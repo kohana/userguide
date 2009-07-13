@@ -70,8 +70,6 @@ class Controller_Kodoc extends Controller_Template {
 			// Get the media route
 			$media = Route::get('kodoc_media');
 
-			echo $e;
-
 			// Add styles
 			$this->template->styles = array(
 				$media->uri(array('file' => 'css/print.css'))  => 'print',

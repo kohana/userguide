@@ -16,9 +16,6 @@ class Kodoc_Guide extends Kodoc {
 	// Current language
 	protected $_lang;
 
-	/**
-	 * 
-	 */
 	public function __construct($lang = NULL)
 	{
 		if ( ! empty($lang))
