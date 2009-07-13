@@ -33,12 +33,13 @@ class Kodoc_Guide extends Kodoc {
 
 	public function find_file($name)
 	{
-		if ($this->_lang)
+		if (($file = Kohana::find_file('guide', $this->_lang.'/'.$name, 'md')) === FALSE)
 		{
-			$name = $this->_lang.'/'.$name;
+			// Get the untranslated file
+			$file = Kohana::find_file('guide', $name, 'md');
 		}
 
-		return Kohana::find_file('guide', $name, 'md');
+		return $file;
 	}
 
 	public function page($name)
