@@ -1,0 +1,14 @@
+body {  }
+pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; }
+
+#docs { display: table; width: 80%; margin: 2em auto; }
+	#docs #menu { display: table-cell; width: 16em; padding: 1em; }
+	#docs #content { display: table-cell; padding: 1em; }
+
+#menu ol,
+#menu ul { margin: 0; padding: 0; list-style: none; }
+	#menu ol ul { margin-left: 1em; }
+#menu li { margin: 0; padding: 0; }
+	#menu li span.title { font-size: 1.2em; }
+
+#content h1 { margin-top: 0; }
