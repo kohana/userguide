@@ -55,9 +55,18 @@ class Kodoc_Guide extends Kodoc {
 
 	public function page_title($page)
 	{
-		if ($menu = $this->find_file('menu'))
+		if (strpos($page, 'classes.') === 0)
 		{
-			if (preg_match('~\[([^\]]+)\]\('.preg_quote($page).'\)~mu', file_get_contents($menu), $matches))
+			$file = $this->find_file('classes');
+		}
+		else
+		{
+			$file = $this->find_file('menu');
+		}
+
+		if ($file AND $text = file_get_contents($file))
+		{
+			if (preg_match('~\[([^\]]+)\]\('.preg_quote($page).'\)~mu', $text, $matches))
 			{
 				// Found a title for this link
 				return $matches[1];

@@ -67,6 +67,9 @@ class Controller_Kodoc extends Controller_Template {
 			// Attach the menu to the template
 			$this->template->menu = $this->kodoc->page('menu');
 
+			// Attach the class list to the template
+			$this->template->classes = $this->kodoc->page('classes');
+
 			// Get the media route
 			$media = Route::get('kodoc_media');
 
