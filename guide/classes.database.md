@@ -2,8 +2,6 @@
 
 The Kohana Database module consists of several classes to provide [MySQL](http://php.net/mysql) and [PDO](http://php.net/pdo) database access. Prepared statements are completely integrated with queries to allow maximum flexibility and caching potential.
 
-Below are examples of typical database usage.
-
 ## Creating a query
 
 Creating a prepared query statement:
@@ -23,7 +21,45 @@ Binding parameters to variables by reference:
 
 ~~~
 $query = DB::query(Database::SELECT, 'SELECT * FROM users WHERE username = :username')
-    ->set(':username', $username);
+    ->bind(':username', $username);
+~~~
+
+## Building queries
+
+Building a SELECT query:
+
+~~~
+// SELECT * is the default
+$query = DB::select()->from('users');
+~~~
+
+Adding WHERE statements:
+
+~~~
+$query = DB::select()->from('users')->where('username', '=', 'john.smith');
+~~~
+
+Building an INSERT query:
+
+~~~
+$query = DB::insert('users', array('username', 'password'))
+    ->values(array('jane.doe', 'tiger'))
+    ->values(array('john.doe', 'walrus'));
+~~~
+
+Binding parameters with built queries:
+
+~~~
+$query = DB::select()->from('users')->where('username', '=', DB::expr(':username'))
+    ->bind(':username', $username);
+~~~
+
+Display the final SQL string of any query:
+
+~~~
+echo $query->compile(Database::instance());
+// Or use __toString() (this will always use the default database instance)
+echo (string) $query;
 ~~~
 
 ## Executing a query
@@ -81,6 +117,15 @@ $result = $query->execute($db);
 ~~~
 
 ## Working with results
+
+Looping through results:
+
+~~~
+foreach ($result as $row)
+{
+    print_r($row);
+}
+~~~
 
 Getting a single column from a result:
 
