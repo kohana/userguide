@@ -10,7 +10,7 @@
     * [Array](classes.array)
     * [CLI](classes.cli)
     * [Cookie](classes.cookie)
-    * [Date](clases.date)
+    * [Date](classes.date)
     * [File](classes.file)
     * [Form](classes.form)
     * [Fragment](classes.fragment)
