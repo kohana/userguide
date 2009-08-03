@@ -7,12 +7,12 @@
    * [Autoloading](conventions.autoloading)
    * [Syntax and Style](conventions.syntax)
 3. **Basics**
-   * [Cascading Filesystem](general.filesystem)
-   * [Startup](general.startup)
-   * [Controllers](general.controllers)
-   * [Models](general.models)
-   * [Views](general.views)
-   * [URLs and Links](general.urls)
+   * [Cascading Filesystem](basics.filesystem)
+   * [Startup](basics.startup)
+   * [Controllers](basics.controllers)
+   * [Models](basics.models)
+   * [Views](basics.views)
+   * [URLs and Links](basics.urls)
 4. **Debugging**
    * [Overview](debugging.overview)
    * [Error Handling](debugging.errors)
