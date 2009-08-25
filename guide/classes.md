@@ -1,8 +1,10 @@
 1. **Core Classes**
+    * [Config](classes.config)
     * [Kohana](classes.kohana)
     * [I18n](classes.i18n)
     * [Profiler](classes.profiler)
     * [Controller](classes.controller)
+    * [Log](classes.log)
     * [Model](classes.model)
     * [View](classes.view)
     * [Exception](classes.exception)
