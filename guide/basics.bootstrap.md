@@ -1,3 +1,0 @@
-# Bootstrap
-
-The file that runs your application...
