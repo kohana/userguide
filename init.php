@@ -7,7 +7,7 @@ Route::set('docs/api', 'api(/<class>)', array('class' => '[a-zA-Z_]+'))
 		'class'      => NULL,
 	));
 
-Route::set('docs/guide', 'guide((/<lang>)/<page>)', array(
+Route::set('docs/guide', 'guide(/<lang>)(/<page>)', array(
 		'lang' => '[a-z]{2}',
 		'page' => '.+',
 	))
