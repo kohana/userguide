@@ -18,10 +18,6 @@
 	<div id="toc" class="menu">
 		<?php echo $menu ?>
 	</div>
-
-	<div id="classes" class="menu">
-		<?php echo $classes ?>
-	</div>
 </div>
 
 </body>
