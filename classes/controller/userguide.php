@@ -2,12 +2,7 @@
 
 class Controller_Userguide extends Controller_Template {
 
-	/**
-	 * @var  object  Kodoc instance
-	 */
-	public $kodoc;
-
-	public $template = 'kodoc/template';
+	public $template = 'userguide/template';
 
 	public function before()
 	{
