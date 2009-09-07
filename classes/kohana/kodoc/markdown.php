@@ -14,6 +14,9 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	public function __construct()
 	{
+		// Parse Kohana view inclusions at the very end
+		$this->document_gamut['doIncludeViews'] = 100;
+
 		// doImage is 10, add base url just before
 		$this->span_gamut['doImageURL'] = 9;
 
@@ -22,6 +25,37 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 		// PHP4 makes me sad.
 		parent::MarkdownExtra_Parser();
+	}
+
+	public function doIncludeViews($text)
+	{
+		if (preg_match_all('/{{(\S+?)}}/m', $text, $matches, PREG_SET_ORDER))
+		{
+			$replace = array();
+
+			foreach ($matches as $set)
+			{
+				list($search, $view) = $set;
+
+				try
+				{
+					$replace[$search] = View::factory($view)->render();
+				}
+				catch (Exception $e)
+				{
+					ob_start();
+
+					// Capture the exception handler output and insert it instead
+					Kohana::exception_handler($e);
+
+					$replace[$search] = ob_get_clean();
+				}
+			}
+
+			$text = strtr($text, $replace);
+		}
+
+		return $text;
 	}
 
 	/**
