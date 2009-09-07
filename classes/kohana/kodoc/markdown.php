@@ -14,14 +14,17 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	public function __construct()
 	{
-		// Parse Kohana view inclusions at the very end
-		$this->document_gamut['doIncludeViews'] = 100;
-
 		// doImage is 10, add base url just before
 		$this->span_gamut['doImageURL'] = 9;
 
 		// doLink is 20, add base url just before
 		$this->span_gamut['doBaseURL'] = 19;
+
+		// Add note spans last
+		$this->span_gamut['doNotes'] = 100;
+
+		// Parse Kohana view inclusions at the very end
+		$this->document_gamut['doIncludeViews'] = 100;
 
 		// PHP4 makes me sad.
 		parent::MarkdownExtra_Parser();
@@ -102,6 +105,16 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 		// Recreate the link
 		return "![{$matches[1]}]({$matches[2]})";
+	}
+
+	public function doNotes($text)
+	{
+		if ( ! preg_match('/^\[!!\]\s*(.+)$/D', $text, $match))
+		{
+			return $text;
+		}
+
+		return $this->hashBlock('<p class="note">'.$match[1].'</p>');
 	}
 
 } // End Kodoc_Markdown

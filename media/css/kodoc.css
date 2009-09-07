@@ -15,3 +15,5 @@ pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; }
 
 #content h1 { margin-top: 0; }
 #content pre { font-size: 1em; line-height: 1.4em; }
+
+#content p.note { display: block; padding: 0.4em 0.6em; background: #efefef; color: #444; font-size: 0.9em; border: solid 1px #eee; }
