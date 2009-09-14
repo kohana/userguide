@@ -13,23 +13,53 @@ class Kohana_Kodoc {
 
 		foreach ($classes as $class)
 		{
-			if (isset($classes['Kohana_'.$class]))
+			if (isset($classes['kohana_'.$class]))
 			{
 				// Remove extended classes
-				unset($classes['Kohana_'.$class]);
+				unset($classes['kohana_'.$class]);
 			}
 		}
 
 		ksort($classes);
 
+		$menu = array();
+
 		$route = Route::get('docs/api');
 
 		foreach ($classes as $class)
 		{
-			$classes[$class] = HTML::anchor($route->uri(array('class' => $class)), $class);
+			$class = Kodoc::factory($class);
+
+			$link = HTML::anchor($route->uri(array('class' => $class->class->name)), $class->class->name);
+
+			if (isset($class->tags['package']))
+			{
+				foreach ($class->tags['package'] as $package)
+				{
+					$menu[$package][] = $link;
+				}
+			}
+			else
+			{
+				$menu['Kohana'][] = $link;
+			}
 		}
 
-		return "<ul>\n<li>".implode("</li>\n<li>", $classes)."</li>\n</ul>";
+		$output = array('<ol>');
+
+		foreach ($menu as $package => $list)
+		{
+			$package = HTML::anchor($route->uri(array('class' => $package)), $package);
+
+			$output[] =
+				"<li>$package\n\t<ul><li>".
+				implode("</li><li>", $list).
+				"</li></ul>\n</li>";
+		}
+
+		$output[] = '</ol>';
+
+		return implode("\n", $output);
 	}
 
 	public static function classes(array $list = NULL)
@@ -53,11 +83,9 @@ class Kohana_Kodoc {
 				$class = substr($name, 8, -(strlen(EXT)));
 
 				// Convert slashes to underscores
-				$class = str_replace('/', '_', $class);
+				$class = str_replace('/', '_', strtolower($class));
 
-				// Add the class to the list with its real name
-				$class = new ReflectionClass($class);
-				$classes[$class->name] = $class->name;
+				$classes[$class] = $class;
 			}
 		}
 
