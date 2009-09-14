@@ -10,15 +10,15 @@ class Kohana_Kodoc_Property extends Kodoc {
 
 	public function __construct($class, $property)
 	{
-		$this->property = new ReflectionProperty($class, $property);
+		$property = new ReflectionProperty($class, $property);
 
-		list($description, $tags) = Kodoc::parse($this->property->getDocComment());
+		list($description, $tags) = Kodoc::parse($property->getDocComment());
 
 		$this->description = $description;
 
-		if ($modifiers = $this->property->getModifiers())
+		if ($modifiers = $property->getModifiers())
 		{
-			$this->modifiers = implode(' ', Reflection::getModifierNames($modifiers));
+			$this->modifiers = '<small>'.implode(' ', Reflection::getModifierNames($modifiers)).'</small> ';
 		}
 
 		if (isset($tags['var']))
@@ -33,6 +33,8 @@ class Kohana_Kodoc_Property extends Kodoc {
 				}
 			}
 		}
+
+		$this->property = $property;
 	}
 
 } // End Kodoc_Property

@@ -108,13 +108,20 @@ class Kohana_Kodoc {
 
 	public $class;
 
-	public $description = '';
+	public $modifiers;
+
+	public $description;
 
 	public $tags = array();
 
 	public function __construct($class)
 	{
 		$class = $parent = new ReflectionClass($class);
+
+		if ($modifiers = $class->getModifiers())
+		{
+			$this->modifiers = '<small>'.implode(' ', Reflection::getModifierNames($modifiers)).'</small> ';
+		}
 
 		do
 		{

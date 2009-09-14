@@ -8,9 +8,14 @@ class Kohana_Kodoc_Method extends Kodoc {
 
 	public function __construct($class, $method)
 	{
-		$this->method = $method = new ReflectionMethod($class, $method);
+		$method = new ReflectionMethod($class, $method);
 
 		$this->class = $method->getDeclaringClass();
+
+		if ($modifiers = $method->getModifiers())
+		{
+			$this->modifiers = '<small>'.implode(' ', Reflection::getModifierNames($modifiers)).'</small> ';
+		}
 
 		list($description, $tags) = Kodoc::parse($method->getDocComment());
 
@@ -37,6 +42,8 @@ class Kohana_Kodoc_Method extends Kodoc {
 		}
 
 		$this->tags = $tags;
+
+		$this->method = $method;
 	}
 
 } // End Kodoc_Method
