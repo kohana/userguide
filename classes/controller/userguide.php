@@ -50,11 +50,22 @@ class Controller_Userguide extends Controller_Template {
 
 	public function action_api()
 	{
-		throw new Kohana_Exception('API is not implemented yet');
+		// Get the class from the request
+		$class = $this->request->param('class', 'Kohana');
+
+		// Set the template title
+		$this->template->title = __(':class API', array(':class' => $class));
+
+		$this->template->content = View::factory('userguide/api/class')
+			->set('doc', Kodoc::factory($class))
+			->set('route', $this->request->route);
 	}
 
-	public function action_media($file)
+	public function action_media()
 	{
+		// Get the file path from the request
+		$file = $this->request->param('file');
+
 		// Find the file extension
 		$ext = pathinfo($file, PATHINFO_EXTENSION);
 
