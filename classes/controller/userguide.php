@@ -47,6 +47,9 @@ class Controller_Userguide extends Controller_Template {
 		// Parse the page contents into the template
 		$this->template->content = Markdown(file_get_contents($file));
 
+		// Attach the menu to the template
+		$this->template->menu = Markdown(file_get_contents($this->file('menu')));
+
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
 
@@ -78,6 +81,9 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->content = View::factory('userguide/api/class')
 			->set('doc', Kodoc::factory($class))
 			->set('route', $this->request->route);
+
+		// Attach the menu to the template
+		$this->template->menu = Kodoc::menu();
 
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
@@ -122,9 +128,6 @@ class Controller_Userguide extends Controller_Template {
 	{
 		if ($this->auto_render)
 		{
-			// Attach the menu to the template
-			$this->template->menu = Markdown(file_get_contents($this->file('menu')));
-
 			// Get the media route
 			$media = Route::get('docs/media');
 
