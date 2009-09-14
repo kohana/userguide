@@ -1,5 +1,5 @@
 <div class="method">
-<h3 id="<?php echo $doc->method->name ?>"><?php echo $doc->modifiers, $doc->method->name ?></h3>
+<h3 id="<?php echo $doc->method->name ?>"><?php echo $doc->modifiers, $doc->method->name, ' ( ', $doc->params, ' )'  ?></h3>
 
 <div class="description">
 <?php echo $doc->description ?>

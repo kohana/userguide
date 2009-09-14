@@ -10,6 +10,18 @@
 
 <?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
 
+<?php if ($doc->constants): ?>
+<h2>Constants</h2>
+<div class="constants">
+<dt>
+<?php foreach ($doc->constants as $name => $value): ?>
+<dt><?php echo $name ?></dt>
+<dd><?php echo $value ?></dd>
+<?php endforeach ?>
+</dt>
+</div>
+<?php endif ?>
+
 <?php if ($properties = $doc->properties()): ?>
 <h2>Properties</h2>
 <div class="properties">
@@ -17,11 +29,11 @@
 <?php foreach ($properties as $prop): ?>
 <dt><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> <?php echo $prop->property->name ?></dt>
 <dd><?php echo $prop->description ?></dd>
+<dd><?php echo $prop->value ?></dd>
 <?php endforeach ?>
 </dt>
 </div>
 <?php endif ?>
-
 
 <?php if ($methods = $doc->methods()): ?>
 <h2>Methods</h2>
