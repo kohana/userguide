@@ -28,7 +28,9 @@ pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; }
 #content pre { font-size: 1em; line-height: 1.4em; }
 
 #content div.method,
-#content div.properties { padding: 0 2em; margin-bottom: 1em; }
+#content div.properties,
+#content div.constants { margin-bottom: 1em; }
+#content div.method { padding: 0 2em; }
 	#content div.method h3 { margin-left: -1em; margin-right: -1em; padding: 0.4em 1em; background: #eee; }
 		#content div.method h3 .param { font-weight: normal; cursor: help; }
 		#content div.method h3 abbr.param { text-transform: none; font-size: 1em; }
