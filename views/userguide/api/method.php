@@ -14,8 +14,10 @@
 </ul>
 <?php endif ?>
 
+<?php if ($doc->source): ?>
 <h6>Source:</h6>
-<pre><code><?php echo Kodoc::source($doc->class->getFilename(), $doc->method->getStartLine(), $doc->method->getEndLine()) ?></code></pre>
+<pre><code><?php echo $doc->source ?></code></pre>
+<?php endif ?>
 
 <?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
 </div>

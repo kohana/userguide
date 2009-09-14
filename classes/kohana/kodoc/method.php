@@ -15,6 +15,8 @@ class Kohana_Kodoc_Method extends Kodoc {
 
 	public $return = array();
 
+	public $source;
+
 	public function __construct($class, $method)
 	{
 		$this->method = new ReflectionMethod($class, $method);
@@ -37,6 +39,11 @@ class Kohana_Kodoc_Method extends Kodoc {
 		while ($parent = $parent->getParentClass());
 
 		list($this->description, $tags) = Kodoc::parse($comment);
+
+		if ($file = $this->class->getFileName())
+		{
+			$this->source = Kodoc::source($file, $this->method->getStartLine(), $this->method->getEndLine());
+		}
 
 		if (isset($tags['param']))
 		{
