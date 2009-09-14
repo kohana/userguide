@@ -8,6 +8,8 @@ class Kohana_Kodoc_Property extends Kodoc {
 
 	public $type;
 
+	public $value;
+
 	public function __construct($class, $property)
 	{
 		$property = new ReflectionProperty($class, $property);
@@ -35,6 +37,11 @@ class Kohana_Kodoc_Property extends Kodoc {
 		}
 
 		$this->property = $property;
+
+		if ($property->isStatic())
+		{
+			$this->value = Kohana::debug($property->getValue($class));
+		}
 	}
 
 } // End Kodoc_Property

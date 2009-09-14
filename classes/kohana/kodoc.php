@@ -114,34 +114,36 @@ class Kohana_Kodoc {
 
 	public $tags = array();
 
+	public $constants = array();
+
 	public function __construct($class)
 	{
-		$class = $parent = new ReflectionClass($class);
+		$this->class = $parent = new ReflectionClass($class);
 
-		if ($modifiers = $class->getModifiers())
+		if ($modifiers = $this->class->getModifiers())
 		{
 			$this->modifiers = '<small>'.implode(' ', Reflection::getModifierNames($modifiers)).'</small> ';
 		}
 
+		if ($constants = $this->class->getConstants())
+		{
+			foreach ($constants as $name => $value)
+			{
+				$this->constants[$name] = Kohana::debug($value);
+			}
+		}
+
 		do
 		{
-			if ($description = $parent->getDocComment())
+			if ($comment = $parent->getDocComment())
 			{
-				list($body, $tags) = Kodoc::parse($description);
-
-				// Set the description
-				$this->description = $body;
-
-				// Set the tags
-				$this->tags = $tags;
-
 				// Found a description for this class
 				break;
 			}
 		}
 		while ($parent = $parent->getParentClass());
 
-		$this->class = $class;
+		list($this->description, $this->tags) = Kodoc::parse($comment);
 	}
 
 	public function properties()
