@@ -2,18 +2,41 @@
 
 class Kohana_Kodoc_Method extends Kodoc {
 
+	public $method;
+
+	public $return = array();
+
 	public function __construct($class, $method)
 	{
-		$method = new ReflectionMethod($class, $method);
+		$this->method = $method = new ReflectionMethod($class, $method);
 
-		foreach ($method->getParameters() as $i => $param)
+		$this->class = $method->getDeclaringClass();
+
+		list($description, $tags) = Kodoc::parse($method->getDocComment());
+
+		$this->description = $description;
+
+		if (isset($tags['param']))
 		{
-			$this->params[$i] = array('name' => $param->getName(), 'optional' => $param->isOptional());
+			$params = $tags['param'];
+
+			unset($tags['param']);
 		}
 
-		$this->source = Kodoc::source($method->getFileName(), $method->getStartLine(), $method->getEndLine());
+		if (isset($tags['return']))
+		{
+			foreach ($tags['return'] as $return)
+			{
+				if (preg_match('/^(\S*)(?:\s*(.+?))?$/', $return, $matches))
+				{
+					$this->return[] = array($matches[1], isset($matches[2]) ? $matches[2] : '');
+				}
+			}
 
-		$this->_parse($method->getDocComment());
+			unset($tags['return']);
+		}
+
+		$this->tags = $tags;
 	}
 
 } // End Kodoc_Method

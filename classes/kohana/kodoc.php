@@ -1,72 +1,145 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-abstract class Kohana_Kodoc {
+class Kohana_Kodoc {
 
-	public static function method($name)
+	public static function factory($class)
 	{
-		list($class, $method) = explode('::', $name);
+		return new Kodoc($class);
+	}
 
-		return new Kodoc_Method($class, $method);
+	public static function classes()
+	{
+		$classes = Kohana::list_files('classes');
+
+		echo Kohana::debug($classes);exit;
+	}
+
+	public static function parse($comment)
+	{
+		// Normalize all new lines to \n
+		$comment = str_replace(array("\r\n", "\n"), "\n", $comment);
+
+		// Remove the phpdoc open/close tags and split
+		$comment = array_slice(explode("\n", $comment), 1, -1);
+
+		// Tag content
+		$tags = array();
+
+		foreach ($comment as $i => $line)
+		{
+			// Remove all leading whitespace
+			$line = preg_replace('/^\s*\* ?/m', '', $line);
+
+			// Search this line for a tag
+			if (preg_match('/^@(\S+)(?:\s*(.+))?$/', $line, $matches))
+			{
+				// This is a tag line
+				unset($comment[$i]);
+
+				$name = $matches[1];
+				$text = isset($matches[2]) ? $matches[2] : '';
+
+				switch ($name)
+				{
+					case 'license':
+						if (strpos($text, '://') !== FALSE)
+						{
+							// Convert the lincense into a link
+							$text = HTML::anchor($text);
+						}
+					break;
+					case 'copyright':
+						if (strpos($text, '(c)') !== FALSE)
+						{
+							// Convert the copyright sign
+							$text = str_replace('(c)', '&copy;', $text);
+						}
+					break;
+					case 'throws':
+						$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $text)), $text);
+					break;
+				}
+
+				// Add the tag
+				$tags[$name][] = $text;
+			}
+			else
+			{
+				// Overwrite the comment line
+				$comment[$i] = (string) $line;
+			}
+		}
+
+		// Concat the comment lines back to a block of text
+		if ($comment = trim(implode("\n", $comment)))
+		{
+			// Parse the comment with Markdown
+			$comment = Markdown($comment);
+		}
+
+		return array($comment, $tags);
 	}
 
 	public static function source($file, $start, $end)
 	{
 		$file = file($file, FILE_IGNORE_NEW_LINES);
-		
+
 		return implode("\n", array_slice($file, $start - 1, $end - 1));
 	}
 
-	public $source = '';
+	public $class;
 
-	public $docs = '';
+	public $description = '';
 
-	protected function _parse($comment)
+	public $tags = array();
+
+	public function __construct($class)
 	{
-		$comment = $this->_strip($comment);
+		$class = $parent = new ReflectionClass($class);
 
-		if (preg_match_all('/\{?@link\s+(\S+)(?:\s+(.+))?\}?/m', $comment, $matches, PREG_SET_ORDER))
+		do
 		{
-			$replace = array();
-			foreach ($matches as $match)
+			if ($description = $parent->getDocComment())
 			{
-				$replace[$match[0]] = '<a href="'.$match[1].'">'.(isset($match[2]) ? $match[2] : $match[1]).'</a>';
+				list($body, $tags) = Kodoc::parse($description);
+
+				// Set the description
+				$this->description = $body;
+
+				// Set the tags
+				$this->tags = $tags;
+
+				// Found a description for this class
+				break;
 			}
-
-			$comment = strtr($comment, $replace);
 		}
+		while ($parent = $parent->getParentClass());
 
-		if (preg_match_all("/@param\s+(\S+)(?: +([^\n]+))?$/m", $comment, $matches, PREG_SET_ORDER))
-		{
-			$replace = array();
-			foreach ($matches as $i => $match)
-			{
-				$replace[$match[0]] = '';
-				if (isset($this->params[$i]))
-				{
-					$this->params[$i]['type'] = $match[1];
-
-					if (isset($match[2]))
-					{
-						$this->params[$i]['description'] = $match[2];
-					}
-				}
-			}
-
-			$comment = strtr($comment, $replace);
-		}
-
-		$this->docs = $comment;
+		$this->class = $class;
 	}
 
-	protected function _strip($comment)
+	public function properties()
 	{
-		// Remove the comment opening and closing lines: /**, */
-		$comment = implode("\n", array_slice(explode("\n", $comment), 1, -1));
+		$props = array();
 
-		// Remove all leading whitespace
-		$comment = preg_replace('/^\s*\* ?/m', '', $comment);
+		foreach ($this->class->getProperties() as $property)
+		{
+			$props[] = new Kodoc_Property($this->class->name, $property->name);
+		}
 
-		return $comment;
+		return $props;
+	}
+
+	public function methods()
+	{
+		$methods = array();
+
+		foreach ($this->class->getMethods() as $method)
+		{
+			$methods[] = new Kodoc_Method($this->class->name, $method->name);
+		}
+
+		return $methods;
 	}
 
 } // End Kodoc
