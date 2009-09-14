@@ -1,8 +1,13 @@
 body {  }
 pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; }
 
-#docs { display: table; width: 90%; margin: 2em auto; }
+#docs { display: table; width: 90%; margin: 0 auto 2em; }
 	#content { display: table-cell; padding: 1em; }
+
+#breadcrumb { display: block; margin: 0 0 2em; padding: 0.6em 5%; list-style: none; overflow: auto; background: #111; color: #aaa; }
+	#breadcrumb li { display: block; float: left; margin: 0; padding: 0; padding-left: 0.6em; }
+	#breadcrumb a { color: #ccc; text-decoration: underline; }
+	#breadcrumb li:before { content: '» '; color: #555; }
 
 #docs div.menu { display: table-cell; width: 14em !important; padding: 1em; background: #efefef; }
 	#docs div.menu ol,

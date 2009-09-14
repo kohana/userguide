@@ -10,8 +10,15 @@
 </head>
 <body>
 
+<ul id="breadcrumb">
+<?php foreach ($breadcrumb as $link => $title): ?>
+	<li><?php echo is_int($link) ? $title : HTML::anchor($link, $title) ?></li>
+<?php endforeach ?>
+</ul>
+
 <div id="docs">
 	<div id="content">
+
 		<?php echo $content ?>
 	</div>
 
@@ -19,6 +26,8 @@
 		<?php echo $menu ?>
 	</div>
 </div>
+
+<?php if (Kohana::$profiling) echo View::factory('profiler/stats') ?>
 
 </body>
 </html>

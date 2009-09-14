@@ -46,6 +46,25 @@ class Controller_Userguide extends Controller_Template {
 
 		// Parse the page contents into the template
 		$this->template->content = Markdown(file_get_contents($file));
+
+		// Bind the breadcrumb
+		$this->template->bind('breadcrumb', $breadcrumb);
+
+		// Get the docs URI
+		$guide = Route::get('docs/guide');
+
+		// Add the breadcrumb
+		$breadcrumb = array();
+		$breadcrumb[$guide->uri()] = __('User Guide');
+
+		if (strpos($page, '.'))
+		{
+			list($section) = explode('.', $page);
+
+			$breadcrumb[$guide->uri(array('page' => $section))] = $this->title($section);
+		}
+
+		$breadcrumb[] = $this->template->title;
 	}
 
 	public function action_api()
@@ -54,11 +73,23 @@ class Controller_Userguide extends Controller_Template {
 		$class = $this->request->param('class', 'Kohana');
 
 		// Set the template title
-		$this->template->title = __(':class API', array(':class' => $class));
+		$this->template->title = $class;
 
 		$this->template->content = View::factory('userguide/api/class')
 			->set('doc', Kodoc::factory($class))
 			->set('route', $this->request->route);
+
+		// Bind the breadcrumb
+		$this->template->bind('breadcrumb', $breadcrumb);
+
+		// Get the docs URI
+		$guide = Route::get('docs/guide');
+
+		// Add the breadcrumb
+		$breadcrumb = array();
+		$breadcrumb[$guide->uri()] = __('User Guide');
+		$breadcrumb[$this->request->route->uri()] = __('API Browser');
+		$breadcrumb[] = $this->template->title;
 	}
 
 	public function action_media()
