@@ -58,6 +58,13 @@ class Kohana_Kodoc {
 					case 'throws':
 						$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $text)), $text);
 					break;
+					case 'uses':
+						if (preg_match('/^([a-z_]+)::([a-z_]+)$/i', $text, $matches))
+						{
+							// Make a class#method API link
+							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])).'#'.$matches[2], $text);
+						}
+					break;
 				}
 
 				// Add the tag
