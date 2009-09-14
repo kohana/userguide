@@ -14,11 +14,17 @@ pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; }
 		#docs div.menu ol > li > a { color: #eee; background: #111; text-decoration: none; }
 
 #content h1 { margin-top: 0; }
-	#content h1 small { display: block; font-size: 0.6em; color: #666; }
+#content h1 small,
+#content h2 small,
+#content h3 small,
+#content h4 small,
+#content h5 small,
+#content h6 small { font-size: 0.6em; color: #444; }
 #content pre { font-size: 1em; line-height: 1.4em; }
 
 #content div.method,
-#content div.properties { padding: 0 1em; margin-bottom: 1em; }
+#content div.properties { padding: 0 2em; margin-bottom: 1em; }
+	#content div.method h3 { margin-left: -1em; margin-right: -1em; padding: 0.4em 1em; background: #eee; }
 #content p.note { display: block; padding: 0.4em 0.6em; background: #efefef; color: #444; font-size: 0.9em; border: solid 1px #eee; }
 #content dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; }
 	#content dl.tags dt { margin: 0 0 0.4em; clear: left; float: left; width: 25%; }
