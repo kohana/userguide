@@ -7,11 +7,61 @@ class Kohana_Kodoc {
 		return new Kodoc($class);
 	}
 
-	public static function classes()
+	public static function menu()
 	{
-		$classes = Kohana::list_files('classes');
+		$classes = Kodoc::classes();
 
-		echo Kohana::debug($classes);exit;
+		foreach ($classes as $class)
+		{
+			if (isset($classes['Kohana_'.$class]))
+			{
+				// Remove extended classes
+				unset($classes['Kohana_'.$class]);
+			}
+		}
+
+		ksort($classes);
+
+		$route = Route::get('docs/api');
+
+		foreach ($classes as $class)
+		{
+			$classes[$class] = HTML::anchor($route->uri(array('class' => $class)), $class);
+		}
+
+		return "<ul>\n<li>".implode("</li>\n<li>", $classes)."</li>\n</ul>";
+	}
+
+	public static function classes(array $list = NULL)
+	{
+		if ($list === NULL)
+		{
+			$list = Kohana::list_files('classes');
+		}
+
+		$classes = array();
+
+		foreach ($list as $name => $path)
+		{
+			if (is_array($path))
+			{
+				$classes += Kodoc::classes($path);
+			}
+			else
+			{
+				// Remove "classes/" and the extension
+				$class = substr($name, 8, -(strlen(EXT)));
+
+				// Convert slashes to underscores
+				$class = str_replace('/', '_', $class);
+
+				// Add the class to the list with its real name
+				$class = new ReflectionClass($class);
+				$classes[$class->name] = $class->name;
+			}
+		}
+
+		return $classes;
 	}
 
 	public static function parse($comment)
