@@ -152,7 +152,10 @@ class Kohana_Kodoc {
 
 		foreach ($this->class->getProperties() as $property)
 		{
-			$props[] = new Kodoc_Property($this->class->name, $property->name);
+			if ($property->isPublic())
+			{
+				$props[] = new Kodoc_Property($this->class->name, $property->name);
+			}
 		}
 
 		return $props;
