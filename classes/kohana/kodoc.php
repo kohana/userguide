@@ -1,5 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
+/**
+ * Class documentation generator.
+ *
+ * @package    Kodoc
+ * @author     Kohana Team
+ * @copyright  (c) 2008-2009 Kohana Team
+ * @license    http://kohanaphp.com/license
+ */
 class Kohana_Kodoc {
 
 	public static function factory($class)

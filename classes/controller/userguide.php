@@ -1,5 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
+/**
+ * Kohana user guide and api browser.
+ *
+ * @package    Kodoc
+ * @author     Kohana Team
+ */
 class Controller_Userguide extends Controller_Template {
 
 	public $template = 'userguide/template';
