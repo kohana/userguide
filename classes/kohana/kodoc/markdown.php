@@ -14,11 +14,14 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	public function __construct()
 	{
-		// doImage is 10, add base url just before
+		// doImage is 10, add image url just before
 		$this->span_gamut['doImageURL'] = 9;
 
 		// doLink is 20, add base url just before
 		$this->span_gamut['doBaseURL'] = 19;
+
+		// Add API links
+		$this->span_gamut['doAPI'] = 90;
 
 		// Add note spans last
 		$this->span_gamut['doNotes'] = 100;
@@ -105,6 +108,40 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 		// Recreate the link
 		return "![{$matches[1]}]({$matches[2]})";
+	}
+
+	public function doAPI($text)
+	{
+		return preg_replace_callback('/\[([a-z_]+(?:::[a-z_]+)?)\]/i', array($this, '_convert_api_link'), $text);
+	}
+
+	public function _convert_api_link($matches)
+	{
+		static $route;
+
+		if ($route === NULL)
+		{
+			$route = Route::get('docs/api');
+		}
+
+		$link = $matches[1];
+
+		if (strpos($link, '::'))
+		{
+			// Split the class and method
+			list($class, $method) = explode('::', $link, 2);
+
+			// Add the id symbol to the method
+			$method = '#'.$method;
+		}
+		else
+		{
+			// Class with no method
+			$class  = $link;
+			$method = NULL;
+		}
+
+		return HTML::anchor($route->uri(array('class' => $class)).$method, $link);
 	}
 
 	public function doNotes($text)
