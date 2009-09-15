@@ -52,10 +52,16 @@ class Kohana_Kodoc {
 			}
 		}
 
+		// Sort the packages
+		ksort($menu);
+
 		$output = array('<ol>');
 
 		foreach ($menu as $package => $list)
 		{
+			// Sort the class list
+			sort($list);
+
 			$package = HTML::anchor($route->uri(array('class' => $package)), $package);
 
 			$output[] =
