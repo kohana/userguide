@@ -15,7 +15,7 @@ Route::set('docs/guide', 'guide(/<lang>)(/<page>)', array(
 		'controller' => 'userguide',
 		'action'     => 'docs',
 		'lang'       => 'en',
-		'page'       => 'index',
+		'page'       => 'start',
 	));
 
 Route::set('docs/media', 'media(/<file>)', array('file' => '.+'))
