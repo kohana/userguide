@@ -180,6 +180,11 @@ class Kohana_Kodoc {
 
 	public static function source($file, $start, $end)
 	{
+		if ( ! $file)
+		{
+			return FALSE;
+		}
+
 		$file = file($file, FILE_IGNORE_NEW_LINES);
 
 		$file = array_slice($file, $start - 1, $end - $start + 1);
