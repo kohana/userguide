@@ -1,5 +1,5 @@
 body { margin: 0; }
-pre { background: #efefef; padding: 0; border: dotted 1px #ddd; overflow: auto; }
+pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; }
 
 #topbar { padding: 1em 0; margin-bottom: 1em; background: #111; border-bottom: solid 0.2em #eee; color: #aaa; }
 	#topbar ul.breadcrumb { display: block; margin: 0; padding: 0; overflow: auto; }

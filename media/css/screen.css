@@ -101,7 +101,7 @@ form div { margin-bottom: .8em; }
 /* COLORS */
 
 a:link { text-decoration: underline; color: #36c; }
-a:visited { text-decoration: underline; color: #99c; }
+a:visited { text-decoration: underline; color: #36c; }
 a:hover { text-decoration: underline; color: #c33; }
 a:active, a:focus { text-decoration: underline; color: #000; }
 code, pre { color: #c33; } /* very optional, but still useful. W3C uses about the same colors for codes */
