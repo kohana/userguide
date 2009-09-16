@@ -102,7 +102,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 */
 	public function doImageURL($text)
 	{
-		return preg_replace_callback('#!\[(.+?)\]\((\S*(?:\s*".+?"))\)#', array($this, '_add_image_url'), $text);
+		return preg_replace_callback('#!\[(.+?)\]\((\S*(?:\s*".+?")?)\)#', array($this, '_add_image_url'), $text);
 	}
 
 	public function _add_image_url($matches)
