@@ -11,8 +11,8 @@
 <?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
 
 <?php if ($doc->constants): ?>
-<h2>Constants</h2>
 <div class="constants">
+<h2>Constants</h2>
 <dt>
 <?php foreach ($doc->constants as $name => $value): ?>
 <dt><?php echo $name ?></dt>
@@ -37,7 +37,7 @@
 
 <?php if ($methods = $doc->methods()): ?>
 <h2>Methods</h2>
-<div class="methods prefix-1">
+<div class="methods">
 <?php foreach ($methods as $method): ?>
 <?php echo View::factory('userguide/api/method')->set('doc', $method) ?>
 <?php endforeach ?>

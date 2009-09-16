@@ -1,7 +1,8 @@
+html { margin: 0; }
 body { margin: 0; }
 pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; }
 
-#topbar { padding: 1em 0; margin-bottom: 1em; background: #111; border-bottom: solid 0.2em #eee; color: #aaa; }
+#topbar { padding: 1em 0; margin-bottom: 1em; background: #111; border-bottom: solid 0.2 #eee; color: #aaa; }
 	#topbar ul.breadcrumb { display: block; margin: 0; padding: 0; overflow: auto; }
 		#topbar ul.breadcrumb li { display: block; float: left; margin: 0; padding: 0; padding-left: 0.6em; }
 		#topbar ul.breadcrumb li:before { content: '» '; color: #555; }
@@ -19,7 +20,13 @@ pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: au
 		#menu > ol ul { padding-top: 0.4em; padding-bottom: 0.6em; }
 			#menu ol > li > a { color: #eee; background: #111; text-decoration: none; }
 
+#footer { margin-top: 1em; padding: 1em 0; color: #666; }
+	#footer p { font-size: 0.8em; text-transform: uppercase; }
+	#footer .copyright { text-align: right; }
 #content h1 { margin-top: 0; }
+#content h1,
+#content h2,
+#content h3 { margin-left: -20px; padding: 0.4em 20px; padding-right: 0; background: #eee; }
 #content h1 small,
 #content h2 small,
 #content h3 small,
@@ -27,13 +34,15 @@ pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: au
 #content h5 small,
 #content h6 small { font-size: 0.9em; font-weight: normal; color: #444; }
 #content pre { font-size: 1em; line-height: 1.4em; }
+#content table th { color: #444; background: #eee; }
+#content table td { background: #f4f4f4; }
+	#content table tr.alt td { background: #fff; }
 
 #content div.method,
 #content div.properties,
 #content div.constants { margin-bottom: 1em; }
-	#content div.method h3 { margin-left: -40px; padding: 0.4em 0; padding-left: 40px; background: #eee; }
-		#content div.method h3 .param { font-weight: normal; cursor: help; }
-		#content div.method h3 abbr.param { text-transform: none; font-size: 1em; }
+	#content div.method h3 .param { font-weight: normal; cursor: help; }
+	#content div.method h3 abbr.param { text-transform: none; font-size: 1em; }
 #content p.note { display: block; padding: 0.4em 0.6em; background: #efefef; color: #444; font-size: 0.9em; border: solid 1px #eee; }
 #content dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; }
 	#content dl.tags dt { margin: 0 0 0.4em; clear: left; float: left; width: 25%; }
