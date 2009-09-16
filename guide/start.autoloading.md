@@ -1,13 +1,17 @@
 # Autoloading
 
-Kohana takes advantage of PHP5's [autoloading feature](http://php.net/manual/language.oop5.autoload.php). This means that you don't need to (and shouldn't) ever [include](http://php.net/include) or [require](http://php.net/require) files that are part of Kohana's normal directory structure.
+Kohana takes advantage of PHP [autoloading](http://php.net/manual/language.oop5.autoload.php). This removes the need to call [include](http://php.net/include) or [require](http://php.net/require) before using a class.
 
-To facilitate this, Kohana has a [file naming convention](start.conventions) where the file name reflects it's location in the directory structure.
+Classes are loaded via the [Kohana::auto_load] method, which makes a simple conversion from class name to file name:
 
-When a class is first used, Kohana looks for it in a particular file according to it's conventions. For example:
+1. Classes are placed in the `classes/` directory of the [filesystem](start.filesystem)
+2. Any underscore characters are converted to slashes
+2. The filename is lowercase
 
-	$validate = Validate::factory($data);
+When calling a class that has not been loaded (eg: `Session_Cookie`), Kohana will search the filesystem using [Kohana::find_file] for a file named `classes/session/cookie.php`.
 
-When this code executes, there is no need to include ro require the validate class file as Kohana knows to look for it in a file called `validate.php`. It will look in the `application/classes` directory followed by the module and system directories as described in [the filesystem overview](general.filesystem).
+## Custom Autoloaders
 
-Underscore characters in class names are converted into directory separators when looking for a class file. For examples of this see [Class Names and File Locations](start.conventions).
+[!!] The default autoloader is enabled in `application/bootstrap.php`.
+
+Additional class loaders can be added using [spl_autoload_register](http://php.net/spl_autoload_register).
