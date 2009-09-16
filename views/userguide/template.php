@@ -12,27 +12,32 @@
 </head>
 <body>
 
-<div id="docs">
-	<div id="content">
+<div id="topbar">
+	<div class="container">
+		<div class="span-17 suffix-1">
+			<ul class="breadcrumb">
+			<?php foreach ($breadcrumb as $link => $title): ?>
+				<li><?php echo is_int($link) ? $title : HTML::anchor($link, $title) ?></li>
+			<?php endforeach ?>
+			</ul>
+		</div>
 
-		<?php echo $content ?>
-	</div>
-
-	<div id="toc" class="menu">
-		<?php echo $menu ?>
+		<div class="translations span-6 last">
+			<?php echo form::open(NULL, array('method' => 'get')) ?>
+				<?php echo form::select('lang', $translations, $lang) ?>
+			<?php echo form::close() ?>
+		</div>
 	</div>
 </div>
 
-<div id="topbar">
-	<ul class="breadcrumb">
-	<?php foreach ($breadcrumb as $link => $title): ?>
-		<li><?php echo is_int($link) ? $title : HTML::anchor($link, $title) ?></li>
-	<?php endforeach ?>
-	</ul>
+<div id="docs" class="container">
+	<div id="content" class="span-17 suffix-1">
+		<?php echo $content ?>
+	</div>
 
-	<?php echo form::open(NULL, array('method' => 'get')) ?>
-		<?php echo form::select('lang', $translations, $lang) ?>
-	<?php echo form::close() ?>
+	<div id="menu" class="span-6 last">
+		<?php echo $menu ?>
+	</div>
 </div>
 
 </body>

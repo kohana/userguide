@@ -37,7 +37,9 @@
 
 <?php if ($methods = $doc->methods()): ?>
 <h2>Methods</h2>
+<div class="methods prefix-1">
 <?php foreach ($methods as $method): ?>
 <?php echo View::factory('userguide/api/method')->set('doc', $method) ?>
 <?php endforeach ?>
+</div>
 <?php endif ?>
