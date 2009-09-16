@@ -15,6 +15,6 @@
    * [Validation](security.validation)
    * [Cookies](security.cookies)
    * [Database](security.database)
-4. [Debugging](debugging.overview)
+4. [Debugging](debugging)
    * [Error Handling](debugging.errors)
    * [Profiling](debugging.profiling)
