@@ -5,16 +5,12 @@
 
 <title><?php echo $title ?> | Kodoc</title>
 
-<?php foreach ($styles as $style => $media) echo html::style($style, array('media' => $media), TRUE), "\n" ?>
+<?php foreach ($styles as $style => $media) echo HTML::style($style, array('media' => $media), TRUE), "\n" ?>
+
+<?php foreach ($scripts as $script) echo HTML::script($script, NULL, TRUE), "\n" ?>
 
 </head>
 <body>
-
-<ul id="breadcrumb">
-<?php foreach ($breadcrumb as $link => $title): ?>
-	<li><?php echo is_int($link) ? $title : HTML::anchor($link, $title) ?></li>
-<?php endforeach ?>
-</ul>
 
 <div id="docs">
 	<div id="content">
@@ -27,7 +23,17 @@
 	</div>
 </div>
 
-<?php if (Kohana::$profiling) echo View::factory('profiler/stats') ?>
+<div id="topbar">
+	<ul class="breadcrumb">
+	<?php foreach ($breadcrumb as $link => $title): ?>
+		<li><?php echo is_int($link) ? $title : HTML::anchor($link, $title) ?></li>
+	<?php endforeach ?>
+	</ul>
+
+	<?php echo form::open(NULL, array('method' => 'get')) ?>
+		<?php echo form::select('lang', $translations, $lang) ?>
+	<?php echo form::close() ?>
+</div>
 
 </body>
 </html>

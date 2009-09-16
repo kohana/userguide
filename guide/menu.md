@@ -18,3 +18,4 @@
 4. [Debugging](debugging)
    * [Error Handling](debugging.errors)
    * [Profiling](debugging.profiling)
+5. [API Browser](api)

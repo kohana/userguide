@@ -18,8 +18,25 @@ class Controller_Userguide extends Controller_Template {
 		}
 		else
 		{
+			if (isset($_GET['lang']))
+			{
+				$lang = $_GET['lang'];
+
+				// Load the accepted language list
+				$translations = array_keys(Kohana::message('userguide', 'translations'));
+
+				if (in_array($lang, $translations))
+				{
+					// Set the language cookie
+					Cookie::set('userguide/language', $lang, Date::YEAR);
+				}
+
+				// Reload the page
+				$this->request->redirect($this->request->uri);
+			}
+
 			// Set the language
-			$this->_lang = $this->request->param('lang');
+			$this->_lang = Cookie::get('userguide/language', 'en');
 
 			// Use customized Markdown parser
 			define('MARKDOWN_PARSER_CLASS', 'Kodoc_Markdown');
@@ -63,7 +80,7 @@ class Controller_Userguide extends Controller_Template {
 
 		// Add the breadcrumb
 		$breadcrumb = array();
-		$breadcrumb[$guide->uri()] = __('User Guide');
+		$breadcrumb[$guide->uri(array('page' => NULL))] = __('User Guide');
 
 		if (strpos($page, '.'))
 		{
@@ -98,8 +115,8 @@ class Controller_Userguide extends Controller_Template {
 
 		// Add the breadcrumb
 		$breadcrumb = array();
-		$breadcrumb[$guide->uri()] = __('User Guide');
-		$breadcrumb[$this->request->route->uri()] = __('API Browser');
+		$breadcrumb[$guide->uri(array('page' => NULL))] = __('User Guide');
+		$breadcrumb[$this->request->route->uri()] = $this->title('api');
 		$breadcrumb[] = $this->template->title;
 	}
 
@@ -142,6 +159,16 @@ class Controller_Userguide extends Controller_Template {
 				$media->uri(array('file' => 'css/screen.css')) => 'screen',
 				$media->uri(array('file' => 'css/kodoc.css'))  => 'screen',
 			);
+
+			// Add scripts
+			$this->template->scripts = array(
+				'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
+				$media->uri(array('file' => 'js/kodoc.js')),
+			);
+
+			// Add languages
+			$this->template->lang = $this->_lang;
+			$this->template->translations = Kohana::message('userguide', 'translations');
 		}
 
 		return parent::after();

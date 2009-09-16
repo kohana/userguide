@@ -1,20 +1,18 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-Route::set('docs/api', 'api(/<class>)', array('class' => '[a-zA-Z_]+'))
+Route::set('docs/api', 'guide/api(/<class>)', array('class' => '[a-zA-Z_]+'))
 	->defaults(array(
 		'controller' => 'userguide',
 		'action'     => 'api',
 		'class'      => NULL,
 	));
 
-Route::set('docs/guide', 'guide(/<lang>)(/<page>)', array(
-		'lang' => '[a-z]{2}',
+Route::set('docs/guide', 'guide(/<page>)', array(
 		'page' => '.+',
 	))
 	->defaults(array(
 		'controller' => 'userguide',
 		'action'     => 'docs',
-		'lang'       => 'en',
 		'page'       => 'start',
 	));
 
