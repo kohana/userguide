@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-Route::set('docs/api', 'guide/api(/<class>)', array('class' => '[a-zA-Z_]+'))
+Route::set('docs/api', 'guide/api(/<class>)', array('class' => '[a-zA-Z0-9_]+'))
 	->defaults(array(
 		'controller' => 'userguide',
 		'action'     => 'api',
