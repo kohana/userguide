@@ -1,6 +1,9 @@
 html { margin: 0; }
 body { margin: 0; }
 pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; }
+table th { color: #444; background: #eee; }
+table td { background: #f4f4f4; }
+	table tr.alt td { background: #fff; }
 
 #topbar { padding: 1em 0; margin-bottom: 2em; background: #111; border-bottom: solid 0.2 #eee; color: #aaa; }
 	#topbar ul.breadcrumb { display: block; margin: 0; padding: 0; overflow: auto; }
@@ -34,9 +37,6 @@ pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: au
 #content h5 small,
 #content h6 small { font-size: 0.9em; font-weight: normal; color: #444; }
 #content pre { font-size: 1em; line-height: 1.4em; }
-#content table th { color: #444; background: #eee; }
-#content table td { background: #f4f4f4; }
-	#content table tr.alt td { background: #fff; }
 
 #content div.method,
 #content div.properties,
