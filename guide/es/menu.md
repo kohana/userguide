@@ -5,7 +5,7 @@
    * [Modelo Vista Controlador](start.mvc)
    * [Sistema de Archivos](start.filesystem)
    * [Autocarga](start.autoloading)
-   * [Request Flow](start.flow)
+   * [Proceso de las Peticiones](start.flow)
 2. [Tutoriales](tutorials)
    * [Hola, Mundo](tutorials.helloworld)
    * [Rutas, URLs, y Enlaces](tutorials.urls)
