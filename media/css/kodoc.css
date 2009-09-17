@@ -2,7 +2,7 @@ html { margin: 0; }
 body { margin: 0; }
 pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; }
 
-#topbar { padding: 1em 0; margin-bottom: 1em; background: #111; border-bottom: solid 0.2 #eee; color: #aaa; }
+#topbar { padding: 1em 0; margin-bottom: 2em; background: #111; border-bottom: solid 0.2 #eee; color: #aaa; }
 	#topbar ul.breadcrumb { display: block; margin: 0; padding: 0; overflow: auto; }
 		#topbar ul.breadcrumb li { display: block; float: left; margin: 0; padding: 0; padding-left: 0.6em; }
 		#topbar ul.breadcrumb li:before { content: '» '; color: #555; }
