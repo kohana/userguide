@@ -4,7 +4,7 @@
 2. 创建一个名为 'kohana' 的目录并解压缩到这个目录
 3. 上传到这个目录的所有文件到你的服务器上
 4. 编辑 `application/bootstrap.php` 文件并按实际情况修改下面配置：
-	- 为你的程序设置默认[市区](http://php.net/timezones)
+	- 为你的程序设置默认[时区](http://php.net/timezones)
 	- 在 [Kohana::init] 方法中设置 `base_url` 的值为 kohana 目录的路径（或域名地址）
 6. 确保 `application/cache` 目录和 `application/logs` 目录为可写属性，命令为 `chmod application/{cache,logs} 0777`
 7. 在你喜欢的浏览器地址栏中输入 `base_url` 来测试 Kohana 是否安装成功
