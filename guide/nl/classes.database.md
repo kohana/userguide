@@ -1,45 +1,45 @@
-# Database Quick Start
+# Snel starten met de database
 
-The Kohana Database module consists of several classes to provide [MySQL](http://php.net/mysql) and [PDO](http://php.net/pdo) database access. Prepared statements are completely integrated with queries to allow maximum flexibility and caching potential.
+De Kohana Database module bestaat uit verschillende klasses om [MySQL](http://be2.php.net/mysql) en [PDO](http://be2.php.net/pdo) database toegang te verlenen. Voorbereide statements zijn volledig geïntegreerd met queries om een maximale flexibiliteit en caching potentiëel toe te laten.
 
-## Creating a query
+## Een query maken
 
-Creating a prepared query statement:
+Een query maken:
 
 ~~~
 $query = DB::query(Database::SELECT, 'SELECT * FROM users');
 ~~~
 
-Adding parameters to a query:
+Er parameters aan toevoegen: 
 
 ~~~
 $query = DB::query(Database::SELECT, 'SELECT * FROM users WHERE username = :username')
     ->set(':username', 'john.smith');
 ~~~
 
-Binding parameters to variables by reference:
+Parameters binden met variabelen: 
 
 ~~~
 $query = DB::query(Database::SELECT, 'SELECT * FROM users WHERE username = :username')
     ->bind(':username', $username);
 ~~~
 
-## Building queries
+## Queries bouwen
 
-Building a SELECT query:
+Een select query maken:
 
 ~~~
-// SELECT * is the default
+// SELECT * is het standaardgedrag
 $query = DB::select()->from('users');
 ~~~
 
-Adding WHERE statements:
+Met WHERE statements: 
 
 ~~~
 $query = DB::select()->from('users')->where('username', '=', 'john.smith');
 ~~~
 
-Building an INSERT query:
+Een INSERT query maken: 
 
 ~~~
 $query = DB::insert('users', array('username', 'password'))
@@ -47,24 +47,24 @@ $query = DB::insert('users', array('username', 'password'))
     ->values(array('john.doe', 'walrus'));
 ~~~
 
-Binding parameters with built queries:
+Parameters binden met gebouwde queries: 
 
 ~~~
 $query = DB::select()->from('users')->where('username', '=', DB::expr(':username'))
     ->bind(':username', $username);
 ~~~
 
-Display the final SQL string of any query:
+De uiteindelijke SQL string tonen van eender welke query: 
 
 ~~~
 echo $query->compile(Database::instance());
-// Or use __toString() (this will always use the default database instance)
+// Of gebruik __toString() (dit zal altijd de standaard database instantie gebruiken)
 echo (string) $query;
 ~~~
 
-## Executing a query
+## Een Query uitvoeren
 
-Execute a SELECT query, returns a result iterator:
+Een SELECT query uitvoeren geeft een resultaten-array:
 
 ~~~
 $results = DB::query(Database::SELECT, 'SELECT id, username FROM users')->execute();
@@ -76,7 +76,7 @@ foreach ($results as $row)
 }
 ~~~
 
-Execute an INSERT query, returns the last insert ID and the number of rows created:
+Een INSERT query uitvoeren geeft het laatst toegevoegde ID en het aantal rijen dat toegevoerd is: 
 
 ~~~
 list($insert_id, $total_rows) = DB::query(Database::INSERT, 'INSERT INTO users (username, password) VALUES (:username, :password))
@@ -87,7 +87,7 @@ list($insert_id, $total_rows) = DB::query(Database::INSERT, 'INSERT INTO users (
 echo 'Inserted '.$total_rows.' with a starting id of '.$insert_id;
 ~~~
 
-All other types of queries:
+Alle andere types queries: 
 
 ~~~
 $total_rows = DB::query(Database::UPDATE, 'UPDATE users SET username = :username WHERE id = :id)
@@ -98,27 +98,27 @@ $total_rows = DB::query(Database::UPDATE, 'UPDATE users SET username = :username
 echo 'Updated '.$total_rows;
 ~~~
 
-Caching the results of a query:
+Het resultaat van een query cachen: 
 
 ~~~
 // Cache the result of this query for 60 seconds
 $result = $query->cached(60)->execute();
 ~~~
 
-Executing a query with a non-default database:
+Een query uitvoeren met een niet-standaard database: 
 
 ~~~
-// Pass the instance name
+// Geef de naam van de instantie
 $result = $query->execute('my-instance');
 
-// Or provide a instance object
+// Of geef een instantieobject
 $db = Database::instance('my-instance');
 $result = $query->execute($db);
 ~~~
 
-## Working with results
+## Werken met resultaten
 
-Looping through results:
+Door de resultaten lopen: 
 
 ~~~
 foreach ($result as $row)
@@ -127,19 +127,19 @@ foreach ($result as $row)
 }
 ~~~
 
-Getting a single column from a result:
+Eén enkele kolom van een resultaat opvragen: 
 
 ~~~
 $id = $result->get('id');
 ~~~
 
-Getting a result as an associative array:
+Een resultaat als een associatieve array krijgen: 
 
 ~~~
-// Get all results organized by (id => row)
+// Krijg al de resulaten georderd op (id=>rij)
 $list = $result->as_array('id');
 
-// Get all results as (id => username) and discard other data
+// Krijg al de resultaten als (id => username) en verwerp andere data
 $list = $result->as_array('id', 'username');
 ~~~
 
