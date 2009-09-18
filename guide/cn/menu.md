@@ -18,4 +18,4 @@
 4. [调试](debugging)
    * [错误句柄](debugging.errors)
    * [分析器](debugging.profiling)
-5. [API 浏览器Browser](api)
+5. [API 浏览器](api)
