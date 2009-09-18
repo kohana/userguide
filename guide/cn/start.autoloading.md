@@ -1,19 +1,19 @@
-# ×Ô¶¯¼ÓÔØ
+ï»¿# è‡ªåŠ¨åŠ è½½
 
-Kohana ĞèÒªÊ¹ÓÃ PHP ×ÔÉíµÄ[×Ô¶¯¼ÓÔØ](http://php.net/manual/language.oop5.autoload.php)¡£Õâ¸öÏû³ıÁË²»ÓÃµ÷ÓÃ [include](http://php.net/include) ºÍ [require](http://php.net/require) Ö®Ç°¾Í¿ÉÒÔÊ¹ÓÃÀàÎÄ¼ş¡£
+Kohana éœ€è¦ä½¿ç”¨ PHP è‡ªèº«çš„[è‡ªåŠ¨åŠ è½½](http://php.net/manual/language.oop5.autoload.php)ã€‚è¿™ä¸ªæ¶ˆé™¤äº†ä¸ç”¨è°ƒç”¨ [include](http://php.net/include) å’Œ [require](http://php.net/require) ä¹‹å‰å°±å¯ä»¥ä½¿ç”¨ç±»æ–‡ä»¶ã€‚
 
-ÀàÒ²¿ÉÒÔÍ¨¹ı [Kohana::auto_load] ·½·¨¼ÓÔØ£¬ÕâÊ¹µÃ´Ó¼òµ¥µÄÀàÃû³Æ×ª»»ÎªÎÄ¼şÃû£º
+ç±»ä¹Ÿå¯ä»¥é€šè¿‡ [Kohana::auto_load] æ–¹æ³•åŠ è½½ï¼Œè¿™ä½¿å¾—ä»ç®€å•çš„ç±»åç§°è½¬æ¢ä¸ºæ–‡ä»¶åï¼š
 
  Classes are loaded via the [Kohana::auto_load] method, which makes a simple conversion from class name to file name:
 
-1. Àà±ØĞë·ÅÖÃÔÚ[ÎÄ¼şÏµÍ³](start.filesystem)µÄ  `classes/` Ä¿Â¼
-2. ÈÎºÎÏÂ»®Ïß×Ö·û×ª»»ÎªĞ±Ïß
-2. ÎÄ¼şÃû±ØĞëÊÇĞ¡Ğ´µÄ
+1. ç±»å¿…é¡»æ”¾ç½®åœ¨[æ–‡ä»¶ç³»ç»Ÿ](start.filesystem)çš„  `classes/` ç›®å½•
+2. ä»»ä½•ä¸‹åˆ’çº¿å­—ç¬¦è½¬æ¢ä¸ºæ–œçº¿
+2. æ–‡ä»¶åå¿…é¡»æ˜¯å°å†™çš„
 
-µ±µ÷ÓÃÒ»¸öÉĞÎ´¼ÓÔØÀà£¨±ÈÈç£¬`Session_Cookie`£©£¬Í¨¹ıÊ¹ÓÃ [Kohana::find_file] ·½·¨¿ÉÒÔÈÃ Kohana ËÑË÷ÎÄ¼şÏµÍ³²éÕÒÃûÎª `classes/session/cookie.php` µÄÎÄ¼ş¡£
+å½“è°ƒç”¨ä¸€ä¸ªå°šæœªåŠ è½½ç±»ï¼ˆæ¯”å¦‚ï¼Œ`Session_Cookie`ï¼‰ï¼Œé€šè¿‡ä½¿ç”¨ [Kohana::find_file] æ–¹æ³•å¯ä»¥è®© Kohana æœç´¢æ–‡ä»¶ç³»ç»ŸæŸ¥æ‰¾åä¸º `classes/session/cookie.php` çš„æ–‡ä»¶ã€‚
 
-## ×Ô¶¯¼ÓÔØÆ÷
+## è‡ªåŠ¨åŠ è½½å™¨
 
-[!!] ÔÚ `application/bootstrap.php` ÅäÖÃÎÄ¼şÄ¬ÈÏÒÑ¾­¿ªÆôÁË×Ô¶¯¼ÓÔØÆ÷¡£
+[!!] åœ¨ `application/bootstrap.php` é…ç½®æ–‡ä»¶é»˜è®¤å·²ç»å¼€å¯äº†è‡ªåŠ¨åŠ è½½å™¨ã€‚
 
-Ê¹ÓÃ [spl_autoload_register](http://php.net/spl_autoload_register) Ìí¼Ó¶îÍâµÄÀà¼ÓÔØÆ÷¡£
+ä½¿ç”¨ [spl_autoload_register](http://php.net/spl_autoload_register) æ·»åŠ é¢å¤–çš„ç±»åŠ è½½å™¨ã€‚
