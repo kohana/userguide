@@ -1,12 +1,12 @@
 #Form
 
-All generated tags are XHTML.
+Alle tags worden gegenereerd als XHTML.
 
-##Functions
+##Functies
 
 ###::open() {#open}
 
-This returns an opening form tag. Pass <code>NULL</code>, the default, as the action and the current URI will be used. The second parameter specifies a list of additional attributes. This is optional.
+Dit returned een open-form tag. Indien je <code>NULL</code> doorgeeft als de action, de standaardwaarde, en de huidige URI zal gebruikt worden. De tweede parameter is een lijst van andere attributen en is optioneel.
 
     Form::open();             // <form method="[current URI]" accept-charset="[default charset]" method="post">
     Form::open('user/login'); // <form method="/user/login" accept-charset="[default charset]" method="post">
@@ -14,58 +14,58 @@ This returns an opening form tag. Pass <code>NULL</code>, the default, as the ac
         'method'=>'get'
     ));                       // <form method="[current URI]" accept-charset="[default charset]" method="get">
 
-The default charset is defined [Kohana::$charset](classes.kohana#$charset).
+De standaard charset is gedefiniëerd in [Kohana::$charset](classes.kohana#$charset).
 
 ###::close() {#close}
 
-This closes a form tag.
+Dit geeft de sluit-form tag.
 
     Form::close(); //</form>
 
 ###::input() {#input}
 
-This returns an input tag. By default, the type set to text.
+Dit geeft een input tag. Standaard is het type text.
 
     Form::input($name, $value = NULL, array $attributes = NULL);
 
 ###::hidden() {#hidden}
 
-This returns a hidden input field. It is identical to <code>input()</code> above except that it has the type set to hidden.
+Dit returned een hidden input field. Het is hetzelfde als <code>input()</code> behalve dat het type hidden is.
 
 ###::password() {#password}
 
-This returns a password input field. Its syntax is identical to <code>input()</code>.
+Dit returned een password input field. De syntax is hetzelfde als <code>input()</code>.
 
 ###::file() {#file}
 
-This returns an input field with its type set to file.
+Dit returned een input field met type file.
 
 ###::checkbox() {#checkbox}
 
-This returns an input field with its type set to checkbox.
+Dit returned een input field met type checkbox.
 
     Form::checkbox($name, $value = NULL, $checked = FALSE, array $attributes = NULL);
 
 ###::radio() {#radio}
 
-This returns an input field with its type set to radio. Its syntax is identical to <code>checkbox()</code> above.
+Dit returned een input field met type radio. De syntax is hetzelfde als <code>checkbox()</code>.
 
 ###::textarea() {#textarea}
 
-This returns a textarea tag.
+Dit returned een textarea.
 
     Form::textarea($name, $body = '', array $attributes = NULL, $double_encode = TRUE);
 
-If $double_encode is true then HTML entities that are already encoded (<code>&amp;amp;</code>) will be encoded again (<code>&amp;amp;amp;</code>).
+Als $double_encode true is, dan zullen HTML entiteiten die al geëncodeerd zijn (<code>&amp;amp;</code>) opnieuw worden geëncodeerd (<code>&amp;amp;amp;</code>).
 
 ###::select() {#select}
 
-This returns a select tag.
+Dit returned een select tag.
 
     Form::select($name, array $options = NULL, $selected = NULL, array $attributes = NULL);
 
-1. <code>$options</code> should, if there are options, be an array of <code>value => title</code> pairs. This may include another array of options to be inserted in an option group.
-2. <code>$selected</code> should contain the option name that should be selected by default.
+1. <code>$options</code> moet, indien er opties zijn, een array zijn van <code>value=>title</code>. Dit mag een andere array van opties inhouden die moeten worden geplaatst in een option group.
+2. <code>$selected</code> moet de optie naam inhouden die moet geselecteerd zijn als standaard.
 
 Here are two examples.
 
@@ -74,7 +74,7 @@ Here are two examples.
         'val_2'=>'Option 2'
     ), 'val_1');
     
-    /* Gives this:
+    /* Geeft:
     <select name="example">
     <option value="val_1" selected="selected">Option 1</option>
     <option value="val_2">Option 2</option>
@@ -90,7 +90,7 @@ Here are two examples.
         )
     ));
     
-    /* Gives this:
+    /* Geeft:
     <select name="example">
     <optgroup label="Group 1">
     <option value="val_1_1">Group 1, Option 1</option>
@@ -103,16 +103,16 @@ Here are two examples.
     
 ###::sumbit() {#submit}
 
-This is the same as <code>file()</code> but its type is submit.
+Dit is hetzelfde als <code>file()</code> met type submit.
 
 ###::button() {#button}
 
-This creates a button tag. The <code>$body</code> is *not* escaped for images etc.
+Dit maakt een button tag. De <code>$body</code> wordt *niet* gecontroleerd op afbeeldingen enz.
 
     Form::button($name, $body, array $attributes = NULL);
 
 ###::label() {#label}
 
-This creates a label tag <code>$input</code> should be the name of the corresponding <code>&lt;input&gt;</code>. If no text is specified then <code>$input</code> will be used and <code>_</code>s replaced with spaces.
+Dit maakt een label tag, <code>$input</code> moet de naam zijn van de bijhorende <code>&lt;input&gt;</code>. Als er geen tekst is gespecifiëerd dan zal <code>$input</code> gebruikt worden en <code>_</code>'s vervangen worden door spaties.
 
     Form::label($input, $text = NULL, array $attributes = NULL);
