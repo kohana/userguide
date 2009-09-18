@@ -5,7 +5,7 @@
    * [模型-视图-控制器](start.mvc)
    * [文件系统](start.filesystem)
    * [自动加载](start.autoloading)
-   * [Request Flow](start.flow)
+   * [请求流程](start.flow)
 2. [教程](tutorials)
    * [Hello, World](tutorials.helloworld)
    * [路由，URLs 和链接](tutorials.urls)
