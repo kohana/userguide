@@ -14,4 +14,4 @@ Cada aplicación sigue el siguiente proceso:
 
 La acción del controlador puede ser cambiada por el método [Controller::before] en base a los parámetros de la petición.
 
-[!!] Sin uso
+[!!] inacabado

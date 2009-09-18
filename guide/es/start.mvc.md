@@ -1,3 +1,3 @@
 # Modelo Vista Controlador
 
-[!!] Sin uso
+[!!] inacabado
