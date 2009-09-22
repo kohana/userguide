@@ -1,4 +1,4 @@
-﻿# 夸站脚本(XSS)安全  
+﻿# 跨站脚本(XSS)安全  
 
 首先大家先要了解什么是 [XSS](http://wikipedia.org/wiki/Cross-Site_Scripting) 之后才能更好的包含自己。XSS 只能在 HTML 代码中才能触发，可能通过表单的输入或者从数据库结果显示。任何全局变量包括客户信息都可能被感染。这包括 $_GET，$_POST 和 $_COOKIE 中的数据。
 
