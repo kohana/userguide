@@ -111,7 +111,7 @@
 
 ###::button() {#button}
 
-创建一个按钮。其中 <code>$body</code> *无法*为图像等进行转移。
+创建一个按钮。其中 <code>$body</code> *无法*为图像等进行转义。
 
     Form::button($name, $body, array $attributes = NULL);
 
