@@ -4,5 +4,6 @@ return array(
 	'translations' => array(
 		'en' => 'English',
 		'es' => 'Español',
+		'cn' =>	'Simplified Chinese'
 	),
 );
