@@ -102,3 +102,38 @@ In your models you define a `has_many` relationship to the other model but then 
 	);
 
 If you've set up kohana to use a table prefix then you don't need to worry about explicitly prefixing the table.
+
+## View Library
+
+There have been a few minor changes to the View library which are worth noting.
+
+In 2.3 views were rendered within the cope of the controller, allowing you to use `$this` as a reference to the controller within the view, this has been changed in 3.0. Views now render in an empty scope, if you need to use $this in your view you can bind a reference to it using [View::bind] - `$view->bind('this', $this)`
+
+It's worth noting though that this is *very* bad practice as it couples your view to the controller, preventing reuse.  The reccomended way is to pass the required variables to the view like so:
+
+	$view = View::factory('my/view');
+	
+	$view->variable = $this->property;
+	
+	// OR if you want to chain this
+	
+	$view
+		->set('variable', $this->property)
+		->set('another_variable', 42);
+		
+	// NOT Reccomended
+	$view->bind('this', $this);
+
+Because the view is rendered in an empty scope `Controller::_kohana_load_view` is now redundent.  If you need to modify the view before it's rendered (i.e. to add a generate a site-wide menu) you can use [Controller::after]
+
+	<?php
+	
+	Class Controller_Hello extends Controller_Template
+	{
+		function after()
+		{
+			$this->template->menu = '...';
+			
+			return parent::after();
+		}
+	}
