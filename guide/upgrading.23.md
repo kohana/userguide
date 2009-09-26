@@ -103,6 +103,51 @@ In your models you define a `has_many` relationship to the other model but then 
 
 If you've set up kohana to use a table prefix then you don't need to worry about explicitly prefixing the table.
 
+## Router Library
+
+In version 2 there was a Router library that handled the main request.  It let you define basic routes in a `config/routes.php` file and it would allow you to use custom regex for the routes, however it was fairly inflexible if you wanted to do something radical.
+
+## Routes
+
+The routing system (now reffered to as the request system) is a lot more flexible in 3.0.  Routes are now definied in the bootstrap file (`application/bootstrap.php`) and the module init.php (`modules/module/init.php`). (It's also worth noting that routes are evaluated in the order that they are defined).
+
+Instead of defining an array of routes you now create a new [Route] object for each route.  Unlike in the 2.x series there is no need to map one uri to another.  Instead you specify a pattern for a uri, using variables to mark the sections (i.e. controller, method, id).
+
+For example, in the old system these regexes
+
+	$config['([a-z]+)/?(\d+)/?([a-z]*)'] = '$1/$3/$1';
+
+Would map the uri controller/id/method to controller/method/id.  In 3.0 you'd use:
+
+	Route::set('reversed','(<controller>(/<id>(/<action>)))')
+			->defaults(array('controller' => 'posts', 'action' => 'index'));
+
+[!!] Each uri should have be given a unique name (in this case it's `reversed`), the reasoning behind this is explained in [the url tutorial](tutorials.urls).
+
+Angled brackets denote dynamic sections that should be parsed into variables; Rounded brackets mark an optional section which is not required. If you wanted to only match uris beggining with admin you could use:
+
+	Rouse::set('admin', 'admin(/<controller>(/<id>(/<action>)))');
+
+And if you wanted to force the user to specify a controller:
+
+	Route::set('admin', 'admin/<controller>(/<id>(/<action>))');
+	
+Also, Kohana does not use any 'default defaults'.  If you want kohana to assume your defaut action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then call [Route::regex] on the route. i.e.:
+
+	Route::set('reversed','(<controller>(/<id>(/<action>)))')
+			->defaults(array('controller' => 'posts', 'action' => 'index'))
+			->regex(array('id' => '[a-z_]+'));
+
+This would force the id value to consist of lowercase alpha characters & underscores.
+
+### Actions
+
+One more thing we need to mention is that methods in a controller that can be accessed via the url are now called "actions", and are prefixed with 'action_'. e.g. in the above example, if the user calls `admin/posts/1/edit` then the action is `edit` but the method called on the controller will be `action_edit`.  See [the url tutorial](tutorials.urls) for more info.
+
+### Before, During and After
+
+
+
 ## View Library
 
 There have been a few minor changes to the View library which are worth noting.
