@@ -144,10 +144,6 @@ This would force the id value to consist of lowercase alpha characters & undersc
 
 One more thing we need to mention is that methods in a controller that can be accessed via the url are now called "actions", and are prefixed with 'action_'. e.g. in the above example, if the user calls `admin/posts/1/edit` then the action is `edit` but the method called on the controller will be `action_edit`.  See [the url tutorial](tutorials.urls) for more info.
 
-### Before, During and After
-
-
-
 ## View Library
 
 There have been a few minor changes to the View library which are worth noting.
