@@ -17,5 +17,5 @@
    * [Bases de Datos](security.database)
 4. [Depuración](debugging)
    * [Gestión de Errores](debugging.errors)
-   * [Profiling](debugging.profiling)
+   * [Análisis de Rendimiento](debugging.profiling)
 5. [Explorar API](api)
