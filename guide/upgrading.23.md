@@ -62,11 +62,9 @@ In 2.3 if you wanted to iterate a model's related objects you could do:
 
 However, in the new system this won't work.   In version 2.3 any queries generated using the Database library were generated in a global scope, meaning that you couldn't try and build two queries simultaneously.  Take for example:
 
-	$users 	= ORM::factory('user')
-				->where('activated', TRUE)
-				->in('id', ORM::factory('comment', 33)->replies->
+# TODO: NEED A DECENT EXAMPLE!!!!
 	
-This query would fail as the second query would 'inherit' the conditions of the first one, thus causing pandemonia.
+This query would fail as the second, inner query would 'inherit' the conditions of the first one, thus causing pandemonia.
 In v3.0 this has been fixed by creating each query in its own scope, however this also means that some things won't work quite as expected.  Take for example:
 
 	foreach(ORM::factory('user', 3)->where('post_date', '>', time() - (3600 * 24))->posts as $post)
