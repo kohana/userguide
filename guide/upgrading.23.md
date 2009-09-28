@@ -48,6 +48,12 @@ In 3.0 you can duplicate this functionality using [Arr::get]:
 
 There have been quite a few major changes in ORM since 2.3, here's a list of the more common upgrading problems.
 
+### Member variables
+
+All member variables are now prefixed with an underscore (_) and are no longer accessible via __get(). Instead you have to call a function with the name of the property, minus the underscore.
+
+For instance, what was once `loaded` in 2.3 is now `_loaded` & can be accessed from outside the class via `$model->loaded()`.
+
 ### Relationships
 
 In 2.3 if you wanted to iterate a model's related objects you could do:
@@ -92,7 +98,7 @@ In 2.3 you could specify `has_and_belongs_to_many` relationships.  In 3.0 this f
 
 In your models you define a `has_many` relationship to the other model but then you add a `'through' => 'table'` attribute, where `'table'` is the name of your through table. For example (in the context of posts<>categories):
 
-	$has_many = array
+	$_has_many = array
 	(
 		'categories' => 	array
 							(
@@ -102,6 +108,73 @@ In your models you define a `has_many` relationship to the other model but then 
 	);
 
 If you've set up kohana to use a table prefix then you don't need to worry about explicitly prefixing the table.
+
+### Foreign keys
+
+If you wanted to override a foreign key in 2.x's ORM you had to specify the relationship it belonged to, and your new foreign key in the member variable `$foreign_keys`.
+
+In 3.0 you now define a `foreign_key` key in the relationship's definition, like so:
+
+	Class Model_Post extends ORM
+	{
+		$_belongs_to = 	array
+						(
+							'author' => array
+										(
+											'model' 		=> 'user',
+											'foreign_key' 	=> 'user_id',
+										),
+						);
+	}
+
+In this example we should then have a `user_id` field in our posts table.
+
+
+
+In has_many relationships the `far_key` is the field in the through table which links it to the foreign table & the foreign key is the field in the through table which links "this" model's table to the through table.
+
+Consider the following setup, "Posts" have and belong to many "Categories" through `posts_sections`.
+
+| categories | posts_sections 	| posts   |
+|------------|------------------|---------|
+| id		 | section_id		| id	  |
+| name		 | post_id			| title   |
+|			 | 					| content |
+
+		Class Model_Post extends ORM
+		{
+			protected $_has_many = 	array(
+										'sections' =>	array(
+															'model' 	=> 'category',
+															'through'	=> 'posts_sections',
+															'far_key'	=> 'section_id',
+														),
+									);
+		}
+		
+		Class Model_Category extends ORM
+		{
+			protected $_has_many = 	array (
+										'posts'		=>	array(
+															'model'			=> 'post',
+															'through'		=> 'posts_sections',
+															'foreign_key'	=> 'section_id',
+														),
+									);
+		}
+
+
+Obviously the aliasing setup here is a little crazy, but it's a good example of how the foreign/far key system works.
+
+### ORM Iterator
+
+It's also worth noting that ORM_Iterator has now been refactored into Database_Result.  
+
+If you need to get an array of ORM objects with they key as the object's pk, you need to call [Database_Result::as_array], e.g.
+
+		$objects = ORM::factory('user')->find_all()->as_array('id');
+
+Where id is the user table's primary key.
 
 ## Router Library
 
@@ -132,11 +205,10 @@ And if you wanted to force the user to specify a controller:
 
 	Route::set('admin', 'admin/<controller>(/<id>(/<action>))');
 	
-Also, Kohana does not use any 'default defaults'.  If you want kohana to assume your defaut action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then call [Route::regex] on the route. i.e.:
+Also, Kohana does not use any 'default defaults'.  If you want kohana to assume your defaut action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then pass an array of segment => regex. i.e.:
 
-	Route::set('reversed','(<controller>(/<id>(/<action>)))')
+	Route::set('reversed', '(<controller>(/<id>(/<action>)))', array('id' => '[a-z_]+'))
 			->defaults(array('controller' => 'posts', 'action' => 'index'))
-			->regex(array('id' => '[a-z_]+'));
 
 This would force the id value to consist of lowercase alpha characters & underscores.
 
