@@ -96,7 +96,7 @@ class Kohana_Kodoc {
 				$class = substr($name, 8, -(strlen(EXT)));
 
 				// Convert slashes to underscores
-				$class = str_replace('/', '_', strtolower($class));
+				$class = str_replace(DIRECTORY_SEPARATOR, '_', strtolower($class));
 
 				$classes[$class] = $class;
 			}
