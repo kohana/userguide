@@ -72,7 +72,7 @@ Lets change our original controller slightly -
 
 Now lets try running our code...
 
-![Where's our hello, world gone?](img/hello_world_2_error.png "Where's our hello, world gone?")
+<div>{{userguide/examples/hello_world_error}}</div>
 
 For some reason kohana's thrown a wobbly and isn't showing our amazing message.
 
