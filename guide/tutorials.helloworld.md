@@ -26,7 +26,7 @@ Lets see what's going on here:
 :	You should recognise the first tag as an opening php tag (if you don't you should probably [learn php](http://php.net)).  What follows is a small check that makes sure that this file is being included by Kohana.  It stops people from accessing files directly from the url.
 
 `Class Controller_Hello extends Controller`
-:	This line declares our controller,  each controller class has to be prefixed with `Controller_` and an underscore deliminated path to the folder the controller is in (see [Conventions and styles](start.conventions) for more info).  Each controller should also extends the base `Controller` class which provides a standard structure for controllers
+:	This line declares our controller,  each controller class has to be prefixed with `Controller_` and an underscore delimited path to the folder the controller is in (see [Conventions and styles](start.conventions) for more info).  Each controller should also extends the base `Controller` class which provides a standard structure for controllers
 
 
 `function action_index()`
@@ -62,13 +62,13 @@ Lets change our original controller slightly -
 	}
 
 `extends Controller_Template`
-:	We're now extending the template controller,  it makes it more conveinient to use views within our controller.
+:	We're now extending the template controller,  it makes it more convenient to use views within our controller.
 
 `public $template = 'site';`
 :	The template controller needs to know what template you want to use. It'll automatically load the view definied in this variable and assign the view object to it.
 
 `$this->template->message = 'hello, world!';`
-:	`$this->template` is a reference to the view object for our site template.  What we're doing here is assigning a variable called "body" to the view with value of "hello, world!"
+:	`$this->template` is a reference to the view object for our site template.  What we're doing here is assigning a variable called "message", with a value of "hello, world!" to the view
 
 Now lets try running our code...
 
