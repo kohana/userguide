@@ -65,7 +65,7 @@ class Kohana_Kodoc {
 			$package = HTML::anchor($route->uri(array('class' => $package)), $package);
 
 			$output[] =
-				"<li>$package\n\t<ul><li>".
+				"<li><strong>$package</strong>\n\t<ul><li>".
 				implode("</li><li>", $list).
 				"</li></ul>\n</li>";
 		}
