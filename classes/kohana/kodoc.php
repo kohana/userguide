@@ -65,7 +65,7 @@ class Kohana_Kodoc {
 			$package = HTML::anchor($route->uri(array('class' => $package)), $package);
 
 			$output[] =
-				"<li>$package\n\t<ul><li>".
+				"<li><strong>$package</strong>\n\t<ul><li>".
 				implode("</li><li>", $list).
 				"</li></ul>\n</li>";
 		}
@@ -96,7 +96,7 @@ class Kohana_Kodoc {
 				$class = substr($name, 8, -(strlen(EXT)));
 
 				// Convert slashes to underscores
-				$class = str_replace('/', '_', strtolower($class));
+				$class = str_replace(DIRECTORY_SEPARATOR, '_', strtolower($class));
 
 				$classes[$class] = $class;
 			}
