@@ -36,7 +36,7 @@ class Controller_Userguide extends Controller_Template {
 			}
 
 			// Set the language
-			$this->_lang = Cookie::get('userguide_language', 'en');
+			I18n::$lang = $this->_lang = Cookie::get('userguide_language', 'en-us');
 
 			// Use customized Markdown parser
 			define('MARKDOWN_PARSER_CLASS', 'Kodoc_Markdown');
