@@ -1,7 +1,7 @@
-# ½Ì³Ì
+ï»¿# æ•™ç¨‹
 
 [!!] stub
 
 - [Hello, World](tutorials.helloworld)
-- [Â·ÓÉ£¬URLs ºÍÁ´½Ó](tutorials.urls)
-- [Êı¾İ¿â](tutorials.databases)
+- [è·¯ç”±ï¼ŒURLs å’Œé“¾æ¥](tutorials.urls)
+- [æ•°æ®åº“](tutorials.databases)
