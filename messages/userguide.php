@@ -1,9 +1,9 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+﻿<?php defined('SYSPATH') or die('No direct script access.');
 
 return array(
 	'translations' => array(
-		'en' => 'English',
+		'en-us' => 'English',
 		'es' => 'Español',
-		'cn' =>	'Simplified Chinese'
+		'zh-cn' =>	'简体中文',
 	),
 );
