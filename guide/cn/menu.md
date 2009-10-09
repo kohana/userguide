@@ -18,4 +18,6 @@
 4. [调试](debugging)
    * [错误句柄](debugging.errors)
    * [分析器](debugging.profiling)
+5. **[升级](upgrading)**
+   - [从 2.3 升级](upgrading.23)
 5. [API 浏览器](api)
