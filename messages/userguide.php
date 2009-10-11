@@ -2,8 +2,8 @@
 
 return array(
 	'translations' => array(
-		'en' => 'English',
-		'es' => 'Español',
+		'en-us' => 'English',
+		'es-es' => 'Español',
 		'cn' =>	'Simplified Chinese'
 	),
 );
