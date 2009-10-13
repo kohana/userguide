@@ -3,7 +3,7 @@
 return array(
 	'translations' => array(
 		'en-us' => 'English',
-		'es' => 'Español',
-		'zh-cn' =>	'简体中文',
+		'es-es' => 'Español',
+		'zh-cn' => '简体中文',
 	),
 );

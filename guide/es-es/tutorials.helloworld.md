@@ -72,7 +72,7 @@ Cambiamos ligeramente el controlador original -
 
 Ahora intentamos ejecutar nuestro código...
 
-![¿Dónde está nuestro hola, mundo?](img/hello_world_2_error.png "¿Dónde está nuestro hola, mundo?")
+<div>{{userguide/examples/hello_world_error}}</div>
 
 Por alguna razón kohana lanza una excepción y no muestra nuestro sorprendente mensaje.
 
