@@ -2,13 +2,21 @@
 
 Most of Kohana v3 works very differently from Kohana 2.3, here's a list of common gotchas & tips for upgrading
 
+## Naming conventions
+
+The 2.x series differentiated between different 'types' of class (i.e. controller, model etc.) using suffixes.  Folders within model / controller folders didn't have any bearing on the name of the class.
+
+In 3.0 this approach has been scrapped in favour of the Zend framework filesystem conventions, where the name of the class is a path to the class itself, separated by underscores instead of slashes (i.e. `/some/class/file.php` becomes `Some_Class_File`)  
+
+See the [conventions documentation](start.conventions) for more information
+
 ## Input Library
 
 The Input Library has been removed from 3.0 in favour of just using $_GET and $_POST. 
 
 ### XSS Protection
 
-If you need to XSS clean some user input you can use [Security::xss_clean] to sanatise it, like so:
+If you need to XSS clean some user input you can use [Security::xss_clean] to sanitise it, like so:
 
 	$_POST['description'] = security::xss_clean($_POST['description']);
 
@@ -180,7 +188,7 @@ In version 2 there was a Router library that handled the main request.  It let y
 
 ## Routes
 
-The routing system (now reffered to as the request system) is a lot more flexible in 3.0.  Routes are now definied in the bootstrap file (`application/bootstrap.php`) and the module init.php (`modules/module/init.php`). (It's also worth noting that routes are evaluated in the order that they are defined).
+The routing system (now refered to as the request system) is a lot more flexible in 3.0.  Routes are now defined in the bootstrap file (`application/bootstrap.php`) and the module init.php (`modules/module/init.php`). (It's also worth noting that routes are evaluated in the order that they are defined).
 
 Instead of defining an array of routes you now create a new [Route] object for each route.  Unlike in the 2.x series there is no need to map one uri to another.  Instead you specify a pattern for a uri, using variables to mark the sections (i.e. controller, method, id).
 
@@ -195,7 +203,7 @@ Would map the uri controller/id/method to controller/method/id.  In 3.0 you'd us
 
 [!!] Each uri should have be given a unique name (in this case it's `reversed`), the reasoning behind this is explained in [the url tutorial](tutorials.urls).
 
-Angled brackets denote dynamic sections that should be parsed into variables; Rounded brackets mark an optional section which is not required. If you wanted to only match uris beggining with admin you could use:
+Angled brackets denote dynamic sections that should be parsed into variables; Rounded brackets mark an optional section which is not required. If you wanted to only match uris begining with admin you could use:
 
 	Rouse::set('admin', 'admin(/<controller>(/<id>(/<action>)))');
 
@@ -203,7 +211,7 @@ And if you wanted to force the user to specify a controller:
 
 	Route::set('admin', 'admin/<controller>(/<id>(/<action>))');
 	
-Also, Kohana does not use any 'default defaults'.  If you want kohana to assume your defaut action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then pass an array of segment => regex. i.e.:
+Also, Kohana does not use any 'default defaults'.  If you want kohana to assume your default action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then pass an array of segment => regex. i.e.:
 
 	Route::set('reversed', '(<controller>(/<id>(/<action>)))', array('id' => '[a-z_]+'))
 			->defaults(array('controller' => 'posts', 'action' => 'index'))
@@ -213,6 +221,40 @@ This would force the id value to consist of lowercase alpha characters & undersc
 ### Actions
 
 One more thing we need to mention is that methods in a controller that can be accessed via the url are now called "actions", and are prefixed with 'action_'. e.g. in the above example, if the user calls `admin/posts/1/edit` then the action is `edit` but the method called on the controller will be `action_edit`.  See [the url tutorial](tutorials.urls) for more info.
+
+## Sessions
+
+There are no longer any Session::set_flash(), Session::keep_flash() or Session::expire_flash() methods, instead you must use [Session::get_once].
+
+## URL Helper
+
+Only a few things have changed with the url helper - `url::redirect()` has been moved into `$this->request->redirect()` (within controllers) / `Request::instance()->redirect()`
+
+`url::current` has now been replaced with `$this->request->uri()` 
+
+## Valid / Validation
+
+These two classes have been merged into a single class called `Validate`.
+
+The syntax has also changed a little for validating arrays:
+
+	$validate = new Validate($_POST);
+	
+	// Apply a filter to all items in the arrays
+	$validate->filter(TRUE, 'trim');
+	
+	// To specify rules individually use rule()
+	$validate
+		->rule('field', 'not_empty')
+		->rule('field', 'matches', array('another_field'));
+	
+	// To set multiple rules for a field use rules(), passing an array of rules => params as the second argument
+	$validate->rules('field', 	array(
+									'not_empty' => NULL,
+									'matches'	=> array('another_field')
+								));
+
+The 'required' rule has also been renamed to 'not_empty' for clarity's sake.
 
 ## View Library
 
@@ -232,10 +274,10 @@ It's worth noting though that this is *very* bad practice as it couples your vie
 		->set('variable', $this->property)
 		->set('another_variable', 42);
 		
-	// NOT Reccomended
+	// NOT Recommended
 	$view->bind('this', $this);
 
-Because the view is rendered in an empty scope `Controller::_kohana_load_view` is now redundent.  If you need to modify the view before it's rendered (i.e. to add a generate a site-wide menu) you can use [Controller::after]
+Because the view is rendered in an empty scope `Controller::_kohana_load_view` is now redundant.  If you need to modify the view before it's rendered (i.e. to add a generate a site-wide menu) you can use [Controller::after]
 
 	<?php
 	
