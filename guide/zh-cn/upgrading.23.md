@@ -7,7 +7,7 @@ Kohana v3 大部分功能都不同于 Kohana 2.3版本，下面列出了一系�
 在 2.x 体系中不同的类的类型（比如 controller，model 等）使用后缀来加以区分。文件夹在模型/控制器目录下没有任何类名的关系。
 
 在 3.0 版本中废弃了上面的形式转而使用 Zend framework 的文件体系的公约，也就是类名包含类名和其路径，之间是有下划线分割而不是斜杠符（比如 `/some/class/file.php` 变为了 `Some_Class_File`） 
-详情请参见 [conventions documentation](start.conventions)
+详情请参见 [公约文档](start.conventions)
 
 ## Input 库
 
@@ -78,7 +78,7 @@ Input 库有一个最大的方便之处在于如果你试图从一个超全域�
 		echo $post->title;
 	}
 
-[!!] (相关新的查询语法请查看 [the Database tutorial](tutorials.databases))
+[!!] (相关新的查询语法请查看 [Database 教程](tutorials.databases))
 
 在 2.3 版本中你希望它可以返回用户为 3 且 `post_date` 在最近 24 小时内发布的所有 posts 的迭代器，然而相反的，它将适用 where 语句到 user 模型中并返回带有指定加入语句的 'Model_Post' 对象。
 
@@ -201,20 +201,20 @@ ORM_Iterator 也是值得注意的改动，它已经融合到了 Database_Result
 
 [!!] 每个 uri 都必须指定一个独一无二的名称（这里定义的是 `reversed`），其背后的原因是解释在 [URL 教程](tutorials.urls) 之中。
 
-Angled brackets denote dynamic sections that should be parsed into variables; Rounded brackets mark an optional section which is not required. If you wanted to only match uris beggining with admin you could use:
+尖括号的内容会当作动态解析部分；圆括号的内容则会当作是可选或不必要的字段。如果你只是想匹配 uris 的开头是 admin，你只需要：
 
 	Rouse::set('admin', 'admin(/<controller>(/<id>(/<action>)))');
 
-And if you wanted to force the user to specify a controller:
+但，如果你想用户必须指定一个控制器：
 
 	Route::set('admin', 'admin/<controller>(/<id>(/<action>))');
 	
-Also, Kohana does not use any 'default defaults'.  If you want kohana to assume your defaut action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then pass an array of segment => regex. i.e.:
+同样，Kohana 不使用任何的 '默认的默认项'。如果你想让 Kohana 去设置默认 action 为 'index'，你只需要使用 [Route::defaults] 设置即可！如果你需要为 uri 字段自定义正则表达式，你只需要以 segment => regex 传递数组，比如：
 
 	Route::set('reversed', '(<controller>(/<id>(/<action>)))', array('id' => '[a-z_]+'))
 			->defaults(array('controller' => 'posts', 'action' => 'index'))
 
-This would force the id value to consist of lowercase alpha characters & underscores.
+这会迫使 id 的值必须全部是小写字母或者是数字，下划线。
 
 ### Actions
 
