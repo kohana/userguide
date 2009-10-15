@@ -2,7 +2,7 @@
 
 return array(
 	'translations' => array(
-		'en-us' => 'English',
+		'en' => 'English',
 		'es-es' => 'Español',
 		'zh-cn' => '简体中文',
 	),

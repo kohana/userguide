@@ -2,6 +2,14 @@
 
 Kohana v3 大部分功能都不同于 Kohana 2.3版本，下面列出了一系列的升级建议：
 
+## Naming conventions
+
+The 2.x series differentiated between different 'types' of class (i.e. controller, model etc.) using suffixes.  Folders within model / controller folders didn't have any bearing on the name of the class.
+
+In 3.0 this approach has been scrapped in favour of the Zend framework filesystem conventions, where the name of the class is a path to the class itself, separated by underscores instead of slashes (i.e. `/some/class/file.php` becomes `Some_Class_File`)  
+
+See the [conventions documentation](start.conventions) for more information
+
 ## Input 库
 
 Input 库已经从 3.0 版本中移除，请使用 $_GET 和 $_POST 获取。
@@ -212,6 +220,40 @@ This would force the id value to consist of lowercase alpha characters & undersc
 ### Actions
 
 还有一点我们必须要提到的，如果控制器中的方法可以通过网址访问，现在被称为 "actions"，且其前缀为 'action_'。比如，在上面的例中，如果用户访问 `admin/posts/1/edit`，那么 "actions" 就是 'edit' 而且方法在控制器将会是 `action_edit`。详情请参见 [URL 教程](tutorials.urls)
+
+## Sessions
+
+There are no longer any Session::set_flash(), Session::keep_flash() or Session::expire_flash() methods, instead you must use [Session::get_once].
+
+## URL Helper
+
+Only a few things have changed with the url helper - `url::redirect()` has been moved into `$this->request->redirect()` (within controllers) / `Request::instance()->redirect()`
+
+`url::current` has now been replaced with `$this->request->uri()` 
+
+## Valid / Validation
+
+These two classes have been merged into a single class called `Validate`.
+
+The syntax has also changed a little for validating arrays:
+
+	$validate = new Validate($_POST);
+	
+	// Apply a filter to all items in the arrays
+	$validate->filter(TRUE, 'trim');
+	
+	// To specify rules individually use rule()
+	$validate
+		->rule('field', 'not_empty')
+		->rule('field', 'matches', array('another_field'));
+	
+	// To set multiple rules for a field use rules(), passing an array of rules => params as the second argument
+	$validate->rules('field', 	array(
+									'not_empty' => NULL,
+									'matches'	=> array('another_field')
+								));
+
+The 'required' rule has also been renamed to 'not_empty' for clarity's sake.
 
 ## View 库
 
