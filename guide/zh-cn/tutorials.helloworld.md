@@ -1,4 +1,4 @@
-﻿# Hello, World
+# Hello, World
 
 差不多每个框架提供的教程实例都会包括 Hello，World 这样的例子，于是我们也遵循这样的传统!
 

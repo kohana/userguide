@@ -1,4 +1,4 @@
-﻿# 错误/异常句柄
+# 错误/异常句柄
 
 Kohana 同时提供了异常句柄和错误句柄使用 PHP 的 [ErrorException](http://php.net/errorexception) 类转换错误为异常。关于错误的详情和通过句柄显示应用程序的内部状态：
 

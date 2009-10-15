@@ -1,4 +1,4 @@
-﻿1. **[入门指南](start)**
+1. **[入门指南](start)**
    - [公约和样式](start.conventions)
    - [安装](start.installation)
    - [配置](start.configuration)

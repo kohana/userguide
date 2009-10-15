@@ -1,4 +1,4 @@
-﻿# 自动加载
+# 自动加载
 
 Kohana 需要使用 PHP 自身的[自动加载](http://php.net/manual/language.oop5.autoload.php)。这个消除了不用调用 [include](http://php.net/include) 和 [require](http://php.net/require) 之前就可以使用类文件。
 
