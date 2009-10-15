@@ -2,13 +2,12 @@
 
 Kohana v3 大部分功能都不同于 Kohana 2.3版本，下面列出了一系列的升级建议：
 
-## Naming conventions
+## 命名公约
 
-The 2.x series differentiated between different 'types' of class (i.e. controller, model etc.) using suffixes.  Folders within model / controller folders didn't have any bearing on the name of the class.
+在 2.x 体系中不同的类的类型（比如 controller，model 等）使用后缀来加以区分。文件夹在模型/控制器目录下没有任何类名的关系。
 
-In 3.0 this approach has been scrapped in favour of the Zend framework filesystem conventions, where the name of the class is a path to the class itself, separated by underscores instead of slashes (i.e. `/some/class/file.php` becomes `Some_Class_File`)  
-
-See the [conventions documentation](start.conventions) for more information
+在 3.0 版本中废弃了上面的形式转而使用 Zend framework 的文件体系的公约，也就是类名包含类名和其路径，之间是有下划线分割而不是斜杠符（比如 `/some/class/file.php` 变为了 `Some_Class_File`） 
+详情请参见 [conventions documentation](start.conventions)
 
 ## Input 库
 
@@ -223,37 +222,37 @@ This would force the id value to consist of lowercase alpha characters & undersc
 
 ## Sessions
 
-There are no longer any Session::set_flash(), Session::keep_flash() or Session::expire_flash() methods, instead you must use [Session::get_once].
+以下方法不再存在：Session::set_flash()，Session::keep_flash() 和 Session::expire_flash() 方法，替代这些废弃方法的函数你可以使用 [Session::get_once]。
 
-## URL Helper
+## URL 辅助函数
 
-Only a few things have changed with the url helper - `url::redirect()` has been moved into `$this->request->redirect()` (within controllers) / `Request::instance()->redirect()`
+URL 辅助函数仅做了略微的改动 - `url::redirect()` 方法转移到了 `$this->request->redirect()` 之中（包含控制器）/ `Request::instance()->redirect()`
 
-`url::current` has now been replaced with `$this->request->uri()` 
+`url::current` 现在替换为了 `$this->request->uri()` 
 
 ## Valid / Validation
 
-These two classes have been merged into a single class called `Validate`.
+这恋歌类现在已经合并为一个类并命名为 `Validate`.
 
-The syntax has also changed a little for validating arrays:
+对于校验数组的语法也有些改动：
 
 	$validate = new Validate($_POST);
 	
-	// Apply a filter to all items in the arrays
+	// 应用一个过滤器到所有数组项中
 	$validate->filter(TRUE, 'trim');
 	
-	// To specify rules individually use rule()
+	// 定义规则使用 rule() 方法
 	$validate
 		->rule('field', 'not_empty')
 		->rule('field', 'matches', array('another_field'));
 	
-	// To set multiple rules for a field use rules(), passing an array of rules => params as the second argument
+	// 为单字段设置多个规则也使用 rules() 方法，以 rules => params 的数组方式作为第二参数
 	$validate->rules('field', 	array(
 									'not_empty' => NULL,
 									'matches'	=> array('another_field')
 								));
 
-The 'required' rule has also been renamed to 'not_empty' for clarity's sake.
+为保证定义明确，其中 'required' 规则现已经改名为 'not_empty'。
 
 ## View 库
 
