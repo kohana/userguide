@@ -2,6 +2,7 @@
 
 return array
 (
-	'lang'		=> 'zh-cn',
+	// Default the userguide language.
+	'lang'		=> 'en-us',
 );
 
