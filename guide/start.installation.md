@@ -11,7 +11,7 @@
 
 [!!] Depending on your platform, the installation's subdirs may have lost their permissions thanks to zip extraction. Chmod them all to 755 by running `find . -type d -exec chmod 0755 {} \;` from the root of your Kohana installation.
 
-You should see the installation page. If it reports any errors, you will need to correct them before contining.
+You should see the installation page. If it reports any errors, you will need to correct them before continuing.
 
 ![Install Page](img/install.png "Example of install page")
 

@@ -19,8 +19,8 @@ All class file names and directory names are lowercase.
 
 All classes should be in the `classes` directory. This may be at any level in the [cascading filesystem](start.filesystem).
 
-Kohana 3 does not differentioate between *types* of class in the same way that Kohana 2.x and some other frameworks do. There is no distinction between a 'helper' or a 'library' class - in Kohana 3 any class can implement whater interface it like whether it be entirely static (helper-like), or instantiable, or a mixture (e.g. singleton).
+Kohana 3 does not differentiate between *types* of class in the same way that Kohana 2.x and some other frameworks do. There is no distinction between a 'helper' or a 'library' class – in Kohana 3 any class can implement whatever interface you like whether it be entirely static (helper-like), or instantiable, or a mixture (e.g. singleton).
 
 ## Code Style
 
-It is encouraged to follow Kohana's coding style. This uses [BSD/Allman style](http://en.wikipedia.org/wiki/Indent_style#BSD.2FAllman_style) bracing. (There is a more [thorough discription](http://dev.kohanaphp.com/wiki/kohana2/CodingStyle) of Kohana's prefered style)
+It is encouraged to follow Kohana's coding style. This uses [BSD/Allman style](http://en.wikipedia.org/wiki/Indent_style#BSD.2FAllman_style) bracing. (There is a more [thorough description](http://dev.kohanaphp.com/wiki/kohana2/CodingStyle) of Kohana's preferred style.)
