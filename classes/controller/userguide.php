@@ -18,6 +18,9 @@ class Controller_Userguide extends Controller_Template {
 		}
 		else
 		{
+			// Set the default language
+			$lang = Kohana::config('userguide.lang');
+			
 			if (isset($_GET['lang']))
 			{
 				$lang = $_GET['lang'];
@@ -36,7 +39,7 @@ class Controller_Userguide extends Controller_Template {
 			}
 
 			// Set the language
-			I18n::$lang = $this->_lang = Cookie::get('userguide_language', 'en-us');
+			I18n::$lang = $this->_lang = Cookie::get('userguide_language', $lang);
 
 			// Use customized Markdown parser
 			define('MARKDOWN_PARSER_CLASS', 'Kodoc_Markdown');
