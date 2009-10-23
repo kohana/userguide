@@ -1,11 +1,11 @@
 1. **[Первые шаги](start)**
-   - [Именование и стили](start.conventions)
+   - [Соглашения и стили](start.conventions)
    - [Установка](start.installation)
    - [Настройка](start.configuration)
-   - [Модель Представление Контроллер](start.mvc)
+   - [Модель-Представление-Контроллер](start.mvc)
    - [Файловая система](start.filesystem)
    - [Автозагрузка](start.autoloading)
-   - [Поток запросов](start.flow)
+   - [Порядок выполнения](start.flow)
 2. **[Обучение](tutorials)**
    - [Hello, World](tutorials.helloworld)
    - [Маршруты, URL и ссылки](tutorials.urls)
