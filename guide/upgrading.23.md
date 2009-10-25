@@ -1,6 +1,6 @@
 # Upgrading from 2.3.x
 
-Most of Kohana v3 works very differently from Kohana 2.3, here's a list of common gotchas & tips for upgrading
+Most of Kohana v3 works very differently from Kohana 2.3, here's a list of common gotchas and tips for upgrading.
 
 ## Naming conventions
 
@@ -12,7 +12,7 @@ See the [conventions documentation](start.conventions) for more information
 
 ## Input Library
 
-The Input Library has been removed from 3.0 in favour of just using $_GET and $_POST. 
+The Input Library has been removed from 3.0 in favour of just using `$_GET` and `$_POST`. 
 
 ### XSS Protection
 
@@ -58,9 +58,9 @@ There have been quite a few major changes in ORM since 2.3, here's a list of the
 
 ### Member variables
 
-All member variables are now prefixed with an underscore (_) and are no longer accessible via __get(). Instead you have to call a function with the name of the property, minus the underscore.
+All member variables are now prefixed with an underscore (_) and are no longer accessible via `__get()`. Instead you have to call a function with the name of the property, minus the underscore.
 
-For instance, what was once `loaded` in 2.3 is now `_loaded` & can be accessed from outside the class via `$model->loaded()`.
+For instance, what was once `loaded` in 2.3 is now `_loaded` and can be accessed from outside the class via `$model->loaded()`.
 
 ### Relationships
 
@@ -91,7 +91,7 @@ To achieve the same effect as in 2.3 you need to rearrange the structure slightl
 		echo $post->title;
 	}
 
-This also applies to has_one relationships:
+This also applies to `has_one` relationships:
 
 	// Incorrect
 	$user = ORM::factory('post', 42)->author;
@@ -137,7 +137,7 @@ In this example we should then have a `user_id` field in our posts table.
 
 
 
-In has_many relationships the `far_key` is the field in the through table which links it to the foreign table & the foreign key is the field in the through table which links "this" model's table to the through table.
+In has_many relationships the `far_key` is the field in the through table which links it to the foreign table and the foreign key is the field in the through table which links "this" model's table to the through table.
 
 Consider the following setup, "Posts" have and belong to many "Categories" through `posts_sections`.
 
@@ -174,13 +174,13 @@ Obviously the aliasing setup here is a little crazy, but it's a good example of 
 
 ### ORM Iterator
 
-It's also worth noting that ORM_Iterator has now been refactored into Database_Result.  
+It's also worth noting that `ORM_Iterator` has now been refactored into `Database_Result`.
 
 If you need to get an array of ORM objects with they key as the object's pk, you need to call [Database_Result::as_array], e.g.
 
 		$objects = ORM::factory('user')->find_all()->as_array('id');
 
-Where id is the user table's primary key.
+Where `id` is the user table's primary key.
 
 ## Router Library
 
@@ -192,18 +192,18 @@ The routing system (now refered to as the request system) is a lot more flexible
 
 Instead of defining an array of routes you now create a new [Route] object for each route.  Unlike in the 2.x series there is no need to map one uri to another.  Instead you specify a pattern for a uri, using variables to mark the sections (i.e. controller, method, id).
 
-For example, in the old system these regexes
+For example, in the old system these regexes:
 
 	$config['([a-z]+)/?(\d+)/?([a-z]*)'] = '$1/$3/$1';
 
-Would map the uri controller/id/method to controller/method/id.  In 3.0 you'd use:
+Would map the uri `controller/id/method` to `controller/method/id`.  In 3.0 you'd use:
 
 	Route::set('reversed','(<controller>(/<id>(/<action>)))')
 			->defaults(array('controller' => 'posts', 'action' => 'index'));
 
 [!!] Each uri should have be given a unique name (in this case it's `reversed`), the reasoning behind this is explained in [the url tutorial](tutorials.urls).
 
-Angled brackets denote dynamic sections that should be parsed into variables; Rounded brackets mark an optional section which is not required. If you wanted to only match uris begining with admin you could use:
+Angled brackets denote dynamic sections that should be parsed into variables. Rounded brackets mark an optional section which is not required. If you wanted to only match uris begining with admin you could use:
 
 	Rouse::set('admin', 'admin(/<controller>(/<id>(/<action>)))');
 
@@ -211,16 +211,16 @@ And if you wanted to force the user to specify a controller:
 
 	Route::set('admin', 'admin/<controller>(/<id>(/<action>))');
 	
-Also, Kohana does not use any 'default defaults'.  If you want kohana to assume your default action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then pass an array of segment => regex. i.e.:
+Also, Kohana does not use any 'default defaults'.  If you want kohana to assume your default action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then pass an array of `segment => regex`. i.e.:
 
 	Route::set('reversed', '(<controller>(/<id>(/<action>)))', array('id' => '[a-z_]+'))
 			->defaults(array('controller' => 'posts', 'action' => 'index'))
 
-This would force the id value to consist of lowercase alpha characters & underscores.
+This would force the `id` value to consist of lowercase alpha characters and underscores.
 
 ### Actions
 
-One more thing we need to mention is that methods in a controller that can be accessed via the url are now called "actions", and are prefixed with 'action_'. e.g. in the above example, if the user calls `admin/posts/1/edit` then the action is `edit` but the method called on the controller will be `action_edit`.  See [the url tutorial](tutorials.urls) for more info.
+One more thing we need to mention is that methods in a controller that can be accessed via the url are now called "actions", and are prefixed with 'action_'. E.g. in the above example, if the user calls `admin/posts/1/edit` then the action is `edit` but the method called on the controller will be `action_edit`.  See [the url tutorial](tutorials.urls) for more info.
 
 ## Sessions
 
@@ -260,9 +260,9 @@ The 'required' rule has also been renamed to 'not_empty' for clarity's sake.
 
 There have been a few minor changes to the View library which are worth noting.
 
-In 2.3 views were rendered within the cope of the controller, allowing you to use `$this` as a reference to the controller within the view, this has been changed in 3.0. Views now render in an empty scope, if you need to use $this in your view you can bind a reference to it using [View::bind] - `$view->bind('this', $this)`
+In 2.3 views were rendered within the cope of the controller, allowing you to use `$this` as a reference to the controller within the view, this has been changed in 3.0. Views now render in an empty scope. If you need to use `$this` in your view you can bind a reference to it using [View::bind]: `$view->bind('this', $this)`.
 
-It's worth noting though that this is *very* bad practice as it couples your view to the controller, preventing reuse.  The reccomended way is to pass the required variables to the view like so:
+It's worth noting, though, that this is *very* bad practice as it couples your view to the controller, preventing reuse.  The recommended way is to pass the required variables to the view like so:
 
 	$view = View::factory('my/view');
 	
@@ -277,7 +277,7 @@ It's worth noting though that this is *very* bad practice as it couples your vie
 	// NOT Recommended
 	$view->bind('this', $this);
 
-Because the view is rendered in an empty scope `Controller::_kohana_load_view` is now redundant.  If you need to modify the view before it's rendered (i.e. to add a generate a site-wide menu) you can use [Controller::after]
+Because the view is rendered in an empty scope `Controller::_kohana_load_view` is now redundant.  If you need to modify the view before it's rendered (i.e. to add a generate a site-wide menu) you can use [Controller::after].
 
 	<?php
 	
