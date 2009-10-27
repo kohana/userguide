@@ -9,6 +9,11 @@ class Controller_Userguide extends Controller_Template {
 
 	public $template = 'userguide/template';
 
+	// Routes
+	protected $media;
+	protected $api;
+	protected $guide;
+
 	public function before()
 	{
 		if ($this->request->action === 'media')
@@ -18,9 +23,11 @@ class Controller_Userguide extends Controller_Template {
 		}
 		else
 		{
-			// Set the default language
-			$lang = Kohana::config('userguide.lang');
-			
+			// Grab the necessary routes
+			$this->media = Route::get('docs/media');
+			$this->api   = Route::get('docs/api');
+			$this->guide = Route::get('docs/guide');
+
 			if (isset($_GET['lang']))
 			{
 				$lang = $_GET['lang'];
@@ -38,8 +45,8 @@ class Controller_Userguide extends Controller_Template {
 				$this->request->redirect($this->request->uri);
 			}
 
-			// Set the language
-			I18n::$lang = $this->_lang = Cookie::get('userguide_language', $lang);
+			// Set the translation language
+			I18n::$lang = Cookie::get('userguide_language', Kohana::config('userguide')->lang);
 
 			// Use customized Markdown parser
 			define('MARKDOWN_PARSER_CLASS', 'Kodoc_Markdown');
@@ -48,8 +55,8 @@ class Controller_Userguide extends Controller_Template {
 			require Kohana::find_file('vendor', 'markdown/markdown');
 
 			// Set the base URL for links and images
-			Kodoc_Markdown::$base_url  = URL::site(Route::get('docs/guide')->uri(array('lang' => $this->_lang, 'page' => NULL))).'/';
-			Kodoc_Markdown::$image_url = URL::site(Route::get('docs/media')->uri()).'/';
+			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/';
+			Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/';
 		}
 
 		parent::before();
@@ -57,8 +64,15 @@ class Controller_Userguide extends Controller_Template {
 
 	public function action_docs()
 	{
-		// Get the path for this page
-		$file = $this->file($page = $this->request->param('page'));
+		$page = $this->request->param('page');
+
+		if ( ! $page)
+		{
+			// Redirect to the default page
+			$this->request->redirect($this->guide->uri(array('page' => 'about.kohana')));
+		}
+
+		$file = $this->file($page);
 
 		if ( ! $file)
 		{
@@ -78,20 +92,10 @@ class Controller_Userguide extends Controller_Template {
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
 
-		// Get the docs URI
-		$guide = Route::get('docs/guide');
-
 		// Add the breadcrumb
 		$breadcrumb = array();
-		$breadcrumb[$guide->uri(array('page' => NULL))] = __('User Guide');
-
-		if (strpos($page, '.'))
-		{
-			list($section) = explode('.', $page);
-
-			$breadcrumb[$guide->uri(array('page' => $section))] = $this->title($section);
-		}
-
+		$breadcrumb[$this->guide->uri()] = __('User Guide');
+		$breadcrumb[] = $this->section($page);
 		$breadcrumb[] = $this->template->title;
 	}
 
@@ -118,7 +122,7 @@ class Controller_Userguide extends Controller_Template {
 
 		// Add the breadcrumb
 		$breadcrumb = array();
-		$breadcrumb[$guide->uri(array('page' => NULL))] = __('User Guide');
+		$breadcrumb[$this->guide->uri(array('page' => NULL))] = __('User Guide');
 		$breadcrumb[$this->request->route->uri()] = $this->title('api');
 		$breadcrumb[] = $this->template->title;
 	}
@@ -170,7 +174,6 @@ class Controller_Userguide extends Controller_Template {
 			);
 
 			// Add languages
-			$this->template->lang = $this->_lang;
 			$this->template->translations = Kohana::message('userguide', 'translations');
 		}
 
@@ -179,13 +182,28 @@ class Controller_Userguide extends Controller_Template {
 
 	public function file($page)
 	{
-		if ( ! ($file = Kohana::find_file('guide', "{$this->_lang}/$page", 'md')))
+		if ( ! ($file = Kohana::find_file('guide', I18n::$lang.'/'.$page, 'md')))
 		{
 			// Use the default file
 			$file = Kohana::find_file('guide', $page, 'md');
 		}
 
 		return $file;
+	}
+
+	public function section($page)
+	{
+		$file = $this->file('menu');
+
+		if ($file AND $text = file_get_contents($file))
+		{
+			if (preg_match('~\*{2}(.+?)\*{2}[^*]+\[[^\]]+\]\('.preg_quote($page).'\)~mu', $text, $matches))
+			{
+				return $matches[1];
+			}
+		}
+
+		return $page;
 	}
 
 	public function title($page)

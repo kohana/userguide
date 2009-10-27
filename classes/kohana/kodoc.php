@@ -62,8 +62,6 @@ class Kohana_Kodoc {
 			// Sort the class list
 			sort($list);
 
-			$package = HTML::anchor($route->uri(array('class' => $package)), $package);
-
 			$output[] =
 				"<li><strong>$package</strong>\n\t<ul><li>".
 				implode("</li><li>", $list).

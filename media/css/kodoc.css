@@ -7,10 +7,10 @@ table td { background: #f4f4f4; }
 
 .container .toggle { font-size: 0.7em; float: right; padding: 0 1em; cursor: pointer; color: #777; text-decoration: none; }
 
-#topbar { padding: 1em 0; margin-bottom: 2em; background: #111; border-bottom: solid 0.2 #eee; color: #aaa; }
+#topbar { padding: 1em 0; margin-bottom: 2em; background: #111; border-bottom: solid 0.2 #eee; color: #ccc; }
 	#topbar ul.breadcrumb { display: block; margin: 0; padding: 0; overflow: auto; }
 		#topbar ul.breadcrumb li { display: block; float: left; margin: 0; padding: 0; padding-left: 0.6em; }
-		#topbar ul.breadcrumb li:before { content: '» '; color: #555; }
+		#topbar ul.breadcrumb li:before { content: '» '; color: #888; }
 			#topbar ul.breadcrumb li a { color: #ccc; text-decoration: underline; }
 	#topbar form { margin: 0 1em; padding: 0; }
 		#topbar form select { width: 98%; }
@@ -20,9 +20,7 @@ table td { background: #f4f4f4; }
 	#menu ul { margin: 0; padding: 0; list-style: none; }
 		#menu li { margin: 0; padding: 0; }
 			#menu li { display: block; }
-			#menu li a { display: block; padding: 0.2em 0.4em; }
-			#menu li strong { display: block; margin-bottom: 0.4em; font-weight: normal; color: #eee; background: #111; }
-				#menu li strong a { color: #eee; background: #111; text-decoration: none; }
+			#menu li strong { display: block; margin-bottom: 0.4em; padding: 0.2em 0.4em; font-weight: normal; color: #eee; background: #111; cursor: pointer; }
 		#menu ol ul { margin-left: 1em; }
 	#menu > ol { padding: 1em; }
 		#menu > ol ul { padding-bottom: 0.6em; }
