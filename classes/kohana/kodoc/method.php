@@ -2,7 +2,7 @@
 /**
  * Class method documentation generator.
  *
- * @package    Kodoc
+ * @package    Userguide
  * @author     Kohana Team
  * @copyright  (c) 2009 Kohana Team
  * @license    http://kohanaphp.com/license
