@@ -23,6 +23,5 @@ Route::set('docs/guide', 'guide(/<page>)', array(
 	->defaults(array(
 		'controller' => 'userguide',
 		'action'     => 'docs',
-		'page'       => 'start',
 	));
 
