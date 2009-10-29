@@ -2,9 +2,7 @@
 
 Controllers stand in between the models and the views in an application. They pass information on to the model when data needs to be changed and they request information from the model. For example database inserts, updates and deletes for data change and database selects for information retrieval. Controllers pass on the information of the model to the views, the views contain the final output for the users.
 
-Controllers are called by a URL, see [URLs and Links](start.urls) for more information.
-
-
+Controllers are called by a URL, see [URLs and Links](about.urls) for more information.
 
 ## Controller naming and anatomy
 

@@ -4,7 +4,7 @@ Kohana takes advantage of PHP [autoloading](http://php.net/manual/language.oop5.
 
 Classes are loaded via the [Kohana::auto_load] method, which makes a simple conversion from class name to file name:
 
-1. Classes are placed in the `classes/` directory of the [filesystem](start.filesystem)
+1. Classes are placed in the `classes/` directory of the [filesystem](about.filesystem)
 2. Any underscore characters are converted to slashes
 2. The filename is lowercase
 

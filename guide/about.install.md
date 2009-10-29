@@ -15,5 +15,6 @@ You should see the installation page. If it reports any errors, you will need to
 
 ![Install Page](img/install.png "Example of install page")
 
-Once your install page reports that your environment is set up correctly you need to either rename or delete `install.php` in the root directory. You should then see the Kohana welcome page. (?? Currently just 'Hello World!' in KO3 ??)
+Once your install page reports that your environment is set up correctly you need to either rename or delete `install.php` in the root directory. You should then see the Kohana welcome page:
 
+![Welcome Page](img/welcome.png "Example of welcome page")

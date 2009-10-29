@@ -2,6 +2,7 @@
    - [What is Kohana?](about.kohana)
    - [Conventions and Style](about.conventions)
    - [Installation](about.install)
+   - [Upgrading](about.upgrading)
    - [Configuration](about.configuration)
    - [Model View Controller](about.mvc)
    - [Filesystem](about.filesystem)
@@ -22,5 +23,3 @@
    - [Code](debugging.code)
    - [Error Handling](debugging.errors)
    - [Profiling](debugging.profiling)
-5. **Upgrading**
-   - [From v2.3](upgrading.23)
