@@ -58,4 +58,18 @@ $(document).ready(function()
 		})
 		.appendTo(header);
 	});
+
+	// Sticky menu position
+	$('#menu').each(function()
+	{
+		var menu = $(this);
+		var win  = $(window);
+		var otop = menu.offset().top;
+
+		win.scroll(function()
+		{
+			wtop = win.scrollTop();
+			menu.css('margin-top', wtop > otop ? wtop - otop : 0)
+		});
+	});
 });

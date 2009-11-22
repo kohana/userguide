@@ -22,8 +22,8 @@ table td { background: #f4f4f4; }
 			#menu li { display: block; }
 			#menu li strong { display: block; margin-bottom: 0.4em; padding: 0.2em 0.4em; font-weight: normal; color: #eee; background: #111; cursor: pointer; }
 		#menu ol ul { margin-left: 1em; }
-	#menu > ol { padding: 1em; }
-		#menu > ol ul { padding-bottom: 0.6em; }
+	#menu ol { padding: 1em; }
+		#menu ol ul { padding-bottom: 0.6em; }
 
 #footer { margin-top: 1em; padding: 1em 0; color: #666; }
 	#footer p { font-size: 0.8em; text-transform: uppercase; }
