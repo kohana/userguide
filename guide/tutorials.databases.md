@@ -1,4 +1,4 @@
-# Databases
+# Databases {#top}
 
 Kohana 3.0 comes with a robust module to working with databases. By default the database module supports drivers for [MySQL](http://php.net/mysql) and [PDO](http://php.net/pdo).
 
@@ -10,7 +10,7 @@ The database module is included with the Kohana 3.0 install but needs to be enab
         ...
     ));
 
-## Configuration
+## Configuration {#configuration}
 
 After the module has been enabled you will need to provide a configuration file so that the module knows how to connect to your database. An example config file can be found at `modules/database/config/database.php`.
 
@@ -35,10 +35,10 @@ DATABASE_TYPE
 :  One of the installed database drivers. Kohana comes with "mysql" and "pdo" drivers.
 
 CONNECTION_ARRAY
-:  Specific driver options for connecting to your database. (Driver options are explained [below](#connections).)
+:  Specific driver options for connecting to your database. (Driver options are explained [below](#connection_settings).)
 
 TABLE_PREFIX
-:  Prefix that will be added to all table names by the [query builder](#query_builder).
+:  Prefix that will be added to all table names by the [query builder](#query_building).
 
 QUERY_PROFILING
 :  Enables [profiling](debugging.profiling) of database queries.
@@ -78,7 +78,7 @@ The example file below shows 2 MySQL connections, one local and one remote.
         ),
     );
 
-### Connections
+### Connection Settings {#connection_settings}
 
 Every database driver has different connection settings.
 
@@ -109,9 +109,26 @@ Type      | Option     |  Description               | Default value
 
 !! If you are using PDO and are not sure what to use for the `dsn` option, review [PDO::__construct](http://php.net/pdo.construct).
 
-## Making Queries
+## Connections and Instances {#connections}
+
+Each configuration group is referred to as a database instance. Each instance can be accessed by calling [Database::instance]:
+
+    $default = Database::instance();
+    $remote  = Database::instance('remote');
+
+To disconnect the database, simply destroy the object:
+
+    unset($default, Database::$instances['default']);
+
+If you want to disconnect all of the database instances at once:
+
+    Database::$instances = array();
+
+## Making Queries {#making_queries}
 
 There are two different ways to make queries. The simplest way to make a query is to use the [Database_Query], via [DB::query], to create queries. These queries are called "prepared statements" and allow you to set query parameters which are automatically escaped. The second way to make a query is by building the query using method calls. This is done using the [query builder](#query_builder).
+
+[!!] All queries are run using the `execute` method, which accepts a [Database] object or instance name. See [Database_Query::execute] for more information.
 
 ### Prepared Statements
 
@@ -154,13 +171,11 @@ It is also possible to bind a parameter to a variable, using a [variable referen
 
 In the above example, the variables `$username` and `$password` are changed for every loop of the `foreach` statement. When the parameter changes, it effectively changes the `:user` and `:pass` query parameters. Careful parameter binding can save a lot of code when it is used properly.
 
-### Query Building
+### Query Building {#query_building}
 
 Creating queries dynamically using objects and methods allows queries to be written very quickly in an agnostic way. Query building also adds identifier (table and column name) quoting, as well as value quoting.
 
 [!!] At this time, it is not possible to combine query building with prepared statements.
-
-All queries are executed using the `execute` method, which is inherited from [Database_Query::execute].
 
 #### SELECT
 
@@ -170,15 +185,23 @@ Each type of database query is represented by a different class, each with their
 
 By default, [DB::select] will select all columns (`SELECT * ...`), but you can also specify which columns you want returned:
 
-    $query = DB::select('password')->from('users')->where('username', '=', 'john');
+    $query = DB::select('username', 'password')->from('users')->where('username', '=', 'john');
 
-Now take a minute to look at what this method chain is doing. First, we create a new instance of [Database_Query_Builder_Select] using the [DB::select] method. Next, we set table(s) using the `from` method. Last, we search for a specific records using the `where` method. We can display the SQL that will be executed by casting the query to a string:
+Now take a minute to look at what this method chain is doing. First, we create a new selection object using the [DB::select] method. Next, we set table(s) using the `from` method. Last, we search for a specific records using the `where` method. We can display the SQL that will be executed by casting the query to a string:
 
     echo Kohana::debug((string) $query);
     // Should display:
-    // SELECT `password` FROM `users` WHERE `username` = 'john'
+    // SELECT `username`, `password` FROM `users` WHERE `username` = 'john'
 
 Notice how the column and table names are automatically escaped, as well as the values? This is one of the key benefits of using the query builder.
+
+It is also possible to create `AS` aliases when selecting:
+
+    $query = DB::select(array('username', 'u'), array('password', 'p'))->from('users');
+
+This query would generate the following SQL:
+
+    SELECT `username` AS `u`, `password` AS `p` FROM `users`
 
 #### INSERT
 
@@ -210,3 +233,16 @@ This query would generate the following SQL:
 
     DELETE FROM `users` WHERE `username` IN ('john', 'jane')
 
+#### Database Functions {#database_functions}
+
+Eventually you will probably run into a situation where you need to call `COUNT` or some other database function within your query. The query builder supports these functions in two ways. The first is using by using quotes within aliases:
+
+    $query = DB::select(array('COUNT("username")', 'total_users'))->from('users');
+
+This looks almost exactly the same as a standard `AS` alias, but note how the column name is wrapped in double quotes. Any time a double-quoted value appears inside of a column name, **only** the part that inside the double quotes will be escaped. This query would generate the following SQL:
+
+    SELECT COUNT(`username`) AS `total_users` FROM `users`
+
+#### Complex Expressions
+
+Quoted aliases will solve most problems, but from time to time you may run into a situation where you need a complex expression. In these cases, you will need to use a database expression created with [DB::expr].  A database expression is taken as direct input and no escaping is performed.
