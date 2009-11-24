@@ -81,14 +81,37 @@ git add application
 git commit -m 'Added initial directory structure'
 ~~~
 
-That's all there is to it. You now have an application that is using Git for versioning. At some point you will probably also want to upgrade your submodules. For example, to update `system`:
+That's all there is to it. You now have an application that is using Git for versioning.
+
+## Updating Submodules
+
+At some point you will probably also want to upgrade your submodules. To update all of your submodules to the latest `HEAD` version:
+
+~~~
+git submodule foreach
+~~~
+
+To update a single submodule, for example, `system`:
 
 ~~~
 cd system
 git checkout master
-git pull
+git fetch
+git merge origin/master
 cd ..
 git add system
-git commit -m 'Updated system directory'
+git commit -m 'Updated system to latest version'
 ~~~
+
+If you want to update a single submodule to a specific revision:
+
+~~~
+cd modules/database
+git fetch
+git checkout fbfdea919028b951c23c3d99d2bc1f5bbeda0c0b
+cd ../..
+git add database
+git commit -m 'Updated database module'
+~~~
+
 
