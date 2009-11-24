@@ -40,6 +40,11 @@ table td { background: #f4f4f4; }
 #content h6 small { font-size: 0.9em; font-weight: normal; color: #444; }
 #content pre { font-size: 1em; line-height: 1.4em; }
 
+#content div.class-list div.class { width: 50%; }
+#content div.class-list div.class.left { float: left; clear: both; }
+#content div.class-list div.class.right { float: right; }
+	#content div.class-list div.class h2 { margin: 0.4em; padding: 0.2em 0.4em; font-size: 1em; }
+
 #content div.toc { margin-bottom: 1em; padding-bottom: 1em; background: #eee; }
 	#content div.toc ul { margin: 0.6em 1em; padding: 0; list-style: none; }
 		#content div.toc li { margin: 0; padding: 0; }

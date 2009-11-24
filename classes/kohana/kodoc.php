@@ -103,6 +103,35 @@ class Kohana_Kodoc {
 		return $classes;
 	}
 
+	public static function class_methods(array $list = NULL)
+	{
+		$list = Kodoc::classes($list);
+
+		$classes = array();
+
+		foreach ($list as $class)
+		{
+			$_class = new ReflectionClass($class);
+
+			if (stripos($_class->name, 'Kohana') === 0)
+			{
+				// Skip the extension stuff stuff
+				continue;
+			}
+
+			$methods = array();
+
+			foreach ($_class->getMethods() as $_method)
+			{
+				$methods[] = $_method->name;
+			}
+
+			$classes[$_class->name] = $methods;
+		}
+
+		return $classes;
+	}
+
 	public static function parse($comment)
 	{
 		// Normalize all new lines to \n
