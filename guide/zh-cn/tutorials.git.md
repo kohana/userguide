@@ -81,14 +81,37 @@ git add application
 git commit -m 'Added initial directory structure'
 ~~~
 
-所有的工作都完成了！你现在可以使用 Git 作为版本控制开发 Kohana 应用了。或许你可能也需要更新你的子模块。比如，更新 `system`：
+所有的工作都完成了！你现在可以使用 Git 作为版本控制开发 Kohana 应用了。
+
+## 更新子模块
+
+有时候你可能也需要更新你的子模块。更新所有子模块至最新的 `HEAD` 版本：
+
+~~~
+git submodule foreach
+~~~
+
+更新单个子模块，比如 `system`：
 
 ~~~
 cd system
 git checkout master
-git pull
+git fetch
+git merge origin/master
 cd ..
 git add system
-git commit -m 'Updated system directory'
+git commit -m 'Updated system to latest version'
 ~~~
+
+如果你要更新单个子模块到指定的版本库：
+
+~~~
+cd modules/database
+git fetch
+git checkout fbfdea919028b951c23c3d99d2bc1f5bbeda0c0b
+cd ../..
+git add database
+git commit -m 'Updated database module'
+~~~
+
 
