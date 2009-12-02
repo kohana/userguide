@@ -126,7 +126,7 @@ If you want to disconnect all of the database instances at once:
 
 ## Making Queries {#making_queries}
 
-There are two different ways to make queries. The simplest way to make a query is to use the [Database_Query], via [DB::query], to create queries. These queries are called "prepared statements" and allow you to set query parameters which are automatically escaped. The second way to make a query is by building the query using method calls. This is done using the [query builder](#query_builder).
+There are two different ways to make queries. The simplest way to make a query is to use the [Database_Query], via [DB::query], to create queries. These queries are called "prepared statements" and allow you to set query parameters which are automatically escaped. The second way to make a query is by building the query using method calls. This is done using the [query builder](#query_building).
 
 [!!] All queries are run using the `execute` method, which accepts a [Database] object or instance name. See [Database_Query::execute] for more information.
 
