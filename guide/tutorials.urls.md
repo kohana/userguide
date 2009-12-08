@@ -35,7 +35,7 @@ This route specifies that the uri must begin with `admin` to match and the direc
 
 The Kohana route system uses perl compatible regular expressions in its matching process. By default the keys (surrounded by `<>`) are matched by `[a-zA-Z0-9_]++` but you can define your own patterns for each key by passing an associative array of keys and patterns as an additional argument to [Route::set]. To extend our previous example let's say you have an admin section and an affiliates section. You could specify those in separate routes or you could do something like this:
 
-    Route::set('sections', '<directory>(/<controller>(/<action>(/<id>)))'
+    Route::set('sections', '<directory>(/<controller>(/<action>(/<id>)))',
       array(
         'directory' => '(admin|affiliate)'
       ))
