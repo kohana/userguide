@@ -126,6 +126,8 @@ class Kohana_Kodoc {
 				$methods[] = $_method->name;
 			}
 
+			sort($methods);
+
 			$classes[$_class->name] = $methods;
 		}
 
@@ -271,13 +273,19 @@ class Kohana_Kodoc {
 
 	public function properties()
 	{
-		$props = array();
+		$props = $this->class->getProperties();
 
-		foreach ($this->class->getProperties() as $property)
+		sort($props);
+
+		foreach ($props as $key => $property)
 		{
 			if ($property->isPublic())
 			{
-				$props[] = new Kodoc_Property($this->class->name, $property->name);
+				$props[$key] = new Kodoc_Property($this->class->name, $property->name);
+			}
+			else
+			{
+				unset($props[$key]);
 			}
 		}
 
@@ -286,11 +294,13 @@ class Kohana_Kodoc {
 
 	public function methods()
 	{
-		$methods = array();
+		$methods = $this->class->getMethods();
 
-		foreach ($this->class->getMethods() as $method)
+		sort($methods);
+
+		foreach ($methods as $key => $method)
 		{
-			$methods[] = new Kodoc_Method($this->class->name, $method->name);
+			$methods[$key] = new Kodoc_Method($this->class->name, $method->name);
 		}
 
 		return $methods;
