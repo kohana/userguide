@@ -13,6 +13,7 @@
    - [Hello, World](tutorials.helloworld)
    - [Routes, URLs, and Links](tutorials.urls)
    - [Databases](tutorials.databases)
+   - [ORM](tutorials.orm)
    - [Working with Git](tutorials.git)
 3. **Security**
    - [XSS](security.xss)
