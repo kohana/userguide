@@ -26,7 +26,7 @@ The first configuration task of any new Kohana installation is changing the [Koh
 :   Base URL for the application. (Default `"/"`) Can be a complete or partial URL. For example "http://example.com/kohana/" or just "/kohana/" would both work.
 
 `string` index_file
-:   The PHP file that starts the application. (Default `"index.php"`) Set to `FALSE` when you remove the index file from with URL rewriting.
+:   The PHP file that starts the application. (Default `"index.php"`) Set to `FALSE` when you remove the index file from the URL with URL rewriting.
 
 `string` cache_dir
 :   Cache file directory. (Default `"application/cache"`) Must point to a **writable** directory.
