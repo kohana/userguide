@@ -21,12 +21,11 @@
 :   设置所有输入和输出的字符编码。（默认是 "utf-8"`）允许设置 [htmlspecialchars](http://php.net/htmlspecialchars) 和 [iconv](http://php.net/iconv) 允许的编码格式。
 
 `string` base_url
-:   程序的 URL（默认为 `"/"`）可以是一个完整或部分网址。比如 "http://example.com/kohana/" 或仅有 "/kohana/" 两者都工作。
+:   程序的 URL（默认为 `"/"`）可以是一个完整或部分网址。比如 "http://example.com/kohana/" 或仅有 "/kohana/" 两者都工作。`string` cache_dir
 
 `string` index_file
-:   程序开始的 PHP 文件入口。（默认是 `"index.php"`）当你从 URL 地址上移除了 index 文件请设置为 `FALSE`。
+:   程序开始的 PHP 文件入口。（默认是 `"index.php"`）设置为 `FALSE` 时，Kohana 利用 URL 重写从 URL 地址移除 index.php 字段。
 
-`string` cache_dir
 :   缓存文件目录。（默认是 `"application/cache"` 目录）且必须是**可写**属性。
 
 ## Cookie 设置
