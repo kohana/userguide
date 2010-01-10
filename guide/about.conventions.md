@@ -13,13 +13,13 @@ Model_User            | classes/model/user.php
 Database              | classes/database.php
 Database_Query        | classes/database/query.php
 
-CamelCased classnames should not be used, except when it is undesirable to create a new directory level.
+CamelCased class names should not be used, except when it is undesirable to create a new directory level.
 
 All class file names and directory names are lowercase.
 
 All classes should be in the `classes` directory. This may be at any level in the [cascading filesystem](about.filesystem).
 
-Kohana 3 does not differentiate between *types* of class in the same way that Kohana 2.x and some other frameworks do. There is no distinction between a 'helper' or a 'library' class – in Kohana 3 any class can implement whatever interface you like whether it be entirely static (helper-like), or instantiable, or a mixture (e.g. singleton).
+Kohana 3 does not differentiate between *types* of class in the same way that Kohana 2.x. There is no distinction between a 'helper' or a 'library' class – in Kohana 3 any class can implement whatever interface you like whether it be entirely static (helper-like), or instantiable, or a mixture (e.g. singleton).
 
 ## Code Style
 
