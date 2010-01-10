@@ -1,0 +1,1 @@
+Cette page liste les fonctionnalités clés de Kohana v3.
