@@ -35,7 +35,7 @@ Lets see what's going on here:
 `echo 'hello, world!';`
 :	And this is the line which outputs the customary phrase!
 
-Now if you open your browser and go to http://your/kohana/website/index.php/hello you should see something like:
+Now if you open your browser and go to http://localhost/index.php/hello you should see something like:
 
 ![Hello, World!](img/hello_world_1.png "Hello, World!")
 
