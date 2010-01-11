@@ -111,7 +111,7 @@ There are countless other possibilities for routes. Here are some more examples:
         'action' => 'index',
       ));
 
-Routes are matched in the order specified so be aware that if you set routes after the modules have been loaded that a module could specify a route that conflicts with your own. This is also the reason that the default route is set last, so that custom routes will be tested first.
+Routes are matched in the order specified so be aware that if you set routes after the modules have been loaded a module could specify a route that conflicts with your own. This is also the reason that the default route is set last, so that custom routes will be tested first.
       
 ### Request Parameters
 
@@ -124,7 +124,7 @@ All other keys specified in a route can be accessed from within the controller v
 
     $this->request->param('key_name');
     
-The [Request::param] method takes an optional second argument to specify a default return value in case the key is not set by the route. If no arguments are given, all parameters are returned as an associative array.
+The [Request::param] method takes an optional second argument to specify a default return value in case the key is not set by the route. If no arguments are given, all keys are returned as an associative array.
 
 ### Convention
 

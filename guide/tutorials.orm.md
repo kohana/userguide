@@ -1,6 +1,6 @@
 # ORM {#top}
 
-Kohana 3.0 includes a powerful ORM module that uses the active record pattern and database introspection to determine a model's column information.
+Kohana 3.0 includes a powerful [ORM](http://en.wikipedia.org/wiki/Orm) module that uses the active record pattern and database introspection to determine a model's column information.
 
 The ORM module is included with the Kohana 3.0 install but needs to be enabled before you can use it. In your `application/bootstrap.php` file modify the call to [Kohana::modules] and include the ORM module:
 
