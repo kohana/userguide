@@ -239,7 +239,7 @@ Eventually you will probably run into a situation where you need to call `COUNT`
 
     $query = DB::select(array('COUNT("username")', 'total_users'))->from('users');
 
-This looks almost exactly the same as a standard `AS` alias, but note how the column name is wrapped in double quotes. Any time a double-quoted value appears inside of a column name, **only** the part that inside the double quotes will be escaped. This query would generate the following SQL:
+This looks almost exactly the same as a standard `AS` alias, but note how the column name is wrapped in double quotes. Any time a double-quoted value appears inside of a column name, **only** the part inside the double quotes will be escaped. This query would generate the following SQL:
 
     SELECT COUNT(`username`) AS `total_users` FROM `users`
 
