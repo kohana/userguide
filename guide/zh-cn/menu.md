@@ -2,15 +2,18 @@
    - [什么是 Kohana?](about.kohana)
    - [公约和样式](about.conventions)
    - [安装](about.install)
+   - [升级](about.upgrading)
    - [配置](about.configuration)
    - [模型-视图-控制器](about.mvc)
    - [文件系统](about.filesystem)
    - [自动加载](about.autoloading)
    - [请求流程](about.flow)
+   - [API 浏览器](api)
 2. **教程**
    - [Hello, World](tutorials.helloworld)
    - [路由，URLs 和链接](tutorials.urls)
    - [数据库](tutorials.databases)
+   - [ORM](tutorials.orm)
    - [使用 Git 开发](tutorials.git)
 3. **安全**
    - [XSS](security.xss)
@@ -18,9 +21,6 @@
    - [Cookies](security.cookies)
    - [数据库](security.database)
 4. **调试**
-   - [API 浏览器](api)
    - [代码](debugging.code)
    - [错误句柄](debugging.errors)
    - [分析器](debugging.profiling)
-5. **升级**
-   - [从 2.3 升级](upgrading.23)

@@ -1,12 +1,12 @@
-# Routes, URLs, and Links
+# 路由，URLs 和链接
 
-This section will provide you with the basic idea behind Kohana's request routing, url generation and links.
+本节讲述了关于 Kohana 的请求路由， URL 生成以及链接的基本使用。
 
-## Routing
+## 路由（Route）
 
-As mentioned in the [Request Flow](about.flow) section, a request is handled by the [Request] class which finds a matching [Route] and loads the appropriate controller to handle the request. This system provides much flexibility as well as a common sense default behavior.
+在上面提到的[请求流程](about.flow)一节中，一个请求通过 [Request] 类来寻找匹配 [Route] 并且加载对应的控制器以执行请求。本系统提供了更大的灵活性以及常规默认行为。
 
-If you look in `APPPATH/bootstrap.php` you will see the following code which is run immediately before the request is handed off to [Request::instance]:
+如果你查看了 `APPPATH/bootstrap.php` 的代码，你会发现会有包含下面的一段代码，它会在请求处理对在 [Request::instance] 关闭前立即执行。
 
     Route::set('default', '(<controller>(/<action>(/<id>)))')
       ->defaults(array(
@@ -14,13 +14,13 @@ If you look in `APPPATH/bootstrap.php` you will see the following code which is 
         'action'     => 'index',
       ));
 
-This sets the `default` route with a uri in the format of `(<controller>(/<action>(/<id>)))`. The tokens surrounded with `<>` are *keys* and the tokens surrounded with `()` are *optional* parts of the uri. In this case, the entire uri is optional, so a blank uri would match and the default controller and action would be assumed resulting in the `Controller_Welcome` class being loaded and eventually the `action_index` method being called to handle the request.
+这是按照 `(<controller>(/<action>(/<id>)))` 的 uri 格式化的 ‘默认’ 路由设置。其中 *key* 使用 '<>' 括起来，而*可选*部分使用 '()' 括起来。既然是这样，上面的路由设置说明，所有的 uri 都是可选的，所以如果对于一个空的 uri 要匹配，它会去匹配默认的控制器和 action，也就是上面代码将会匹配并加载 `Controller_Welcome` 类，调用 `action_index` 方法以执行请求。
 
-Notice that in Kohana routes, any characters are allowed aside from `()<>` and the `/` has no special meaning. In the default route the `/` is used as a static separator but as long as the regex makes sense there is no restriction to how you can format your routes.
+需要注意的是，任何的字符都是允许使用 `()<>` 括起来，对于 `/` 并没有特殊含义。在默认路由中 `/` 是被用来当作静态分隔符，但是如果正确的正则表达式是不会限制你如果格式化你的路由。
 
-### Directories
+### 目录
 
-For organizational purposes you may wish to place some of your controllers in subdirectories. A common case is for an admin backend to your site:
+对于某些原因你可能需要把一些控制器放置在子目录当作。比如这里有一个 amdin 子目录：
 
     Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
       ->defaults(array(
@@ -29,11 +29,11 @@ For organizational purposes you may wish to place some of your controllers in su
         'action'     => 'index',
       ));
 
-This route specifies that the uri must begin with `admin` to match and the directory is statically assigned to `admin` in the defaults. Now a request to `admin/users/create` would load the `Controller_Admin_Users` class and call the `action_create` method.
+该路由规定了 uri 中必须以 `admin` 开头去匹配，并且默认的，这个目录是静态被分配到 `admin`。如果现在有一个请求到 `admin/users/create` 那么它会加载 `Controller_Admin_Users` 类并调用 `action_create` 方法。
 
-### Patterns
+### 模式
 
-The Kohana route system uses perl compatible regular expressions in its matching process. By default the keys (surrounded by `<>`) are matched by `[a-zA-Z0-9_]++` but you can define your own patterns for each key by passing an associative array of keys and patterns as an additional argument to [Route::set]. To extend our previous example let's say you have an admin section and an affiliates section. You could specify those in separate routes or you could do something like this:
+Kohana 路由系统使用 perl 正则表达式来处理匹配。默认情况下 key（使用 `<>` 括起来的）只能根据 `[a-zA-Z0-9_]++` 来匹配，但是你可以为每个 key 以数组的形式自定义不同的模式分配到 [Route::set]。继续扩充上面的例子，如果你之前定义了一个 amdin 和 addiliate 段。其实可以使用路由分割或者下面的方式指定它们：
 
     Route::set('sections', '<directory>(/<controller>(/<action>(/<id>)))',
       array(
@@ -44,14 +44,14 @@ The Kohana route system uses perl compatible regular expressions in its matching
         'action'     => 'index',
       ));
       
-This would provide you with two sections of your site, 'admin' and 'affiliate' which would let you organize the controllers for each into subdirectories but otherwise work like the default route.
+上面的设置同时实现了两个段的路由映射，'admin' 和 'affiliate' 会映射到相对于的目录控制器里但是它会覆盖默认的路由设置。
 
-### More Route Examples
+### 更多路由样例
 
-There are countless other possibilities for routes. Here are some more examples:
+这里还有一些其他使用技巧，下面是一些样例：
 
     /*
-     * Authentication shortcuts
+     * 验证的缩写
      */
     Route::set('auth', '<action>',
       array(
@@ -62,7 +62,7 @@ There are countless other possibilities for routes. Here are some more examples:
       ));
       
     /*
-     * Multi-format feeds
+     * 多样式 feeds
      *   452346/comments.rss
      *   5373.json
      */
@@ -77,7 +77,7 @@ There are countless other possibilities for routes. Here are some more examples:
       ));
     
     /*
-     * Static pages
+     * 静态页面
      */
     Route::set('static', '<path>.html',
       array(
@@ -89,7 +89,7 @@ There are countless other possibilities for routes. Here are some more examples:
       ));
       
     /*
-     * You don't like slashes?
+     * 你不喜欢斜线号？那我们使用冒号分隔。
      *   EditGallery:bahamas
      *   Watch:wakeboarding
      */
@@ -103,7 +103,7 @@ There are countless other possibilities for routes. Here are some more examples:
       ));
       
     /*
-     * Quick search
+     * 快速搜索
      */
     Route::set('search', ':<query>', array('query' => '.*'))
       ->defaults(array(
@@ -111,9 +111,10 @@ There are countless other possibilities for routes. Here are some more examples:
         'action' => 'index',
       ));
 
-Routes are matched in the order specified so be aware that if you set routes after the modules have been loaded that a module could specify a route that conflicts with your own. This is also the reason that the default route is set last, so that custom routes will be tested first.
+
+路由的匹配是按照顺序指定的所以大家需要知道的是，如果你在加载模块之后设置路由，模块也可以指定路由程序相冲突的路由。如果是因为这个为什么默认路由会在最后设置，所以字段能够以路由的时候最好先做测试。
       
-### Request Parameters
+### 请求参数
 
 The directory, controller and action can be accessed from the [Request] instance in either of these two ways:
 
@@ -126,7 +127,7 @@ All other keys specified in a route can be accessed from within the controller v
     
 The [Request::param] method takes an optional second argument to specify a default return value in case the key is not set by the route. If no arguments are given, all parameters are returned as an associative array.
 
-### Convention
+### 公约
 
 The established convention is to either place your custom routes in the `MODPATH/<module>/init.php` file of your module if the routes belong to a module, or simply insert them into the `APPPATH/bootstrap.php` file above the default route if they are specific to the application. Of course, they could also be included from an external file or even generated dynamically.
     
@@ -154,6 +155,6 @@ Or if within a view, the preferable method is:
 
     Request::instance()->uri(array('action' => 'view', 'id' => $user_id));
 
-## Links
+## 链接
 
 [!!] links stub

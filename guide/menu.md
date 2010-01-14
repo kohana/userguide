@@ -8,10 +8,12 @@
    - [Filesystem](about.filesystem)
    - [Autoloading](about.autoloading)
    - [Request Flow](about.flow)
+   - [API Browser](api)
 2. **Tutorials**
    - [Hello, World](tutorials.helloworld)
    - [Routes, URLs, and Links](tutorials.urls)
    - [Databases](tutorials.databases)
+   - [ORM](tutorials.orm)
    - [Working with Git](tutorials.git)
 3. **Security**
    - [XSS](security.xss)
@@ -19,7 +21,6 @@
    - [Cookies](security.cookies)
    - [Database](security.database)
 4. **Debugging**
-   - [API Browser](api)
    - [Code](debugging.code)
    - [Error Handling](debugging.errors)
    - [Profiling](debugging.profiling)

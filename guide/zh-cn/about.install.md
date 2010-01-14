@@ -17,3 +17,4 @@
 
 一旦安装页面报告你的环境确认无误，并且可以改名或删除`install.php`（Your environment is set up correctly you need to either rename or delete `install.php`）。安装刚才的说明操作之后就能看到 Kohana 的欢迎界面了(?? 目前 KO3 版本只有一个 'Hello World!' ??)
 
+![Welcome Page](img/welcome.png "Example of welcome page")

@@ -102,14 +102,24 @@ class Controller_Userguide extends Controller_Template {
 	public function action_api()
 	{
 		// Get the class from the request
-		$class = $this->request->param('class', 'Kohana');
+		$class = $this->request->param('class');
 
-		// Set the template title
-		$this->template->title = $class;
+		if ($class)
+		{
+			$this->template->title = $class;
 
-		$this->template->content = View::factory('userguide/api/class')
-			->set('doc', Kodoc::factory($class))
-			->set('route', $this->request->route);
+			$this->template->content = View::factory('userguide/api/class')
+				->set('doc', Kodoc::factory($class))
+				->set('route', $this->request->route);
+		}
+		else
+		{
+			$this->template->title = __('Table of Contents');
+
+			$this->template->content = View::factory('userguide/api/toc')
+				->set('classes', Kodoc::class_methods())
+				->set('route', $this->request->route);
+		}
 
 		// Attach the menu to the template
 		$this->template->menu = Kodoc::menu();

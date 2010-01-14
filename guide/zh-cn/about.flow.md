@@ -14,7 +14,7 @@
     3. 调用 [Controller::before] 方法
     4. 调用控制 action
     5. 调用 [Controller::after] 方法
-4. 显示 [Request] 响应
+5. 显示 [Request] 响应
 
 控制器 action 可以通过基于请求参数的 [Controller::before] 方法改变。
 
