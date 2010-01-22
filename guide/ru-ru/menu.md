@@ -1,7 +1,7 @@
 1. **Первые шаги**
    - [Что такое Kohana?](about.kohana)
    - [Соглашения и стили](about.conventions)
-   - [Установка](about.installation)
+   - [Установка](about.install)
    - [Обновление](about.upgrading)
    - [Настройка](about.configuration)
    - [Модель-Представление-Контроллер](about.mvc)
