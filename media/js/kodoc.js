@@ -12,34 +12,32 @@ $(document).ready(function()
 	// Toggle menus
 	$('#menu ol > li').each(function()
 	{
-		var link = $(this).find('strong a');
+		var link = $(this).find('strong');
 		var menu = $(this).find('ul');
-		var togg = $('<span class="toggle">[ + ]</span>');
+		// var togg = $('<span class="toggle">[ + ]</span>');
 
 		var open  = function()
 		{
-			$(this).html('[ &ndash; ]');
+			// togg.html('[ &ndash; ]');
 			menu.stop().slideDown();
 		};
 
 		var close = function()
 		{
-			$(this).html('[ + ]');
+			// togg.html('[ + ]');
 			menu.stop().slideUp();
 		};
 
-		if ($(this).find('a[href="'+ window.location.pathname +'"]').length)
+		if (menu.find('a[href="'+ window.location.pathname +'"]').length)
 		{
-			togg.html('[ &ndash; ]')
-			.toggle(close, open);
+			// Currently active menu
+			link.toggle(close, open);
 		}
 		else
 		{
-			menu.hide();
-			togg.toggle(open, close);
+			menu.slideUp(0);
+			link.toggle(open, close);
 		}
-
-		togg.appendTo(link);
 	});
 
 	// Collapsable class contents

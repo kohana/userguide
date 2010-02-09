@@ -1,10 +1,10 @@
 # Cross-Site Scripting (XSS) Security
 
-The first step to preventing [XSS](http://wikipedia.org/wiki/Cross-Site_Scripting) attacks is knowing when you need to protect youself. XSS can only be triggered when it is displayed within HTML content, sometimes via a form input or being displayed from database results. Any global variable that contains client information can be tainted. This includes $_GET, $_POST, and $_COOKIE data.
+The first step to preventing [XSS](http://wikipedia.org/wiki/Cross-Site_Scripting) attacks is knowing when you need to protect youself. XSS can only be triggered when it is displayed within HTML content, sometimes via a form input or being displayed from database results. Any global variable that contains client information can be tainted. This includes `$_GET`, `$_POST`, and `$_COOKIE` data.
 
 ## Prevention
 
-There are a few simple rules to follow to guard your application HTML against XSS. The first is to use the [Security::xss] method to clean any input data that comes from a global variable. If you do not want HTML in an variable, use [strip_tags](http://php.net/strip_tags) to remove all unwanted HTML tags from a value.
+There are a few simple rules to follow to guard your application HTML against XSS. The first is to use the [Security::xss] method to clean any input data that comes from a global variable. If you do not want HTML in a variable, use [strip_tags](http://php.net/strip_tags) to remove all unwanted HTML tags from a value.
 
 [!!] If you allow users to submit HTML to your application, it is highly recommended to use an HTML cleaning tool such as [HTML Purifier](http://htmlpurifier.org/) or [HTML Tidy](http://php.net/tidy).
 

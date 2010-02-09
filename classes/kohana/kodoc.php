@@ -2,7 +2,7 @@
 /**
  * Class documentation generator.
  *
- * @package    Kodoc
+ * @package    Userguide
  * @author     Kohana Team
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license
@@ -62,8 +62,6 @@ class Kohana_Kodoc {
 			// Sort the class list
 			sort($list);
 
-			$package = HTML::anchor($route->uri(array('class' => $package)), $package);
-
 			$output[] =
 				"<li><strong>$package</strong>\n\t<ul><li>".
 				implode("</li><li>", $list).
@@ -100,6 +98,37 @@ class Kohana_Kodoc {
 
 				$classes[$class] = $class;
 			}
+		}
+
+		return $classes;
+	}
+
+	public static function class_methods(array $list = NULL)
+	{
+		$list = Kodoc::classes($list);
+
+		$classes = array();
+
+		foreach ($list as $class)
+		{
+			$_class = new ReflectionClass($class);
+
+			if (stripos($_class->name, 'Kohana') === 0)
+			{
+				// Skip the extension stuff stuff
+				continue;
+			}
+
+			$methods = array();
+
+			foreach ($_class->getMethods() as $_method)
+			{
+				$methods[] = $_method->name;
+			}
+
+			sort($methods);
+
+			$classes[$_class->name] = $methods;
 		}
 
 		return $classes;
@@ -244,13 +273,19 @@ class Kohana_Kodoc {
 
 	public function properties()
 	{
-		$props = array();
+		$props = $this->class->getProperties();
 
-		foreach ($this->class->getProperties() as $property)
+		sort($props);
+
+		foreach ($props as $key => $property)
 		{
 			if ($property->isPublic())
 			{
-				$props[] = new Kodoc_Property($this->class->name, $property->name);
+				$props[$key] = new Kodoc_Property($this->class->name, $property->name);
+			}
+			else
+			{
+				unset($props[$key]);
 			}
 		}
 
@@ -259,11 +294,13 @@ class Kohana_Kodoc {
 
 	public function methods()
 	{
-		$methods = array();
+		$methods = $this->class->getMethods();
 
-		foreach ($this->class->getMethods() as $method)
+		sort($methods);
+
+		foreach ($methods as $key => $method)
 		{
-			$methods[] = new Kodoc_Method($this->class->name, $method->name);
+			$methods[$key] = new Kodoc_Method($this->class->name, $method->name);
 		}
 
 		return $methods;

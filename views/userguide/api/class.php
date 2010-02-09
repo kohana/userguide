@@ -55,7 +55,7 @@
 <h2 id="constants">Constants</h2>
 <dt>
 <?php foreach ($doc->constants as $name => $value): ?>
-<dt id="constant:<?php echo strtolower($name) ?>"><?php echo $name ?></dt>
+<dt id="constant:<?php echo $name ?>"><?php echo $name ?></dt>
 <dd><?php echo $value ?></dd>
 <?php endforeach ?>
 </dt>
@@ -67,7 +67,7 @@
 <div class="properties">
 <dt>
 <?php foreach ($properties as $prop): ?>
-<dt id="property:<?php echo strtolower($prop->property->name) ?>"><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> <?php echo $prop->property->name ?></dt>
+<dt id="property:<?php echo $prop->property->name ?>"><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> <?php echo $prop->property->name ?></dt>
 <dd><?php echo $prop->description ?></dd>
 <dd><?php echo $prop->value ?></dd>
 <?php endforeach ?>
