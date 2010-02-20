@@ -37,6 +37,10 @@
 
 	<div id="menu" class="span-6 last">
 		<?php echo $menu ?>
+		<?php if (isset($module_menus) AND ! empty($module_menus)) : ?>
+			<h3>Modules</h3>
+			<?php echo implode('\n', $module_menus) ?>
+		<?php endif; ?>
 	</div>
 </div>
 

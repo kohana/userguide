@@ -24,6 +24,7 @@ table td { background: #f4f4f4; }
 		#menu ol ul { margin-left: 1em; }
 	#menu ol { padding: 1em; }
 		#menu ol ul { padding-bottom: 0.6em; }
+	#menu h3 { font-size: 1em; margin: 0; padding: 1em 1em 0; border-top: 5px solid #fff; }
 
 #footer { margin-top: 1em; padding: 1em 0; color: #666; }
 	#footer p { font-size: 0.8em; text-transform: uppercase; }
