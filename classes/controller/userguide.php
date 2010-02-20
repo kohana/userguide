@@ -88,6 +88,20 @@ class Controller_Userguide extends Controller_Template {
 
 		// Attach the menu to the template
 		$this->template->menu = Markdown(file_get_contents($this->file('menu')));
+		
+		// Bind module menu items
+		$this->template->bind('module_menus', $module_menus);
+		
+		// Attach module-specific menu items
+		$module_menus = array();
+		
+		foreach(Kohana::modules() as $module => $path)
+		{
+			if ($file = $this->file('menu.'.$module))
+			{
+				$module_menus[$module] = Markdown(file_get_contents($file)); 
+			}
+		}
 
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
