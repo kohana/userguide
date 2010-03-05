@@ -73,7 +73,7 @@ Article list goes here!
 
 Say we want to display a specific article, for example the article with the title being `your-article-title` and the id of the article is `1`.
 
-The url would look like yoursite.com/article/view/**your-article-title/1** The last two segments of the url are passed on to the view() method.
+The url would look like yoursite.com/article/view/**your-article-title/1**. The last two segments of the url are passed on to the view() method.
 
 **application/classes/controller/article.php**
 ~~~

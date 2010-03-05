@@ -11,7 +11,7 @@ The first configuration task of any new Kohana installation is changing the [Koh
     error and exception handlers.
 
 `boolean` profile
-:   Do internal benchmarking? (Default `TRUE`) Set to `FALSE` to disable internal profiling.
+:   Do internal profiling? (Default `TRUE`) Set to `FALSE` to disable internal profiling.
     Disable in production for best performance.
 
 `boolean` caching
@@ -36,7 +36,7 @@ The first configuration task of any new Kohana installation is changing the [Koh
 There are several static properties in the [Cookie] class that should be set, particularly on production websites.
 
 `string` salt
-:   Unique salt string that is used to used to enable [signed cookies](security.cookies)
+:   Unique salt string that is used to enable [signed cookies](security.cookies)
 
 `integer` expiration
 :   Default expiration lifetime in seconds
