@@ -2,7 +2,7 @@
 
 Kohana 默认加载一些功能强大的功能来辅助调试程序。
 
-最多也最基本的是 [Kohana::debug] 方法，这个简单的方法会显示任何的变量数字，类似于 [var_export] 或 [print_r]，但是使用了 HTML 格式输出。
+最常使用也是最基本的 [Kohana::debug] 方法。这个简单的方法会显示任何的变量数字，类似于 [var_export](http://php.net/var_export) 或 [print_r](http://php.net/print_r)，但是使用了 HTML 格式输出。
 
 ~~~
 // 显示 $foo 和 $bar 变量的相关信息
