@@ -16,7 +16,7 @@ Kohana 也提供一个方法 [Kohana::debug_source] 来显示特定文件的源�
 echo Kohana::debug_source(__FILE__, __LINE__);
 ~~~
 
-如果你也想显示你应用文件的信息而不偷漏安装路径，你可以使用[Kohana::debug_path]：
+如果你希望显示你应用文件的信息而不泄漏安装路径，你可以使用[Kohana::debug_path]：
 
 ~~~
 // 显示 "APPPATH/cache" 而不是真实路径
