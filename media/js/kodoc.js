@@ -66,6 +66,7 @@ $(document).ready(function()
 		.appendTo(header);
 	});
 	
+
 	// Show source links
 	$('#content .method-source').each(function()
 	{
@@ -84,4 +85,12 @@ $(document).ready(function()
 			code.stop(true, true).slideUp();
 		});
 	});
+
+	// "Link to" headers
+	$('#main')
+		.children('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')
+		.append(function(index, html){
+			return '<a href="#' + $(this).attr('id') + '" class="permalink">Link to this</a>';
+		});
+
 });

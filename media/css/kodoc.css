@@ -90,6 +90,18 @@ h3 {
 	margin:1.25em 0;
 }
 
+h1 a.permalink,
+h2 a.permalink,
+h3 a.permalink,
+h4 a.permalink,
+h5 a.permalink,
+h6 a.permalink {
+	font-size:12px;
+	margin-left:1em;
+	font-weight:normal;
+}
+
+
 header {
 	background:#85da4c url('../img/header.png') bottom left repeat-x scroll;
 	padding:20px 0 0 0;

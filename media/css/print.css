@@ -42,5 +42,6 @@ thead {display: table-header-group;}
 tr {page-break-inside: avoid;} 
 
 /*add sections here to hide various parts from the site*/
+a.heading-link{display:none;}
 
 /*#header, #footer, #navigation, #sidebar, button, a.button {display:none;}*/
