@@ -48,27 +48,51 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		parent::MarkdownExtra_Parser();
 	}
 	
+	/**
+	 * Callback for the heading setext style
+	 * 
+	 * Heading 1
+	 * =========
+	 *
+	 * @param  array    Matches from regex call
+	 * @return string   Generated html
+	 */
 	function _doHeaders_callback_setext($matches) 
 	{
-		# Terrible hack to check we haven't found an empty list item.
-		if ($matches[2] == '-' && preg_match('{^-(?: |$)}', $matches[1]))
+		if ($matches[3] == '-' && preg_match('{^- }', $matches[1]))
 			return $matches[0];
+		$level = $matches[3]{0} == '=' ? 1 : 2;
+		$attr  = $this->_doHeaders_attr($id =& $matches[2]);
 		
-		$level = $matches[2]{0} == '=' ? 1 : 2;
-		$block = '<h'.$level.' id="'.$this->make_heading_id($matches[2]).'">'
-					.$this->runSpanGamut($matches[1])
-					.'</h'.$level.'>';
+		// Only auto-generate id if one doesn't exist
+		if(empty($attr))
+			$attr = ' id="'.$this->make_heading_id($matches[1]).'"';
+		
+		$block = "<h$level$attr>".$this->runSpanGamut($matches[1])."</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
 	}
 	
+	/**
+	 * Callback for the heading atx style
+	 *
+	 * # Heading 1
+	 *
+	 * @param  array    Matches from regex call
+	 * @return string   Generated html
+	 */
 	function _doHeaders_callback_atx($matches) 
 	{
 		$level = strlen($matches[1]);
-		$block = '<h'.$level.' id="'.$this->make_heading_id($matches[2]).'">'
-					.$this->runSpanGamut($matches[2])
-					.'</h'.$level.'>';
+		$attr  = $this->_doHeaders_attr($id =& $matches[3]);
+		
+		// Only auto-generate id if one doesn't exist
+		if(empty($attr))
+			$attr = ' id="'.$this->make_heading_id($matches[2]).'"';
+		
+		$block = "<h$level$attr>".$this->runSpanGamut($matches[2])."</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
 	}
+
 	
 	/**
 	 * Makes a heading id from the heading text
