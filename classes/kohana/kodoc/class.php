@@ -72,6 +72,7 @@ class Kohana_Kodoc_Class extends Kodoc {
 
 		foreach ($props as $key => $property)
 		{
+			// Only show public properties, because Reflection can't get the private ones
 			if ($property->isPublic())
 			{
 				$props[$key] = new Kodoc_Property($this->class->name, $property->name);
@@ -141,4 +142,5 @@ class Kohana_Kodoc_Class extends Kodoc {
 		
 		return $bdepth - $adepth;
 	}
-}
+	
+} // End Kodac_Class
