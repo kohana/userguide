@@ -87,7 +87,7 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 <h2 id="methods">Methods</h2>
 <div class="methods">
 <?php foreach ($methods as $method): ?>
-<?php echo View::factory('userguide/api/method')->set('doc', $method) ?>
+<?php echo View::factory('userguide/api/method')->set('doc', $method)->set('route', $route) ?>
 <?php endforeach ?>
 </div>
 <?php endif ?>

@@ -10,12 +10,24 @@
  */
 class Kohana_Kodoc_Method extends Kodoc {
 
+	/**
+	 * @var  ReflectionMethod   The ReflectionMethod for this class
+	 */
 	public $method;
 
+	/**
+	 * @var  string    the string that denotes the params for this class
+	 */
 	public $params;
 
+	/**
+	 * @var  array   the things this function can return
+	 */
 	public $return = array();
 
+	/**
+	 * @var   string  the source code for this function
+	 */
 	public $source;
 
 	public function __construct($class, $method)

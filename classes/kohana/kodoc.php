@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Class documentation generator.
+ * Documentation generator.
  *
  * @package    Kohana/Userguide
  * @category   Base
@@ -12,9 +12,14 @@ class Kohana_Kodoc {
 
 	public static function factory($class)
 	{
-		return new Kodoc($class);
+		return new Kodoc_Class($class);
 	}
 
+	/**
+	 * Creates an html list of all classes sorted by category (or package if no category)
+	 *
+	 * @return   string   the html for the menu
+	 */
 	public static function menu()
 	{
 		$classes = Kodoc::classes();
@@ -70,6 +75,14 @@ class Kohana_Kodoc {
 			->bind('menu', $menu);
 	}
 
+	/**
+	 * Returns an array of all the classes available, built by listing all files in the classes folder and then trying to create that class.
+	 * 
+	 * This means any empty class files (as in complety empty) will cause an exception
+	 *
+	 * @param   array   array of files, obtained using Kohana::list_files
+	 * @retur   array   an array of all the class names
+	 */
 	public static function classes(array $list = NULL)
 	{
 		if ($list === NULL)
@@ -100,6 +113,14 @@ class Kohana_Kodoc {
 		return $classes;
 	}
 
+	/**
+	 * Get all classes and methods.  Used on index page.
+	 *
+	 * >  I personally don't the current index page, but this could be useful for namespacing/packaging
+	 * >  For example:  class_methods( Kohana::list_files('classes/sprig') ) could make a nice index page for the sprig package in the api browser
+	 * >     ~bluehawk
+	 *
+	 */
 	public static function class_methods(array $list = NULL)
 	{
 		$list = Kodoc::classes($list);
@@ -131,6 +152,12 @@ class Kohana_Kodoc {
 		return $classes;
 	}
 
+	/**
+	 * Parse a comment to extract the description and the tags
+	 *
+	 * @param   string  the comment retreived using ReflectionClass->getDocComment()
+	 * @return  array   array(string $description, array $tags)
+	 */
 	public static function parse($comment)
 	{
 		// Normalize all new lines to \n
@@ -204,6 +231,13 @@ class Kohana_Kodoc {
 		return array($comment, $tags);
 	}
 
+	/**
+	 * Get the source of a function
+	 *
+	 * @param  string   the filename
+	 * @param  int      start line?
+	 * @param  int      end line?
+	 */
 	public static function source($file, $start, $end)
 	{
 		if ( ! $file)
@@ -226,81 +260,6 @@ class Kohana_Kodoc {
 		}
 
 		return implode("\n", $file);
-	}
-
-	public $class;
-
-	public $modifiers;
-
-	public $description;
-
-	public $tags = array();
-
-	public $constants = array();
-
-	public function __construct($class)
-	{
-		$this->class = $parent = new ReflectionClass($class);
-
-		if ($modifiers = $this->class->getModifiers())
-		{
-			$this->modifiers = '<small>'.implode(' ', Reflection::getModifierNames($modifiers)).'</small> ';
-		}
-
-		if ($constants = $this->class->getConstants())
-		{
-			foreach ($constants as $name => $value)
-			{
-				$this->constants[$name] = Kohana::debug($value);
-			}
-		}
-
-		do
-		{
-			if ($comment = $parent->getDocComment())
-			{
-				// Found a description for this class
-				break;
-			}
-		}
-		while ($parent = $parent->getParentClass());
-
-		list($this->description, $this->tags) = Kodoc::parse($comment);
-	}
-
-	public function properties()
-	{
-		$props = $this->class->getProperties();
-
-		sort($props);
-
-		foreach ($props as $key => $property)
-		{
-			if ($property->isPublic())
-			{
-				$props[$key] = new Kodoc_Property($this->class->name, $property->name);
-			}
-			else
-			{
-				unset($props[$key]);
-			}
-		}
-
-		return $props;
-	}
-
-	public function methods()
-	{
-		$methods = $this->class->getMethods();
-
-		sort($methods);
-
-		foreach ($methods as $key => $method)
-		{
-			$methods[$key] = new Kodoc_Method($this->class->name, $method->name);
-		}
-
-		return $methods;
 	}
 
 } // End Kodoc

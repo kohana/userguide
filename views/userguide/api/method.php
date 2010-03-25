@@ -1,5 +1,9 @@
 <div class="method">
-<h3 id="<?php echo $doc->method->name ?>"><?php echo $doc->modifiers, $doc->method->name, ' ( ', $doc->params, ' )'  ?> <a class="toggle" href="#toc">(top)</a></h3>
+	
+<h3 id="<?php echo $doc->method->name ?>">
+	<?php echo $doc->modifiers, $doc->method->name, ' ( ', $doc->params, ' )'  ?>
+	<?php echo '<br/><small>declared by '.html::anchor($route->uri(array('class'=>$doc->method->getDeclaringClass()->getName())),$doc->method->getDeclaringClass()->getName()).'</small>' ?>
+</h3>
 
 <div class="description">
 <?php echo $doc->description ?>
