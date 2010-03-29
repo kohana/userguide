@@ -81,7 +81,7 @@ Any function added to the `Validate` class may be added as a rule without specif
 
     $post
         ->rule('username', 'not_empty')
-        ->rule('username', 'regex', array('/^[a-z_.]++$/i'))
+        ->rule('username', 'regex', array('/^[a-z_.]++$/iD'))
 
         ->rule('password', 'not_empty')
         ->rule('password', 'min_length', array('6'))
