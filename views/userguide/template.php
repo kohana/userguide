@@ -46,7 +46,7 @@
 
 <div id="footer" class="container">
 	<div class="span-17 suffix-1">
-		<p class="copyright">&copy; 2008-2009 Kohana Team</p>
+		<p class="copyright">&copy; 2008–<?php echo date('Y') ?> Kohana Team</p>
 	</div>
 	<div class="span-6 last">
 		<p class="powered">Powered by <?php echo HTML::anchor('http://kohanaphp.com/', 'Kohana') ?> v<?php echo Kohana::VERSION ?></p>
