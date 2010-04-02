@@ -25,15 +25,15 @@ ORM 扩展默认包含在 Kohana 3.0 之中，但是如要使用它则需要先�
 
 下面的属性是用于配置每个模型的：
 
-Type      | Option              |  Description                     | Default value
+类型      | 属性                |  描述                            | 默认值
 ----------|---------------------|----------------------------------| -------------------------
-`string`  |  _table_name        | Table name to use                | `singular model name`
-`string`  | _db                 | Name of the database to use      | `default`
-`string`  | _primary_key        | Column to use as primary key     | `id`
-`string`  | _primary_val        | Column to use as primary value   | `name`
-`bool`    | _table_names_plural | Whether tables names are plural  | `TRUE`
-`array`   | _sorting            | Array of column => direction     | `primary key => ASC`
-`string`  | _foreign_key_suffix | Suffix to use for foreign keys   | `_id`
+`string`  |  _table_name        | 表名                             | `singular model name`
+`string`  | _db                 | 数据库配置名                     | `default`
+`string`  | _primary_key        | 主键                             | `id`
+`string`  | _primary_val        | 主键值                           | `name`
+`bool`    | _table_names_plural | 表名是否是复数形式               | `TRUE`
+`array`   | _sorting            | 列名 => 排序方向的数组           | `primary key => ASC`
+`string`  | _foreign_key_suffix | 外键的后缀                       | `_id`
 
 ## 使用 ORM
 
@@ -153,14 +153,14 @@ ORM 一个强大的特性是 [ORM::as_array] 方法，它把返回的记录集�
 	// 更新所有结果记录的名字为 'Bob'
 	$user->where('active', '=', TRUE)->save_all();
 
-#### Using `Updated` and `Created` Columns
+#### 使用 `Updated` 和 `Created` 列
 
-The `_updated_column` and `_created_column` members are provided to automatically be updated when a model is updated and created.  These are not used by default.  To use them:
+`_updated_column` 和 `_created_column` 变量是用于当模型更新或插入新纪录的时候自动更新设置的字段值。默认没有使用。如果你想使用:
 
-	// date_created is the column used for storing the creation date.  Use TRUE to store a timestamp
+	// date_created 列用于储存创建的时间，使用 TRUE 保存的是时间戳(timestamp)
 	protected $_created_column = array('date_created' => TRUE);
 
-	// date_modified is the column used for storing the modified date.  In this case, a string specifying a date() format is used
+	// date_modified 列用于储存最后修改时间。这里的时间设置为使用 date() 格式后的字符串
 	protected $_updated_column = array('date_modified' => 'm/d/Y');
 
 ### 删除记录
@@ -169,61 +169,61 @@ The `_updated_column` and `_created_column` members are provided to automaticall
 
 ### 关系
 
-ORM provides for powerful relationship support.  Ruby has a great tutorial on relationships at [http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html)
+ORM 提供强大的关系模型。Ruby 有一篇介绍关系模型的文章: [http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html)
 
 #### Belongs-To 和 Has-Many
 
-We'll assume we're working with a school that has many students.  Each student can belong to only one school.  You would define the relationships in this manner:
+假设我们在一所学校工作，当然学校有很多学生，而每个学生都只属于一个学校。这样的关系模型可以这样定义:
 
-	// Inside the school model
+	// school 模型文件
 	protected $_has_many = array('students' => array());
 
-	// Inside the student model
+	// student 模型文件
 	protected $_belongs_to = array('school' => array());
 
-To access a student's school you use:
+获取学生的学校:
 
 	$school = $student->school;
 
-To access a school's students, you would use:
+获取学校的学生:
 
-	// Note that find_all is required after students
+	// 注意在 studends 后必须调用 find_all 方法
 	$students = $school->students->find_all();
 
-	// To narrow results:
+	// 缩小范围查询:
 	$students = $school->students->where('active', '=', TRUE)->find_all();
 
-By default, ORM will look for a `school_id` model in the student table.  This can be overriden by using the `foreign_key` attribute:
+默认情况下，在 student 表定义的模型文件中 ORM 会寻找 `school_id` 当作外键。这个可以通过 `foreign_key` 属性更改:
 
 	protected $_belongs_to = array('school' => array('foreign_key' => 'schoolID'));
 	
-The foreign key should be overridden in both the student and school models.
+外键应该同时覆写 student 和 school 模型文件。
 
 #### Has-One
 
 Has-One is a special case of Has-Many, the only difference being that there is one and only one record.  In the above example, each school would have one and only one student (although this is a poor example).
 
-	// Inside the school model
+	// school 模型文件
 	protected $_has_one = array('student' => array());
 
-Like Belongs-To, you do not need to use the `find` method when referencing the Has-One related object - it is done automatically.
+类似于 Belongs-To，当你引用 Has-One 关系对象的时候无需调用 `find` 方法 - 它是自动完成的。
 
 #### Has-Many "Through"
 
 The Has-Many "through" relationship (also known as Has-And-Belongs-To-Many) is used in the case of one object being related to multiple objects of another type, and visa-versa.  For instance, a student may have multiple classes and a class may have multiple students.  In this case, a third table and model known as a `pivot` is used.  In this case, we will call the pivot object/model `enrollment`.
 
-	// Inside the student model
+	// student 模型文件
 	protected $_has_many = array('classes' => array('through' => 'enrollment'));
 
-	// Inside the class model
+	// class 模型文件
 	protected $_has_many = array('students' => array('through' => 'enrollment'));
 
 The enrollment table should contain two foreign keys, one for `class_id` and the other for `student_id`.  These can be overriden using `foreign_key` and `far_key` when defining the relationship.  For example:
 
-	// Inside the student model (the foreign key refers to this model [student], while the far key refers to the other model [class])
+	// student 模型文件 (the foreign key refers to this model [student], while the far key refers to the other model [class])
 	protected $_has_many = array('classes' => array('through' => 'enrollment', 'foreign_key' => 'studentID', 'far_key' => 'classID'));
 
-	// Inside the class model
+	// class 模型文件
 	protected $_has_many = array('students' => array('through' => 'enrollment', 'foreign_key' => 'classID', 'far_key' => 'studentID'));
 
 The enrollment model should be defined as such:
@@ -231,17 +231,17 @@ The enrollment model should be defined as such:
 	// Enrollment model belongs to both a student and a class
 	protected $_belongs_to = array('student' => array(), 'class' => array());
 
-To access the related objects, use:
+获取相关对象:
 
-	// To access classes from a student
+	// 从 student 中获取 classes
 	$student->classes->find_all();
 
-	// To access students from a class
+	// 从 class 中获取 students
 	$class->students->find_all();
 
 ### 校验
 	
-ORM is integrated tightly with the [Validate] library.  The ORM provides the following members for validation
+ORM 和 [Validate] 类是紧密结合使用的。ORM 提供以下几种校验方式:
 
 * _rules
 * _callbacks
@@ -256,7 +256,7 @@ ORM is integrated tightly with the [Validate] library.  The ORM provides the fol
 		'email'    => array('not_empty' => array(), 'email' => array()),
 	);
 
-`username` will be checked to make sure it's not empty.  `email` will be checked to also ensure it is a valid email address.  The empty arrays passed as values can be used to provide optional additional parameters to these validate method calls.
+检测并确保 `username` 字段不为空。检测 `email` 字段不为空且是有效的 Email 地址格式。那些传递空值数组用于提供可选的额外参数到校验方法中使用。
 
 #### `_callbacks`
 	
@@ -265,11 +265,11 @@ ORM is integrated tightly with the [Validate] library.  The ORM provides the fol
 		'username' => array('username_unique'),
 	);
 
-`username` will be passed to a callback method `username_unique`.  If the method exists in the current model, it will be used, otherwise a global function will be called.  Here is an example of the definition of this method:
+`username` 字段被传递到了 `username_unique` 回调函数。如果方法存在于当前模型它就会被调用，否则调用全局函数。下面有个小例子:
 
 	public function username_unique(Validate $data, $field)
 	{
-		// Logic to make sure a username is unique
+		// 确保 username 是唯一的
 		...
 	}
 
@@ -281,20 +281,20 @@ ORM is integrated tightly with the [Validate] library.  The ORM provides the fol
 		'username' => array('stripslashes' => array()),
 	);
 
-`TRUE` indicates that the `trim` filter is to be used on all fields.  `username` will be filtered through `stripslashes` before it is validated.  The empty arrays passed as values can be used to provide additional parameters to these filter method calls.
+`TRUE` 值代表 `trim` 过滤器应用到所有字段。而 `username` 字段则在校验前使用 `stripslashes` 过滤。那些传递空值数组用于提供可选的额外参数到校验方法中使用。
 	
 #### 检测对象是否通过校验
 
-Use [ORM::check] to see if the object is currently valid.
+使用 [ORM::check] 检测当前对象是否通过校验:
 
-	// Setting an object's values, then checking to see if it's valid
+	// 设置完对象的值，接下来检测是否通过校验
 	if ($user->values($_POST)->check())
 	{
 		$user->save();
 	}
 
-You can use the `validate()` method to access the model's validation object
+你也可是使用 `validate()` 方法直接访问模型的校验对象:
 
-	// Add an additional filter manually
+	// 手动添加额外的过滤器
 	$user->validate()->filter('username', 'trim');
 
