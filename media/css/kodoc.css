@@ -6,6 +6,7 @@ table td { background: #f4f4f4; }
 	table tr.alt td { background: #fff; }
 
 .container .toggle { font-size: 0.7em; float: right; padding: 0 1em; cursor: pointer; color: #777; text-decoration: none; }
+.container table { width: 100%; }
 
 #topbar { padding: 1em 0; margin-bottom: 2em; background: #111; border-bottom: solid 0.2 #eee; color: #ccc; }
 	#topbar ul.breadcrumb { display: block; margin: 0; padding: 0; overflow: auto; }
