@@ -3,7 +3,7 @@
 <li><strong><?php echo $package ?></strong>
 	<ol>
 	<?php foreach ($categories as $category => $classes): sort($classes); ?>
-		<li><strong><?php echo $category ?></strong>
+		<li><?php if ($category !== 'Base'): ?><strong><?php echo $category ?></strong><?php endif ?>
 			<ol>
 			<?php foreach ($classes as $class): ?>
 				<li><?php echo $class ?></li>

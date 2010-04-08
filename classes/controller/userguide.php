@@ -2,7 +2,8 @@
 /**
  * Kohana user guide and api browser.
  *
- * @package    Userguide
+ * @package    Kohana/Userguide
+ * @category   Controllers
  * @author     Kohana Team
  */
 class Controller_Userguide extends Controller_Template {

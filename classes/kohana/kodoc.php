@@ -2,7 +2,8 @@
 /**
  * Class documentation generator.
  *
- * @package    Userguide
+ * @package    Kohana/Userguide
+ * @category   Base
  * @author     Kohana Team
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license
@@ -58,7 +59,7 @@ class Kohana_Kodoc {
 			}
 			else
 			{
-				$menu['Unknown']['Core'][] = $link;
+				$menu['Unknown']['Base'][] = $link;
 			}
 		}
 
