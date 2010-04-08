@@ -67,7 +67,7 @@
 <div class="properties">
 <dt>
 <?php foreach ($properties as $prop): ?>
-<dt id="property:<?php echo $prop->property->name ?>"><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> <?php echo $prop->property->name ?></dt>
+<dt id="property:<?php echo $prop->property->name ?>"><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> $<?php echo $prop->property->name ?></dt>
 <dd><?php echo $prop->description ?></dd>
 <dd><?php echo $prop->value ?></dd>
 <?php endforeach ?>
