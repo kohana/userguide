@@ -23,9 +23,9 @@ table td { background: #f4f4f4; }
 			#menu li { display: block; }
 			#menu li strong { display: block; margin-bottom: 0.4em; padding: 0.2em 0.4em; font-weight: normal; color: #eee; background: #111; cursor: pointer; }
 			#menu li li strong { background-color: #ccc; color: #111; }
-	#menu ol { padding: 0 0.6em; }
+	#menu ol { padding: 0 0.6em; margin: 0; }
 		#menu ol ul,
-		#menu ol ol { margin: 0 0.6em 0; padding: 0 0 0.6em; }
+		#menu ol ol { margin-left: 1em; padding: 0 0 0.6em; }
 	#menu h3 { font-size: 1em; margin: 1em 0 0; padding: 1em 1em 0.5em; border-top: 5px solid #fff; }
 
 #footer { margin-top: 1em; padding: 1em 0; color: #666; }

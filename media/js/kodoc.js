@@ -10,33 +10,35 @@ $(document).ready(function()
 	$('#content tbody tr:even').addClass('alt');
 
 	// Toggle menus
-	$('#menu ol > li').each(function()
+	$('#menu ol li strong').each(function()
 	{
-		var link = $(this).find('strong');
-		var menu = $(this).find('ul');
-		// var togg = $('<span class="toggle">[ + ]</span>');
+		var link = $(this);
+		var menu = link.parent().find('ol:first, ul:first');
+		var togg = $('<span class="toggle">+</span>').appendTo(link);
 
-		var open  = function()
+		link.click(function()
 		{
-			// togg.html('[ &ndash; ]');
-			menu.stop().slideDown();
-		};
+			if (menu.is(':visible'))
+			{
+				// Hide visible menus
+				togg.html('+');
+				menu.hide();
+			}
+			else
+			{
+				// Show hidden menus
+				togg.html('&ndash;');
+				menu.show();
+			}
+		});
 
-		var close = function()
-		{
-			// togg.html('[ + ]');
-			menu.stop().slideUp();
-		};
+		// Hide all menus that do not contain the active link
+		menu.not(':has(a[href="'+ window.location.pathname +'"])').hide();
 
-		if (menu.find('a[href="'+ window.location.pathname +'"]').length)
+		if (menu.is(':visible'))
 		{
-			// Currently active menu
-			link.toggle(close, open);
-		}
-		else
-		{
-			menu.slideUp(0);
-			link.toggle(open, close);
+			// Display the toggle as being open
+			togg.html('&ndash;');
 		}
 	});
 
