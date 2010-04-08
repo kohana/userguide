@@ -43,34 +43,30 @@ class Kohana_Kodoc {
 			{
 				foreach ($class->tags['package'] as $package)
 				{
-					$menu[$package][] = $link;
+					if (isset($class->tags['category']))
+					{
+						foreach ($class->tags['category'] as $category)
+						{
+							$menu[$package][$category][] = $link;
+						}
+					}
+					else
+					{
+						$menu[$package]['Core'][] = $link;
+					}
 				}
 			}
 			else
 			{
-				$menu['Kohana'][] = $link;
+				$menu['Unknown']['Core'][] = $link;
 			}
 		}
 
 		// Sort the packages
 		ksort($menu);
 
-		$output = array('<ol>');
-
-		foreach ($menu as $package => $list)
-		{
-			// Sort the class list
-			sort($list);
-
-			$output[] =
-				"<li><strong>$package</strong>\n\t<ul><li>".
-				implode("</li><li>", $list).
-				"</li></ul>\n</li>";
-		}
-
-		$output[] = '</ol>';
-
-		return implode("\n", $output);
+		return View::factory('userguide/api/menu')
+			->bind('menu', $menu);
 	}
 
 	public static function classes(array $list = NULL)
