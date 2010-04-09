@@ -22,13 +22,13 @@ $(document).ready(function()
 			{
 				// Hide visible menus
 				togg.html('+');
-				menu.hide();
+				menu.stop(true, true).slideUp('fast');
 			}
 			else
 			{
 				// Show hidden menus
 				togg.html('&ndash;');
-				menu.show();
+				menu.stop(true, true).slideDown('fast');
 			}
 		});
 
