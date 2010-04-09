@@ -7,7 +7,7 @@ $(document).ready(function()
 	});
 	
 	// Syntax highlighter
-	$('pre code').each(function(){
+	$('pre:not(.debug) code').each(function(){
 		$(this).addClass('brush: php');
 	});
 	
