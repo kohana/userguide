@@ -40,7 +40,7 @@ table td { background: #f4f4f4; }
 #content h3 small,
 #content h4 small,
 #content h5 small,
-#content h6 small { font-size: 0.9em; font-weight: normal; color: #444; }
+#content h6 small { font-size: 0.8em; font-weight: normal; color: #444; }
 #content pre { font-size: 1em; line-height: 1.4em; }
 
 #content div.class-list div.class { width: 50%; }

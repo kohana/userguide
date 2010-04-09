@@ -1,8 +1,8 @@
 <h1>
 	<?php echo $doc->modifiers, $doc->class->name ?>
 	<?php $parent = $doc->class; ?>
-	<?php while ($parent = $parent->getParentClass()): ?><br/>
-	<small>&raquo; <?php echo HTML::anchor($route->uri(array('class' => $parent->name)), $parent->name) ?></small>
+	<?php while ($parent = $parent->getParentClass()): ?>
+	<br/><small>&rsaquo; <?php echo HTML::anchor($route->uri(array('class' => $parent->name)), $parent->name) ?></small>
 	<?php endwhile ?>
 </h1>
 
