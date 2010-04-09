@@ -26,7 +26,6 @@ class Controller_Userguide extends Controller_Template {
 		{
 			// Grab the necessary routes
 			$this->media = Route::get('docs/media');
-			$this->api   = Route::get('docs/api');
 			$this->guide = Route::get('docs/guide');
 
 			if (isset($_GET['lang']))
@@ -121,6 +120,18 @@ class Controller_Userguide extends Controller_Template {
 
 		if ($class)
 		{
+			try
+			{
+				$_class = Kodoc_Class::factory($class);
+			
+				if ( ! Kodoc::show_class($_class))
+					throw new Exception("That class is hidden");
+			}
+			catch (Exception $e)
+			{
+				return $this->error("API Reference: Class not found.");
+			}
+			
 			$this->template->title = $class;
 
 			$this->template->content = View::factory('userguide/api/class')

@@ -41,7 +41,11 @@ class Kohana_Kodoc {
 
 		foreach ($classes as $class)
 		{
-			$class = Kodoc::factory($class);
+			$class = Kodoc_Class::factory($class);
+			
+			// Test if we should show this class
+			if ( ! Kodoc::show_class($class))
+				continue;
 
 			$link = HTML::anchor($route->uri(array('class' => $class->class->name)), $class->class->name);
 
@@ -58,13 +62,13 @@ class Kohana_Kodoc {
 					}
 					else
 					{
-						$menu[$package]['Core'][] = $link;
+						$menu[$package]['Base'][] = $link;
 					}
 				}
 			}
 			else
 			{
-				$menu['Unknown']['Base'][] = $link;
+				$menu['[Unknown]']['Base'][] = $link;
 			}
 		}
 
@@ -114,9 +118,9 @@ class Kohana_Kodoc {
 	}
 
 	/**
-	 * Get all classes and methods.  Used on index page.
+	 * Get all classes and methods of files in a list.
 	 *
-	 * >  I personally don't the current index page, but this could be useful for namespacing/packaging
+	 * >  I personally don't like this as it was used on the index page.  Way too much stuff on one page.  It has potential for a package index page though.
 	 * >  For example:  class_methods( Kohana::list_files('classes/sprig') ) could make a nice index page for the sprig package in the api browser
 	 * >     ~bluehawk
 	 *
@@ -271,5 +275,36 @@ class Kohana_Kodoc {
 
 		return implode("\n", $file);
 	}
+	
+	/**
+	 * Test whether a class should be shown, based on the api_packages config option
+	 *
+	 * @param  Kodoc_Class  the class to test
+	 * @return  bool  whether this class should be shown
+	 */
+	public static function show_class(Kodoc_Class $class)
+	{
+		$api_packages = Kohana::config('userguide.api_packages');
+		
+		// If api_packages is true, all packages should be shown
+		if ($api_packages === TRUE)
+			return TRUE;
+		
+		// Get the package tags for this class (as an array)
+		$packages = Arr::get($class->tags,'package',Array('None'));
+		
+		$show_this = FALSE;
+		
+		// Loop through each package tag
+		foreach ($packages as $package)
+		{
+			// If this package is in the allowed packages, set show this to true
+			if (in_array($package,explode(',',$api_packages)))
+				$show_this = TRUE;
+		}
+		
+		return $show_this;
+	}
+	
 
 } // End Kodoc
