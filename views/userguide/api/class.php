@@ -50,6 +50,14 @@
 
 <?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
 
+<p class="note">
+<?php if ($path = $doc->class->getFilename()): ?>
+Class declared in <tt><?php echo Kohana::debug_path($path) ?></tt> file.
+<?php else: ?>
+Class is not declared in a file, it is probably an internal <?php echo html::anchor('http://php.net/manual/class.'.strtolower($doc->class->name).'.php', 'PHP class') ?>.
+<?php endif ?>
+</p>
+
 <?php if ($doc->constants): ?>
 <div class="constants">
 <h2 id="constants">Constants</h2>
