@@ -51,12 +51,12 @@ $(document).ready(function()
 		$('<span class="toggle">[ + ]</span>').toggle(function()
 		{
 			$(this).html('[ &ndash; ]');
-			content.stop().slideDown();
+			content.stop(true, true).slideDown();
 		},
 		function()
 		{
 			$(this).html('[ + ]');
-			content.stop().slideUp();
+			content.stop(true, true).slideUp();
 		})
 		.appendTo(header);
 	});
