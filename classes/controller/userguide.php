@@ -190,12 +190,16 @@ class Controller_Userguide extends Controller_Template {
 				$media->uri(array('file' => 'css/print.css'))  => 'print',
 				$media->uri(array('file' => 'css/screen.css')) => 'screen',
 				$media->uri(array('file' => 'css/kodoc.css'))  => 'screen',
+				$media->uri(array('file' => 'css/shCore.css')) => 'screen',
+				$media->uri(array('file' => 'css/shThemeKodoc.css')) => 'screen',
 			);
 
 			// Add scripts
 			$this->template->scripts = array(
 				$media->uri(array('file' => 'js/jquery.min.js')),
 				$media->uri(array('file' => 'js/kodoc.js')),
+				$media->uri(array('file' => 'js/shCore.js')),
+				$media->uri(array('file' => 'js/shBrushPhp.js')),
 			);
 
 			// Add languages
