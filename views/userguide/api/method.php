@@ -15,8 +15,10 @@
 <?php endif ?>
 
 <?php if ($doc->source): ?>
-<h6>Source:</h6>
+<div class="method-source">
+<h6>Source Code:</h6>
 <pre><code><?php echo HTML::chars($doc->source) ?></code></pre>
+</div>
 <?php endif ?>
 
 <?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
