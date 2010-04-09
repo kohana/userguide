@@ -81,7 +81,7 @@ class Kohana_Kodoc {
 	 * This means any empty class files (as in complety empty) will cause an exception
 	 *
 	 * @param   array   array of files, obtained using Kohana::list_files
-	 * @retur   array   an array of all the class names
+	 * @return  array   an array of all the class names
 	 */
 	public static function classes(array $list = NULL)
 	{
@@ -200,7 +200,14 @@ class Kohana_Kodoc {
 						}
 					break;
 					case 'throws':
-						$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $text)), $text);
+						if (preg_match('/^(\w+)\W(.*)$/',$text,$matches))
+						{
+							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])), $matches[1]).' '.$matches[2];
+						}
+						else
+						{
+							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $text)), $text);
+						}
 					break;
 					case 'uses':
 						if (preg_match('/^([a-z_]+)::([a-z_]+)$/i', $text, $matches))
@@ -209,6 +216,9 @@ class Kohana_Kodoc {
 							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])).'#'.$matches[2], $text);
 						}
 					break;
+					// Don't show @access lines, they are shown elsewhere
+					case 'access':
+						continue 2;
 				}
 
 				// Add the tag
