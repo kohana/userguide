@@ -43,7 +43,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	public function doIncludeViews($text)
 	{
-		if (preg_match_all('/{{(\S+?)}}/m', $text, $matches, PREG_SET_ORDER))
+		if (preg_match_all('/{{([^\s{}]++)}}/', $text, $matches, PREG_SET_ORDER))
 		{
 			$replace = array();
 
@@ -120,7 +120,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	public function doAPI($text)
 	{
-		return preg_replace_callback('/\[([a-z_]+(?:::\$?[a-z_]+)?)\]/i', array($this, '_convert_api_link'), $text);
+		return preg_replace_callback('/\[([a-z_]++(?:::\$?[a-z_]++)?)\]/i', array($this, '_convert_api_link'), $text);
 	}
 
 	public function _convert_api_link($matches)
@@ -160,12 +160,12 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	public function doNotes($text)
 	{
-		if ( ! preg_match('/^\[!!\]\s*(.+?)(\n{2,}|$)/s', $text, $match))
+		if ( ! preg_match('/^\[!!\]\s*+(.+?)(?=\n{2,}|$)/s', $text, $match))
 		{
 			return $text;
 		}
 
-		return $this->hashBlock('<p class="note">'.$match[1].'</p>'.$match[2]);
+		return $this->hashBlock('<p class="note">'.$match[1].'</p>');
 	}
 
 } // End Kodoc_Markdown
