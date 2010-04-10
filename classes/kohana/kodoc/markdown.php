@@ -160,12 +160,12 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	public function doNotes($text)
 	{
-		if ( ! preg_match('/^\[!!\]\s*(.+)$/D', $text, $match))
+		if ( ! preg_match('/^\[!!\]\s*(.+?)(\n{2,}|$)/s', $text, $match))
 		{
 			return $text;
 		}
 
-		return $this->hashBlock('<p class="note">'.$match[1].'</p>');
+		return $this->hashBlock('<p class="note">'.$match[1].'</p>'.$match[2]);
 	}
 
 } // End Kodoc_Markdown
