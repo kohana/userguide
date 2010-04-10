@@ -26,7 +26,6 @@ class Controller_Userguide extends Controller_Template {
 		{
 			// Grab the necessary routes
 			$this->media = Route::get('docs/media');
-			$this->api   = Route::get('docs/api');
 			$this->guide = Route::get('docs/guide');
 
 			if (isset($_GET['lang']))
@@ -121,6 +120,18 @@ class Controller_Userguide extends Controller_Template {
 
 		if ($class)
 		{
+			try
+			{
+				$_class = Kodoc_Class::factory($class);
+			
+				if ( ! Kodoc::show_class($_class))
+					throw new Exception("That class is hidden");
+			}
+			catch (Exception $e)
+			{
+				return $this->error("API Reference: Class not found.");
+			}
+			
 			$this->template->title = $class;
 
 			$this->template->content = View::factory('userguide/api/class')
@@ -190,12 +201,16 @@ class Controller_Userguide extends Controller_Template {
 				$media->uri(array('file' => 'css/print.css'))  => 'print',
 				$media->uri(array('file' => 'css/screen.css')) => 'screen',
 				$media->uri(array('file' => 'css/kodoc.css'))  => 'screen',
+				$media->uri(array('file' => 'css/shCore.css')) => 'screen',
+				$media->uri(array('file' => 'css/shThemeKodoc.css')) => 'screen',
 			);
 
 			// Add scripts
 			$this->template->scripts = array(
 				$media->uri(array('file' => 'js/jquery.min.js')),
 				$media->uri(array('file' => 'js/kodoc.js')),
+				$media->uri(array('file' => 'js/shCore.js')),
+				$media->uri(array('file' => 'js/shBrushPhp.js')),
 			);
 
 			// Add languages

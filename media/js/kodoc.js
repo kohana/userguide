@@ -5,6 +5,17 @@ $(document).ready(function()
 	{
 		$(this).parents('form').submit();
 	});
+	
+	// Syntax highlighter
+	$('pre:not(.debug) code').each(function(){
+		$(this).addClass('brush: php');
+	});
+	
+	SyntaxHighlighter.config.tagName = 'code';
+	// Don't show the toolbar or line-numbers.
+	SyntaxHighlighter.defaults.toolbar = false;
+	SyntaxHighlighter.defaults.gutter = false;
+	SyntaxHighlighter.all();
 
 	// Striped tables
 	$('#content tbody tr:even').addClass('alt');
@@ -59,5 +70,28 @@ $(document).ready(function()
 			content.stop(true, true).slideUp();
 		})
 		.appendTo(header);
+	});
+	
+	// Show source links
+	$('#content .method-source').each(function(){
+		$(this).find('h6').each(function(){ $(this).append(' <a class="toggler" href="#">[show]</a>') });
+		var link = $(this).find('.toggler');
+		var code = $(this).find('pre');
+
+		var show = function()
+		{
+			code.stop(true, true).slideDown();
+			link.html(' [hide]');
+		};
+
+		var hide = function()
+		{
+			code.stop(true, true).slideUp();
+			link.html(' [show]');
+		};
+
+		link.toggle(show,hide);
+
+		code.hide();
 	});
 });
