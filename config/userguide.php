@@ -3,6 +3,6 @@
 return array
 (
 	// Default the userguide language.
-	'lang'		=> 'en-us',
+	'lang'         => 'en-us',
+	'api_browser'  => TRUE,
 );
-
