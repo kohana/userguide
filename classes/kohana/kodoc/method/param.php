@@ -10,59 +10,46 @@
 class Kohana_Kodoc_Method_Param extends Kodoc {
 
 	/**
-	 * @var  ReflectionParameter  The ReflectionParameter for this property
+	 * @var  object  ReflectionParameter for this property
 	 */
 	public $param;
 
 	/**
-	 * @var  string  the name of this var
+	 * @var  string  name of this var
 	 */
 	public $name;
 
 	/**
-	 * @var  string  The variable type, retreived from the comment
+	 * @var  string  variable type, retrieved from the comment
 	 */
 	public $type;
 
 	/**
-	 * @var  string  The default value of this param
+	 * @var  string  default value of this param
 	 */
 	public $default;
 
 	/**
-	 * @var  string  Description of this parameter
+	 * @var  string  description of this parameter
 	 */
 	public $description;
 
 	public $byref = false;
 
-	public $optional = false;
+	/**
+	 * @var  boolean  is the parameter optional?
+	 */
+	public $optional = FALSE;
 
-	public function __construct($method,$param)
+	public function __construct($method, $param)
 	{
-		$this->param = new ReflectionParameter($method,$param);
+		$this->param = new ReflectionParameter($method, $param);
+
 		$this->name = $this->param->name;
 
 		if ($this->param->isDefaultValueAvailable())
 		{
-			$default = $this->param->getDefaultValue();
-
-			if ($default === NULL)
-			{
-				$this->default .= 'NULL ';
-			}
-			elseif ($default === FALSE)
-			{
-				$this->default .= 'FALSE ';
-			}
-			elseif (is_string($default))
-			{
-				$this->default .= "'".$default."'";
-			}
-			else
-			{
-				$this->default .= print_r($default,true);
-			}
+			$this->default = Kohana::dump($this->param->getDefaultValue());
 		}
 
 		if ($this->param->isPassedByReference())
@@ -72,7 +59,7 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 
 		if ($this->param->isOptional())
 		{
-			$this->optional = true;
+			$this->optional = TRUE;
 		}
 	}
 
@@ -99,7 +86,7 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 			$out .= '$'.$this->name.' ';
 		}
 
-		if ($this->param->isDefaultValueAvailable())
+		if ($this->default)
 		{
 			$out .= '<small>= '.$this->default.'</small> ';
 		}
