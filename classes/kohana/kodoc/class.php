@@ -18,14 +18,14 @@ class Kohana_Kodoc_Class extends Kodoc {
 	 * @var  string  modifiers like abstract, final
 	 */
 	public $modifiers;
-	
+
 	/**
 	 * @var  string  description of the class from the comment
 	 */
 	public $description;
 
 	/**
-	 * @var  array  array of tags, retreived from the comment
+	 * @var  array  array of tags, retrieved from the comment
 	 */
 	public $tags = array();
 
@@ -34,9 +34,17 @@ class Kohana_Kodoc_Class extends Kodoc {
 	 */
 	public $constants = array();
 
+	/**
+	 * Loads a class and uses [reflection](http://php.net/reflection) to parse
+	 * the class. Reads the class modifiers, constants and comment. Parses the
+	 * comment to find the description and tags.
+	 *
+	 * @param   string   class name
+	 * @return  void
+	 */
 	public function __construct($class)
 	{
-		$this->class = $parent = new ReflectionClass($class);
+		$this->class = new ReflectionClass($class);
 
 		if ($modifiers = $this->class->getModifiers())
 		{
@@ -51,6 +59,8 @@ class Kohana_Kodoc_Class extends Kodoc {
 			}
 		}
 
+		$parent = $this->class;
+
 		do
 		{
 			if ($comment = $parent->getDocComment())
@@ -64,6 +74,11 @@ class Kohana_Kodoc_Class extends Kodoc {
 		list($this->description, $this->tags) = Kodoc::parse($comment);
 	}
 
+	/**
+	 * Gets a list of the class properties as [Kodoc_Property] objects.
+	 *
+	 * @return  array
+	 */
 	public function properties()
 	{
 		$props = $this->class->getProperties();
@@ -86,11 +101,16 @@ class Kohana_Kodoc_Class extends Kodoc {
 		return $props;
 	}
 
+	/**
+	 * Gets a list of the class properties as [Kodoc_Method] objects.
+	 *
+	 * @return  array
+	 */
 	public function methods()
 	{
 		$methods = $this->class->getMethods();
 
-		usort($methods,array($this,'_method_sort'));
+		usort($methods, array($this,'_method_sort'));
 
 		foreach ($methods as $key => $method)
 		{
@@ -99,7 +119,7 @@ class Kohana_Kodoc_Class extends Kodoc {
 
 		return $methods;
 	}
-	
+
 	protected function _method_sort($a,$b)
 	{
 		/*
@@ -110,8 +130,8 @@ class Kohana_Kodoc_Class extends Kodoc {
 						   'otherwise, the result is:',strcmp($a->class,$b->class)
 						   );
 		*/
-		
-		
+
+
 		// If both methods are defined in the same class, just compare the method names
 		if ($a->class == $b->class)
 			return strcmp($a->name,$b->name);
@@ -125,22 +145,22 @@ class Kohana_Kodoc_Class extends Kodoc {
 		// Otherwise, get the parents of each methods declaring class, then compare which function has more "ancestors"
 		$adepth = 0;
 		$bdepth = 0;
-		
+
 		$parent = $a->getDeclaringClass();
 		do
 		{
 			$adepth++;
 		}
 		while ($parent = $parent->getParentClass());
-		
+
 		$parent = $b->getDeclaringClass();
 		do
 		{
 			$bdepth++;
 		}
 		while ($parent = $parent->getParentClass());
-		
+
 		return $bdepth - $adepth;
 	}
-	
+
 } // End Kodac_Class
