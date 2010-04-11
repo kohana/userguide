@@ -28,25 +28,25 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 	 * @var  string  The default value of this param
 	 */
 	public $default;
-	
+
 	/**
 	 * @var  string  Description of this parameter
 	 */
 	public $description;
-	
+
 	public $byref = false;
-	
+
 	public $optional = false;
 
 	public function __construct($method,$param)
 	{
 		$this->param = new ReflectionParameter($method,$param);
 		$this->name = $this->param->name;
-		
+
 		if ($this->param->isDefaultValueAvailable())
 		{
 			$default = $this->param->getDefaultValue();
-			
+
 			if ($default === NULL)
 			{
 				$this->default .= 'NULL ';
@@ -64,31 +64,32 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 				$this->default .= print_r($default,true);
 			}
 		}
-		
+
 		if ($this->param->isPassedByReference())
 		{
 			$this->byref = true;
 		}
-		
+
 		if ($this->param->isOptional())
 		{
 			$this->optional = true;
 		}
 	}
-	
+
 	public function short()
 	{
 		$out = '';
-		if ($this->byref)
-		{
-			$out .= '<small>byref</small> ';
-		}
-		
+
 		if (isset($this->type))
 		{
 			$out .= '<small>'.$this->type.'</small> ';
 		}
-		
+
+		if ($this->byref)
+		{
+			$out .= '<small><abbr title="passed by reference">&</abbr></small> ';
+		}
+
 		if (isset($this->description))
 		{
 			$out .= '<span class="param" title="'.ucfirst($this->description).'">$'.$this->name.'</span> ';
@@ -97,12 +98,12 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 		{
 			$out .= '$'.$this->name.' ';
 		}
-		
+
 		if ($this->param->isDefaultValueAvailable())
 		{
 			$out .= '<small>= '.$this->default.'</small> ';
 		}
-		
+
 		return $out;
 	}
 
