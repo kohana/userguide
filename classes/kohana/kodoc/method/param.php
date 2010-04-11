@@ -34,7 +34,10 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 	 */
 	public $description;
 
-	public $byref = false;
+	/**
+	 * @var  boolean  is the parameter passed by reference?
+	 */
+	public $reference = FALSE;
 
 	/**
 	 * @var  boolean  is the parameter optional?
@@ -54,7 +57,7 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 
 		if ($this->param->isPassedByReference())
 		{
-			$this->byref = true;
+			$this->reference = TRUE;
 		}
 
 		if ($this->param->isOptional())
@@ -63,35 +66,35 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 		}
 	}
 
-	public function short()
+	public function __toString()
 	{
-		$out = '';
+		$display = '';
 
-		if (isset($this->type))
+		if ($this->type)
 		{
-			$out .= '<small>'.$this->type.'</small> ';
+			$display .= '<small>'.$this->type.'</small> ';
 		}
 
-		if ($this->byref)
+		if ($this->reference)
 		{
-			$out .= '<small><abbr title="passed by reference">&</abbr></small> ';
+			$display .= '<small><abbr title="passed by reference">&</abbr></small> ';
 		}
 
-		if (isset($this->description))
+		if ($this->description)
 		{
-			$out .= '<span class="param" title="'.ucfirst($this->description).'">$'.$this->name.'</span> ';
+			$display .= '<span class="param" title="'.$this->description.'">$'.$this->name.'</span> ';
 		}
 		else
 		{
-			$out .= '$'.$this->name.' ';
+			$display .= '$'.$this->name.' ';
 		}
 
 		if ($this->default)
 		{
-			$out .= '<small>= '.$this->default.'</small> ';
+			$display .= '<small>= '.$this->default.'</small> ';
 		}
 
-		return $out;
+		return $display;
 	}
 
 } // End Kodoc_Method_Param

@@ -26,7 +26,7 @@ class Kohana_Kodoc_Method extends Kodoc {
 	public $return = array();
 
 	/**
-	 * @var   string  the source code for this function
+	 * @var  string  the source code for this function
 	 */
 	public $source;
 
@@ -100,41 +100,41 @@ class Kohana_Kodoc_Method extends Kodoc {
 
 		$this->tags = $tags;
 	}
-	
+
 	public function params_short()
 	{
 		$out = '';
-		$required = true;
-		$first = true;
+		$required = TRUE;
+		$first = TRUE;
 		foreach ($this->params as $param)
 		{
 			if ($required AND $param->default AND $first)
 			{
-				$out .= '[ '.$param->short();
-				$required = false;
-				$first = false;
+				$out .= '[ '.$param;
+				$required = FALSE;
+				$first = FALSE;
 			}
 			elseif ($required AND $param->default)
 			{
-				$out .= '[ , '.$param->short();
-				$required = false;
+				$out .= '[, '.$param;
+				$required = FALSE;
 			}
 			elseif ($first)
 			{
-				$out .= $param->short();
-				$first = false;
+				$out .= $param;
+				$first = FALSE;
 			}
 			else
 			{
-				$out .= ', '.$param->short();
+				$out .= ', '.$param;
 			}
 		}
-		
+
 		if ( ! $required)
 		{
 			$out .= '] ';
 		}
-		
+
 		return $out;
 	}
 
