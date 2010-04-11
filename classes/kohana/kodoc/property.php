@@ -11,22 +11,22 @@
 class Kohana_Kodoc_Property extends Kodoc {
 
 	/**
-	 * @var  ReflectionProperty  The ReflectionProperty for this property
+	 * @var  object  ReflectionProperty
 	 */
 	public $property;
 
 	/**
-	 * @var  string   Modifiers, like public, private, static. Defaults to 'public'
+	 * @var  string   modifiers: public, private, static, etc
 	 */
 	public $modifiers = 'public';
 
 	/**
-	 * @var  string  The variable type, retreived from the comment
+	 * @var  string  variable type, retrieved from the comment
 	 */
 	public $type;
 
 	/**
-	 * @var  string  The value of this property
+	 * @var  string  value of the property
 	 */
 	public $value;
 
