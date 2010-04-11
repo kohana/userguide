@@ -100,6 +100,14 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		return preg_replace('~(!\[.+?\]\()(?!\w++://)(\S*(?:\s*+".+?")?\))~', '$1'.Kodoc_Markdown::$image_url.'$2', $text);
 	}
 
+	/**
+	 * Parses links to the API browser.
+	 *
+	 *     [Class_Name] or [Class::$property]
+	 *
+	 * @param   string   span text
+	 * @return  string
+	 */
 	public function doAPI($text)
 	{
 		return preg_replace_callback('/\[([a-z_]++(?:::\$?[a-z_]++)?)\]/i', array($this, '_convert_api_link'), $text);
