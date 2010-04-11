@@ -5,12 +5,13 @@ $(document).ready(function()
 	{
 		$(this).parents('form').submit();
 	});
-	
+
 	// Syntax highlighter
-	$('pre:not(.debug) code').each(function(){
+	$('pre:not(.debug) code').each(function()
+	{
 		$(this).addClass('brush: php');
 	});
-	
+
 	SyntaxHighlighter.config.tagName = 'code';
 	// Don't show the toolbar or line-numbers.
 	SyntaxHighlighter.defaults.toolbar = false;
@@ -73,25 +74,21 @@ $(document).ready(function()
 	});
 	
 	// Show source links
-	$('#content .method-source').each(function(){
-		$(this).find('h6').each(function(){ $(this).append(' <a class="toggler" href="#">[show]</a>') });
-		var link = $(this).find('.toggler');
-		var code = $(this).find('pre');
+	$('#content .method-source').each(function()
+	{
+		var self = $(this);
+		var togg = $('<span class="toggle">+</span>').appendTo($('h5', self));
+		var code = self.find('pre').hide();
 
-		var show = function()
+		self.toggle(function()
 		{
+			togg.html('&ndash;');
 			code.stop(true, true).slideDown();
-			link.html(' [hide]');
-		};
-
-		var hide = function()
+		},
+		function()
 		{
+			togg.html('+');
 			code.stop(true, true).slideUp();
-			link.html(' [show]');
-		};
-
-		link.toggle(show,hide);
-
-		code.hide();
+		});
 	});
 });
