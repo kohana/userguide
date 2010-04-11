@@ -76,8 +76,8 @@ class Controller_Userguide extends Controller_Template {
 
 		if ( ! $file)
 		{
-			throw new Kohana_Exception('User guide page not found: :page',
-				array(':page' => $page));
+			$this->error('Userguide page not found');
+			return;
 		}
 
 		// Set the page title
@@ -187,6 +187,16 @@ class Controller_Userguide extends Controller_Template {
 
 		// Set the content type for this extension
 		$this->request->headers['Content-Type'] = File::mime_by_ext($ext);
+	}
+	
+	// Display an error if a page isn't found
+	public function error($message)
+	{
+		$this->request->status = 404;
+		$this->template->title = "Userguide - Error";
+		$this->template->content = View::factory('userguide/error',array('message'=>$message));
+		$this->template->menu = Kodoc::menu();
+		$this->template->breadcrumb = array($this->guide->uri() => 'User Guide', 'Error');
 	}
 
 	public function after()
