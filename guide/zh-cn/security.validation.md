@@ -16,6 +16,8 @@
 :  回调函数是自定义函数，它可以访问整个校验对象。
    回调函数的返回值会被忽略，因此，当校验错误时回调函数必须手动的使用 [Validate::error] 添加错误到对象中。
 
+[!!] 注意 [Validate] 的 callbacks 和 [PHP callbacks](http://php.net/manual/language.pseudo-types.php#language.types.callback) 是完全不同的两个方法。
+
 如果想把添加的过滤器，规则或回调函数应用到所有的定义的字段需要设置字段名为 `TRUE` 。
 
 **[Validate] 对象会移除所有未设置标签，过滤器，规则或回调函数的字段。以此防止未被验证的字段发生校验错误。**
@@ -26,27 +28,7 @@
 
 [!!] 提示 `$post` 对象将会被用于本教程的其他实例中。
 
-## 添加过滤器
-
-所有的校验规则被定义为字段名，方法或函数(使用 [PHP callback](http://php.net/callback) 语法)以及数组形式的参数:
-
-    $object->filter($field, $callback, $parameter);
-
-### 实例
-
-如果要转换 "username" 字段的值为全小写:
-
-    $post->filter('username', 'strtolower');
-
-如果要对所有字段移除左右所有空格:
-
-    $post->filter(TRUE, 'trim');
-
-## 添加规则
-
-所有的校验规则被定义为字段名，方法或函数(使用 [PHP callback](http://php.net/callback) 语法)以及数组形式的参数:
-
-    $object->rule($field, $callback, $parameter);
+### 默认规则
 
 校验默认提供的规则:
 
@@ -74,6 +56,31 @@
 [Validate::color]         | 值必须是有效的 HEX 颜色
 [Validate::matches]       | 值必须匹配其他字段的值
 
+[!!] 任何存在于 [Validate] 类中的方法都可以在不指定完整回调的情况下用于校验规则。
+比如，添加 `'not_empty'` 和 `array('Validate', 'not_empty')` 是等同的。
+
+## 添加过滤器
+
+所有的校验规则被定义为字段名，方法或函数(使用 [PHP callback](http://php.net/callback) 语法)以及数组形式的参数:
+
+    $object->filter($field, $callback, $parameter);
+
+过滤器修改字段值之前请仔细检查规则或回调函数。
+
+如果要转换 "username" 字段的值为全小写:
+
+    $post->filter('username', 'strtolower');
+
+如果要对所有字段移除左右*所有*空格:
+
+    $post->filter(TRUE, 'trim');
+
+## 添加规则
+
+所有的校验规则被定义为字段名，方法或函数(使用 [PHP callback](http://php.net/callback) 语法)以及数组形式的参数:
+
+    $object->rule($field, $callback, $parameter);
+
 ### 实例
 
 任何函数添加到 `Validate` 类都可以通过调用一个规则而不必指定 `Validate` 类:
@@ -98,6 +105,20 @@
 
     $post->rule('username', array($model, 'unique_username'));
 
+回调方法 `$model->unique_username()` 的代码如下：
+
+    public function unique_username($username)
+    {
+        // 检测用户名是否存在于数据库
+        return ! DB::select(array(DB::expr('COUNT(username)'), 'total'))
+            ->from('users')
+            ->where('username', '=', $username)
+            ->execute()
+            ->get('total');
+    }
+
+[!!] 自定义规则可以设置许多额外的检测以可用于多种用途。这些方法运行存在于一个模型(model)中，或者是定义在任意一个类中。
+
 ## 添加回调函数
 
 所有的校验规则被定义为字段名，方法或函数(使用 [PHP callback](http://php.net/callback) 语法)以及数组形式的参数:
@@ -105,8 +126,6 @@
     $object->callback($field, $callback);
 
 [!!] 不同的过滤器和规则，没有参数也可以传递到回调函数之中。
-
-### 实例
 
 如果用户的密码必须是哈希值，我们可以使用回调函数哈希其值：
 
@@ -123,3 +142,103 @@
         }
     }
 
+# 一个完整的例子
+
+首先，我们使用 [View] 创建一个 HTML 表单。假设文件存放于 `application/views/user/register.php`:
+
+    <?php echo Form::open() ?>
+    <?php if ($errors): ?>
+    <p class="message">操作发生问题，请仔细检查并保证填写正确。</p>
+    <ul class="errors">
+    <?php foreach ($errors as $message): ?>
+        <li><?php echo $message ?></li>
+    <?php endforeach ?>
+    <?php endif ?>
+
+    <dl>
+        <dt><?php echo Form::label('username', '用户名') ?></dt>
+        <dd><?php echo Form::input('username', $post['username']) ?></dd>
+
+        <dt><?php echo Form::label('password', '密码') ?></dt>
+        <dd><?php echo From::password('password') ?></dd>
+        <dd class="help">密码必须保证至少六位字符</dd>
+        <dt><?php echo Form::label('confirm', '重复上面密码') ?></dt>
+        <dd><?php echo Form::password('confirm') ?></dd>
+
+        <dt><?php echo Form::label('use_ssl', '使用 SSL') ?></dt>
+        <dd><?php echo Form::select('use_ssl', array('yes' => '总是使用 SSL', 'no' => '仅当需要的时候'), $post['use_ssl']) ?></dd>
+        <dd class="help">鉴于安全起见，SSL 一般用于支付时使用</dd>
+    </dl>
+
+    <?php echo Form::submit(NULL, '申请') ?>
+    <?php echo Form::close() ?>
+
+[!!] 本例子我们使用了 [Form] 辅助函数生成表单。使用 [Form] 从而代替手写 HTML 代码的好处在于所有输入项都会严格处理。
+如果你喜欢手写 HTML，那请记得使用 [HTML::chars] 方法来转移用户输入。
+
+接下来，我们开始编写控制器的代码来处理注册过程。假设文件存放于 `application/classes/controller/user.php`:
+
+    class Controller_User extends Controller {
+
+        public function action_register()
+        {
+            $user = Model::factory('user');
+
+            $post = Validate::factory($_POST)
+                ->filter(TRUE, 'trim')
+
+                ->filter('username', 'strtolower')
+
+                ->rule('username', 'not_empty')
+                ->rule('username', 'regex', array('/^[a-z_.]++$/iD'))
+                ->rule('username', array($user, 'unique_username'))
+
+                ->rule('password', 'not_empty')
+                ->rule('password', 'min_length', array('6'))
+                ->rule('confirm',  'matches', array('password'))
+
+                ->rule('use_ssl', 'not_empty')
+                ->rule('use_ssl', 'in_array', array(array('yes', 'no')))
+
+                ->callback('password', array($user, 'hash_password'));
+
+            if ($post->check())
+            {
+                // 确保数据都通过了校验后执行注册用户
+                $user->register($post);
+
+                // 通常在注册成功后会调整到登录前的页面
+                URL::redirect('user/profile');
+            }
+
+            // 校验失败，获得错误提示
+            $errors = $post->errors('user');
+
+            // 显示用户注册的表单
+            $this->request->response = View::factory('user/register')
+                ->bind('post', $post)
+                ->bind('errors', $errors);
+        }
+
+    }
+
+另外我们还需要有一个 user 模型，假设文件存放于 `application/classes/model/user.php`:
+
+    class Model_User extends Model {
+
+        public function register($array)
+        {
+            // 创建一条新纪录
+            $id = DB::insert(array_keys($array))
+                ->values($array)
+                ->execute();
+
+            // 保存新用户的 id 到 cookie
+            cookie::set('user', $id);
+
+            return $id;
+        }
+
+    }
+
+一个简单的用户注册的例子就这么完成了！
