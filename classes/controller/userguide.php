@@ -2,7 +2,8 @@
 /**
  * Kohana user guide and api browser.
  *
- * @package    Userguide
+ * @package    Kohana/Userguide
+ * @category   Controllers
  * @author     Kohana Team
  */
 class Controller_Userguide extends Controller_Template {
@@ -25,7 +26,6 @@ class Controller_Userguide extends Controller_Template {
 		{
 			// Grab the necessary routes
 			$this->media = Route::get('docs/media');
-			$this->api   = Route::get('docs/api');
 			$this->guide = Route::get('docs/guide');
 
 			if (isset($_GET['lang']))
@@ -76,8 +76,8 @@ class Controller_Userguide extends Controller_Template {
 
 		if ( ! $file)
 		{
-			throw new Kohana_Exception('User guide page not found: :page',
-				array(':page' => $page));
+			$this->error('Userguide page not found');
+			return;
 		}
 
 		// Set the page title
@@ -120,6 +120,18 @@ class Controller_Userguide extends Controller_Template {
 
 		if ($class)
 		{
+			try
+			{
+				$_class = Kodoc_Class::factory($class);
+			
+				if ( ! Kodoc::show_class($_class))
+					throw new Exception("That class is hidden");
+			}
+			catch (Exception $e)
+			{
+				return $this->error("API Reference: Class not found.");
+			}
+			
 			$this->template->title = $class;
 
 			$this->template->content = View::factory('userguide/api/class')
@@ -176,6 +188,16 @@ class Controller_Userguide extends Controller_Template {
 		// Set the content type for this extension
 		$this->request->headers['Content-Type'] = File::mime_by_ext($ext);
 	}
+	
+	// Display an error if a page isn't found
+	public function error($message)
+	{
+		$this->request->status = 404;
+		$this->template->title = "Userguide - Error";
+		$this->template->content = View::factory('userguide/error',array('message'=>$message));
+		$this->template->menu = Kodoc::menu();
+		$this->template->breadcrumb = array($this->guide->uri() => 'User Guide', 'Error');
+	}
 
 	public function after()
 	{
@@ -189,12 +211,16 @@ class Controller_Userguide extends Controller_Template {
 				$media->uri(array('file' => 'css/print.css'))  => 'print',
 				$media->uri(array('file' => 'css/screen.css')) => 'screen',
 				$media->uri(array('file' => 'css/kodoc.css'))  => 'screen',
+				$media->uri(array('file' => 'css/shCore.css')) => 'screen',
+				$media->uri(array('file' => 'css/shThemeKodoc.css')) => 'screen',
 			);
 
 			// Add scripts
 			$this->template->scripts = array(
-				'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
+				$media->uri(array('file' => 'js/jquery.min.js')),
 				$media->uri(array('file' => 'js/kodoc.js')),
+				$media->uri(array('file' => 'js/shCore.js')),
+				$media->uri(array('file' => 'js/shBrushPhp.js')),
 			);
 
 			// Add languages

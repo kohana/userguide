@@ -1,8 +1,8 @@
 <h1>
 	<?php echo $doc->modifiers, $doc->class->name ?>
 	<?php $parent = $doc->class; ?>
-	<?php while ($parent = $parent->getParentClass()): ?><br/>
-	<small>&raquo; <?php echo HTML::anchor($route->uri(array('class' => $parent->name)), $parent->name) ?></small>
+	<?php while ($parent = $parent->getParentClass()): ?>
+	<br/><small>&rsaquo; <?php echo HTML::anchor($route->uri(array('class' => $parent->name)), $parent->name) ?></small>
 	<?php endwhile ?>
 </h1>
 
@@ -50,6 +50,14 @@
 
 <?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
 
+<p class="note">
+<?php if ($path = $doc->class->getFilename()): ?>
+Class declared in <tt><?php echo Kohana::debug_path($path) ?></tt> on line <?php echo $doc->class->getStartLine() ?>.
+<?php else: ?>
+Class is not declared in a file, it is probably an internal <?php echo html::anchor('http://php.net/manual/class.'.strtolower($doc->class->name).'.php', 'PHP class') ?>.
+<?php endif ?>
+</p>
+
 <?php if ($doc->constants): ?>
 <div class="constants">
 <h2 id="constants">Constants</h2>
@@ -67,7 +75,7 @@
 <div class="properties">
 <dt>
 <?php foreach ($properties as $prop): ?>
-<dt id="property:<?php echo $prop->property->name ?>"><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> <?php echo $prop->property->name ?></dt>
+<dt id="property:<?php echo $prop->property->name ?>"><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> $<?php echo $prop->property->name ?></dt>
 <dd><?php echo $prop->description ?></dd>
 <dd><?php echo $prop->value ?></dd>
 <?php endforeach ?>
@@ -79,7 +87,7 @@
 <h2 id="methods">Methods</h2>
 <div class="methods">
 <?php foreach ($methods as $method): ?>
-<?php echo View::factory('userguide/api/method')->set('doc', $method) ?>
+<?php echo View::factory('userguide/api/method')->set('doc', $method)->set('route', $route) ?>
 <?php endforeach ?>
 </div>
 <?php endif ?>

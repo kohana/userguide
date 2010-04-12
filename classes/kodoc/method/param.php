@@ -1,6 +1,3 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-return array
-(
-	'User Guide' => 'Handbuch'
-);
+class Kodoc_Method_Param extends Kohana_Kodoc_Method_Param {}

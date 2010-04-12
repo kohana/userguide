@@ -2,7 +2,8 @@
 /**
  * Custom Markdown parser for Kohana documentation.
  *
- * @package    Userguide
+ * @package    Kohana/Userguide
+ * @category   Base
  * @author     Kohana Team
  * @copyright  (c) 2009 Kohana Team
  * @license    http://kohanaphp.com/license
@@ -42,7 +43,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	public function doIncludeViews($text)
 	{
-		if (preg_match_all('/{{(\S+?)}}/m', $text, $matches, PREG_SET_ORDER))
+		if (preg_match_all('/{{([^\s{}]++)}}/', $text, $matches, PREG_SET_ORDER))
 		{
 			$replace = array();
 
@@ -72,54 +73,44 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	}
 
 	/**
-	 * Add the current base url to all links.
+	 * Add the current base url to all local links.
+	 *
+	 *     [filesystem](about.filesystem "Optional title")
 	 *
 	 * @param   string  span text
 	 * @return  string
 	 */
 	public function doBaseURL($text)
-	{	
-		return preg_replace_callback('~(?!!)\[(.+?)\]\(([^#]\S*(?:\s*".+?")?)\)~', array($this, '_add_base_url'), $text);
-	}
-
-	public function _add_base_url($matches)
 	{
-		if ($matches[2] AND strpos($matches[2], '://') === FALSE)
-		{
-			// Add the base url to the link URL
-			$matches[2] = Kodoc_Markdown::$base_url.$matches[2];
-		}
-
-		// Recreate the link
-		return "[{$matches[1]}]({$matches[2]})";
+		// URLs containing "://" are left untouched
+		return preg_replace('~(?<!!)(\[.+?\]\()(?!\w++://)([^#]\S*(?:\s*+".+?")?\))~', '$1'.Kodoc_Markdown::$base_url.'$2', $text);
 	}
 
 	/**
-	 * Add the current base url to all images.
+	 * Add the current base url to all local images.
+	 *
+	 *     ![Install Page](img/install.png "Optional title")
 	 *
 	 * @param   string  span text
 	 * @return  string
 	 */
 	public function doImageURL($text)
 	{
-		return preg_replace_callback('#!\[(.+?)\]\((\S*(?:\s*".+?")?)\)#', array($this, '_add_image_url'), $text);
+		// URLs containing "://" are left untouched
+		return preg_replace('~(!\[.+?\]\()(?!\w++://)(\S*(?:\s*+".+?")?\))~', '$1'.Kodoc_Markdown::$image_url.'$2', $text);
 	}
 
-	public function _add_image_url($matches)
-	{
-		if ($matches[2] AND strpos($matches[2], '://') === FALSE)
-		{
-			// Add the base url to the link URL
-			$matches[2] = Kodoc_Markdown::$image_url.$matches[2];
-		}
-
-		// Recreate the link
-		return "![{$matches[1]}]({$matches[2]})";
-	}
-
+	/**
+	 * Parses links to the API browser.
+	 *
+	 *     [Class_Name] or [Class::$property]
+	 *
+	 * @param   string   span text
+	 * @return  string
+	 */
 	public function doAPI($text)
 	{
-		return preg_replace_callback('/\[([a-z_]+(?:::[a-z_]+)?)\]/i', array($this, '_convert_api_link'), $text);
+		return preg_replace_callback('/\[([a-z_]++(?:::\$?[a-z_]++)?)\]/i', array($this, '_convert_api_link'), $text);
 	}
 
 	public function _convert_api_link($matches)
@@ -138,6 +129,12 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 			// Split the class and method
 			list($class, $method) = explode('::', $link, 2);
 
+			if ($method[0] === '$')
+			{
+				// Class property, not method
+				$method = 'property:'.substr($method, 1);
+			}
+
 			// Add the id symbol to the method
 			$method = '#'.$method;
 		}
@@ -151,9 +148,17 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		return HTML::anchor($route->uri(array('class' => $class)).$method, $link);
 	}
 
+	/**
+	 * Wrap notes in the applicable markup. Notes can contain single newlines.
+	 *
+	 *     [!!] Remember the milk!
+	 *
+	 * @param   string  span text
+	 * @return  string
+	 */
 	public function doNotes($text)
 	{
-		if ( ! preg_match('/^\[!!\]\s*(.+)$/D', $text, $match))
+		if ( ! preg_match('/^\[!!\]\s*+(.+?)(?=\n{2,}|$)/s', $text, $match))
 		{
 			return $text;
 		}
