@@ -13,6 +13,7 @@
    - [Hello, World](tutorials.helloworld)
    - [路由，URLs 和链接](tutorials.urls)
    - [数据库](tutorials.databases)
+   - [ORM](tutorials.orm)
    - [使用 Git 开发](tutorials.git)
 3. **安全**
    - [XSS](security.xss)

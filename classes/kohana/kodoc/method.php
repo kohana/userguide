@@ -2,19 +2,32 @@
 /**
  * Class method documentation generator.
  *
- * @package    Userguide
+ * @package    Kohana/Userguide
+ * @category   Base
  * @author     Kohana Team
  * @copyright  (c) 2009 Kohana Team
  * @license    http://kohanaphp.com/license
  */
 class Kohana_Kodoc_Method extends Kodoc {
 
+	/**
+	 * @var  ReflectionMethod   The ReflectionMethod for this class
+	 */
 	public $method;
 
+	/**
+	 * @var  array    array of Kodoc_Method_Param
+	 */
 	public $params;
 
+	/**
+	 * @var  array   the things this function can return
+	 */
 	public $return = array();
 
+	/**
+	 * @var  string  the source code for this function
+	 */
 	public $source;
 
 	public function __construct($class, $method)
@@ -51,35 +64,23 @@ class Kohana_Kodoc_Method extends Kodoc {
 
 			foreach ($this->method->getParameters() as $i => $param)
 			{
+				$param = new Kodoc_Method_Param(array($this->method->class,$this->method->name),$i);
+
 				if (isset($tags['param'][$i]))
 				{
-					if ($param->isDefaultValueAvailable())
-					{
-						$name = $param->name.' = '.var_export($param->getDefaultValue(), TRUE);
-					}
-					else
-					{
-						$name = $param->name;
-					}
-
 					preg_match('/^(\S+)(?:\s*(.+))?$/', $tags['param'][$i], $matches);
 
-					$verbose = '<small>'.$matches[1].'</small> ';
+					$param->type = $matches[1];
 
 					if (isset($matches[2]))
 					{
-						$verbose .= '<span class="param" title="'.$matches[2].'">$'.$name.'</span>';
+						$param->description = $matches[2];
 					}
-					else
-					{
-						$verbose .= '<span class="param">$'.$name.'</span>';
-					}
-
-					$params[] = $verbose;
 				}
+				$params[] = $param;
 			}
 
-			$this->params = implode(', ', $params);
+			$this->params = $params;
 
 			unset($tags['param']);
 		}
@@ -98,6 +99,43 @@ class Kohana_Kodoc_Method extends Kodoc {
 		}
 
 		$this->tags = $tags;
+	}
+
+	public function params_short()
+	{
+		$out = '';
+		$required = TRUE;
+		$first = TRUE;
+		foreach ($this->params as $param)
+		{
+			if ($required AND $param->default AND $first)
+			{
+				$out .= '[ '.$param;
+				$required = FALSE;
+				$first = FALSE;
+			}
+			elseif ($required AND $param->default)
+			{
+				$out .= '[, '.$param;
+				$required = FALSE;
+			}
+			elseif ($first)
+			{
+				$out .= $param;
+				$first = FALSE;
+			}
+			else
+			{
+				$out .= ', '.$param;
+			}
+		}
+
+		if ( ! $required)
+		{
+			$out .= '] ';
+		}
+
+		return $out;
 	}
 
 } // End Kodoc_Method

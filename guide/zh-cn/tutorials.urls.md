@@ -35,8 +35,8 @@
 
 Kohana 路由系统使用 perl 正则表达式来处理匹配。默认情况下 key（使用 `<>` 括起来的）只能根据 `[a-zA-Z0-9_]++` 来匹配，但是你可以为每个 key 以数组的形式自定义不同的模式分配到 [Route::set]。继续扩充上面的例子，如果你之前定义了一个 amdin 和 addiliate 段。其实可以使用路由分割或者下面的方式指定它们：
 
-    Route::set('sections', '<directory>(/<controller>(/<action>(/<id>)))'
-      array((
+    Route::set('sections', '<directory>(/<controller>(/<action>(/<id>)))',
+      array(
         'directory' => '(admin|affiliate)'
       ))
       ->defaults(array(
@@ -110,7 +110,6 @@ Kohana 路由系统使用 perl 正则表达式来处理匹配。默认情况下 
         'controller' => 'search',
         'action' => 'index',
       ));
-
 
 路由的匹配是按照顺序指定的所以大家需要知道的是，如果你在加载模块之后设置路由，模块也可以指定路由程序相冲突的路由。如果是因为这个为什么默认路由会在最后设置，所以字段能够以路由的时候最好先做测试。
       

@@ -2,7 +2,7 @@
 
 Kohana 使用 [git](http://git-scm.com/) 作为版本控制并托管在 [github](http://github.com/kohana) 网站上面。本教程将会讲解如何让你使用 Git 并从 github 上部署一个简单的应用。
 
-## Initial Structure
+## 部署系统结构
 
 [!!] 开始本教程前务必保证开发环境以及设置完毕，接下来我们要做一个可以通过 <http://localhost/gitorial/> 访问的新应用。
 

@@ -1,17 +1,19 @@
 1. **Первые шаги**
    - [Что такое Kohana?](about.kohana)
    - [Соглашения и стили](about.conventions)
-   - [Установка](about.installation)
+   - [Установка](about.install)
    - [Обновление](about.upgrading)
    - [Настройка](about.configuration)
    - [Модель-Представление-Контроллер](about.mvc)
    - [Файловая система](about.filesystem)
    - [Автозагрузка](about.autoloading)
    - [Порядок выполнения](about.flow)
+   - [Обзор API](api)
 2. **Обучение**
    - [Hello, World](tutorials.helloworld)
    - [Маршруты, URL и ссылки](tutorials.urls)
    - [Базы данных](tutorials.databases)
+   - [ORM](tutorials.orm)
    - [Работа с Git](tutorials.git)
 3. **Безопасность**
    - [XSS](security.xss)
@@ -19,7 +21,6 @@
    - [Cookies](security.cookies)
    - [База данных](security.database)
 4. **Отладка**
-   - [Обзор API](api)
    - [Отладка кода](debugging.code)
    - [Обработка ошибок](debugging.errors)
    - [Профилирование](debugging.profiling)

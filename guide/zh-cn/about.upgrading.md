@@ -276,8 +276,6 @@ It's worth noting, though, that this is *very* bad practice as it couples your v
 	$view->bind('this', $this);
 
 因为视图在一个空的作用域呈现，而 `Controller::_kohana_load_view` 现在是多余的了。如果你想在它呈现之前修改视图（比如，添加一个站点的菜单），你可以使用 [Controller::after]
-
-	<?php
 	
 	Class Controller_Hello extends Controller_Template
 	{
