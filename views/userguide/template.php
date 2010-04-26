@@ -33,23 +33,20 @@
 <div id="docs" class="container">
 	<div id="content" class="span-17 suffix-1 colborder">
 		<?php echo $content ?>
-		
+
+		<?php if (Kohana::$environment === 'production'): ?>
 		<div id="disqus_thread" class="clear"></div>
 		<script type="text/javascript">
-		  /**
-		    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread] 
-		    */
-		  <?php if ( ! Kohana::$environment !== 'production'): ?>
-		  var disqus_developer = true;
-		  <?php endif ?>
-		  (function() {
-		   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-		   dsq.src = 'http://kohana.disqus.com/embed.js';
-		   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-		  })();
+			var disqus_identifier = '<?php echo Request::instance()->uri ?>';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://kohana.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
 		</script>
 		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=kohana">comments powered by Disqus.</a></noscript>
 		<a href="http://disqus.com" class="dsq-brlink">Documentation comments powered by <span class="logo-disqus">Disqus</span></a>
+		<?php endif ?>
 	</div>
 
 	<div id="menu" class="span-6 last">
@@ -70,6 +67,7 @@
 	</div>
 </div>
 
+<?php if (Kohana::$environment === 'production'): ?>
 <script type="text/javascript">
 //<![CDATA[
 (function() {
@@ -84,6 +82,6 @@
 })();
 //]]>
 </script>
-
+<?php endif ?>
 </body>
 </html>
