@@ -34,7 +34,7 @@
 	<div id="content" class="span-17 suffix-1 colborder">
 		<?php echo $content ?>
 		
-		<div id="disqus_thread"></div>
+		<div id="disqus_thread" class="clear"></div>
 		<script type="text/javascript">
 		  /**
 		    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread] 
