@@ -33,6 +33,23 @@
 <div id="docs" class="container">
 	<div id="content" class="span-17 suffix-1 colborder">
 		<?php echo $content ?>
+		
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+		  /**
+		    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread] 
+		    */
+		  <?php if ( ! Kohana::$environment !== 'production'): ?>
+		  var disqus_developer = true;
+		  <?php endif ?>
+		  (function() {
+		   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		   dsq.src = 'http://kohana.disqus.com/embed.js';
+		   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		  })();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=kohana">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">Documentation comments powered by <span class="logo-disqus">Disqus</span></a>
 	</div>
 
 	<div id="menu" class="span-6 last">
@@ -52,6 +69,21 @@
 		<p class="powered">Powered by <?php echo HTML::anchor('http://kohanaphp.com/', 'Kohana') ?> v<?php echo Kohana::VERSION ?></p>
 	</div>
 </div>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/kohana/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
 
 </body>
 </html>
