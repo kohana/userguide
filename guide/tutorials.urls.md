@@ -132,7 +132,7 @@ The established convention is to either place your custom routes in the `MODPATH
     
 ## URLs
 
-Along with Kohana's powerful routing capabilities are included some methods for generating URLs for your routes uris. You can always specify your uris as a string using [URL::site] to create a full URL like so:
+Along with Kohana's powerful routing capabilities are included some methods for generating URLs for your routes' uris. You can always specify your uris as a string using [URL::site] to create a full URL like so:
 
     URL::site('admin/edit/user/'.$user_id);
 
