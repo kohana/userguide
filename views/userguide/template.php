@@ -34,7 +34,7 @@
 	<div id="content" class="span-17 suffix-1 colborder">
 		<?php echo $content ?>
 
-		<?php if (Kohana::$environment === 'production'): ?>
+		<?php if (Kohana::$environment === Kohana::PRODUCTION): ?>
 		<div id="disqus_thread" class="clear"></div>
 		<script type="text/javascript">
 			var disqus_identifier = '<?php echo Request::instance()->uri ?>';
@@ -67,7 +67,7 @@
 	</div>
 </div>
 
-<?php if (Kohana::$environment === 'production'): ?>
+<?php if (Kohana::$environment === Kohana::PRODUCTION): ?>
 <script type="text/javascript">
 //<![CDATA[
 (function() {
