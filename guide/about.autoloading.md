@@ -12,6 +12,8 @@ When calling a class that has not been loaded (eg: `Session_Cookie`), Kohana wil
 
 ## Custom Autoloaders
 
-[!!] The default autoloader is enabled in `application/bootstrap.php`.
+The default autoloader is enabled in `application/bootstrap.php`, like this:
 
-Additional class loaders can be added using [spl_autoload_register](http://php.net/spl_autoload_register).
+    spl_autoload_register(array('Kohana', 'auto_load'));
+
+This adds the [Kohana::auto_load] method to the enabled auto loading callbacks. You can add your own using [spl_autoload_register](http://php.net/spl_autoload_register).
