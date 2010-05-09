@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $l = substr(I18n::$lang, 2) ?>" lang="<?php echo $l ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $l = substr(I18n::$lang, 0, 2) ?>" lang="<?php echo $l ?>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<div id="topbar">
+<div id="topbar" class="clear">
 	<div class="container">
 		<div class="span-17 suffix-1">
 			<ul class="breadcrumb">
@@ -30,7 +30,7 @@
 	</div>
 </div>
 
-<div id="docs" class="container">
+<div id="docs" class="container clear">
 	<div id="content" class="span-17 suffix-1 colborder">
 		<?php echo $content ?>
 
@@ -58,12 +58,14 @@
 	</div>
 </div>
 
-<div id="footer" class="container">
-	<div class="span-17 suffix-1">
-		<p class="copyright">&copy; 2008–<?php echo date('Y') ?> Kohana Team</p>
-	</div>
-	<div class="span-6 last">
-		<p class="powered">Powered by <?php echo HTML::anchor('http://kohanaphp.com/', 'Kohana') ?> v<?php echo Kohana::VERSION ?></p>
+<div id="footer" class="clear">
+	<div class="container">
+		<div class="span-17 suffix-1">
+			<p class="copyright">&copy; 2008–<?php echo date('Y') ?> Kohana Team</p>
+		</div>
+		<div class="span-6 last">
+			<p class="powered center">Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?></p>
+		</div>
 	</div>
 </div>
 
