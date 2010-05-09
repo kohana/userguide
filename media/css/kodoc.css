@@ -56,7 +56,7 @@ table td { background: #f4f4f4; }
 #content div.constants { margin-bottom: 1em; }
 	#content div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
 	#content div.method h3 abbr.param { text-transform: none; font-size: 1em; }
-#content p.note { display: block; padding: 0.4em 0.6em; background: #efefef; color: #444; font-size: 0.9em; border: solid 1px #eee; }
+#content p.note { display: block; padding: 0.4em 0.6em; padding-left: 3em; background: #efefef url(../img/note.png) 1em 0.6em no-repeat; color: #444; border: solid 1px #eee; }
 #content dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; }
 	#content dl.tags dt { margin: 0 0 0.4em; clear: both; float: left; width: 25%; }
 	#content dl.tags dd { margin: 0; padding: 0; clear: right; float: right; }
