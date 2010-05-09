@@ -1,6 +1,6 @@
 # Installation
 
-1. Download the latest **stable** release from the [Kohana website](http://kohanaphp.com/)
+1. Download the latest **stable** release from the [Kohana website](http://kohanaframework.org/)
 2. Unzip the downloaded package to create a `kohana` directory
 3. Upload the contents of this folder to your webserver
 4. Open `application/bootstrap.php` and make the following changes:

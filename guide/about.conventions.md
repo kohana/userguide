@@ -23,4 +23,4 @@ Kohana 3 does not differentiate between *types* of class in the same way that Ko
 
 ## Code Style
 
-It is encouraged to follow Kohana's [coding style](http://dev.kohanaphp.com/wiki/kohana2/CodingStyle). This uses [BSD/Allman style](http://en.wikipedia.org/wiki/Indent_style#BSD.2FAllman_style) bracing, among other things.
+It is encouraged to follow Kohana's [coding style](http://dev.kohanaframework.org/wiki/kohana2/CodingStyle). This uses [BSD/Allman style](http://en.wikipedia.org/wiki/Indent_style#BSD.2FAllman_style) bracing, among other things.
