@@ -25,6 +25,38 @@ If you have a view file called `welcome.php` in the `APPPATH/views` and
 `SYSPATH/views` directories, the one in application will be returned when
 `welcome.php` is loaded because it is at the top of the filesystem.
 
+## Types of Files
+
+The top level directories of the application, module, and system paths has the following
+default directories:
+
+classes/
+:  All classes that you want to [autoload](about.autoloading) should be stored here.
+   This includes controllers, models, and all other classes. All classes must
+   follow the [class naming conventions](about.conventions#classes).
+
+config/
+:  Configuration files return an associative array of options that can be
+   loaded using [Kohana::config]. See [config usage](about.configuration) for
+   more information.
+
+i18n/
+:  Translation files return an associative array of strings. Translation is
+   done using the `__()` method. To translate "Hello, world!" into Spanish,
+   you would call `__('Hello, world!')` with [I18n::$lang] set to "es-es".
+   See [translation usage](about.translation) for more information.
+
+messages/
+:  Message files return an associative array of strings that can be loaded
+   using [Kohana::message]. Messages and i18n files differ in that messages
+   are not translated, but always written in the default language and referred
+   to by a single key. See [messages](about.messages) for more information.
+
+views/
+:  Views are a plain PHP file which is used to generate HTML. The view file is
+   loaded into a [View] object and assigned variables, which it then converts
+   into an HTML fragment. Multiple views can be used within each other.
+
 # Loading Files
 
 The path to any file within the filesystem can be found by calling [Kohana::find_file]:
