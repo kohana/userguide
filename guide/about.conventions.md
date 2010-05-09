@@ -2,7 +2,7 @@
 
 ## Class Names and File Location
 
-Class names in Kohana follow a strict convention to facilitate [autoloading](about.autoloading).
+Class names in Kohana follow a strict convention to facilitate [autoloading](using.autoloading).
 
 Class names should have uppercase first letters with underscores to separate words. Underscores are significant as they directly reflect the file location in the filesystem.
 

@@ -31,33 +31,34 @@ The top level directories of the application, module, and system paths has the f
 default directories:
 
 classes/
-:  All classes that you want to [autoload](about.autoloading) should be stored here.
+:  All classes that you want to [autoload](using.autoloading) should be stored here.
    This includes controllers, models, and all other classes. All classes must
    follow the [class naming conventions](about.conventions#classes).
 
 config/
 :  Configuration files return an associative array of options that can be
-   loaded using [Kohana::config]. See [config usage](about.configuration) for
+   loaded using [Kohana::config]. See [config usage](using.configuration) for
    more information.
 
 i18n/
 :  Translation files return an associative array of strings. Translation is
    done using the `__()` method. To translate "Hello, world!" into Spanish,
    you would call `__('Hello, world!')` with [I18n::$lang] set to "es-es".
-   See [translation usage](about.translation) for more information.
+   See [translation usage](using.translation) for more information.
 
 messages/
 :  Message files return an associative array of strings that can be loaded
    using [Kohana::message]. Messages and i18n files differ in that messages
    are not translated, but always written in the default language and referred
-   to by a single key. See [messages](about.messages) for more information.
+   to by a single key. See [message usage](using.messages) for more information.
 
 views/
 :  Views are a plain PHP file which is used to generate HTML. The view file is
    loaded into a [View] object and assigned variables, which it then converts
    into an HTML fragment. Multiple views can be used within each other.
+   See [view usage](usings.views) for more infromation.
 
-# Loading Files
+## Finding Files
 
 The path to any file within the filesystem can be found by calling [Kohana::find_file]:
 
@@ -67,90 +68,6 @@ The path to any file within the filesystem can be found by calling [Kohana::find
     // Find the full path to "views/user/login.php"
     $path = Kohana::find_file('views', 'user/login');
 
-## Classes
-
-All classes within the filesystem can be [autoloaded](about.autoloading) without
-having to call [include](http://php.net/include) or [require](http://php.net/require).
-
-For instance, when you want to use the [Cookie::set] method, you just call:
-
-    Cookie::set('mycookie', 'any string value');
-
-### Transparent Class Extension
-
-The cascading filesystem also allows transparent class extension. For instance,
-the class [Cookie] is defined in `SYSPATH/classes/cookie.php` as:
-
-    class Cookie extends Kohana_Cookie {}
-
-The default Kohana classes, and many extensions, use this definition so that
-almost all classes can be over loaded. You extend any class transparently,
-by defining your own class in `APPPATH/classes/cookie.php` to add your own methods.
-For instance, if you wanted to create method that sets encrypted cookies using
-the [Encrypt] class:
-
-	<?php defined('SYSPATH') or die('No direct script access.');
-
-    class Cookie extends Kohana_Cookie {
-
-        /**
-         * @var  mixed  default encryption instance
-         */
-        public static $encryption = 'default';
-
-        /**
-         * Sets an encrypted cookie.
-         *
-         * @uses  Cookie::set
-         * @uses  Encrypt::encode
-         */
-         public static function encrypt($name, $value, $expiration = NULL)
-         {
-             $value = Encrypt::instance(Cookie::$encrpytion)->encode((string) $value);
-
-             parent::set($name, $value, $expiration);
-         }
-
-         /**
-          * Gets an encrypted cookie.
-          *
-          * @uses  Cookie::get
-          * @uses  Encrypt::decode
-          */
-          public static function decrypt($name, $default = NULL)
-          {
-              if ($value = parent::get($name, NULL))
-              {
-                  $value = Encrypt::instance(Cookie::$encryption)->decode($value);
-              }
-
-              return isset($value) ? $value : $default;
-          }
-
-    } // End Cookie
-
-Now calling `Cookie::encrypt('secret', $data)` will create an encrypted cookie
-which we can decrypt with `$data = Cookie::decrypt('secret')`.
-
-#### Multiple Levels of Extension
-
-If you are extending a Kohana class in a module, you should maintain
-transparent extensions. Instead of making the [Cookie] extension extend Kohana,
-you can create `MODPATH/mymod/encrypted/cookie.php`:
-
-    class Encrypted_Cookie extends Kohana_Cookie {
-
-        // Use the same encrypt() and decrypt() methods as above
-
-    }
-
-And create `MODPATH/mymod/cookie.php`:
-
-    class Cookie extends Encrypted_Cookie {}
-
-This will still allow users to add their own extension to [Cookie] with your
-extensions intact. However, the next extension of [Cookie] will have to extend
-`Encrypted_Cookie` instead of `Kohana_Cookie`.
 
 ## Views
 
