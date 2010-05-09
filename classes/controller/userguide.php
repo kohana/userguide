@@ -185,8 +185,10 @@ class Controller_Userguide extends Controller_Template {
 			$this->request->status = 404;
 		}
 
-		// Set the content type for this extension
-		$this->request->headers['Content-Type'] = File::mime_by_ext($ext);
+		// Set the proper headers to allow caching
+		$this->request->headers['Content-Type']   = File::mime_by_ext($ext);
+		$this->request->headers['Content-Length'] = filesize($file);
+		$this->request->headers['Last-Modified']  = date('r', filemtime($file));
 	}
 	
 	// Display an error if a page isn't found
