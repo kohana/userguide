@@ -1,6 +1,6 @@
 # 系统安装
 
-1. 从 [Kohana 官方网站](http://kohanaphp.com/)下载最新**稳定**版本的框架
+1. 从 [Kohana 官方网站](http://kohanaframework.org/)下载最新**稳定**版本的框架
 2. 创建一个名为 'kohana' 的目录并解压缩到这个目录
 3. 上传到这个目录的所有文件到你的服务器上
 4. 编辑 `application/bootstrap.php` 文件并按实际情况修改下面配置：
@@ -15,6 +15,6 @@
 
 ![安装页面](img/install.png "Example of install page")
 
-一旦安装页面报告你的环境确认无误，并且可以改名或删除`install.php`（Your environment is set up correctly you need to either rename or delete `install.php`）。安装刚才的说明操作之后就能看到 Kohana 的欢迎界面了(?? 目前 KO3 版本只有一个 'Hello World!' ??)
+一旦安装页面报告你的环境确认无误，并且可以改名或删除在跟目录的 `install.php` 文件，然后你就能看到 Kohana 的欢迎界面：
 
 ![Welcome Page](img/welcome.png "Example of welcome page")

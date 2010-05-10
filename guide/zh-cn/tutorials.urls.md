@@ -2,7 +2,7 @@
 
 本节讲述了关于 Kohana 的请求路由， URL 生成以及链接的基本使用。
 
-## 路由（Route）
+## 路由（Routing）
 
 在上面提到的[请求流程](about.flow)一节中，一个请求通过 [Request] 类来寻找匹配 [Route] 并且加载对应的控制器以执行请求。本系统提供了更大的灵活性以及常规默认行为。
 
@@ -124,15 +124,15 @@ All other keys specified in a route can be accessed from within the controller v
 
     $this->request->param('key_name');
     
-The [Request::param] method takes an optional second argument to specify a default return value in case the key is not set by the route. If no arguments are given, all parameters are returned as an associative array.
+The [Request::param] method takes an optional second argument to specify a default return value in case the key is not set by the route. If no arguments are given, all keys are returned as an associative array.
 
-### 公约
+### 约定
 
 The established convention is to either place your custom routes in the `MODPATH/<module>/init.php` file of your module if the routes belong to a module, or simply insert them into the `APPPATH/bootstrap.php` file above the default route if they are specific to the application. Of course, they could also be included from an external file or even generated dynamically.
     
 ## URLs
 
-Along with Kohana's powerful routing capabilities are included some methods for generating URLs for your routes uris. You can always specify your uris as a string using [URL::site] to create a full URL like so:
+Along with Kohana's powerful routing capabilities are included some methods for generating URLs for your routes' uris. You can always specify your uris as a string using [URL::site] to create a full URL like so:
 
     URL::site('admin/edit/user/'.$user_id);
 
