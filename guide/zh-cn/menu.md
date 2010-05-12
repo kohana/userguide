@@ -14,7 +14,7 @@
    - [代码](debugging.code)
    - [错误句柄](debugging.errors)
    - [分析器](debugging.profiling)
-5. **Security**
+5. **安全**
    - [XSS](security.xss)
    - [校验](security.validation)
    - [Cookies](security.cookies)
