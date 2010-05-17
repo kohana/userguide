@@ -17,4 +17,4 @@
 
 一旦安装页面报告你的环境确认无误，并且可以改名或删除在跟目录的 `install.php` 文件，然后你就能看到 Kohana 的欢迎界面：
 
-![Welcome Page](img/welcome.png "Example of welcome page")
+![欢迎界面](img/welcome.png "Example of welcome page")

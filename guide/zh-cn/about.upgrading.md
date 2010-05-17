@@ -6,7 +6,7 @@ Kohana v3 大部分功能都不同于 Kohana 2.3 版本，下面列出了一系�
 
 在 2.x 体系中不同的类的'类型'（比如 controller，model 等）使用后缀来加以区分。文件夹在模型/控制器目录下没有任何类名的关系。
 
-在 3.0 版本中废弃了上面的形式转而使用 Zend framework 的文件体系的公约，也就是类名包含类名和其路径，之间是有下划线分割而不是斜杠符（比如 `/some/class/file.php` 变为了 `Some_Class_File`） 
+在 3.0 版本中废弃了上面的形式转而使用 Zend framework 的文件体系的约定，也就是类名包含类名和其路径，之间是有下划线分割而不是斜杠符（比如 `/some/class/file.php` 变为了 `Some_Class_File`） 
 详情请参见 [约定文档](start.conventions)
 
 ## Input 库

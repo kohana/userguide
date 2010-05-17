@@ -10,7 +10,7 @@
 
 控制器的类名必须和文件名保持一致。 
 
-**控制器公约**
+**控制器约定**
 
 * 控制器的文件名必须全部小写。比如 `articles.php`
 * 全部放置在 **classes/controller** 或其子目录下面。比如 `classes/controller/articles.php`
@@ -40,7 +40,7 @@ class Controller_Article extends Controller
 ~~~
 Hello World
 ~~~
-这个控制器就是这么简单。里面包含了上面所提到的所有公约。
+这个控制器就是这么简单。里面包含了上面所提到的所有约定。
 
 
 
