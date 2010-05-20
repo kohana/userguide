@@ -48,11 +48,19 @@ class Controller_Userguide extends Controller_Template {
 			// Set the translation language
 			I18n::$lang = Cookie::get('userguide_language', Kohana::config('userguide')->lang);
 
+			if (defined('MARKDOWN_PARSER_CLASS'))
+			{
+				throw new Kohana_Exception('Markdown parser already registered. Live documentation will not work in your environment.');
+			}
+
 			// Use customized Markdown parser
 			define('MARKDOWN_PARSER_CLASS', 'Kodoc_Markdown');
 
-			// Load Markdown support
-			require Kohana::find_file('vendor', 'markdown/markdown');
+			if ( ! class_exists('Markdown', FALSE))
+			{
+				// Load Markdown support
+				require Kohana::find_file('vendor', 'markdown/markdown');
+			}
 
 			// Set the base URL for links and images
 			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/';
