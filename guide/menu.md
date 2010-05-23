@@ -23,6 +23,7 @@
 4. **Tutorials**
    - [Hello, World](tutorials.helloworld)
    - [Routes, URLs, and Links](tutorials.urls)
+   - [Clean URLs](tutorials.removeindex)
    - [Databases](tutorials.databases)
    - [ORM](tutorials.orm)
    - [Working with Git](tutorials.git)
