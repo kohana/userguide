@@ -24,7 +24,7 @@ The default autoloader is enabled in `application/bootstrap.php` using [spl_auto
 
 This allows [Kohana::auto_load] to attempt to load any class that does not yet exist when the class is first used.
 
-# Transparent Class Extension
+# Transparent Class Extension {#class-extension}
 
 The [cascading filesystem](about.filesystem) allows transparent class extension. For instance, the class [Cookie] is defined in `SYSPATH/classes/cookie.php` as:
 
@@ -78,7 +78,7 @@ For instance, if you wanted to create method that sets encrypted cookies using t
 
 Now calling `Cookie::encrypt('secret', $data)` will create an encrypted cookie which we can decrypt with `$data = Cookie::decrypt('secret')`.
 
-## Multiple Levels of Extension
+## Multiple Levels of Extension {#multiple-extensions}
 
 If you are extending a Kohana class in a module, you should maintain transparent extensions. Instead of making the [Cookie] extension extend Kohana, you can create `MODPATH/mymod/encrypted/cookie.php`:
 
