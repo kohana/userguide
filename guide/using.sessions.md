@@ -19,7 +19,20 @@ Accessing the session instance is done using the [Session::instance] method:
     // Get the session instance
     $session = Session::instance();
 
-## Storing Data
+When using sessions, you can also get all of the current session data using the [Session::as_array] method:
+
+    // Get all of the session data as an array
+    $data = $session->as_array();
+
+You can also use this to overload the `$_SESSION` global to get and set data in a way more similar to standard PHP:
+
+    // Overload $_SESSION with the session data
+    $_SESSION =& $session->as_array();
+    
+    // Set session data
+    $_SESSION[$key] = $value;
+
+## Storing Data {#setting}
 
 Storing session or cookie data is done using the `set` method:
 
@@ -33,7 +46,7 @@ Storing session or cookie data is done using the `set` method:
     $session->set('user_id', 10);
     Cookie::set('user_id', 10);
 
-## Retrieving Data
+## Retrieving Data {#getting}
 
 Getting session or cookie data is done using the `get` method:
 
@@ -47,7 +60,7 @@ Getting session or cookie data is done using the `get` method:
     $user = $session->get('user_id');
     $user = Cookie::get('user_id');
 
-## Deleting Data
+## Deleting Data {#deleting}
 
 Deleting session or cookie data is done using the `delete` method:
 
@@ -61,7 +74,7 @@ Deleting session or cookie data is done using the `delete` method:
     $session->delete('user_id');
     Cookie::delete('user_id');
 
-# Configuration
+# Configuration {#configuration}
 
 Both cookies and sessions have several configuration settings which affect how data is stored. Always check these settings before making your application live, as many of them will have a direct affect on the security of your application.
 
@@ -111,7 +124,7 @@ To prevent cookies from being accessed using Javascript, you can change the [Coo
     // Make cookies inaccessible to Javascript
     Cookie::$httponly = TRUE;
 
-## Session Adapters
+## Session Adapters {#adapters}
 
 When creating or accessing an instance of the [Session] class you can decide which session adapter you wish to use. The session adapters that are available to you are:
 
@@ -124,8 +137,87 @@ Database
 Cookie
 : Stores session data in a cookie using the [Cookie] class. **Sessions will have a 4KB limit when using this adapter.**
 
-[!!] The default adapter is "native". You can change the default datapter by setting [Session::$default] to the adapter you want to use.
+The default datapter can be set by changing the value of [Session::$default]. The default adapter is "native".
+
+[!!] As with cookies, a "lifetime" setting of "0" means that the session will expire when the browser is closed.
 
 ### Session Adapter Settings
 
-[!!] Stub, explain configuration options
+You can apply configuration settings to each of the session adapters by creating a session config file at `APPPATH/config/session.php`. The following sample configuration file defines all the settings for each adapater:
+
+    return array(
+        'native' => array(
+            'name' => 'session_name',
+            'lifetime' => 43200,
+        ),
+        'cookie' => array(
+            'name' => 'cookie_name',
+            'encrypted' => TRUE,
+            'lifetime' => 43200,
+        ),
+        'database' => array(
+            'name' => 'cookie_name',
+            'encrypted' => TRUE,
+            'lifetime' => 43200,
+            'group' => 'default',
+            'table' => 'table_name',
+            'columns' => array(
+                'session_id'  => 'session_id',
+        		'last_active' => 'last_active',
+        		'contents'    => 'contents'
+            ),
+            'gc' => 500,
+        ),
+    );
+
+#### Native Adapter {#adapter-native}
+
+Type      | Setting   | Description                                       | Default
+----------|-----------|---------------------------------------------------|-----------
+`string`  | name      | name of the session                               | `"session"`
+`integer` | lifetime  | number of seconds the session should live for     | `0`
+
+#### Cookie Adapter {#adapter-cookie}
+
+Type      | Setting   | Description                                       | Default
+----------|-----------|---------------------------------------------------|-----------
+`string`  | name      | name of the cookie used to store the session data | `"session"`
+`boolean` | encrypted | encrypt the session data using [Encrypt]?         | `FALSE`
+`integer` | lifetime  | number of seconds the session should live for     | `0`
+
+#### Database Adapter {#adapter-database}
+
+Type      | Setting   | Description                                       | Default
+----------|-----------|---------------------------------------------------|-----------
+`string`  | group     | [Database::instance] group name                   | `"default"`
+`string`  | table     | table name to store sessions in                   | `"sessions"`
+`array`   | columns   | associative array of column aliases               | `array`
+`integer` | gc        | 1:x chance that garbage collection will be run    | `500`
+`string`  | name      | name of the cookie used to store the session data | `"session"`
+`boolean` | encrypted | encrypt the session data using [Encrypt]?         | `FALSE`
+`integer` | lifetime  | number of seconds the session should live for     | `0`
+
+##### Table Schema
+
+You will need to create the session storage table in the database. This is the default schema:
+
+    CREATE TABLE  `sessions` (
+        `session_id` VARCHAR(24) NOT NULL,
+        `last_active` INT UNSIGNED NOT NULL,
+        `contents` TEXT NOT NULL,
+        PRIMARY KEY (`session_id`),
+        INDEX (`last_active`)
+    ) ENGINE = MYISAM;
+
+##### Table Columns
+
+You can change the column names to match an existing database schema when connecting to a legacy session table. The default value is the same as the key value.
+
+session_id
+: the name of the "id" column
+
+last_active
+: UNIX timestamp of the last time the session was updated
+
+contents
+: session data stored as a serialized string, and optionally encrypted
