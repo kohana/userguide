@@ -10,6 +10,7 @@
 3. **Basic Usage**
    - [Configuration](using.configuration)
    - [Loading Classes](using.autoloading)
+   - [Sessions and Cookies](using.sessions)
 6. **Debugging**
    - [Code](debugging.code)
    - [Error Handling](debugging.errors)
