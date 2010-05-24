@@ -57,40 +57,34 @@ There are several static properties in the [Cookie] class that should be set, pa
 
 Configuration is done in plain PHP files, which look similar to:
 
-~~~
-<?php defined('SYSPATH') or die('No direct script access.');
+    <?php defined('SYSPATH') or die('No direct script access.');
 
-return array(
-    'setting' => 'value',
-    'options' => array(
-        'foo' => 'bar',
-    ),
-);
-~~~
+    return array(
+        'setting' => 'value',
+        'options' => array(
+            'foo' => 'bar',
+        ),
+    );
 
 If the above configuration file was called `myconf.php`, you could acess it using:
 
-~~~
-$config = Kohana::config('myconf');
-$options = $config['options'];
-~~~
+    $config = Kohana::config('myconf');
+    $options = $config['options'];
 
 [Kohana::config] also provides a shortcut for accessing individual keys from configuration arrays using "dot paths".
 
 Get the "options" array:
 
-~~~
-$options = Kohana::config('myconf.options');
-~~~
+    $options = Kohana::config('myconf.options');
 
 Get the "foo" key from the "options" array:
 
-~~~
-$foo = Kohana::config('myconf.options.foo');
-~~~
+    $foo = Kohana::config('myconf.options.foo');
 
 Configuration arrays can also be accessed as objects, if you prefer that method:
 
-~~~
-$options = Kohana::config('myconf')->options;
-~~~
+    $options = Kohana::config('myconf')->options;
+
+Please note that you can only access the top level of keys as object properties, all child keys must be accessed using standard array syntax:
+
+    $foo = Kohana::config('myconf')->options['foo'];
