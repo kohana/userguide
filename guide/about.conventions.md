@@ -2,7 +2,7 @@
 
 It is encouraged to follow Kohana's [coding style](http://dev.kohanaframework.org/wiki/kohana2/CodingStyle). This uses [BSD/Allman style](http://en.wikipedia.org/wiki/Indent_style#BSD.2FAllman_style) bracing, among other things.
 
-## Class Names and File Location
+## Class Names and File Location {#classes}
 
 Class names in Kohana follow a strict convention to facilitate [autoloading](using.autoloading). Class names should have uppercase first letters with underscores to separate words. Underscores are significant as they directly reflect the file location in the filesystem.
 
