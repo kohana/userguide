@@ -54,40 +54,34 @@
 
 配置文件是纯 PHP 文件，这类似于：
 
-~~~
-<?php defined('SYSPATH') or die('No direct script access.');
+    <?php defined('SYSPATH') or die('No direct script access.');
 
-return array(
-    'setting' => 'value',
-    'options' => array(
-        'foo' => 'bar',
-    ),
-);
-~~~
+    return array(
+        'setting' => 'value',
+        'options' => array(
+            'foo' => 'bar',
+        ),
+    );
 
 如果上面的配置文件名为 `myconf.php`，你可以通过下面代码调用：
 
-~~~
-$config = Kohana::config('myconf');
-$options = $config['options'];
-~~~
+    $config = Kohana::config('myconf');
+    $options = $config['options'];
 
 [Kohana::config] 也提供了一钟使用“逗号格式”访问配置数组中的键：
 
 获得 "options" 数组：
 
-~~~
-$options = Kohana::config('myconf.options');
-~~~
+    $options = Kohana::config('myconf.options');
 
 从 "options" 数组获得 "foo" 键：
 
-~~~
-$foo = Kohana::config('myconf.options.foo');
-~~~
+    $foo = Kohana::config('myconf.options.foo');
 
 配置数组也可以当作对象访问，如果你喜欢下面的方法：
 
-~~~
-$options = Kohana::config('myconf')->options;
-~~~
+    $options = Kohana::config('myconf')->options;
+
+请注意的是你只能使用键值型数组访问首个变量，其余的子键都必须使用标准数组方式访：
+
+    $foo = Kohana::config('myconf')->options['foo'];

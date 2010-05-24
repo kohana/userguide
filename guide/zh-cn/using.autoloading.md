@@ -24,22 +24,17 @@ Kohana 需要使用 PHP 自身的[自动加载](http://php.net/manual/language.o
 
 在此类第一次使用的时候，这让 [Kohana::auto_load] 尝试去加载任意的不存在类。
 
-# Transparent Class Extension
+# Transparent Class Extension {#class-extension}
 
-The [cascading filesystem](about.filesystem) allows transparent class extension.
-For instance, the class [Cookie] is defined in `SYSPATH/classes/cookie.php` as:
+The [cascading filesystem](about.filesystem) allows transparent class extension. For instance, the class [Cookie] is defined in `SYSPATH/classes/cookie.php` as:
 
     class Cookie extends Kohana_Cookie {}
 
-The default Kohana classes, and many extensions, use this definition so that
-almost all classes can be extended. You extend any class transparently,
-by defining your own class in `APPPATH/classes/cookie.php` to add your own methods.
+The default Kohana classes, and many extensions, use this definition so that almost all classes can be extended. You extend any class transparently, by defining your own class in `APPPATH/classes/cookie.php` to add your own methods.
 
-[!!] You should **never** modify any of the files that are distributed with Kohana.
-Always make modifications to classes using extensions to prevent upgrade issues.
+[!!] You should **never** modify any of the files that are distributed with Kohana. Always make modifications to classes using extensions to prevent upgrade issues.
 
-For instance, if you wanted to create method that sets encrypted cookies using
-the [Encrypt] class:
+For instance, if you wanted to create method that sets encrypted cookies using the [Encrypt] class:
 
     <?php defined('SYSPATH') or die('No direct script access.');
 
@@ -81,14 +76,11 @@ the [Encrypt] class:
 
     } // End Cookie
 
-Now calling `Cookie::encrypt('secret', $data)` will create an encrypted cookie
-which we can decrypt with `$data = Cookie::decrypt('secret')`.
+Now calling `Cookie::encrypt('secret', $data)` will create an encrypted cookie which we can decrypt with `$data = Cookie::decrypt('secret')`.
 
-## Multiple Levels of Extension
+## Multiple Levels of Extension {#multiple-extensions}
 
-If you are extending a Kohana class in a module, you should maintain
-transparent extensions. Instead of making the [Cookie] extension extend Kohana,
-you can create `MODPATH/mymod/encrypted/cookie.php`:
+If you are extending a Kohana class in a module, you should maintain transparent extensions. Instead of making the [Cookie] extension extend Kohana, you can create `MODPATH/mymod/encrypted/cookie.php`:
 
     class Encrypted_Cookie extends Kohana_Cookie {
 
@@ -100,6 +92,4 @@ And create `MODPATH/mymod/cookie.php`:
 
     class Cookie extends Encrypted_Cookie {}
 
-This will still allow users to add their own extension to [Cookie] with your
-extensions intact. However, the next extension of [Cookie] will have to extend
-`Encrypted_Cookie` instead of `Kohana_Cookie`.
+This will still allow users to add their own extension to [Cookie] with your extensions intact. However, the next extension of [Cookie] will have to extend `Encrypted_Cookie` instead of `Kohana_Cookie`.

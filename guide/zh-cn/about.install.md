@@ -6,7 +6,7 @@
 4. 编辑 `application/bootstrap.php` 文件并按实际情况修改下面配置：
 	- 为你的程序设置默认[时区](http://php.net/timezones)
 	- 在 [Kohana::init] 方法中设置 `base_url` 的值为 kohana 目录的路径（或域名地址）
-6. 确保 `application/cache` 目录和 `application/logs` 目录为可写属性，命令为 `chmod application/{cache,logs} 0777`
+6. 确保 `application/cache` 目录和 `application/logs` 目录让服务器可写权限
 7. 在你喜欢的浏览器地址栏中输入 `base_url` 来测试 Kohana 是否安装成功
 
 [!!] 根据系统平台的不同，安装的目录可能会随着解压缩而失去原先的权限属性。如果有错误发生请在 Kohana 根目录设定所有文件属性为 755。命令为：`find . -type d -exec chmod 0755 {} \;`
