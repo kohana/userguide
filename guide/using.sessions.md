@@ -10,7 +10,7 @@ Sessions should be used for storing temporary or private data. Very sensitive da
 
 [!!] For more information on best practices with session variables see [the seven deadly sins of sessions](http://lists.nyphp.org/pipermail/talk/2006-December/020358.html).
 
-# Storing, Retieving, and Deleting Data
+# Storing, Retrieving, and Deleting Data
 
 [Cookie] and [Session] provide a very similar API for storing data. The main difference between them is that sessions are accessed using an object, and cookies are accessed using a static class.
 
