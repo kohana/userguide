@@ -12,6 +12,7 @@
    - [Loading Classes](using.autoloading)
    - [Views and HTML](using.views)
    - [Sessions and Cookies](using.sessions)
+   - [Messages](using.messages)
 4. **Debugging**
    - [Code](debugging.code)
    - [Error Handling](debugging.errors)
