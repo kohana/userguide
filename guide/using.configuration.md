@@ -6,8 +6,6 @@ Static properties can be set in `APPPATH/bootstrap.php` or by [class extension](
 
 [!!] When using opcode caching, such as [APC](http://php.net/apc) or [eAccelerator](http://eaccelerator.org/), class loading time is significantly reduced. It is highly recommended to use opcode caching with *any* production website, no matter the size.
 
-Configuration files are slightly different from other files within the [cascading filesystem](about.filesystem) in that they are **merged** rather than overloaded. This means that all configuration files with the same file path are combined to produce the final configuration. The end result is that you can overload *individual* settings rather than duplicating an entire file.
-
 ## Initial Settings
 
 Every new Kohana installation will require changing [Kohana::init] settings in `APPPATH/bootstrap.php`. Any setting that is not set will use the default setting. These settings can be accessed and modified later by using the static property of the [Kohana] class. For instance, to get the current character set, read the [Kohana::$charset] property.
@@ -20,7 +18,9 @@ If you plan to use the [Encrypt] class, you will also need to create an `encrypt
 
 [!!] **Do not use a hash for the encryption key!** Doing so will make the encryption key much easier to crack.
 
-# Configuration Files
+# Configuration Files {#config-files}
+
+Configuration files are slightly different from other files within the [cascading filesystem](about.filesystem) in that they are **merged** rather than overloaded. This means that all configuration files with the same file path are combined to produce the final configuration. The end result is that you can overload *individual* settings rather than duplicating an entire file.
 
 Configuration files are plain PHP files, stored in the `config/` directory, which return an associative array:
 
