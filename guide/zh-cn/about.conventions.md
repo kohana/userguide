@@ -2,7 +2,7 @@
 
 鼓励大家遵循 Kohana 的编码样式，Kohana 基于 [BSD/Allman style](http://en.wikipedia.org/wiki/Indent_style#BSD.2FAllman_style) 的编码样式（这里还有一些更多[关于 Kohana 编码样式的描述](http://dev.kohanaframework.org/wiki/kohana2/CodingStyle)）
 
-## 类名和文件位置
+## 类名和文件位置 {#classes}
 
 在 Kohana 系统中类名严格遵循命名约定才能够[自动加载](using.autoloading)。类名的首字母必须大写，且使用下划线连接单词，千万要注意下划线的重要性，因为它直接关系到文件在文件系统中所存放的位置。
 

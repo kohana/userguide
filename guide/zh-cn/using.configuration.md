@@ -1,58 +1,28 @@
 # 通用配置
 
-[!!] TODO：静态配置属性的说明
+Kohana uses both static properties and files for configuration. Static properties are typically used for static classes, such as [Cookie], [Security], and [Upload]. Files are typically used for objects such as [Database], [Encrypt], and [Session].
 
-## 核心配置
+Static properties can be set in `APPPATH/bootstrap.php` or by [class extension](using.autoloading#class-extension). The benefit of static properties is that no additional files need to be loaded. The problem with this method is that it causes the class to be loaded when the property is set, if you do not use an extension. However, using extensions will overload extensions made in modules. It is generally recommended to do static property configuration in the bootstrap.
 
-任何一个新的 Kohana 安装之后第一件事情就是需要修改位于 `application/bootstrap.php` 配置文件的 [Kohana::init] 设置：
+[!!] When using opcode caching, such as [APC](http://php.net/apc) or [eAccelerator](http://eaccelerator.org/), class loading time is significantly reduced. It is highly recommended to use opcode caching with *any* production website, no matter the size.
 
-`boolean` errors
-:   使用内部错误和异常句柄？（默认为 `TRUE`）设置为 `FALSE` 则在 Kohana 中关闭错误和异常句柄显示。
+## 加载配置
 
-`boolean` profile
-:   使用内部基准测试？（默认为 `TRUE`）设置为 `FALSE` 则为关闭内部分析器。
-    禁用它可以获得最佳性能。
+Every new Kohana installation will require changing [Kohana::init] settings in `APPPATH/bootstrap.php`. Any setting that is not set will use the default setting. These settings can be accessed and modified later by using the static property of the [Kohana] class. For instance, to get the current character set, read the [Kohana::$charset] property.
 
-`boolean` caching
-:   高速缓存之间的请求文件的位置？（默认是 `FALSE`）设置为 `TRUE` 开缓存在绝对路径的文件。
-	这大大加速了 [Kohana::find_file] 方法，它有时会对性能产生重大影响。仅在产品环境开启做测试使用。
+## 安全配置
 
-`string` charset
-:   设置所有输入和输出的字符编码。（默认是 "utf-8"`）允许设置 [htmlspecialchars](http://php.net/htmlspecialchars) 和 [iconv](http://php.net/iconv) 允许的编码格式。
+There are several settings which need to be changed to make Kohana secure. The most important of these is [Cookie::$salt], which is used to create a "signature" on cookies that prevents them from being modified outside of Kohana.
 
-`string` base_url
-:   程序的 URL（默认为 `"/"`）可以是一个完整或部分网址。比如 "http://example.com/kohana/" 或仅有 "/kohana/" 两者都工作。`string` cache_dir
+If you plan to use the [Encrypt] class, you will also need to create an `encrypt` configuration file and set the encryption `key` value. The encryption key should include letters, numbers, and symbols for the best security.
 
-`string` index_file
-:   程序开始的 PHP 文件入口。（默认是 `"index.php"`）设置为 `FALSE` 时，Kohana 利用 URL 重写从 URL 地址移除 index.php 字段。
+[!!] **Do not use a hash for the encryption key!** Doing so will make the encryption key much easier to crack.
 
-:   缓存文件目录。（默认是 `"application/cache"` 目录）且必须是**可写**属性。
+# 配置文件 {#config-files}
 
-## Cookie 设置
+Configuration files are slightly different from other files within the [cascading filesystem](about.filesystem) in that they are **merged** rather than overloaded. This means that all configuration files with the same file path are combined to produce the final configuration. The end result is that you can overload *individual* settings rather than duplicating an entire file.
 
-[Cookie] 类中有几个静态的属性可以设置，特别是上线中的产品。
-
-`string` salt
-:   Unique salt string that is used to used to enable [signed cookies](security.cookies)
-
-`integer` expiration
-:   默认的生命期限（单位以 秒 为单位）
-
-`string` path
-:   Cookie 可以写入的一个有效 URL 路径。
-
-`string` domain
-:   限制只有配置的域名地址才能访问 cookies
-
-`boolean` secure
-:   仅能通过 HTTPS 访问允许的 cookies
-
-`boolean` httponly
-:   仅能通过 HTTP 访问允许的 cookies（同时也禁用 Javascript 访问）
-
-# 配置文件
-
-配置文件是纯 PHP 文件，这类似于：
+配置文件存放在 `config/` 目录的 PHP 文件，结构类似于：
 
     <?php defined('SYSPATH') or die('No direct script access.');
 

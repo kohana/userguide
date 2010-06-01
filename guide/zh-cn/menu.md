@@ -10,7 +10,9 @@
 3. **基本使用**
    - [配置](using.configuration)
    - [类的加载](using.autoloading)
+   - [试图和 HTML](using.views)
    - [Sessions 和 Cookies](using.sessions)
+   - [Messages](using.messages)
 6. **调试**
    - [代码](debugging.code)
    - [错误句柄](debugging.errors)
