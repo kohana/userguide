@@ -1,58 +1,59 @@
-# Removing `index.php` From the URL
+# 从 URL 移除 `index.php`
 
-To keep your URLs clean, you will probably want to be able to access your app without having `/index.php/` in the URL. There are two steps to remove `index.php` from the URL.
+为了保持 URLs 的干净，你可能希望 URL 在访问的时候不包含 `/index.php/`。下面有两步可以实现。
 
-1. Edit the bootstrap file
-2. Set up rewriting
+1. 编辑 bootstrap 文件
+2. 设置重写规则
 
-# Configure Bootstrap
+# 配置 Bootstrap
 
-The first thing you will need to change is the `index_file` setting of [Kohana::init]:
+首先你需要在 [Kohana::init] 方法中更改 `index_file` 设置:
 
     Kohana::init(array(
         'base_url'   => '/myapp/',
         'index_file' => FALSE,
     ));
 
-Now all of the links generated using [URL::site], [URL::base], and [HTML::anchor] will no longer include "index.php" in the URL. All generated links will start with `/myapp/` instead of `/myapp/index.php/`.
+现在所有使用 [URL::site]，[URL::base] 和 [HTML::anchor] 生成的 URL均不会包含 "index.php" 了。
 
-# URL Rewriting
+# URL 重写
 
 Enabling rewriting is done differently, depending on your web server.
 
 ## Apache
 
-Rename `example.htaccess` to only `.htaccess` and alter the following line of code:
+改名 `example.htaccess` 为 `.htaccess` 后修改下面的参数代码:
 
     RewriteBase /kohana/
 
-This needs to match the `base_url` setting of [Kohana::init]:
+这里需要和 [Kohana::init] 方法中的 `base_url` 选项匹配:
 
     RewriteBase /myapp/
 
-In most cases, this is all you will need to change.
+完成了，就这点事！
 
-### Failed!
+### 失败了!
 
-If you get a "Internal Server Error" or "No input file specified" error, try changing:
+如果提示 "Internal Server Error" 或 "No input file specified" 错误，请尝试下面的修改:
 
     RewriteRule ^(?:application|modules|system)\b - [F,L]
 
-Instead, we can try a slash:
+相反，我们可以尝试反斜杠:
 
     RewriteRule ^(application|modules|system)/ - [F,L]
 
-If that doesn't work, try changing:
+如果这样还不工作，再试着修改:
 
     RewriteRule .* index.php/$0 [PT]
 
-To something more simple:
+再简单点:
 
     RewriteRule .* index.php [PT]
 
-### Still Failed!
+### 仍然失败!
 
-If you are still getting errors, check to make sure that your host supports URL `mod_rewrite`. If you can change the Apache configuration, add these lines to the the configuration, usually `httpd.conf`:
+如果还是提示失败的话，请确保你的服务器支持 URL 的 `mod_rewrite`。
+加入你可以修改 Apache 的配置，你可以复制下面的配置到 `httpd.conf`:
 
     <Directory "/var/www/html/myapp">
         Order allow,deny
@@ -62,7 +63,7 @@ If you are still getting errors, check to make sure that your host supports URL 
 
 ## NGINX
 
-It is hard to give examples of nginx configuration, but here is a sample for a server:
+很难给出 nginx 的配置实例，但是修改其实非常简单:
 
     location / {
         index index.php index.html index.htm;
@@ -81,8 +82,8 @@ It is hard to give examples of nginx configuration, but here is a sample for a s
         fastcgi_index index.php;
     }
 
-The two things to note are the use of [try_files](http://wiki.nginx.org/NginxHttpCoreModule#try_files) and [fastcgi_split_path_info](http://wiki.nginx.org/NginxHttpFcgiModule#fastcgi_split_path_info).
+两点需要注意的是使用 [try_files](http://wiki.nginx.org/NginxHttpCoreModule#try_files) 和 [fastcgi_split_path_info](http://wiki.nginx.org/NginxHttpFcgiModule#fastcgi_split_path_info)。
 
-[!!] This assumes that you are running PHP as a FastCGI server on port 9000 and are using nginx v0.7.31 or later.
+[!!] 以上配置假定你的 PHP 是在端口为 9000 的 FastCGI 服务器，同时 nginx 在 v0.731 以上版本。
 
-If you are having issues getting this working, enable debug level logging in nginx and check the access and error logs.
+如果在运行中遇到的问题，请在 nginx 中启用 debug 级别的日志记录并检查 access 和 error 日志。

@@ -10,9 +10,9 @@
 3. **基本使用**
    - [配置](using.configuration)
    - [类的加载](using.autoloading)
-   - [试图和 HTML](using.views)
+   - [视图和 HTML](using.views)
    - [Sessions 和 Cookies](using.sessions)
-   - [Messages](using.messages)
+   - [消息](using.messages)
 6. **调试**
    - [代码](debugging.code)
    - [错误句柄](debugging.errors)
@@ -25,7 +25,7 @@
 4. **教程**
    - [Hello, World](tutorials.helloworld)
    - [路由，URLs 和链接](tutorials.urls)
-   - [清洁 URLs](tutorials.removeindex)
+   - [清理 URLs](tutorials.removeindex)
    - [数据库](tutorials.databases)
    - [ORM](tutorials.orm)
    - [使用 Git 开发](tutorials.git)
