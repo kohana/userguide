@@ -69,65 +69,6 @@ The path to any file within the filesystem can be found by calling [Kohana::find
     $path = Kohana::find_file('views', 'user/login');
 
 
-## Views
-
-Most HTML is generated within by a [View] object, which loads a view file
-from the `views/` directory. To load a view, create a new object with the
-relative path to the view file with [View::factory]:
-
-    // Loads "views/welcome.php" as a new view object
-    $view = View::factory('welcome');
-
-Once view file has been loaded into a view object, you can assign variables
-to the view using the [View::set] and [View::bind] methods.
-
-
-    // Make the $user variable to available in the view
-    $view->bind('user', $user);
-
-[!!] The only difference between `set()` and `bind()` is that `bind()` assigns
-the variable by reference. If you `bind()` a variable before it has been defined,
-the variable will be created as `NULL`.
-
-Unlike version 2.x of Kohana, the view is not loaded within the context of
-the [Controller], so you will not be able to access `$this` as the controller
-that loaded the view. Passing the controller to the view must be done explictly:
-
-    // Make $this available as $controller in the view
-    $view->bind('controller', $this);
-
-To display a view, you just [echo](http://php.net/echo) the view object or
-assign it as a [Request::$response]:
-
-    // Display the view right now
-    echo $view;
-
-Within a controller, you should always assign the view as the request response:
-
-    // Use this view as the request
-    $this->request->response = $view;
-
-If you want to include another view within a view, there are two choices.
-By calling [View::factory] you can sandbox the included view. This means
-that you will have to provide all of the variables to the view using [View::set]
-or [View::bind]:
-
-    // Only the $user variable will be available in "views/user/login.php"
-    <?php echo View::factory('user/login')->bind('user', $user) ?>
-
-The other option is to include the view directly, which makes all of the current
-variables available to the included view:
-
-    // Any variable defined in this view will be included in "views/message.php"
-    <?php include Kohana::find_file('views', 'user/login') ?>
-
-Of course, you can also load an entire [Request] within a view:
-
-    <?php echo Request::factory('user/login')->execute() ?>
-
-This is an example of [HMVC](about.mvc), which makes it possible to create and
-read calls to other URLs within your application.
-
 # Vendor Extensions
 
 We call extensions that are not specific to Kohana "vendor" extensions.

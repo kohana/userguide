@@ -10,8 +10,10 @@
 3. **Basic Usage**
    - [Configuration](using.configuration)
    - [Loading Classes](using.autoloading)
+   - [Views and HTML](using.views)
    - [Sessions and Cookies](using.sessions)
-6. **Debugging**
+   - [Messages](using.messages)
+4. **Debugging**
    - [Code](debugging.code)
    - [Error Handling](debugging.errors)
    - [Profiling](debugging.profiling)
@@ -20,7 +22,7 @@
    - [Validation](security.validation)
    - [Cookies](security.cookies)
    - [Database](security.database)
-4. **Tutorials**
+6. **Tutorials**
    - [Hello, World](tutorials.helloworld)
    - [Routes, URLs, and Links](tutorials.urls)
    - [Clean URLs](tutorials.removeindex)

@@ -1,61 +1,28 @@
 # General Configuration
 
-[!!] todo, description of benefits of static properties for configuration
+Kohana uses both static properties and files for configuration. Static properties are typically used for static classes, such as [Cookie], [Security], and [Upload]. Files are typically used for objects such as [Database], [Encrypt], and [Session].
 
-## Core Configuration
+Static properties can be set in `APPPATH/bootstrap.php` or by [class extension](using.autoloading#class-extension). The benefit of static properties is that no additional files need to be loaded. The problem with this method is that it causes the class to be loaded when the property is set, if you do not use an extension. However, using extensions will overload extensions made in modules. It is generally recommended to do static property configuration in the bootstrap.
 
-The first configuration task of any new Kohana installation is changing the [Kohana::init] settings in `application/bootstrap.php`. These settings are:
+[!!] When using opcode caching, such as [APC](http://php.net/apc) or [eAccelerator](http://eaccelerator.org/), class loading time is significantly reduced. It is highly recommended to use opcode caching with *any* production website, no matter the size.
 
-`boolean` errors
-:   Use internal error and exception handling? (Default `TRUE`) Set to `FALSE` to disable the Kohana
-    error and exception handlers.
+## Initial Settings
 
-`boolean` profile
-:   Do internal profiling? (Default `TRUE`) Set to `FALSE` to disable internal profiling.
-    Disable in production for best performance.
+Every new Kohana installation will require changing [Kohana::init] settings in `APPPATH/bootstrap.php`. Any setting that is not set will use the default setting. These settings can be accessed and modified later by using the static property of the [Kohana] class. For instance, to get the current character set, read the [Kohana::$charset] property.
 
-`boolean` caching
-:   Cache the location of files between requests? (Default `FALSE`) Set to `TRUE` to cache the
-    absolute path of files. This dramatically speeds up [Kohana::find_file] and can sometimes
-    have a dramatic impact on performance. Only enable in a production environment, or for testing.
+## Security Settings
 
-`string` charset
-:   Character set used for all input and output. (Default `"utf-8"`) Should be a character set that is supported by both [htmlspecialchars](http://php.net/htmlspecialchars) and [iconv](http://php.net/iconv).
+There are several settings which need to be changed to make Kohana secure. The most important of these is [Cookie::$salt], which is used to create a "signature" on cookies that prevents them from being modified outside of Kohana.
 
-`string` base_url
-:   Base URL for the application. (Default `"/"`) Can be a complete or partial URL. For example "http://example.com/kohana/" or just "/kohana/" would both work.
+If you plan to use the [Encrypt] class, you will also need to create an `encrypt` configuration file and set the encryption `key` value. The encryption key should include letters, numbers, and symbols for the best security.
 
-`string` index_file
-:   The PHP file that starts the application. (Default `"index.php"`) Set to `FALSE` when you remove the index file from the URL with URL rewriting.
+[!!] **Do not use a hash for the encryption key!** Doing so will make the encryption key much easier to crack.
 
-`string` cache_dir
-:   Cache file directory. (Default `"application/cache"`) Must point to a **writable** directory.
+# Configuration Files {#config-files}
 
-## Cookie Settings
+Configuration files are slightly different from other files within the [cascading filesystem](about.filesystem) in that they are **merged** rather than overloaded. This means that all configuration files with the same file path are combined to produce the final configuration. The end result is that you can overload *individual* settings rather than duplicating an entire file.
 
-There are several static properties in the [Cookie] class that should be set, particularly on production websites.
-
-`string` salt
-:   Unique salt string that is used to enable [signed cookies](security.cookies)
-
-`integer` expiration
-:   Default expiration lifetime in seconds
-
-`string` path
-:   URL path to restrict cookies to be accessed
-
-`string` domain
-:   URL domain to restrict cookies to be accessed
-
-`boolean` secure
-:   Only allow cookies to be accessed over HTTPS
-
-`boolean` httponly
-:   Only allow cookies to be accessed over HTTP (also disables Javascript access)
-
-# Configuration Files
-
-Configuration is done in plain PHP files, which look similar to:
+Configuration files are plain PHP files, stored in the `config/` directory, which return an associative array:
 
     <?php defined('SYSPATH') or die('No direct script access.');
 
