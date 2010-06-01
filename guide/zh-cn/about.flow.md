@@ -26,11 +26,11 @@
 
 ## index.php
 
-Kohana follows a [front controller] pattern, which means that all requests are sent to `index.php`. This keeps allows a very clean [filesystem](about.filesystem) design. In `index.php`, there are some very basic configuration options available. You can change the `$application`, `$modules`, and `$system` paths and set the error reporting level.
+Kohana 遵循[前端控制器]模式，因此所有的请求都要发送到 `index.php` 文件。这样就可以保持一个非常整洁的[文件系统](about.filesystem)设计。在 `index.php` 文件中有一些非常重要而又基础的配置变量。你可以改变 `$application`，`$modules` 和 `$system` 的路径以及设置错误报告级别。
 
-The `$application` variable lets you set the directory that contains your application files. By default, this is `application`. The `$modules` variable lets you set the directory that contains module files. The `$system` variable lets you set the directory that contains the default Kohana files.
+`$application` 变量让目录包含着你的程序文件。默认情况下，就是 `application` 目录。`$modules` 变量让目录包含着你的扩展文件。默认情况下。`$system` 变量让目录包含着默认的 Kohana 文件。默认情况下。
 
-You can move these three directories anywhere. For instance, if your directories are set up like this:
+你可以移动下面三个目录到任意路径。假如你的目录结构是:
 
     www/
         index.php
@@ -38,7 +38,7 @@ You can move these three directories anywhere. For instance, if your directories
         modules/
         system/
 
-You could move the directories out of the web root:
+你想转移这些目录到 web 目录以外:
 
     application/
     modules/
@@ -46,7 +46,7 @@ You could move the directories out of the web root:
     www/
         index.php
 
-Then you would change the settings in `index.php` to be:
+那么你应该在 `index.php` 文件改变下面变量的配置:
 
     $application = '../application';
     $modules     = '../modules';
@@ -56,19 +56,18 @@ Now none of the directories can be accessed by the web server. It is not necessa
 
 [!!] There is a security check at the top of every Kohana file to prevent it from being accessed without using the front controller. However, it is more secure to move the application, modules, and system directories to a location that cannot be accessed via the web.
 
-### Error Reporting
+### 错误报告
 
-By default, Kohana displays all errors, including strict mode warnings. This is set using [error_reporting](http://php.net/error_reporting):
+默认情况下，Kohana显示所有错误，包括严格的警告。
 
     error_reporting(E_ALL | E_STRICT);
 
-When you application is live and in production, a more conservative setting is recommended, such as ignoring notices:
+对于已经上线并在运行的程序，一个保守的推荐，可以忽略掉提醒:
 
     error_reporting(E_ALL & ~E_NOTICE);
 
-If you get a white screen when an error is triggered, your host probably has disabled displaying errors. You can turn it on again by adding this line just after your `error_reporting` call:
+如果在错误被触发后得到的是一个空白的结果，你的服务器可能关闭了错误提示。你可以在 `error_reporting` 调用前使用下面的代码开启错误提醒:
 
     ini_set('display_errors', TRUE);
 
-Errors should **always** be displayed, even in production, because it allows you to use [exception and error handling](debugging.errors) to serve a nice error page rather than a blank white screen when an error happens.
-
+在发送错误提示时，错误应该**实时**显示，甚至是在上线发布之后，因为它允许你使用[异常和错误句柄](debugging.errors) 指引到一个友好的错误页面从而代替空白的页面。
