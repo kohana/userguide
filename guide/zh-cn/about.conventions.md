@@ -8,7 +8,7 @@
 
 请遵循以下约定：
 
-1. 类名不允许使用骆驼命名法， except when it is undesirable to create a new directory level.
+1. 类名不允许使用骆驼命名法，除非需要创建新一级的目录文件。
 2. 所有的类文件的文件名和目录名都必须是小写。
 3. 所有的类文件都应该存放在 `classes` 目录下面，它可以是在[级联文件系统](about.filesystem)的任何一级。
 
