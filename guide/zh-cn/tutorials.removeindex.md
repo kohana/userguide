@@ -1,6 +1,6 @@
 # 从 URL 移除 `index.php`
 
-为了保持 URLs 的干净，你可能希望 URL 在访问的时候不包含 `/index.php/`。下面有两步可以实现。
+为了保持 URLs 的干净，你可能希望 URL 在访问的时候不包含 `/index.php/`。下面有两步可以实现:
 
 1. 编辑 bootstrap 文件
 2. 设置重写规则
@@ -18,7 +18,7 @@
 
 # URL 重写
 
-Enabling rewriting is done differently, depending on your web server.
+开启重写配置的方法根据服务器的不同而不同，下面仅供参考:
 
 ## Apache
 
