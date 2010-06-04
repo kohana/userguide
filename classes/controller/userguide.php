@@ -84,7 +84,7 @@ class Controller_Userguide extends Controller_Template {
 
 		if ( ! $file)
 		{
-			$this->error('Userguide page not found');
+			$this->error(__('Userguide page not found'));
 			return;
 		}
 
@@ -133,11 +133,11 @@ class Controller_Userguide extends Controller_Template {
 				$_class = Kodoc_Class::factory($class);
 			
 				if ( ! Kodoc::show_class($_class))
-					throw new Exception("That class is hidden");
+					throw new Exception(__('That class is hidden'));
 			}
 			catch (Exception $e)
 			{
-				return $this->error("API Reference: Class not found.");
+				return $this->error(__('API Reference: Class not found.'));
 			}
 			
 			$this->template->title = $class;
@@ -203,10 +203,10 @@ class Controller_Userguide extends Controller_Template {
 	public function error($message)
 	{
 		$this->request->status = 404;
-		$this->template->title = "Userguide - Error";
+		$this->template->title = __('User Guide').' - '.__('Error');
 		$this->template->content = View::factory('userguide/error',array('message'=>$message));
 		$this->template->menu = Kodoc::menu();
-		$this->template->breadcrumb = array($this->guide->uri() => 'User Guide', 'Error');
+		$this->template->breadcrumb = array($this->guide->uri() =>  __('User Guide'), __('Error'));
 	}
 
 	public function after()
