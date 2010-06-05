@@ -173,6 +173,9 @@ class Controller_Userguide extends Controller_Template {
 
 	public function action_media()
 	{
+		// Generate and check the ETag for this file
+		$this->request->check_cache(sha1($this->request->uri));
+
 		// Get the file path from the request
 		$file = $this->request->param('file');
 
