@@ -19,7 +19,7 @@ ORM 扩展默认包含在 Kohana 3.0 之中，但是如要使用它则需要先�
 		...
 	}
 
-上面的例子中，模型会寻找默认数据库的 'users' 表。
+上面的例子中，模型会寻找默认数据库的 `users` 表。
 
 ### 模型配置属性
 
@@ -201,7 +201,7 @@ ORM 提供强大的关系模型。Ruby 有一篇介绍关系模型的文章: [ht
 
 #### Has-One
 
-Has-One is a special case of Has-Many, the only difference being that there is one and only one record.  In the above example, each school would have one and only one student (although this is a poor example).
+Has-One 是 Has-Many 的一个特别情况，唯一不同的这是一对一关系。还以上面的例子说明就是，每个学校有且只有一个学生（当然这是一个很牵强呃例子）。
 
 	// school 模型文件
 	protected $_has_one = array('student' => array());
@@ -210,25 +210,25 @@ Has-One is a special case of Has-Many, the only difference being that there is o
 
 #### Has-Many "Through"
 
-The Has-Many "through" relationship (also known as Has-And-Belongs-To-Many) is used in the case of one object being related to multiple objects of another type, and visa-versa.  For instance, a student may have multiple classes and a class may have multiple students.  In this case, a third table and model known as a `pivot` is used.  In this case, we will call the pivot object/model `enrollment`.
+Has-Many "through" 关系(也可以称之为 Has-And-Belongs-To-Many) is used in the case of one object being related to multiple objects of another type, and visa-versa.  For instance, a student may have multiple classes and a class may have multiple students.  In this case, a third table and model known as a `pivot` is used.  In this case, we will call the pivot object/model `enrollment`.
 
-	// student 模型文件
+	// student (学生)模型文件
 	protected $_has_many = array('classes' => array('through' => 'enrollment'));
 
-	// class 模型文件
+	// class (班级)模型文件
 	protected $_has_many = array('students' => array('through' => 'enrollment'));
 
-The enrollment table should contain two foreign keys, one for `class_id` and the other for `student_id`.  These can be overriden using `foreign_key` and `far_key` when defining the relationship.  For example:
+其中 enrollment 表包含两个外键: `class_id` 和 `student_id`。在定义关系时，使用 `foreign_key` 和 `far_key` 覆写了默认值。例如:
 
-	// student 模型文件 (the foreign key refers to this model [student], while the far key refers to the other model [class])
+	// student (学生)模型文件() (the foreign key refers to this model [student], while the far key refers to the other model [class])
 	protected $_has_many = array('classes' => array('through' => 'enrollment', 'foreign_key' => 'studentID', 'far_key' => 'classID'));
 
-	// class 模型文件
+	// class (班级)模型文件
 	protected $_has_many = array('students' => array('through' => 'enrollment', 'foreign_key' => 'classID', 'far_key' => 'studentID'));
 
-The enrollment model should be defined as such:
+enrollment 模型文件应该这样定义:
 
-	// Enrollment model belongs to both a student and a class
+	// Enrollment 模型同时属于一个 student 和 class
 	protected $_belongs_to = array('student' => array(), 'class' => array());
 
 获取相关对象:
@@ -297,4 +297,3 @@ ORM 和 [Validate] 类是紧密结合使用的。ORM 提供以下几种校验方
 
 	// 手动添加额外的过滤器
 	$user->validate()->filter('username', 'trim');
-

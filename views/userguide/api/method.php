@@ -14,13 +14,13 @@
 
 <?php // param tables disabled, removed the FALSE AND below to activate ?>
 <?php if ( FALSE AND $doc->params): ?>
-<h5>Parameters</h5>
+<h5><?php echo __('Parameters'); ?></h5>
 <table>
 <tr>
-	<th>Parameter</th>
-	<th>Type</th>
-	<th>Description</th>
-	<th>Default</th>
+	<th><?php echo __('Parameter'); ?></th>
+	<th><?php echo __('Type'); ?></th>
+	<th><?php echo __('Description'); ?></th>
+	<th><?php echo __('Default'); ?></th>
 </tr>
 <?php foreach ($doc->params as $param): ?>
 <tr>
@@ -29,12 +29,12 @@
 <td><?php echo ucfirst($param->description) ?></td>
 <td><?php echo $param->default ?></td>
 </tr>
-<?php endforeach ?>
+<?php endforeach; ?>
 </table>
 <?php endif ?>
 
 <?php if ($doc->return): ?>
-<h5>Return Values</h5>
+<h5><?php echo __('Return Values'); ?></h5>
 <ul class="return">
 <?php foreach ($doc->return as $set): list($type, $text) = $set; ?>
 <li><code><?php echo HTML::chars($type) ?></code> <?php echo HTML::chars($text) ?></li>
@@ -44,7 +44,7 @@
 
 <?php if ($doc->source): ?>
 <div class="method-source">
-<h5>Source Code</h5>
+<h5><?php echo __('Source Code'); ?></h5>
 <pre><code><?php echo HTML::chars($doc->source) ?></code></pre>
 </div>
 <?php endif ?>

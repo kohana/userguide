@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title><?php echo $title ?> | Kohana User Guide</title>
+<title><?php echo $title ?> | Kohana <?php echo __('User Guide'); ?></title>
 
 <?php foreach ($styles as $style => $media) echo HTML::style($style, array('media' => $media), TRUE), "\n" ?>
 
@@ -44,7 +44,7 @@
 				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 				})();
 		</script>
-		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=kohana">comments powered by Disqus.</a></noscript>
+		<noscript><?php echo __('Please enable JavaScript to view the :anchor_open comments powered by Disqus.:anchor_close', array(':anchor_open' => '<a href="http://disqus.com/?ref_noscript=kohana">', ':anchor_close' => '</a>')); ?></noscript>
 		<a href="http://disqus.com" class="dsq-brlink">Documentation comments powered by <span class="logo-disqus">Disqus</span></a>
 		<?php endif ?>
 	</div>
@@ -52,7 +52,7 @@
 	<div id="menu" class="span-6 last">
 		<?php echo $menu ?>
 		<?php if (isset($module_menus) AND ! empty($module_menus)) : ?>
-			<h3>Modules</h3>
+			<h3><?php echo __('Modules'); ?></h3>
 			<?php echo implode("\n", $module_menus) ?>
 		<?php endif; ?>
 	</div>

@@ -26,7 +26,7 @@
 :	首先你应该知道代码开头是 PHP 的开始标签（如果你不知道请先好好[学习 PHP](http://php.net)）。紧跟着它后面的是一段检测代码，以它来确保此文件是由 Kohana 来加载的。它会阻止访问者由 URL 上面直接访问本文件。
 
 `Class Controller_Hello extends Controller`
-:	这行代码是声明我们的控制器，每个控制器类都必须使用 `Controller_` 作为前缀，下划线的作用是划定文件夹路径下的控制器（详情请参见 [公约和样式](start.conventions)）。每个控制器都必须继承基控制器 `Controller` 类，它提供了一个控制器的标准结构。
+:	这行代码是声明我们的控制器，每个控制器类都必须使用 `Controller_` 作为前缀，下划线的作用是划定文件夹路径下的控制器（详情请参见 [约定和样式](start.conventions)）。每个控制器都必须继承基控制器 `Controller` 类，它提供了一个控制器的标准结构。
 
 
 `function action_index()`
