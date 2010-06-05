@@ -20,5 +20,5 @@ If you want to display information about your application files without exposing
 
 ~~~
 // Displays "APPPATH/cache" rather than the real path
-echo Kohana::debug_file(APPPATH.'cache');
+echo Kohana::debug_path(APPPATH.'cache');
 ~~~
