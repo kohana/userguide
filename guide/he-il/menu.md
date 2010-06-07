@@ -1,5 +1,5 @@
 1. **מתחילים**
-   - [?Kohana מה זה](about.kohana)
+   - [ מה זה Kohana?](about.kohana)
    - [מוסכמות וסיגנון](about.conventions)
    - [התקנה](about.install)
    - [שידרוג](about.upgrading)
@@ -20,7 +20,7 @@
    - [Validation - ואלידציה](security.validation)
    - [Cookies - עוגיות](security.cookies)
    - [Database - מסד נתונים](security.database)
-4. **Debugging**
-   - [Code](debugging.code)
-   - [Error Handling](debugging.errors)
-   - [Profiling](debugging.profiling)
+4. **ניפוי באגים**
+   - [קוד](debugging.code)
+   - [טיפול בשגיאות](debugging.errors)
+   - [פרופיל](debugging.profiling)
