@@ -1,5 +1,5 @@
 html { margin: 0; }
-body { margin: 0; }
+body { margin: 0; direction: rtl }
 pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; }
 table th { color: #444; background: #eee; }
 table td { background: #f4f4f4; }
@@ -40,7 +40,7 @@ table td { background: #f4f4f4; }
 #content h4 small,
 #content h5 small,
 #content h6 small { font-size: 0.8em; font-weight: normal; color: #444; }
-#content pre { font-size: 1em; line-height: 1.4em; }
+#content pre { font-size: 1em; line-height: 1.4em; direction: ltr }
 
 #content div.class-list div.class { width: 50%; }
 #content div.class-list div.class.left { float: left; clear: both; }
