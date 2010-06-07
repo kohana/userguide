@@ -1,5 +1,6 @@
 html { margin: 0; }
-body { margin: 0; direction: rtl }
+body { margin: 0 }
+body.he { direction: rtl }
 pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; }
 table th { color: #444; background: #eee; }
 table td { background: #f4f4f4; }
