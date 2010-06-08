@@ -160,7 +160,7 @@ First, we need a [View] that contains the HTML form, which will be placed in `ap
         <dd><?php echo Form::input('username', $post['username']) ?></dd>
 
         <dt><?php echo Form::label('password', 'Password') ?></dt>
-        <dd><?php echo From::password('password') ?></dd>
+        <dd><?php echo Form::password('password') ?></dd>
         <dd class="help">Passwords must be at least 6 characters long.</dd>
         <dt><?php echo Form::label('confirm', 'Confirm Password') ?></dt>
         <dd><?php echo Form::password('confirm') ?></dd>
