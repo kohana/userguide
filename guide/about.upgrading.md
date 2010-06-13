@@ -203,7 +203,7 @@ Would map the uri `controller/id/method` to `controller/method/id`.  In 3.0 you'
 
 [!!] Each uri should have be given a unique name (in this case it's `reversed`), the reasoning behind this is explained in [the url tutorial](tutorials.urls).
 
-Angled brackets denote dynamic sections that should be parsed into variables. Rounded brackets mark an optional section which is not required. If you wanted to only match uris begining with admin you could use:
+Angled brackets denote dynamic sections that should be parsed into variables. Rounded brackets mark an optional section which is not required. If you wanted to only match uris beginning with admin you could use:
 
 	Rouse::set('admin', 'admin(/<controller>(/<id>(/<action>)))');
 
@@ -211,7 +211,7 @@ And if you wanted to force the user to specify a controller:
 
 	Route::set('admin', 'admin/<controller>(/<id>(/<action>))');
 	
-Also, Kohana does not use any 'default defaults'.  If you want kohana to assume your default action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then pass an array of `segment => regex` i.e.:
+Also, Kohana does not use any 'default defaults'.  If you want Kohana to assume your default action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then pass an array of `segment => regex` i.e.:
 
 	Route::set('reversed', '(<controller>(/<id>(/<action>)))', array('id' => '[a-z_]+'))
 			->defaults(array('controller' => 'posts', 'action' => 'index'))

@@ -14,10 +14,10 @@ rules
 
 callbacks
 :  A callback is custom method that can access the entire Validate object.
-   The return value of a callback is ignored. Instead, the the callback must
+   The return value of a callback is ignored. Instead, the callback must
    manually add an error to the object using [Validate::error] on failure.
 
-[!!] Note that [Validate] callbacks and [PHP callbacks](http://php.net/manual/language.pseudo-types.php#language.types.callback) are two not the same.
+[!!] Note that [Validate] callbacks and [PHP callbacks](http://php.net/manual/language.pseudo-types.php#language.types.callback) are not the same.
 
 Using `TRUE` as the field name when adding a filter, rule, or callback will by applied to all named fields.
 
@@ -50,7 +50,7 @@ Rule name                 | Function
 [Validate::alpha]         | Only alpha characters allowed
 [Validate::alpha_dash]    | Only alpha and hyphens allowed
 [Validate::alpha_numeric] | Only alpha and numbers allowed
-[Validate::digit]         | Value must be an interger digit
+[Validate::digit]         | Value must be an integer digit
 [Validate::decimal]       | Value must be a decimal or float value
 [Validate::numeric]       | Only numeric characters allowed
 [Validate::range]         | Value must be within a range
@@ -105,7 +105,7 @@ Any custom rules can be added using a [PHP callback](http://php.net/manual/langu
 
     $post->rule('username', array($model, 'unique_username'));
 
-The method `$model->unique_username()` would similar to:
+The method `$model->unique_username()` would be defined similar to:
 
     public function unique_username($username)
     {
@@ -137,7 +137,7 @@ This would assume that the `$model->hash_password()` method would be defined sim
     {
         if ($array[$field])
         {
-            // Hash the password if exists
+            // Hash the password if it exists
             $array[$field] = sha1($array[$field]);
         }
     }

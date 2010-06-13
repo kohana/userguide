@@ -48,11 +48,19 @@ class Controller_Userguide extends Controller_Template {
 			// Set the translation language
 			I18n::$lang = Cookie::get('userguide_language', Kohana::config('userguide')->lang);
 
+			if (defined('MARKDOWN_PARSER_CLASS'))
+			{
+				throw new Kohana_Exception('Markdown parser already registered. Live documentation will not work in your environment.');
+			}
+
 			// Use customized Markdown parser
 			define('MARKDOWN_PARSER_CLASS', 'Kodoc_Markdown');
 
-			// Load Markdown support
-			require Kohana::find_file('vendor', 'markdown/markdown');
+			if ( ! class_exists('Markdown', FALSE))
+			{
+				// Load Markdown support
+				require Kohana::find_file('vendor', 'markdown/markdown');
+			}
 
 			// Set the base URL for links and images
 			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/';
@@ -76,7 +84,7 @@ class Controller_Userguide extends Controller_Template {
 
 		if ( ! $file)
 		{
-			$this->error('Userguide page not found');
+			$this->error(__('Userguide page not found'));
 			return;
 		}
 
@@ -125,11 +133,11 @@ class Controller_Userguide extends Controller_Template {
 				$_class = Kodoc_Class::factory($class);
 			
 				if ( ! Kodoc::show_class($_class))
-					throw new Exception("That class is hidden");
+					throw new Exception(__('That class is hidden'));
 			}
 			catch (Exception $e)
 			{
-				return $this->error("API Reference: Class not found.");
+				return $this->error(__('API Reference: Class not found.'));
 			}
 			
 			$this->template->title = $class;
@@ -165,6 +173,9 @@ class Controller_Userguide extends Controller_Template {
 
 	public function action_media()
 	{
+		// Generate and check the ETag for this file
+		$this->request->check_cache(sha1($this->request->uri));
+
 		// Get the file path from the request
 		$file = $this->request->param('file');
 
@@ -185,18 +196,20 @@ class Controller_Userguide extends Controller_Template {
 			$this->request->status = 404;
 		}
 
-		// Set the content type for this extension
-		$this->request->headers['Content-Type'] = File::mime_by_ext($ext);
+		// Set the proper headers to allow caching
+		$this->request->headers['Content-Type']   = File::mime_by_ext($ext);
+		$this->request->headers['Content-Length'] = filesize($file);
+		$this->request->headers['Last-Modified']  = date('r', filemtime($file));
 	}
 	
 	// Display an error if a page isn't found
 	public function error($message)
 	{
 		$this->request->status = 404;
-		$this->template->title = "Userguide - Error";
+		$this->template->title = __('User Guide').' - '.__('Error');
 		$this->template->content = View::factory('userguide/error',array('message'=>$message));
 		$this->template->menu = Kodoc::menu();
-		$this->template->breadcrumb = array($this->guide->uri() => 'User Guide', 'Error');
+		$this->template->breadcrumb = array($this->guide->uri() =>  __('User Guide'), __('Error'));
 	}
 
 	public function after()

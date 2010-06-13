@@ -1,23 +1,26 @@
-# General Configuration
+# General Configuration - הגדרות כלליות
 
-[!!] todo, description of benefits of static properties for configuration
+[!!] Finish translating... (todo: description of benefits of static properties for configuration)
 
-## Core Configuration
+## Core Configuration - הגדרות בסיסיות
 
-The first configuration task of any new Kohana installation is changing the [Kohana::init] settings in `application/bootstrap.php`. These settings are:
+ההגדרה הראשונה אותה יש לבצע בכל התקנה של קוהנה היא שינוי ההגדרות של [Kohana::init] ב `application/bootstrap.php`.
+ההגדרות הן:
 
-`boolean` errors
-:   Use internal error and exception handling? (Default `TRUE`) Set to `FALSE` to disable the Kohana
-    error and exception handlers.
+שגיאות:
+האם להשתמש בטיפול שגיאות ויוצאי דופן פנימי של הקוהנה
+ערך ברירת מחדל - True, יש לשנות ל FLASE במידה ולא מעוניינים
 
-`boolean` profile
-:   Do internal profiling? (Default `TRUE`) Set to `FALSE` to disable internal profiling.
-    Disable in production for best performance.
+פרופיל:
+האם להשתמש בדף הפרופיל הסטטיסטי
+ערך ברירת מחדל - True
+יש לשנות ל FALSE במידה ולא מעוניינים - מומלץ שלא להשתמש באפשרות זו בגרסה הסופית על מנת להסתיר מידע רגיש וטעינה מהירה יותר של הדפים
 
-`boolean` caching
-:   Cache the location of files between requests? (Default `FALSE`) Set to `TRUE` to cache the
-    absolute path of files. This dramatically speeds up [Kohana::find_file] and can sometimes
-    have a dramatic impact on performance. Only enable in a production environment, or for testing.
+caching - זכרון מטמון
+האם לשמור בזכרון מטמון את המיקום של הקבצים בין בקשות?
+ערך ברירת מחדל - True, יש לשנות ל FALSE במידה ולא מעוניינים
+פעולה זו מגבירה באופן דרמטי את מהירות הטעינת דפים [Kohana::find_file] ולכן יכולה להיות בעלת השפעה גדולה על רמת הביצועים הכללית של האפליקציה.
+חשוב להשתמש באופצייה זו רק בגרסה הסופית או בשביל נסיונות.
 
 `string` charset
 :   Character set used for all input and output. (Default `"utf-8"`) Should be a character set that is supported by both [htmlspecialchars](http://php.net/htmlspecialchars) and [iconv](http://php.net/iconv).

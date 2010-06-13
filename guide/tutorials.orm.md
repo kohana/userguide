@@ -21,7 +21,7 @@ ORM requires little configuration to get started.  Extend your model classes wit
 
 In the example above, the model will look for a `users` table in the default database.
 
-### Model Conguration Properties
+### Model Configuration Properties
 
 The following properties are used to configure each model:
 
@@ -164,7 +164,7 @@ The `_updated_column` and `_created_column` members are provided to automaticall
 
 ### Deleting Records
 
-Records are deleted with [ORM::delete] and [ORM::delet_all].  These methods operate in the same fashion as saving described above with the exception that [ORM::delete] takes one optional parameter, the `id` of the record to delete.  Otherwise, the currently loaded record is deleted.
+Records are deleted with [ORM::delete] and [ORM::delete_all].  These methods operate in the same fashion as saving described above with the exception that [ORM::delete] takes one optional parameter, the `id` of the record to delete.  Otherwise, the currently loaded record is deleted.
 
 ### Relationships
 

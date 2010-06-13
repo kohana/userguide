@@ -13,4 +13,4 @@ All changes from `person/userguide-xx` must be merged into your own repo, using 
     git remote add person git://github.com/person/userguide-xx
     git pull person master
 
-Thanks for you help!
+Thanks for your help!

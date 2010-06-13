@@ -6,41 +6,41 @@
 	<?php endwhile ?>
 </h1>
 
-<h2 id="toc">Class Contents</h2>
+<h2 id="toc"><?php echo __('Class Contents'); ?></h2>
 <div class="toc span-17 last">
 	<div class="constants span-5">
-		<h3>Constants</h3>
+		<h3><?php echo __('Constants'); ?></h3>
 		<ul>
 		<?php if ($doc->constants): ?>
 		<?php foreach ($doc->constants as $name => $value): ?>
 			<li><a href="#constant:<?php echo $name ?>"><?php echo $name ?></a></li>
 		<?php endforeach ?>
 		<?php else: ?>
-			<li><em>None</em></li>
+			<li><em><?php echo __('None'); ?></em></li>
 		<?php endif ?>
 		</ul>
 	</div>
 	<div class="properties span-6">
-		<h3>Properties</h3>
+		<h3><?php echo __('Properties'); ?></h3>
 		<ul>
 		<?php if ($properties = $doc->properties()): ?>
 		<?php foreach ($properties as $prop): ?>
 			<li><a href="#property:<?php echo $prop->property->name ?>">$<?php echo $prop->property->name ?></a></li>
 		<?php endforeach ?>
 		<?php else: ?>
-			<li><em>none</em></li>
+			<li><em><?php echo __('None'); ?></em></li>
 		<?php endif ?>
 		</ul>
 	</div>
 	<div class="methods span-6 last">
-		<h3>Methods</h3>
+		<h3><?php echo __('Methods'); ?></h3>
 		<ul>
 		<?php if ($methods = $doc->methods()): ?>
 		<?php foreach ($methods as $method): ?>
 			<li><a href="#<?php echo $method->method->name ?>"><?php echo $method->method->name ?>()</a></li>
 		<?php endforeach ?>
 		<?php else: ?>
-			<li><em>none</em></li>
+			<li><em><?php echo __('one'); ?></em></li>
 		<?php endif ?>
 		</ul>
 	</div>
@@ -60,18 +60,18 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 
 <?php if ($doc->constants): ?>
 <div class="constants">
-<h2 id="constants">Constants</h2>
+<h2 id="constants"><?php echo __('Constants'); ?></h2>
 <dt>
 <?php foreach ($doc->constants as $name => $value): ?>
 <dt id="constant:<?php echo $name ?>"><?php echo $name ?></dt>
 <dd><?php echo $value ?></dd>
-<?php endforeach ?>
+<?php endforeach; ?>
 </dt>
 </div>
 <?php endif ?>
 
 <?php if ($properties = $doc->properties()): ?>
-<h2 id="properties">Properties</h2>
+<h2 id="properties"><?php echo __('Properties'); ?></h2>
 <div class="properties">
 <dt>
 <?php foreach ($properties as $prop): ?>
@@ -84,7 +84,7 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 <?php endif ?>
 
 <?php if ($methods = $doc->methods()): ?>
-<h2 id="methods">Methods</h2>
+<h2 id="methods"><?php echo __('Methods'); ?></h2>
 <div class="methods">
 <?php foreach ($methods as $method): ?>
 <?php echo View::factory('userguide/api/method')->set('doc', $method)->set('route', $route) ?>

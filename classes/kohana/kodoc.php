@@ -42,7 +42,7 @@ class Kohana_Kodoc {
 		foreach ($classes as $class)
 		{
 			$class = Kodoc_Class::factory($class);
-			
+
 			// Test if we should show this class
 			if ( ! Kodoc::show_class($class))
 				continue;
@@ -81,7 +81,7 @@ class Kohana_Kodoc {
 
 	/**
 	 * Returns an array of all the classes available, built by listing all files in the classes folder and then trying to create that class.
-	 * 
+	 *
 	 * This means any empty class files (as in complety empty) will cause an exception
 	 *
 	 * @param   array   array of files, obtained using Kohana::list_files
@@ -145,7 +145,18 @@ class Kohana_Kodoc {
 
 			foreach ($_class->getMethods() as $_method)
 			{
-				$methods[] = $_method->name;
+				$declares = $_method->getDeclaringClass()->name;
+
+				if (stripos($declares, 'Kohana') === 0)
+				{
+					// Remove "Kohana_"
+					$declares = substr($declares, 7);
+				}
+
+				if ($declares === $_class->name)
+				{
+					$methods[] = $_method->name;
+				}
 			}
 
 			sort($methods);
@@ -275,7 +286,7 @@ class Kohana_Kodoc {
 
 		return implode("\n", $file);
 	}
-	
+
 	/**
 	 * Test whether a class should be shown, based on the api_packages config option
 	 *
@@ -285,16 +296,16 @@ class Kohana_Kodoc {
 	public static function show_class(Kodoc_Class $class)
 	{
 		$api_packages = Kohana::config('userguide.api_packages');
-		
+
 		// If api_packages is true, all packages should be shown
 		if ($api_packages === TRUE)
 			return TRUE;
-		
+
 		// Get the package tags for this class (as an array)
 		$packages = Arr::get($class->tags,'package',Array('None'));
-		
+
 		$show_this = FALSE;
-		
+
 		// Loop through each package tag
 		foreach ($packages as $package)
 		{
@@ -302,9 +313,9 @@ class Kohana_Kodoc {
 			if (in_array($package,explode(',',$api_packages)))
 				$show_this = TRUE;
 		}
-		
+
 		return $show_this;
 	}
-	
+
 
 } // End Kodoc

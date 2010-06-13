@@ -2,7 +2,7 @@
 
 本节讲述了关于 Kohana 的请求路由， URL 生成以及链接的基本使用。
 
-## 路由（Route）
+## 路由（Routing）
 
 在上面提到的[请求流程](about.flow)一节中，一个请求通过 [Request] 类来寻找匹配 [Route] 并且加载对应的控制器以执行请求。本系统提供了更大的灵活性以及常规默认行为。
 
@@ -115,28 +115,28 @@ Kohana 路由系统使用 perl 正则表达式来处理匹配。默认情况下 
       
 ### 请求参数
 
-The directory, controller and action can be accessed from the [Request] instance in either of these two ways:
+目录，控制器和 action 都可以通过 [Request] 实例化后的两种方式访问:
 
     $this->request->action;
     Request::instance()->action;
     
-All other keys specified in a route can be accessed from within the controller via:
+所有其他定义在路由中的键值可以从内控制器中访问:
 
     $this->request->param('key_name');
     
-The [Request::param] method takes an optional second argument to specify a default return value in case the key is not set by the route. If no arguments are given, all parameters are returned as an associative array.
+[Request::param] 方法提供一个可选的第二参数，用于返回默认的没有找到路由设置键值的值。如果没有指定第二参数，返回包含所有键值的数组。
 
-### 公约
+### 约定
 
-The established convention is to either place your custom routes in the `MODPATH/<module>/init.php` file of your module if the routes belong to a module, or simply insert them into the `APPPATH/bootstrap.php` file above the default route if they are specific to the application. Of course, they could also be included from an external file or even generated dynamically.
+约定适用于自定义的扩展的 `MODPATH/<module>/init.php` 文件或者 `APPPATH/bootstrap.php` 文件默认设置的路由。当然，你也可以采用外部加载，甚至是动态加载的方式。
     
 ## URLs
 
-Along with Kohana's powerful routing capabilities are included some methods for generating URLs for your routes uris. You can always specify your uris as a string using [URL::site] to create a full URL like so:
+随着 Kohana 路由功能的不断强大，加入了一些生成路由 URI 的方法。通常你可能在调用 [URL::site] 方法时指定的字符串来创建完整的 URL:
 
     URL::site('admin/edit/user/'.$user_id);
 
-However, Kohana also provides a method to generate the uri from the route's definition. This is extremely useful if your routing could ever change since it would relieve you from having to go back through your code and change everywhere that you specified a uri as a string. Here is an example of dynamic generation that corresponds to the `feeds` route example from above:
+同时，Kohana 也提供另外一种从路由定义生成 URI 的方法。假如能够所以改变的路由的参数从而减轻代码的变更带来的烦恼，这是非常好的替代方法。下面提供一个使用 `feeds` 路由动态生成 URL 的例子:
 
     Route::get('feeds')->uri(array(
       'user_id' => $user_id,
@@ -144,13 +144,14 @@ However, Kohana also provides a method to generate the uri from the route's defi
       'format' => 'rss'
     ));
 
+比方说，你今后决定改变 `feeds/<user_id>(/<action>).<format>` 的路由定义作进一步的设计。
 Let's say you decided later to make that route definition more verbose by changing it to `feeds/<user_id>(/<action>).<format>`. If you wrote your code with the above uri generation method you wouldn't have to change a single line! When a part of the uri is enclosed in parentheses and specifies a key for which there in no value provided for uri generation and no default value specified in the route, then that part will be removed from the uri. An example of this is the `(/<id>)` part of the default route; this will not be included in the generated uri if an id is not provided.
 
-One method you might use frequently is the shortcut [Request::uri] which is the same as the above except it assumes the current route, directory, controller and action. If our current route is the default and the uri was `users/list`, we can do the following to generate uris in the format `users/view/$id`:
+[Request::uri] 可能会是你经常使用的方法，它除了上面说明的功能外还可以设定当前的路由，目录，控制器和 actions 的值。如果我们当前的默认路由是 `users/list`，我们可以生成这样的格式 `users/view/$id`:
 
     $this->request->uri(array('action' => 'view', 'id' => $user_id));
     
-Or if within a view, the preferable method is:
+或者在视图中，可取的方法:
 
     Request::instance()->uri(array('action' => 'view', 'id' => $user_id));
 
