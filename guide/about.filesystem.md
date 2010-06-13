@@ -53,10 +53,10 @@ messages/
    to by a single key. See [message usage](using.messages) for more information.
 
 views/
-:  Views are a plain PHP file which is used to generate HTML. The view file is
+:  Views are plain PHP files which are used to generate HTML or other output. The view file is
    loaded into a [View] object and assigned variables, which it then converts
    into an HTML fragment. Multiple views can be used within each other.
-   See [view usage](usings.views) for more infromation.
+   See [view usage](usings.views) for more information.
 
 ## Finding Files
 
