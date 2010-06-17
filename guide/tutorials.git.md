@@ -2,6 +2,57 @@
 
 Kohana uses [git](http://git-scm.com/) for version control and [github](http://github.com/kohana) for collaboration. This tutorial will show you how to use git and github to build a simple application.
 
+## Installing and setting up Git on your machine
+
+### Installing Git
+
+- OSX: [Git-OSX](http://code.google.com/p/git-osx-installer/)
+- Windows: [Msygit](http://code.google.com/p/msysgit/)
+- Or download it from [git-site](http://git-scm.com/) and install it manually (see git website)
+
+### Basic global settings
+
+    git config --global user.name "Your Name"
+    git config --global user.email "youremail@website.com"
+
+### Additional but preferable settings
+
+To have a better visualisation of the git commandos and repositories in your command-line, you can set these:
+
+    git config --global color.diff auto
+    git config --global color.status auto
+    git config --global color.branch auto
+
+### Setting auto-completion
+
+[!!] These lines are only to use on an OSX machine
+
+These lines will do all the dirty work for you, so auto-completion can work for your git-environment
+
+    cd /tmp
+    git clone git://git.kernel.org/pub/scm/git/git.git
+    cd git
+    git checkout v`git --version | awk '{print $3}'`
+    cp contrib/completion/git-completion.bash ~/.git-completion.bash
+    cd ~
+    rm -rf /tmp/git
+    echo -e "source ~/.git-completion.bash" >> .profile
+	
+### Always use LF line endings
+
+This is the convention that we make for Kohana. Please set this settings for your own good and especially if you want to contribute to the Kohana community.
+
+    git config --global core.autocrlf input
+    git config --global core.savecrlf true
+
+[!!] More information about line endings at [github](http://help.github.com/dealing-with-lineendings/)
+
+### More information to get you on the track
+
+- [Git Screencasts](http://www.gitcasts.com/)
+- [Git Reference](http://gitref.org/)
+- [Pro Git book](http://progit.org/book/)
+
 ## Initial Structure
 
 [!!] This tutorial will assume that your web server is already set up, and you are going to create a new application at <http://localhost/gitorial/>.
