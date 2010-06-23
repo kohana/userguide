@@ -1,6 +1,6 @@
 1. **Ga van slag**
    - [Wat is Kohana?](about.kohana)
-   - [Conventions and Style](about.conventions)
+   - [Conventies and Codeerstijl](about.conventions)
    - [Model View Controller](about.mvc)
    - [Cascading Filesystem](about.filesystem)
    - [Request Flow](about.flow)

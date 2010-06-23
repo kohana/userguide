@@ -1,36 +1,36 @@
 # Request Flow
 
-Every application follows the same flow:
+Iedere applicatie volgt de zelfde flow:
 
-1. Application starts from `index.php`.
-2. The application, module, and system paths are set.
-3. Error reporting levels are set.
-4. Install file is loaded, if it exists.
-5. The [Kohana] class is loaded.
-6. The bootstrap file, `APPPATH/bootstrap.php`, is included.
-7. [Kohana::init] is called, which sets up error handling, caching, and logging.
-8. [Kohana_Config] readers and [Kohana_Log] writers are attached.
-9. [Kohana::modules] is called to enable additional modules.
-    * Module paths are added to the [cascading filesystem](about.filesystem).
-    * Includes the module `init.php` file, if it exists. 
-    * The `init.php` file can perform additional environment setup, including adding routes.
-10. [Route::set] is called multiple times to define the [application routes](using.routing).
-11. [Request::instance] is called to start processing the request.
-    1. Checks each route that has been set until a match is found.
-    2. Creates the controller instance and passes the request to it.
-    3. Calls the [Controller::before] method.
-    4. Calls the controller action, which generates the request response.
-    5. Calls the [Controller::after] method.
-        * The above 5 steps can be repeated multiple times when using [HMVC sub-requests](about.mvc).
-12. The main [Request] response is displayed
+1. Applicatie start vanaf `index.php`.
+2. De application, module, en system paden worden ingesteld.
+3. Error reporting niveaus worden ingesteld.
+4. Install file wordt geladen, als het bestaat.
+5. De [Kohana] class wordt ingeladen.
+6. Het bootstrap bestand, `APPPATH/bootstrap.php`, wordt geinclude.
+7. [Kohana::init] wordt aangeroepen, deze stelt error handling, caching, en logging in.
+8. [Kohana_Config] lezers en [Kohana_Log] schrijvers worden toegevoegd.
+9. [Kohana::modules] wordt aangeroepen om additionele modules te activeren.
+    * Module paden worden toegevoegd aan het [cascading filesystem](about.filesystem).
+    * Includen van `init.php` bestand, als het bestaat. 
+    * Het `init.php` bestand kan een extra omgevingsinstellingen instellen, waaronder het toevoegen van routes.
+10. [Route::set] wordt verschillende keren opgeroepen om de [applicaties routes](using.routing) te definiëren.
+11. [Request::instance] wordt opgeroepen om het request-proces te starten.
+    1. Iedere route controleren dat is ingesteld tot er een overeenkomst is gevonden.
+    2. Conroller instantie wordt gecreeërd en het request wordt doorgeven eraan.
+    3. De [Controller::before] methode wordt aangeroepen.
+    4. De controller action wordt aangeroepen, deze genereerd de request response.
+    5. De [Controller::after] methode wordt aangeroepen.
+        * De 5 bovenstaande stappen kunnen verschillende keren worden herhaald wanneer je [HMVC sub-requests](about.mvc) gebruikt.
+12. De basis [Request] response wordt getoond
 
 ## index.php
 
-Kohana follows a [front controller] pattern, which means that all requests are sent to `index.php`. This allows a very clean [filesystem](about.filesystem) design. In `index.php`, there are some very basic configuration options available. You can change the `$application`, `$modules`, and `$system` paths and set the error reporting level.
+Kohana volgt een [front controller] pattern, dit betekent dat alle requests worden gezonden naar `index.php`. Dit laat een zeer eenvoudig [bestandsstructuur](about.filesystem) design toe. In `index.php` zijn er enkele zeer basis configuratie opties mogelijk. je kan de `$application`, `$modules`, en `$system` paden veranderen en het error reporting level instellen.
 
-The `$application` variable lets you set the directory that contains your application files. By default, this is `application`. The `$modules` variable lets you set the directory that contains module files. The `$system` variable lets you set the directory that contains the default Kohana files.
+De `$application` variabele laat je toe om de folder in te stellen die al je application bestanden bevat. Standaard is dit `application`. De `$modules` variabele laat je toe om de folder in te stellen die alle module bestanden bevat. De `$system` variabele laat je toe om de folder in te stellen die alle Kohana bestanden bevat.
 
-You can move these three directories anywhere. For instance, if your directories are set up like this:
+Je kan deze drie folders overal naartoe verplaatsen. Bijvoorbeeld, als je folderstructuur zo is ingesteld:
 
     www/
         index.php
@@ -38,7 +38,7 @@ You can move these three directories anywhere. For instance, if your directories
         modules/
         system/
 
-You could move the directories out of the web root:
+Dan kan je de folders uit de webroot verplaatsen:
 
     application/
     modules/
@@ -46,28 +46,28 @@ You could move the directories out of the web root:
     www/
         index.php
 
-Then you would change the settings in `index.php` to be:
+Dan moet je de instellingen in `index.php` veranderen naar:
 
     $application = '../application';
     $modules     = '../modules';
     $system      = '../system';
 
-Now none of the directories can be accessed by the web server. It is not necessary to make this change, but does make it possible to share the directories with multiple applications, among other things.
+Nu kan geen enkele van deze folders worden bereikt via de webserver. Het is niet noodzakelijk om deze verandering te maken, maar het maakt het wel mogelijk om de folders te delen met meerdere applicaties, de mogelijkheden zijn enorm.
 
-[!!] There is a security check at the top of every Kohana file to prevent it from being accessed without using the front controller. However, it is more secure to move the application, modules, and system directories to a location that cannot be accessed via the web.
+[!!] Er is een veiligheidscontrole bovenaan elke Kohana file om te voorkomen dat het wordt uitgevoerd zonder het gebruik van de front controller. Maar natuurlijk is het veiliger om de application, modules, en system folders te verplaatsen naar een locatie dat niet kan worden bereikt via het web.
 
 ### Error Reporting
 
-By default, Kohana displays all errors, including strict mode warnings. This is set using [error_reporting](http://php.net/error_reporting):
+Standaard toont Kohana alle errors, zo ook strikte warnings. Dit wordt ingesteld door [error_reporting](http://php.net/error_reporting):
 
     error_reporting(E_ALL | E_STRICT);
 
-When you application is live and in production, a more conservative setting is recommended, such as ignoring notices:
+Als je applicatie live staat en in productie is, een meer conversatieve instelling is aangeraden, zoals het negeren van notices:
 
     error_reporting(E_ALL & ~E_NOTICE);
 
-If you get a white screen when an error is triggered, your host probably has disabled displaying errors. You can turn it on again by adding this line just after your `error_reporting` call:
+Als je een wit scherm krijgt wanneer een error is opgetreden, dan zal uw host waarschijnlijk het tonen van errors hebben uitgeschakeld. Je kan dit terug aanzetten door deze lijn toe te voegen juist achter je `error_reporting` call:
 
     ini_set('display_errors', TRUE);
 
-Errors should **always** be displayed, even in production, because it allows you to use [exception and error handling](debugging.errors) to serve a nice error page rather than a blank white screen when an error happens.
+Errors zouden **altijd** moeten worden getoond, zelf in productie, omdat het je toelaat om [exception en error handling](debugging.errors) te gebruiken om een mooie error pagina te tonen in plaats van een wit scherm als een error voorkomt.

@@ -1,20 +1,20 @@
-# Installation
+# Installatie
 
-1. Download the latest **stable** release from the [Kohana website](http://kohanaframework.org/)
-2. Unzip the downloaded package to create a `kohana` directory
-3. Upload the contents of this folder to your webserver
-4. Open `application/bootstrap.php` and make the following changes:
-	- Set the default [timezone](http://php.net/timezones) for your application
-	- Set the `base_url` in the [Kohana::init] call to reflect the location of the kohana folder on your server
-6. Make sure the `application/cache` and `application/logs` directories are writable by the web server
-7. Test your installation by opening the URL you set as the `base_url` in your favorite browser
+1. Download de laatste **stabiele** release van de [Kohana website](http://kohanaframework.org/)
+2. Unzip het gedownloade pakket om de `kohana` folder aan te maken
+3. Upload de inhoud van deze folder naar je webserver
+4. Open `application/bootstrap.php` en maak de volgende aanpassingen:
+	- Stel de standaard [timezone](http://php.net/timezones) in voor je applicatie
+	- Stel de `base_url` in de [Kohana::init] methode in om te verwijzen naar de locatie van de kohana folder op je server
+6. Zorg ervoor dat de `application/cache` en `application/logs` folders schrijfrechten hebben voor de web server
+7. Test je installatie door de URL te openen in je favoriete browser dat je hebt ingesteld als `base_url`
 
-[!!] Depending on your platform, the installation's subdirs may have lost their permissions thanks to zip extraction. Chmod them all to 755 by running `find . -type d -exec chmod 0755 {} \;` from the root of your Kohana installation.
+[!!] Afhankelijk van je platform is het mogelijk dat de installatie subfolders hun rechten verloren hebben tijdens de zip extractie. Chmod ze allemaal met 755 door het commando `find . -type d -exec chmod 0755 {} \;` uit te voeren in de root van je Kohana installatie.
 
-You should see the installation page. If it reports any errors, you will need to correct them before continuing.
+Je zou de installatie pagina moeten zien. Als het errors toont, zal je ze moeten aanpassen vooraleer je verder kunt gaan.
 
-![Install Page](img/install.png "Example of install page")
+![Install Page](img/install.png "Voorbeeld van de installatie pagina")
 
-Once your install page reports that your environment is set up correctly you need to either rename or delete `install.php` in the root directory. You should then see the Kohana welcome page:
+Eens je installatie pagina zegt dat je omgeving goed is ingesteld dan moet je de `install.php` pagina hernoemen of verwijderen in de root folder. Je zou nu de de Kohana welcome pagina moeten zien:
 
-![Welcome Page](img/welcome.png "Example of welcome page")
+![Welcome Page](img/welcome.png "Voorbeeld van welcome pagina")

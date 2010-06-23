@@ -1,86 +1,76 @@
 # Cascading Filesystem
 
-The Kohana filesystem is a heirarchy of directory structure. When a file is
-loaded by [Kohana::find_file], it is searched in the following order:
+Het Kohana filesysteem heeft hiërarchie van folder-structuur. Wanneer een bestand wordt ingeladen door [Kohana::find_file], dan wordt het gezocht in de volgend volgorde:
 
-Application Path
-: Defined as `APPPATH` in `index.php`. The default value is `application`.
+Application pad
+: Gedefineerd als `APPPATH` in `index.php`. De standaard value hiervan is `application`.
 
-Module Paths
-: This is set as an associative array using [Kohana::modules] in `APPPATH/bootstrap.php`.
-  Each of the values of the array will be searched in the order that the modules
-  are added.
+Module paden
+: Dit is ingesteld als een associatieve array met behulp van [Kohana::modules] in `APPPATH/bootstrap.php`. Elk van de waarden van de array zal worden gezocht in de volgorde waarin de modules worden toegevoegd.
 
-System Path
-: Defined as `SYSPATH` in `index.php`. The default value is `system`. All of the
-  main or "core" files and classes are defined here.
+System pad
+: Gedefineerd als `SYSPATH` in `index.php`. De standaard value hiervan is `system`. Alle belangrijkste of "core"-bestanden en classes zijn hier gedefinieerd.
 
-Files that are in directories higher up the include path order take precedence
-over files of the same name lower down the order, which makes it is possible to
-overload any file by placing a file with the same name in a "higher" directory:
+Bestanden die zich hoger bevinden in de volgorde van het inladen van bestanden hebben voorrang op bestanden met dezelfde naam die zich lager bevinden in de volgorde van inladen, dit maakt het mogelijk om ieder bestand te overloaden door een bestand met dezelfde naam in een "hogere" folder te plaatsen:
 
 ![Cascading Filesystem Infographic](img/cascading_filesystem.png)
 
-If you have a view file called `welcome.php` in the `APPPATH/views` and
-`SYSPATH/views` directories, the one in application will be returned when
-`welcome.php` is loaded because it is at the top of the filesystem.
+Als je een view bestand hebt met de naam `welcome.php` in de `APPPATH/views` en `SYSPATH/views` folders, dan zal hetgeen uit application worden gereturned als `welcome.php` wordt ingeladen omdat het "hoger" staat in de folderstructuur.
 
-## Types of Files
+## Types bestanden
 
-The top level directories of the application, module, and system paths has the following
-default directories:
+De top level folders van de application, module en systeem paden hebben volgende standaard folders:
 
 classes/
-:  All classes that you want to [autoload](using.autoloading) should be stored here.
-   This includes controllers, models, and all other classes. All classes must
-   follow the [class naming conventions](about.conventions#classes).
+:  Alle classes dat je wilt [automatisch inladen](using.autoloading) moeten zich hier
+   bevinden. Dit houdt in controllers, models, en alle andere classes. Alle classes moeten 
+   de [class naam conventies](about.conventions#classes) volgen.
 
 config/
-:  Configuration files return an associative array of options that can be
-   loaded using [Kohana::config]. See [config usage](using.configuration) for
-   more information.
+:  Configuratie bestanden geven een associatieve array van opties terug die je kunt
+   inladen via [Kohana::config]. Zie [gebruik van configuratie](using.configuration) voor
+   meer informatie.
 
 i18n/
-:  Translation files return an associative array of strings. Translation is
-   done using the `__()` method. To translate "Hello, world!" into Spanish,
-   you would call `__('Hello, world!')` with [I18n::$lang] set to "es-es".
-   See [translation usage](using.translation) for more information.
+:  Vertalingsbestanden geven een associatieve array van strings terug. Vertalen wordt 
+   gedaan door de `__()` methode te gebruiken. Om "Hello, world!" te vertalen in het 
+   Spaans zou je de methode `__('Hello, world!')` oproepen met [I18n::$lang] ingesteld op "es-es".
+   Zie [gebruik van vertaling](using.translation) voor meer informatie.
 
 messages/
-:  Message files return an associative array of strings that can be loaded
-   using [Kohana::message]. Messages and i18n files differ in that messages
-   are not translated, but always written in the default language and referred
-   to by a single key. See [message usage](using.messages) for more information.
+:  Berichtenbestanden geven een associatieve array van strings terug die ingeladen kunnen 
+   worden via [Kohana::message]. Messages en i18n bestanden verschillen erin dat messages
+   niet worden vertaald, maar altijd geschreven worden in de standaard taal en verwezen worden 
+   via een enkelvoudige key. Zie [gebruik van messages](using.messages) voor meer informatie.
 
 views/
-:  Views are plain PHP files which are used to generate HTML or other output. The view file is
-   loaded into a [View] object and assigned variables, which it then converts
-   into an HTML fragment. Multiple views can be used within each other.
-   See [view usage](usings.views) for more information.
+:  Views zijn plain PHP files die worden gebruikt om HTML of een ander formaat te genereren. Het view bestand wordt
+   ingeladen in in een [View] object en toegewezen variabelen, die het dan zal omzetten naar een HTML fractie. Het is mogelijk om meerder views in elkaar te gebruiken.
+   Zie [gebruik van views](usings.views) voor meer informatie.
 
-## Finding Files
+## Vinden van betanden
 
-The path to any file within the filesystem can be found by calling [Kohana::find_file]:
+Het pad naar eender welk bestand in de folderstructuur kan worden gevonden door het gebruik van [Kohana::find_file]:
 
-    // Find the full path to "classes/cookie.php"
+    // Vind het volledige pad naar "classes/cookie.php"
     $path = Kohana::find_file('classes', 'cookie');
 
-    // Find the full path to "views/user/login.php"
+    // Vind het volledige pad naar "views/user/login.php"
     $path = Kohana::find_file('views', 'user/login');
 
 
 # Vendor Extensions
 
-We call extensions that are not specific to Kohana "vendor" extensions.
-For example, if you wanted to use [DOMPDF](http://code.google.com/p/dompdf),
-you would copy it to `application/vendor/dompdf` and include the DOMPDF
-autoloading class:
+Extensies die niet specifiek zijn aan Kohana noemen we "vendor" extensions.
+Bijvoorbeeld, als je [DOMPDF](http://code.google.com/p/dompdf) wilt gebruiken,
+dan moet je het kopiëren naar `application/vendor/dompdf` en de DOMPDF
+autoloading class inladen:
 
     require Kohana::find_file('vendor', 'dompdf/dompdf/dompdf_config.inc');
 
-Now you can use DOMPDF without loading any more files:
+Nu kan je DOMPDF gebruiken zonder inladen van andere bestanden:
 
     $pdf = new DOMPDF;
 
-[!!] If you want to convert views into PDFs using DOMPDF, try the
+[!!] Indien je views wilt omzetten in PDFs via DOMPDF, probeer dan de
 [PDFView](http://github.com/shadowhand/pdfview) module.

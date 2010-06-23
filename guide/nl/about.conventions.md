@@ -1,24 +1,24 @@
-# Conventions
+# Conventies
 
-It is encouraged to follow Kohana's [coding style](http://dev.kohanaframework.org/wiki/kohana2/CodingStyle). This uses [BSD/Allman style](http://en.wikipedia.org/wiki/Indent_style#BSD.2FAllman_style) bracing, among other things.
+Het is aanbevolen om Kohana's [manier van coderen](http://dev.kohanaframework.org/wiki/kohana2/CodingStyle) te gebruiken. Dit gebruikt de [BSD/Allman stijl](http://en.wikipedia.org/wiki/Indent_style#BSD.2FAllman_style) van haakjes, en nog andere dingen.
 
-## Class Names and File Location {#classes}
+## Class namen en locaties van bestanden {#classes}
 
-Class names in Kohana follow a strict convention to facilitate [autoloading](using.autoloading). Class names should have uppercase first letters with underscores to separate words. Underscores are significant as they directly reflect the file location in the filesystem.
+Class namen in Kohana volgen een strikte conventie om [autoloading](using.autoloading) gemakkelijker te maken. Class namen zouden met een hoofdletter moeten beginnen en een underscore gebruiken om woorden af te scheiden van elkaar. Underscores zijn belangrijk omdat ze de locatie van het bestand weerspiegelen in de folderstructuur.
 
-The following conventions apply:
+De volgende conventies worden gebruikt:
 
-1. CamelCased class names should not be used, except when it is undesirable to create a new directory level.
-2. All class file names and directory names are lowercase.
-3. All classes should be in the `classes` directory. This may be at any level in the [cascading filesystem](about.filesystem).
+1. CamelCased class namen worden niet gebruikt, alleen maar als het onnodig is om een nieuw folderniveau aan te maken.
+2. Alle class bestandsnamen en foldernamen zijn met kleine letters geschreven.
+3. Alle classes zitten in de `classes` folder. Dit kan op ieder niveau in het [cascading filesystem](about.filesystem).
 
-[!!] Unlike Kohana v2.x, there is no separation between "controllers", "models", "libraries" and "helpers". All classes are placed in the "classes/" directory, regardless if they are static "helpers" or object "libraries". You can use whatever kind of class design you want: static, singleton, adapter, etc.
+[!!] In tegenstelling tot Kohana v2.x, is er geen afscheiding tussen "controllers", "models", "libraries" en "helpers". Alle classes worden in de folder "classes/" geplaatst, of het nu static "helpers" of object "libraries" zijn. Ieder design pattern is mogelijk voor het maken van classes: static, singleton, adapter, etc.
 
-## Examples
+## Voorbeelden
 
-Remember that in a class, an underscore means a new directory. Consider the following examples:
+Onthoud dat in een class, een underscore een folder betekent. Bekijk de volgende voorbeelden:
 
-Class Name            | File Path
+Class Naam            | Locatie File
 ----------------------|-------------------------------
 Controller_Template   | classes/controller/template.php
 Model_User            | classes/model/user.php
