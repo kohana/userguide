@@ -4,7 +4,7 @@ Kohana provides both an exception handler and an error handler that transforms e
 
 1. Exception class
 2. Error level
-3. Errror message
+3. Error message
 4. Source of the error, with the error line highlighted
 5. A [debug backtrace](http://php.net/debug_backtrace) of the execution flow
 6. Included files, loaded extensions, and global variables

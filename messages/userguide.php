@@ -9,5 +9,6 @@ return array(
 		'ru-ru' => 'Русский',
 		'fr-fr' => 'Français',
 		'he-il' => 'עברית',
+		'nl'	=> 'Nederlands',
 	),
 );
