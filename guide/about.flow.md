@@ -15,7 +15,7 @@ Every application follows the same flow:
     * Includes the module `init.php` file, if it exists. 
     * The `init.php` file can perform additional environment setup, including adding routes.
 10. [Route::set] is called multiple times to define the [application routes](using.routing).
-11. [Request::instance] called to start processing the request.
+11. [Request::instance] is called to start processing the request.
     1. Checks each route that has been set until a match is found.
     2. Creates the controller instance and passes the request to it.
     3. Calls the [Controller::before] method.
@@ -26,7 +26,7 @@ Every application follows the same flow:
 
 ## index.php
 
-Kohana follows a [front controller] pattern, which means that all requests are sent to `index.php`. This keeps allows a very clean [filesystem](about.filesystem) design. In `index.php`, there are some very basic configuration options available. You can change the `$application`, `$modules`, and `$system` paths and set the error reporting level.
+Kohana follows a [front controller] pattern, which means that all requests are sent to `index.php`. This allows a very clean [filesystem](about.filesystem) design. In `index.php`, there are some very basic configuration options available. You can change the `$application`, `$modules`, and `$system` paths and set the error reporting level.
 
 The `$application` variable lets you set the directory that contains your application files. By default, this is `application`. The `$modules` variable lets you set the directory that contains module files. The `$system` variable lets you set the directory that contains the default Kohana files.
 
