@@ -4,7 +4,7 @@ Kohana uses both static properties and files for configuration. Static propertie
 
 Static properties can be set in `APPPATH/bootstrap.php` or by [class extension](using.autoloading#class-extension). The benefit of static properties is that no additional files need to be loaded. The problem with this method is that it causes the class to be loaded when the property is set, if you do not use an extension. However, using extensions will overload extensions made in modules. It is generally recommended to do static property configuration in the bootstrap.
 
-[!!] When using opcode caching, such as [APC](http://php.net/apc) or [eAccelerator](http://eaccelerator.org/), class loading time is significantly reduced. It is highly recommended to use opcode caching with *any* production website, no matter the size.
+[!!] When using opcode caching, such as [APC](http://php.net/apc) or [eAccelerator](http://eaccelerator.net/), class loading time is significantly reduced. It is highly recommended to use opcode caching with *any* production website, no matter the size.
 
 ## 加载配置
 
