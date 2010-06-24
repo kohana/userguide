@@ -2,3 +2,5 @@ Icon?
 .DS_Store
 .svn
 .idea
+*~
+*.swp
