@@ -92,8 +92,7 @@ Kohana 使用下划线连接命名，而不是驼峰命名。
 
 代码在逻辑上缩进使用制表符(TAB)代替空格。
 
-
-Vertical spacing (for multi-line) is done with spaces. Tabs are not good for vertical alignment because different people have different tab widths.
+垂直间距(即多行)使用空格。制表符并不适用于垂直间距主要是因为不同的人可能设置类不同的制表符宽度。
 
 	<?php
 
@@ -116,13 +115,13 @@ Vertical spacing (for multi-line) is done with spaces. Tabs are not good for ver
 	$str = 'one'. $var .'two';
 	$str = 'one' . $var . 'two';
 
-### Single Line Statements
+### 单行表达式
 
-Single-line IF statements should only be used when breaking normal execution (e.g. return or continue):
+单行 IF 表达式仅用于破坏正常执行的情况(比如，return 或 continue):
 
 	<?php
 
-	// Acceptable:
+	// 可接受:
 	if ($foo == $bar)
 		return $foo;
 
@@ -135,35 +134,37 @@ Single-line IF statements should only be used when breaking normal execution (e.
 	if ($foo == $bar)
 		throw new Exception('You screwed up!');
 
-	// Not acceptable:
+	// 不可接受:
 	if ($baz == $bun)
 		$baz = $bar + 2;
 
-### Comparison Operations
+### 比较操作
 
-Please use OR and AND for comparison:
+使用 OR 和 AND 作为比较符:
 
 	<?php
 
-	// Correct:
+	// 正确:
 	if (($foo AND $bar) OR ($b AND $c))
 
-	// Incorrect:
+	// 错误:
 	if (($foo && $bar) || ($b && $c))
-	if/else Blocks
-	Please use elseif, not else if:
+
+if/else Blocks
+
+使用 elseif 而不是 else if:
 
 	<?php
 
-	// Correct:
+	// 正确:
 	elseif ($bar)
 
-	// Incorrect:
+	// 错误:
 	else if($bar)
 
-### Switch structures
+### Switch 结构
 
-Each case, break and default should be on a separate line. The block inside a case or default must be indented by 1 tab.
+每个 case，break 和 default 都应该是独立的一行。每个 case 或 default 里面必须使用一个制表符(TAB)。
 
 	<?php
 
@@ -181,39 +182,39 @@ Each case, break and default should be on a separate line. The block inside a ca
 		break;
 	}
 
-### Parentheses
+### 括号
 
 There should be one space after statement name, followed by a parenthesis. The ! (bang) character must have a space on either side to ensure maximum readability. Except in the case of a bang or type casting, there should be no whitespace after an opening parenthesis or before a closing parenthesis.
 
 	<?php
 
-	// Correct:
+	// 正确:
 	if ($foo == $bar)
 	if ( ! $foo)
 
-	// Incorrect:
+	// 错误:
 	if($foo == $bar)
 	if(!$foo)
 	if ((int) $foo)
 	if ( $foo == $bar )
 	if (! $foo)
 
-### Ternaries
+### 三元操作
 
-All ternary operations should follow a standard format. Use parentheses around expressions only, not around just variables.
+所有的三元操作都应该遵循一种标准格式。表达式左右使用括号，而变量则不需要。
 
 <?php
 
 	$foo = ($bar == $foo) ? $foo : $bar;
 	$foo = $bar ? $foo : $bar;
 
-All comparisons and operations must be done inside of a parentheses group:
+所有的比较和操作都必须使用括号括起来作为一个组:
 
 	<?php
 
 	$foo = ($bar > 5) ? ($bar + $foo) : strlen($bar);
 
-When separating complex ternaries (ternaries where the first part goes beyond ~80 chars) into multiple lines, spaces should be used to line up operators, which should be at the front of the successive lines:
+分离复杂的三元操作（三元的第一部分超过了 80 个字符）为多行形式。spaces should be used to line up operators, which should be at the front of the successive lines:
 
 	<?php
 
@@ -221,124 +222,126 @@ When separating complex ternaries (ternaries where the first part goes beyond ~8
 		 ? $foo
 		 : $bar;
 
-### Type Casting
+### 强制类型转换
 
-Type casting should be done with spaces on each side of the cast:
+强制类型转换需要在两边使用空格:
 
 	<?php
 
-	// Correct:
+	// 正确:
 	$foo = (string) $bar;
 	if ( (string) $bar)
 
-	// Incorrect:
+	// 错误:
 	$foo = (string)$bar;
 
-When possible, please use type casting instead of ternary operations:
+如果可能，请使用强制类型转换，而不是三元操作:
 
 	<?php
 
-	// Correct:
+	// 正确:
 	$foo = (bool) $bar;
 
-	// Incorrect:
+	// 错误:
 	$foo = ($bar == TRUE) ? TRUE : FALSE;
 
-When casting type to integer or boolean, use the short format:
+如果强制类型转换整形(int)或布尔型(boolean)，请使用短格式:
 
 	<?php
 
-	// Correct:
+	// 正确:
 	$foo = (int) $bar;
 	$foo = (bool) $bar;
 
-	// Incorrect:
+	// 错误:
 	$foo = (integer) $bar;
 	$foo = (boolean) $bar;
 
-### Constants
+### 常量
 
-Always use uppercase for constants:
+常量尽量使用全大写:
 
 	<?php
 
-	// Correct:
+	// 正确:
 	define('MY_CONSTANT', 'my_value');
 	$a = TRUE;
 	$b = NULL;
 
-	// Incorrect:
+	// 错误:
 	define('MyConstant', 'my_value');
 	$a = True;
 	$b = null;
 
-Place constant comparisons at the end of tests:
+请把常量放在比较符号的末端:
 
 	<?php
 
-	// Correct:
+	// 正确:
 	if ($foo !== FALSE)
 
-	// Incorrect:
+	// 错误:
 	if (FALSE !== $foo)
 
-This is a slightly controversial choice, so I will explain the reasoning. If we were to write the previous example in plain English, the correct example would read:
+这是一个略有争议的选择，所以我会解释其理由。如果我们用简单的英语写前面的例子中，正确的例子如下:
 
 	if variable $foo is not exactly FALSE
 
-And the incorrect example would read:
+但是错误的例子可以理解为:
 
 	if FALSE is not exactly variable $foo
 
-Since we are reading left to right, it simply doesn't make sense to put the constant first.
+由于我们是从左向右读，因此把常量放在第一位根本没有意义。
 
-### Comments
+### 注解
 
-#### One-line comments
+#### 单行注解
 
-Use //, preferably above the line of code you're commenting on. Leave a space after it and start with a capital. Never use #.
-
-	<?php
-
-	// Correct
-
-	//Incorrect
-	// incorrect
-	# Incorrect
-
-### Regular expressions
-
-When coding regular expressions please use PCRE rather than the POSIX flavor. PCRE is considered more powerful and faster.
+单行注解使用 //，或许你在使用下面几种注解方式。请在注解符后面保留一个空格在添加注解。坚决不能使用 #。
 
 	<?php
 
-	// Correct:
+	// 正确
+
+	//错误
+	// 错误
+	# 错误
+
+### 正则表达式
+
+如果编码中使用到正则表达式，请尽量使用 PCRE 风格而不是 POSIX 风格。相比较而言 PCRE 风格更为强大，速度更快。
+
+	<?php
+
+	// 正确:
 	if (preg_match('/abc/i'), $str)
 
-	// Incorrect:
+	// 错误:
 	if (eregi('abc', $str))
 
-Use single quotes around your regular expressions rather than double quotes. Single-quoted strings are more convenient because of their simplicity. Unlike double-quoted strings they don't support variable interpolation nor integrated backslash sequences like \n or \t, etc.
+正则表达式使用单引号括起来而不是双引号。单引号的字符串简单而且解析起来更快。 
+Unlike double-quoted strings they don't support variable interpolation 
+nor integrated backslash sequences like \n or \t, etc.
 
 	<?php
 
-	// Correct:
+	// 正确:
 	preg_match('/abc/', $str);
 
-	// Incorrect:
+	// 错误:
 	preg_match("/abc/", $str);
 
-When performing a regular expression search and replace, please use the $n notation for backreferences. This is preferred over \\n.
+当需要使用正则搜索活替换时，请使用 $n 符号作反向引用，它的效率优于 \\n。
 
 	<?php
 
-	// Correct:
+	// 正确:
 	preg_replace('/(\d+) dollar/', '$1 euro', $str);
 
-	// Incorrect:
+	// 错误:
 	preg_replace('/(\d+) dollar/', '\\1 euro', $str);
 
-Finally, please note that the $ character for matching the position at the end of the line allows for a following newline character. Use the D modifier to fix this if needed. [More info](http://blog.php-security.org/archives/76-Holes-in-most-preg_match-filters.html).
+最后，请注意如果使用 $ 符号匹配字符串末尾是否允许后换行符的话，如果需要可以附加 D 修饰符解决此问题。[更多详情](http://blog.php-security.org/archives/76-Holes-in-most-preg_match-filters.html)。
 
 	<?php
 
