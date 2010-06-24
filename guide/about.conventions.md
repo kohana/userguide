@@ -39,8 +39,6 @@ Kohana uses under_score naming, not camelCase naming.
 
 #### Classes
 
-	<?php
-
 	// Library, uses _Core suffix
 	class Beer_Core {
 
@@ -58,8 +56,6 @@ Kohana uses under_score naming, not camelCase naming.
 
 When creating an instance of a class, don't use parentheses if you're not passing something on to the constructor:
 
-	<?php
-
 	// Correct:
 	$db = new Database;
 
@@ -70,16 +66,12 @@ When creating an instance of a class, don't use parentheses if you're not passin
 
 Functions should be all lowercase, and use under_scores to separate words:
 
-	<?php
-
 	function drink_beverage($beverage)
 	{
 
 #### Variables
 
 All variables should be lowercase and use under_score, not camelCase:
-
-	<?php
 
 	// Correct:
 	$foo = 'bar';
@@ -94,8 +86,6 @@ You must use tabs to indent your code. Using spaces for tabbing is strictly forb
 
 Vertical spacing (for multi-line) is done with spaces. Tabs are not good for vertical alignment because different people have different tab widths.
 
-	<?php
-
 	$text = 'this is a long text block that is wrapped. Normally, we aim for '
 		  . 'wrapping at 80 chars. Vertical alignment is very important for '
 		  . 'code readability. Remember that all indentation is done with tabs,'
@@ -105,8 +95,6 @@ Vertical spacing (for multi-line) is done with spaces. Tabs are not good for ver
 ### String concatenation
 
 Don't put spaces around the concatenation operator:
-
-	<?php
 
 	// Correct:
 	$str = 'one'.$var.'two';
@@ -118,8 +106,6 @@ Don't put spaces around the concatenation operator:
 ### Single Line Statements
 
 Single-line IF statements should only be used when breaking normal execution (e.g. return or continue):
-
-	<?php
 
 	// Acceptable:
 	if ($foo == $bar)
@@ -142,17 +128,13 @@ Single-line IF statements should only be used when breaking normal execution (e.
 
 Please use OR and AND for comparison:
 
-	<?php
-
 	// Correct:
 	if (($foo AND $bar) OR ($b AND $c))
 
 	// Incorrect:
 	if (($foo && $bar) || ($b && $c))
-	if/else Blocks
-	Please use elseif, not else if:
-
-	<?php
+	
+Please use elseif, not else if:
 
 	// Correct:
 	elseif ($bar)
@@ -163,8 +145,6 @@ Please use OR and AND for comparison:
 ### Switch structures
 
 Each case, break and default should be on a separate line. The block inside a case or default must be indented by 1 tab.
-
-	<?php
 
 	switch ($var)
 	{
@@ -184,8 +164,6 @@ Each case, break and default should be on a separate line. The block inside a ca
 
 There should be one space after statement name, followed by a parenthesis. The ! (bang) character must have a space on either side to ensure maximum readability. Except in the case of a bang or type casting, there should be no whitespace after an opening parenthesis or before a closing parenthesis.
 
-	<?php
-
 	// Correct:
 	if ($foo == $bar)
 	if ( ! $foo)
@@ -201,20 +179,14 @@ There should be one space after statement name, followed by a parenthesis. The !
 
 All ternary operations should follow a standard format. Use parentheses around expressions only, not around just variables.
 
-<?php
-
 	$foo = ($bar == $foo) ? $foo : $bar;
 	$foo = $bar ? $foo : $bar;
 
 All comparisons and operations must be done inside of a parentheses group:
 
-	<?php
-
 	$foo = ($bar > 5) ? ($bar + $foo) : strlen($bar);
 
 When separating complex ternaries (ternaries where the first part goes beyond ~80 chars) into multiple lines, spaces should be used to line up operators, which should be at the front of the successive lines:
-
-	<?php
 
 	$foo = ($bar == $foo)
 		 ? $foo
@@ -223,8 +195,6 @@ When separating complex ternaries (ternaries where the first part goes beyond ~8
 ### Type Casting
 
 Type casting should be done with spaces on each side of the cast:
-
-	<?php
 
 	// Correct:
 	$foo = (string) $bar;
@@ -235,8 +205,6 @@ Type casting should be done with spaces on each side of the cast:
 
 When possible, please use type casting instead of ternary operations:
 
-	<?php
-
 	// Correct:
 	$foo = (bool) $bar;
 
@@ -244,8 +212,6 @@ When possible, please use type casting instead of ternary operations:
 	$foo = ($bar == TRUE) ? TRUE : FALSE;
 
 When casting type to integer or boolean, use the short format:
-
-	<?php
 
 	// Correct:
 	$foo = (int) $bar;
@@ -259,8 +225,6 @@ When casting type to integer or boolean, use the short format:
 
 Always use uppercase for constants:
 
-	<?php
-
 	// Correct:
 	define('MY_CONSTANT', 'my_value');
 	$a = TRUE;
@@ -272,8 +236,6 @@ Always use uppercase for constants:
 	$b = null;
 
 Place constant comparisons at the end of tests:
-
-	<?php
 
 	// Correct:
 	if ($foo !== FALSE)
@@ -297,8 +259,6 @@ Since we are reading left to right, it simply doesn't make sense to put the cons
 
 Use //, preferably above the line of code you're commenting on. Leave a space after it and start with a capital. Never use #.
 
-	<?php
-
 	// Correct
 
 	//Incorrect
@@ -309,8 +269,6 @@ Use //, preferably above the line of code you're commenting on. Leave a space af
 
 When coding regular expressions please use PCRE rather than the POSIX flavor. PCRE is considered more powerful and faster.
 
-	<?php
-
 	// Correct:
 	if (preg_match('/abc/i'), $str)
 
@@ -318,8 +276,6 @@ When coding regular expressions please use PCRE rather than the POSIX flavor. PC
 	if (eregi('abc', $str))
 
 Use single quotes around your regular expressions rather than double quotes. Single-quoted strings are more convenient because of their simplicity. Unlike double-quoted strings they don't support variable interpolation nor integrated backslash sequences like \n or \t, etc.
-
-	<?php
 
 	// Correct:
 	preg_match('/abc/', $str);
@@ -329,8 +285,6 @@ Use single quotes around your regular expressions rather than double quotes. Sin
 
 When performing a regular expression search and replace, please use the $n notation for backreferences. This is preferred over \\n.
 
-	<?php
-
 	// Correct:
 	preg_replace('/(\d+) dollar/', '$1 euro', $str);
 
@@ -338,8 +292,6 @@ When performing a regular expression search and replace, please use the $n notat
 	preg_replace('/(\d+) dollar/', '\\1 euro', $str);
 
 Finally, please note that the $ character for matching the position at the end of the line allows for a following newline character. Use the D modifier to fix this if needed. [More info](http://blog.php-security.org/archives/76-Holes-in-most-preg_match-filters.html).
-
-	<?php
 
 	$str = "email@example.com\n";
 
