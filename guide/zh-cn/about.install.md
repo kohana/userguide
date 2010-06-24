@@ -20,18 +20,18 @@
 ![欢迎界面](img/welcome.png "Example of welcome page")
 
 
-## Setting up a production environment
+## 设置产品(Production)环境
 
-There are a few things you'll want to do with your application before moving into production.
+在转移到产品环境之前有些事情需要完成:
 
-1. See the [Configuration page](about.configuration) in the docs. 
-   This covers most of the global settings that would change between environments. 
-   As a general rule, you should enable caching and disable profiling ([Kohana::init] settings) for production sites. 
-   Route caching can also help if you have a lot of routes.
-2. Catch all exceptions in application/bootstrap.php, so that sensitive data is cannot be leaked by stack traces. 
-   See the example below which was taken from Shadowhand's wingsc.com source.
-3. Turn on APC or some kind of opcode caching. 
-   This is be the single easiest performance boost you can make to PHP itself. The more complex your application, the bigger the benefit of using opcode caching.
+1. 查看文档的[配置页面](about.configuration)。
+   它涵盖了大多数的环境全局设置。
+   一般来讲，在产品环境下需要开启缓存并关闭概况分析(profiling)([Kohana::init] 设置)。
+   如果设置了很多路由，路由缓存也是很有必要的。
+2. 在 application/bootstrap.php 捕获所有的异常，已保证敏感信息不会被堆栈跟踪泄漏。 
+   下面有一个从 Shadowhand 的 wingsc.com 网站源代码提取出来的样例。
+3. 打开 APC 或某些类型的指令缓存。
+   这是最简单容易的提升 PHP 自身性能的方法。程序越复杂，使用指令缓存带来越大的利益。
 
 		/**
 		 * Set the environment string by the domain (defaults to 'development').
