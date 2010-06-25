@@ -46,7 +46,7 @@ messages/
 
 views/
 :  视图是标准的 PHP 文件被用于生成 HTML。视图文件被加载到 [View] 对象中并得到变量的设置，
-   最后在转换为 HTML 片段。多个视图可以相互引用。
+   最后在转换为 HTML 片段或其他输出。多个视图可以相互引用。
    详情请查阅[视图的用法](using.views)。
 
 ## 查找文件
@@ -72,5 +72,4 @@ views/
 
     $pdf = new DOMPDF;
 
-[!!] 如果你想使用 DOMPDF 转换试图到 PDFs，可以试试
-[PDFView](http://github.com/shadowhand/pdfview) 扩展。
+[!!] 如果你想使用 DOMPDF 转换试图到 PDFs，可以试试 [PDFView](http://github.com/shadowhand/pdfview) 扩展。

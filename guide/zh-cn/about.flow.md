@@ -26,7 +26,7 @@
 
 ## index.php
 
-Kohana 遵循[前端控制器]模式，因此所有的请求都要发送到 `index.php` 文件。这样就可以保持一个非常整洁的[文件系统](about.filesystem)设计。在 `index.php` 文件中有一些非常重要而又基础的配置变量。你可以改变 `$application`，`$modules` 和 `$system` 的路径以及设置错误报告级别。
+Kohana 遵循[前端控制器]模式，因此所有的请求都要发送到 `index.php` 文件。这样就可以允许保持一个非常整洁的[文件系统](about.filesystem)设计。在 `index.php` 文件中有一些非常重要而又基础的配置变量。你可以改变 `$application`，`$modules` 和 `$system` 的路径以及设置错误报告级别。
 
 `$application` 变量让目录包含着你的程序文件。默认情况下，就是 `application` 目录。`$modules` 变量让目录包含着你的扩展文件。默认情况下。`$system` 变量让目录包含着默认的 Kohana 文件。默认情况下。
 
