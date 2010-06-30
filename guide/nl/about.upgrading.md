@@ -1,26 +1,25 @@
-# Upgrading from 2.3.x
+# Upgraden vanaf 2.3.x
 
-Most of Kohana v3 works very differently from Kohana 2.3, here's a list of common gotchas and tips for upgrading.
+De code van Kohana v3 werkt grotendeels anders dan Kohana 2.3, hier is een lijst van de meeste valkuilen en tips om succesvol te upgraden.
 
-## Naming conventions
+## Naming conventies
 
-The 2.x series differentiated between different 'types' of class (i.e. controller, model etc.) using suffixes.  Folders within model / controller folders didn't have any bearing on the name of the class.
+In 2.x versies onderscheiden de verschillende soorten van classes (zoals controller, model, ...) zich met elkaar met behulp van achtervoegsels. Mappen in de model / controller mappen hadden geen invloed op de naam van de class.
 
-In 3.0 this approach has been scrapped in favour of the Zend framework filesystem conventions, where the name of the class is a path to the class itself, separated by underscores instead of slashes (i.e. `/some/class/file.php` becomes `Some_Class_File`).
-
-See the [conventions documentation](start.conventions) for more information.
+In 3.0 werd aanpak geschrapt ten gunste van de Zend framework bestandssysteem conventies, waar de naam van de class het pad is naar de class zelf, gescheiden door een underscore in plaats van slashes (dus `/some/class/file.php` bekomt `Some_Class_File`).
+Zie de [conventies documentatie](start.conventions) voor meer informatie.
 
 ## Input Library
 
-The Input Library has been removed from 3.0 in favour of just using `$_GET` and `$_POST`. 
+De Input Library is verwijderd in 3.0, er wordt nu aanbevolen om gewoon `$_GET` en `$_POST` te gebruiken.
 
-### XSS Protection
+### XSS Protectie
 
-If you need to XSS clean some user input you can use [Security::xss_clean] to sanitise it, like so:
+Als je invoer van gebruikers wilt filteren op XSS kan je [Security::xss_clean] gebruiken om:
 
 	$_POST['description'] = security::xss_clean($_POST['description']);
 
-You can also use the [Security::xss_clean] as a filter with the [Validate] library:
+Je kan ook altijd [Security::xss_clean] gebruiken als filter met de [Validate] library:
 
 	$validation = new Validate($_POST);
 	
@@ -28,81 +27,81 @@ You can also use the [Security::xss_clean] as a filter with the [Validate] libra
 
 ### POST & GET
 
-One of the great features of the Input library was that if you tried to access the value in one of the superglobal arrays and it didn't exist the Input library would return a default value that you could specify i.e.:
+Eén van de grootste functies van de Input Library was als je probeerde een waarde uit een superglobale array te halen en deze bestond bestond niet, dan zou de Input Library een standaard waarde teruggeven dat je kon instellen:
 
 	$_GET = array();
 	
-	// $id is assigned the value 1
+	// $id heeft de waarde 1 gekregen
 	$id = Input::instance()->get('id', 1);
 	
 	$_GET['id'] = 25;
 	
-	// $id is assigned the value 25
+	// $id heeft de waarde 25 gekregen
 	$id = Input::instance()->get('id', 1);
 
-In 3.0 you can duplicate this functionality using [Arr::get]:
+In 3.0 kan je deze functionaliteit nabootsen door [Arr::get] te gebruiken:
 
 	$_GET = array();
 	
-	// $id is assigned the value 1
+	// $id heeft de waarde 1 gekregen
 	$id = Arr::get($_GET, 'id', 1);
 	
 	$_GET['id'] = 42;
 	
-	// $id is assigned the value 42
+	// $id heeft de waarde 42 gekregen
 	$id = Arr::get($_GET, 'id', 1);
 
 ## ORM Library
 
-There have been quite a few major changes in ORM since 2.3, here's a list of the more common upgrading problems.
+Er zijn redelijk veel grote wijzingingen aangebracht in ORM sedert 2.3. Hier is een lijst met de meest voorkomende upgrade problemen.
 
-### Member variables
+### Member variablen
 
-All member variables are now prefixed with an underscore (_) and are no longer accessible via `__get()`. Instead you have to call a function with the name of the property, minus the underscore.
+Alle member variablen hebben nu een voorvoegsel gekregen met een underscore (_) en zijn niet langer bereikbaar via `__get()`. Nu moet je een functie aanroepen met de naam van de property zonder de underscore.
 
-For instance, what was once `loaded` in 2.3 is now `_loaded` and can be accessed from outside the class via `$model->loaded()`.
+Bijvoorbeeld, in 2.3 had je `loaded` en in 3.x is dat nu `_loaded` en heb je nu toegang van buiten de class via `$model->loaded()`.
 
-### Relationships
+### Relaties
 
-In 2.3 if you wanted to iterate a model's related objects you could do:
+Als je in 2.3 de gerelateerde objecten van een model wilde herhalen, kon je dat zo doen:
 
 	foreach($model->{relation_name} as $relation)
 
-However, in the new system this won't work.   In version 2.3 any queries generated using the Database library were generated in a global scope, meaning that you couldn't try and build two queries simultaneously.  Take for example:
+Maar in 3.0 zal dit niet werken. In de 2.3 serie werden alle queries die gegenereerd werden met behulp van de Database Library gegeneeerd in een globale omgeving, wat betekent dat je niet kon proberen en maken van twee queries. Bijvoorbeeld:
 
-# TODO: NEED A DECENT EXAMPLE!!!!
-	
-This query would fail as the second, inner query would 'inherit' the conditions of the first one, thus causing pandemonia.
-In v3.0 this has been fixed by creating each query in its own scope, however this also means that some things won't work quite as expected.  Take for example:
+# TODO: GOED VOORBEELD!!!!
+
+Deze query zou mislukken doordat de tweede, inner query alle voorwaarden zou overerven van de eerste, wat zou leiden tot het mislukken.
+In 3.0 is dit aangepast door iedere query te laten genereren in zijn eigen omgeving. Let wel dat sommige dingen hierdoor niet gaan werken zoals je verwacht. Bijvoorbeeld:
 
 	foreach(ORM::factory('user', 3)->where('post_date', '>', time() - (3600 * 24))->posts as $post)
 	{
 		echo $post->title;
 	}
 
-[!!] (See [the Database tutorial](tutorials.databases) for the new query syntax)
+[!!] (Zie [de Database tutorial](tutorials.databases) voor de nieuwe query syntax)
 
-In 2.3 you would expect this to return an iterator of all posts by user 3 where `post_date` was some time within the last 24 hours, however instead it'll apply the where condition to the user model and return a `Model_Post` with the joining conditions specified.
+In 2.3 zou je verwachten dat dit iterator teruggeeft van alle berichten van een gebruiker met `id` 3 met een `post_date` binnenin de 24 uren, maar in de plaats daarvan zal de WHERE conditie toegepast worden op het user-model en een `Model_Post` worden teruggevens met de joining conditities gespecifieerd.
 
-To achieve the same effect as in 2.3 you need to rearrange the structure slightly:
+Om hetzelfde effect te verkrijgen zoals in 2.3, moet je de structuur iets aanpassen:
 
 	foreach(ORM::factory('user', 3)->posts->where('post_date', '>', time() - (36000 * 24))->find_all() as $post)
 	{
 		echo $post->title;
 	}
 
-This also applies to `has_one` relationships:
+Dit is ook van toepassing op de `has_one` relaties:
 
-	// Incorrect
+	// Niet correct
 	$user = ORM::factory('post', 42)->author;
 	// Correct
 	$user = ORM::factory('post', 42)->author->find();
 
-### Has and belongs to many relationships
+### Has and belongs to many relaties
 
-In 2.3 you could specify `has_and_belongs_to_many` relationships.  In 3.0 this functionality has been refactored into `has_many` *through*.
+In 2.3 kon je `has_and_belongs_to_many` relaties specifieren. In 3.0 is deze functionaliteit herschreven naar `has_many` *through*.
 
-In your models you define a `has_many` relationship to the other model but then you add a `'through' => 'table'` attribute, where `'table'` is the name of your through table. For example (in the context of posts<>categories):
+In het model definieer je een `has_many` relatie met een ander model maar dan voeg je nog een `'through' => 'table'` attribuut aan toe, waar `'table'` de naam is van de trough tabel. Bijvoorbeeld (in de context van posts<>categories):
 
 	$_has_many = array
 	(
@@ -113,13 +112,13 @@ In your models you define a `has_many` relationship to the other model but then 
 							),
 	);
 
-If you've set up kohana to use a table prefix then you don't need to worry about explicitly prefixing the table.
+Als je Kohana hebt opgezet om een tabel voorvoegsel te gebruiken, dan hoef je geen zorgen te maken om dit voorvoegsel hier te gebruiken bij de tabelnaam.
 
 ### Foreign keys
 
-If you wanted to override a foreign key in 2.x's ORM you had to specify the relationship it belonged to, and your new foreign key in the member variable `$foreign_keys`.
+Als je in Kohana 2.x's ORM een foreign key wilde overschrijven moest je de relatie specificeren waaraan het toebehoorde, en de nieuwe foreign key instellen in de member variabele `$foreign_keys`.
 
-In 3.0 you now define a `foreign_key` key in the relationship's definition, like so:
+In 3.0 moet je nu een `foreign_key` definiëren in de relatie-definitie, zoals hier:
 
 	Class Model_Post extends ORM
 	{
@@ -133,13 +132,13 @@ In 3.0 you now define a `foreign_key` key in the relationship's definition, like
 						);
 	}
 
-In this example we should then have a `user_id` field in our posts table.
+In dit voorbeeld zouden we een `user_id` veld moeten hebben in de tabel posts.
 
 
 
-In has_many relationships the `far_key` is the field in the through table which links it to the foreign table and the foreign key is the field in the through table which links "this" model's table to the through table.
+In has_many relaties is de `far_key` het veld in de trough tabel die linkt naar de foreign tabel en is de `foreign key` het veld in de trough tabel die "this" model's tabel linkt naar de trough table.
 
-Consider the following setup, "Posts" have and belong to many "Categories" through `posts_sections`.
+Stel je de volgende opstelleing voor: "Posts" hebben en behoren tot vele "Categories" via `posts_sections` ("Posts" have and belong to many "Categories" through `posts_sections`)
 
 | categories | posts_sections 	| posts   |
 |------------|------------------|---------|
@@ -170,115 +169,114 @@ Consider the following setup, "Posts" have and belong to many "Categories" throu
 		}
 
 
-Obviously the aliasing setup here is a little crazy, but it's a good example of how the foreign/far key system works.
+Uiteraard is de aliasing setup hier een beetje gek, onnodig, maar het is een goed voorbeeld om te tonen hoe het foreign/far key systeem werkt.
 
 ### ORM Iterator
 
-It's also worth noting that `ORM_Iterator` has now been refactored into `Database_Result`.
+Het is ook best te melden dat `ORM_Iterator` nu herschreven is naar `Database_Result`.
 
-If you need to get an array of ORM objects with their keys as the object's pk, you need to call [Database_Result::as_array], e.g.
+Als je een array van ORM objecten met hun keys als index van de array wilt verkrijgen, moet je [Database_Result::as_array] gebruiken, bijvoorbeeld:
+
 
 		$objects = ORM::factory('user')->find_all()->as_array('id');
 
-Where `id` is the user table's primary key.
+Waar `id` de primary key is in de user tabel.
 
 ## Router Library
 
-In version 2 there was a Router library that handled the main request.  It let you define basic routes in a `config/routes.php` file and it would allow you to use custom regex for the routes, however it was fairly inflexible if you wanted to do something radical.
+In versie 2 was er een Router library die de main request afhandelde. Het liet je de basisroutes instellen in het `config/routes.php` bestand en het liet je toe om zelfgeschreven regex te gebruiken voor routes, maar het was niet echt flexibel als je iets radicaal wou veranderen.
 
 ## Routes
 
-The routing system (now refered to as the request system) is a lot more flexible in 3.0. Routes are now defined in the bootstrap file (`application/bootstrap.php`) and the module init.php (`modules/module_name/init.php`). It's also worth noting that routes are evaluated in the order that they are defined.
+Het routing systeem (nu wordt verwezen naar het request systeem) is een stuk flexibeler in 3.0. Routes zijn nu gedefinieerd in het boostrap bestand (`application/bootstrap.php`) en de de module's init.php (`modules/module_name/init.php`). Het is ook interessant te weten dat routes worden geëvalueerd in de volgorde dat ze worden gedefinieerd. In plaats daarvan specifieer je een patroon voor elke uri, je kan variabelen gebruiken om segmenten aan te duiden (zoals een controller, methode, id).
 
-Instead of defining an array of routes you now create a new [Route] object for each route. Unlike in the 2.x series there is no need to map one uri to another. Instead you specify a pattern for a uri, use variables to mark the segments (i.e. controller, method, id).
-
-For example, in 2.x these regexes:
+Bijvoorbeeld, in 2.x zouden deze regexes:
 
 	$config['([a-z]+)/?(\d+)/?([a-z]*)'] = '$1/$3/$1';
 
-Would map the uri `controller/id/method` to `controller/method/id`.  In 3.0 you'd use:
+de uri `controller/id/method` linken aan `controller/method/id`. In 3.0 gebruik je dit:
 
 	Route::set('reversed','(<controller>(/<id>(/<action>)))')
 			->defaults(array('controller' => 'posts', 'action' => 'index'));
 
-[!!] Each uri should have be given a unique name (in this case it's `reversed`), the reasoning behind this is explained in [the url tutorial](tutorials.urls).
+[!!] Iedere uri moet een unieke naam hebben (in dit geval `reversed`), de reden hiervoor wordt nader uitgelegd in de [url tutorial](tutorials.urls).
 
-Angled brackets denote dynamic sections that should be parsed into variables. Rounded brackets mark an optional section which is not required. If you wanted to only match uris beginning with admin you could use:
+Slashes geven dynamische secties weer die zouden moeten worden ontleed in variabelen. Haakjes geven optionele secties aan die niet vereist zijn. Als je met een route enkel uris die beginnen met admin wilt aanspreken kan je dit gebruiken:
 
 	Rouse::set('admin', 'admin(/<controller>(/<id>(/<action>)))');
 
-And if you wanted to force the user to specify a controller:
+En als je wilt een dat een gebruiker een controller specificeert:
 
 	Route::set('admin', 'admin/<controller>(/<id>(/<action>))');
-	
-Also, Kohana does not use any 'default defaults'.  If you want Kohana to assume your default action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then pass an array of `segment => regex` i.e.:
+
+Kohana maakt geen gebruik van `default defaults`. Als je wilt dat Kohana ervan uit gaat dat de standaard actie 'index' is, dan moet je dat ook zo instellen! Dit kan je doen via [Route::defaults]. Als je zelfgeschreven regex wilt gebruiken voor uri segmenten dan moet je ene array met `segment => regex` meegeven, bijvoorbeeld:
 
 	Route::set('reversed', '(<controller>(/<id>(/<action>)))', array('id' => '[a-z_]+'))
 			->defaults(array('controller' => 'posts', 'action' => 'index'))
 
-This would force the `id` value to consist of lowercase alpha characters and underscores.
+Dit zou de `id` waarde forceren om te bestaan uit kleine letters van a tot z en underscores.
 
 ### Actions
 
-One more thing we need to mention is that methods in a controller that can be accessed via the url are now called "actions", and are prefixed with 'action_'. E.g. in the above example, if the user calls `admin/posts/1/edit` then the action is `edit` but the method called on the controller will be `action_edit`.  See [the url tutorial](tutorials.urls) for more info.
+Nog één ding dat belangrijk is om te melden, is dat methoden in een controller die toegankelijk moeten zijn via een url nu "actions" worden genoemd. Ze krijgen een voorvoegsel 'action_'. Bijvoorbeeld in het bovenstaande voorbeeld, als de user de url `admin/posts/1/edit` aanroept dan is de actie `edit` maar is de methode die wordt aangeroepen in de controller `action_edit`.  Zie de [url tutorial](tutorials.urls) voor meer informatie.
 
-## Sessions
+## Sessies
 
-There are no longer any Session::set_flash(), Session::keep_flash() or Session::expire_flash() methods, instead you must use [Session::get_once].
+De volgende methoden worden niet meer ondersteund: Session::set_flash(), Session::keep_flash() or Session::expire_flash(), inde plaats daarvan gebruik je nu [Session::get_once].
 
 ## URL Helper
 
-Only a few things have changed with the url helper - `url::redirect()` has been moved into `$this->request->redirect()` within controllers) and `Request::instance()->redirect()` instead.
+Er zijn maar een aantal kleinere dingen veranderd in de url helper. `url::redirect()` werd vervangen door `$this->request->redirect()` (binnenin controllers) en `Request::instance()->redirect()`.
 
-`url::current` has now been replaced with `$this->request->uri()` 
+`url::current` werd nu vervangen door `$this->request->uri()` 
 
 ## Valid / Validation
 
-These two classes have been merged into a single class called `Validate`.
+Deze twee classes zijn nu samengevoegd in één enkele class met de naam `Validate`.
 
-The syntax has also changed a little for validating arrays:
+De syntax om arrays te valideren is een klein beetje gewijzigd:
 
 	$validate = new Validate($_POST);
 	
-	// Apply a filter to all items in the arrays
+	// Pas een filter toe op alle waarden in de array
 	$validate->filter(TRUE, 'trim');
 	
-	// To specify rules individually use rule()
+	// Om enkel rules te definiëren gebruik je rule()
 	$validate
 		->rule('field', 'not_empty')
 		->rule('field', 'matches', array('another_field'));
 	
-	// To set multiple rules for a field use rules(), passing an array of rules => params as the second argument
+	// Om meerdere rules te definiëren voor een veld gebruik je rules(), je geeft een array mee met `passing an array of rules => params als tweede argument
 	$validate->rules('field', 	array(
 									'not_empty' => NULL,
 									'matches'	=> array('another_field')
 								));
 
-The 'required' rule has also been renamed to 'not_empty' for clarity's sake.
+De 'required' rule is ook verandert van naam. Nu wordt voor de duidelijkheid 'not_empty' gebruikt.
 
 ## View Library
 
-There have been a few minor changes to the View library which are worth noting.
+Er zijn enkele kleine wijzigingen aangebracht aan de View library die de moeite zijn om even te melden.
 
-In 2.3 views were rendered within the scope of the controller, allowing you to use `$this` as a reference to the controller within the view, this has been changed in 3.0. Views now render in an empty scope. If you need to use `$this` in your view you can bind a reference to it using [View::bind]: `$view->bind('this', $this)`.
+In 2.3 werden views gegenereerd binnenin de scope van de controller, dit liet je toe om `$this` te gebruiken als referentie naar de controller vanuit je view, dit is verandert in 3.0. Views worden nu gegenereerd in een lege scope. Als je nog `$this` wilt gebruiken in je view, moet je een referentie leggen via [View::bind]: `$view->bind('this', $this)`.
 
-It's worth noting, though, that this is *very* bad practice as it couples your view to the controller, preventing reuse.  The recommended way is to pass the required variables to the view like so:
+Het moet wel gezegd worden dat dit een *erg* slechte manier van werken is omdat het je view koppelt aan de controller wat tegenhoud om deze view opnieuw te gebruiken. Het is aan te raden om de noodzakelijke variabelen voor je view als volgt door te sturen:
 
 	$view = View::factory('my/view');
 	
 	$view->variable = $this->property;
 	
-	// OR if you want to chain this
+	// OF als je dit wilt "chainen"
 	
 	$view
 		->set('variable', $this->property)
 		->set('another_variable', 42);
 		
-	// NOT Recommended
+	// NIET aangeraden
 	$view->bind('this', $this);
 
-Because the view is rendered in an empty scope `Controller::_kohana_load_view` is now redundant.  If you need to modify the view before it's rendered (i.e. to add a generate a site-wide menu) you can use [Controller::after].
-	
+Omdat de view gegenereerd wordt in een lege scope, is `Controller::_kohana_load_view` nu overtollig. Als je de view moet aanpassen vooraleer het word gegenereerd (bijvoorbeeld om een menu te gereneren over de gehele site) kan je [Controller::after] gebruiken.
+
 	Class Controller_Hello extends Controller_Template
 	{
 		function after()
