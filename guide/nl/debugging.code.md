@@ -1,24 +1,18 @@
-# Debugging
+# Debuggen
 
-Kohana includes several powerful tools to help you debug your application.
+Kohana heeft verschillende goede tools om je te helpen met het debuggen van je applicatie.
 
-The most basic of these is [Kohana::debug]. This simple method will display any number of variables, similar to [var_export](http://php.net/var_export) or [print_r](http://php.net/print_r), but using HTML for extra formatting.
+De meest gebruikte is [Kohana::debug]. Deze eenvoudige methode geef alle variablen terug, vergelijkbaar met [var_export](http://php.net/var_export) of [print_r](http://php.net/print_r), maar het gebruikt HTML voor extra opmaak.
 
-~~~
-// Display a dump of the $foo and $bar variables
-echo Kohana::debug($foo, $bar);
-~~~
+    // Toon een dump van de variabelen $foo en $bar
+    echo Kohana::debug($foo, $bar);
 
-Kohana also provides a method to show the source code of a particular file using [Kohana::debug_source].
+Kohana biedt ook een methode aan om de broncode van een bepaald bestand te tonen via [Kohana::debug_source].
 
-~~~
-// Display this line of source code
-echo Kohana::debug_source(__FILE__, __LINE__);
-~~~
+    // Toon deze lijn van de broncode
+    echo Kohana::debug_source(__FILE__, __LINE__);
 
-If you want to display information about your application files without exposing the installation directory, you can use [Kohana::debug_path]:
+Als je informatie wilt tonen over uw applicatie bestanden zonder te vertellen wat de installatie folder is, kan je [Kohana::debug_path] gebruiken:
 
-~~~
-// Displays "APPPATH/cache" rather than the real path
-echo Kohana::debug_path(APPPATH.'cache');
-~~~
+    // Toont "APPPATH/cache" in plaats van het echte path
+    echo Kohana::debug_path(APPPATH.'cache');
