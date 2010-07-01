@@ -131,7 +131,7 @@ To update a single submodule, for example, `system`:
     git add system
     git commit -m 'Updated system to latest version'
 
-If you want to update a single submodule to a specific revision:
+If you want to update a single submodule to a specific commit:
 
     cd modules/database
     git pull origin master
@@ -139,5 +139,11 @@ If you want to update a single submodule to a specific revision:
     cd ../..
     git add database
     git commit -m 'Updated database module'
+
+Note that you can also check out the commit at a tagged official release point, for example:
+
+    git checkout 3.0.6
+
+Simply run `git tag` without arguments to get a list of all tags.
 
 All done!
