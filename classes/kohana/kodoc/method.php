@@ -68,7 +68,7 @@ class Kohana_Kodoc_Method extends Kodoc {
 
 				if (isset($tags['param'][$i]))
 				{
-					preg_match('/^(\S+)(?:\s*(.+))?$/', $tags['param'][$i], $matches);
+					preg_match('/^(\S+)(?:\s*(?:\$'.$param->name.'\s*)?(.+))?$/', $tags['param'][$i], $matches);
 
 					$param->type = $matches[1];
 
