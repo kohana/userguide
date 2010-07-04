@@ -207,6 +207,10 @@ class Kohana_Kodoc {
 							$text = HTML::anchor($text);
 						}
 					break;
+					case 'link':
+						$text = preg_split('/\s+/', $text, 2);
+						$text = HTML::anchor($text[0], isset($text[1]) ? $text[1] : $text[0]);
+					break;
 					case 'copyright':
 						if (strpos($text, '(c)') !== FALSE)
 						{
