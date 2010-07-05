@@ -7,7 +7,7 @@ Kohana 同时提供了异常句柄和错误句柄使用 PHP 的 [ErrorException]
 3. 错误信息
 4. 带有行高亮的错误源
 5. 执行流程的[调试跟踪](http://php.net/debug_backtrace)
-6. 包含（Include）文件，加载扩展，全局变量
+6. 导入(include)文件，加载扩展，全局变量
 
 ## 实例
 
@@ -17,8 +17,6 @@ Kohana 同时提供了异常句柄和错误句柄使用 PHP 的 [ErrorException]
 
 ## 显示错误/异常句柄
 
-如果您不希望使用内部错误句柄，您可以调用 [Kohana::init] 时禁用它：
+如果您不希望使用内部错误句柄，您可以调用 [Kohana::init] 时禁用它:
 
-~~~
-Kohana::init(array('errors' => FALSE));
-~~~
+    Kohana::init(array('errors' => FALSE));

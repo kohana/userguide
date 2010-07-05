@@ -39,8 +39,6 @@ Kohana 使用下划线连接命名，而不是驼峰命名。
 
 #### 类
 
-	<?php
-
 	// 库，使用 _Core 作后缀
 	class Beer_Core {
 
@@ -58,8 +56,6 @@ Kohana 使用下划线连接命名，而不是驼峰命名。
 
 当你实例化一个不需要附带参数的类时不需要使用圆括号:
 
-	<?php
-
 	// 正确:
 	$db = new Database;
 
@@ -70,16 +66,12 @@ Kohana 使用下划线连接命名，而不是驼峰命名。
 
 函数尽量全小写，并使用下划线分割单词:
 
-	<?php
-
 	function drink_beverage($beverage)
 	{
 
 #### 变量
 
 所有变量尽量全小写，并使用下划线分割单词而不是驼峰:
-
-	<?php
 
 	// 正确:
 	$foo = 'bar';
@@ -94,8 +86,6 @@ Kohana 使用下划线连接命名，而不是驼峰命名。
 
 垂直间距(即多行)使用空格。制表符并不适用于垂直间距主要是因为不同的人可能设置类不同的制表符宽度。
 
-	<?php
-
 	$text = 'this is a long text block that is wrapped. Normally, we aim for '
 		  . 'wrapping at 80 chars. Vertical alignment is very important for '
 		  . 'code readability. Remember that all indentation is done with tabs,'
@@ -105,8 +95,6 @@ Kohana 使用下划线连接命名，而不是驼峰命名。
 ### 字符串连接
 
 不要在连接符左右使用空格:
-
-	<?php
 
 	// 正确:
 	$str = 'one'.$var.'two';
@@ -118,8 +106,6 @@ Kohana 使用下划线连接命名，而不是驼峰命名。
 ### 单行表达式
 
 单行 IF 表达式仅用于破坏正常执行的情况(比如，return 或 continue):
-
-	<?php
 
 	// 可接受:
 	if ($foo == $bar)
@@ -142,8 +128,6 @@ Kohana 使用下划线连接命名，而不是驼峰命名。
 
 使用 OR 和 AND 作为比较符:
 
-	<?php
-
 	// 正确:
 	if (($foo AND $bar) OR ($b AND $c))
 
@@ -154,8 +138,6 @@ if/else Blocks
 
 使用 elseif 而不是 else if:
 
-	<?php
-
 	// 正确:
 	elseif ($bar)
 
@@ -165,8 +147,6 @@ if/else Blocks
 ### Switch 结构
 
 每个 case，break 和 default 都应该是独立的一行。每个 case 或 default 里面必须使用一个制表符(TAB)。
-
-	<?php
 
 	switch ($var)
 	{
@@ -186,8 +166,6 @@ if/else Blocks
 
 There should be one space after statement name, followed by a parenthesis. The ! (bang) character must have a space on either side to ensure maximum readability. Except in the case of a bang or type casting, there should be no whitespace after an opening parenthesis or before a closing parenthesis.
 
-	<?php
-
 	// 正确:
 	if ($foo == $bar)
 	if ( ! $foo)
@@ -203,20 +181,14 @@ There should be one space after statement name, followed by a parenthesis. The !
 
 所有的三元操作都应该遵循一种标准格式。表达式左右使用括号，而变量则不需要。
 
-<?php
-
 	$foo = ($bar == $foo) ? $foo : $bar;
 	$foo = $bar ? $foo : $bar;
 
 所有的比较和操作都必须使用括号括起来作为一个组:
 
-	<?php
-
 	$foo = ($bar > 5) ? ($bar + $foo) : strlen($bar);
 
 分离复杂的三元操作（三元的第一部分超过了 80 个字符）为多行形式。spaces should be used to line up operators, which should be at the front of the successive lines:
-
-	<?php
 
 	$foo = ($bar == $foo)
 		 ? $foo
@@ -225,8 +197,6 @@ There should be one space after statement name, followed by a parenthesis. The !
 ### 强制类型转换
 
 强制类型转换需要在两边使用空格:
-
-	<?php
 
 	// 正确:
 	$foo = (string) $bar;
@@ -237,8 +207,6 @@ There should be one space after statement name, followed by a parenthesis. The !
 
 如果可能，请使用强制类型转换，而不是三元操作:
 
-	<?php
-
 	// 正确:
 	$foo = (bool) $bar;
 
@@ -246,8 +214,6 @@ There should be one space after statement name, followed by a parenthesis. The !
 	$foo = ($bar == TRUE) ? TRUE : FALSE;
 
 如果强制类型转换整形(int)或布尔型(boolean)，请使用短格式:
-
-	<?php
 
 	// 正确:
 	$foo = (int) $bar;
@@ -261,8 +227,6 @@ There should be one space after statement name, followed by a parenthesis. The !
 
 常量尽量使用全大写:
 
-	<?php
-
 	// 正确:
 	define('MY_CONSTANT', 'my_value');
 	$a = TRUE;
@@ -274,8 +238,6 @@ There should be one space after statement name, followed by a parenthesis. The !
 	$b = null;
 
 请把常量放在比较符号的末端:
-
-	<?php
 
 	// 正确:
 	if ($foo !== FALSE)
@@ -299,8 +261,6 @@ There should be one space after statement name, followed by a parenthesis. The !
 
 单行注解使用 //，或许你在使用下面几种注解方式。请在注解符后面保留一个空格在添加注解。坚决不能使用 #。
 
-	<?php
-
 	// 正确
 
 	//错误
@@ -310,8 +270,6 @@ There should be one space after statement name, followed by a parenthesis. The !
 ### 正则表达式
 
 如果编码中使用到正则表达式，请尽量使用 PCRE 风格而不是 POSIX 风格。相比较而言 PCRE 风格更为强大，速度更快。
-
-	<?php
 
 	// 正确:
 	if (preg_match('/abc/i'), $str)
@@ -323,8 +281,6 @@ There should be one space after statement name, followed by a parenthesis. The !
 Unlike double-quoted strings they don't support variable interpolation 
 nor integrated backslash sequences like \n or \t, etc.
 
-	<?php
-
 	// 正确:
 	preg_match('/abc/', $str);
 
@@ -333,8 +289,6 @@ nor integrated backslash sequences like \n or \t, etc.
 
 当需要使用正则搜索活替换时，请使用 $n 符号作反向引用，它的效率优于 \\n。
 
-	<?php
-
 	// 正确:
 	preg_replace('/(\d+) dollar/', '$1 euro', $str);
 
@@ -342,8 +296,6 @@ nor integrated backslash sequences like \n or \t, etc.
 	preg_replace('/(\d+) dollar/', '\\1 euro', $str);
 
 最后，请注意如果使用 $ 符号匹配字符串末尾是否允许后换行符的话，如果需要可以附加 D 修饰符解决此问题。[更多详情](http://blog.php-security.org/archives/76-Holes-in-most-preg_match-filters.html)。
-
-	<?php
 
 	$str = "email@example.com\n";
 
