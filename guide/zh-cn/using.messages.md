@@ -1,6 +1,6 @@
 # 消息的基本使用
 
-Kohana 消息(messages) are human friendly strings represented by a shorter word or phrase, called a "key". Messages are accessed using the [Kohana::message] method, which an return either an entire group of messages, or a single message.
+Kohana 消息(messages) 是一种友好化短小的词或短语的字符串，通常被叫做 "key"。消息通过 [Kohana::message] 方法调用访问并返回整个消息组或者单个消息。
 
 举个简单的例子，当用户没有登录并试图访问一个需要验证的页面，通常会一个类似"你必须登录后才能访问此页面"的提示，而此消息可以保存在 auth 文件的 'must_login' 的键值中:
 
