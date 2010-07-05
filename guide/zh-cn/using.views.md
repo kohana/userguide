@@ -1,12 +1,12 @@
-# Using Views
+# 视图的使用
 
-Views are files that contain the display information for your application. This is most commonly HTML, CSS and Javascript but can be anything you require such as XML or JSON for AJAX output. The purpose of views is to keep this information separate from your application logic for easy reusability and cleaner code.
+视图是包含输出显示信息内容的文件。通常大多数情况下是 HTML，CSS 和 Javascript 或者其他任何内容（包括调用 AJAX 的 XML 或 JSON 的输出）。其主要目的是为了从程序中分离逻辑以获得可复用性和整洁代码。
 
-While this is true, views themselves can contain code used for displaying the data you pass into them. For example, looping through an array of product information and display each one on a new table row. Views are still PHP files so you can use any code you normally would.
+然而事实上，视图本身也能传递变量等代码并输出数据。比如，循环产品信息的数组并输出每个产品的信息。视图仍然是 PHP 文件因此你可以正常的写任何代码。
 
-# Creating View Files
+# 创建视图文件
 
-View files are stored in the `views` directory of the [filesystem](about.filesystem). You can also create sub-directories within the `views` directory to organize your files. All of the following examples are reasonable view files:
+视图文件存在[文件系统](about.filesystem)中的 `views` 目录。你也可以在 `views` 目录下面创建子目录组织你的文件。下面所有的例子都是合理的视图文件:
 
     APPPATH/views/home.php
     APPPATH/views/pages/about.php
@@ -14,16 +14,16 @@ View files are stored in the `views` directory of the [filesystem](about.filesys
     MODPATH/error/views/errors/404.php
     MODPATH/common/views/template.php
 
-## Loading Views
+## 加载视图
 
-[View] objects will typically be created inside a [Controller] using the [View::factory] method. Typically the view is then assigned as the [Request::$response] property or to another view.
+[View] 对象通常在 [Controller] 内部通过使用 [View::factory] 方法创建。一般视图被赋值给 [Request::$response] 属性或其他视图。
 
     public function action_about()
     {
         $this->request->response = View::factory('pages/about');
     }
 
-When a view is assigned as the [Request::$response], as in the example above, it will automatically be rendered when necessary. To get the rendered result of a view you can call the [View::render] method or just type cast it to a string. When a view is rendered, the view file is loaded and HTML is generated.
+当视图对象如同上面的例子赋值给 [Request::$response]，必要时它会自动输出呈现。如果想获得视图输出的内容，你可以调用 [View::render] 方法或者强制转为字符串类型。当时视图输出呈现时，视图会被加载并生成 HTML 代码。
 
     public function action_index()
     {
@@ -38,9 +38,9 @@ When a view is assigned as the [Request::$response], as in the example above, it
         $this->request->response = $about_page;
     }
 
-## Varibles in Views
+## 视图变量
 
-Once view has been loaded, variables can be assigned to it using the [View::set] and [View::bind] methods.
+一旦视图已经被加载，我们可以通过 [View::set] 和 [View::bind] 方法赋值变量。
 
     public function action_roadtrip()
     {
@@ -48,20 +48,20 @@ Once view has been loaded, variables can be assigned to it using the [View::set]
             ->set('places', array('Rome', 'Paris', 'London', 'New York', 'Tokyo'));
             ->bind('user', $this->user);
 
-        // The view will have $places and $user variables
+        // 视图拥有 $places 和 $user 变量
         $this->request->response = $view;
     }
 
-[!!] The only difference between `set()` and `bind()` is that `bind()` assigns the variable by reference. If you `bind()` a variable before it has been defined, the variable will be created as `NULL`.
+[!!] `set()` 和 `bind()` 方法的区别在于 `bind()` 是引用赋值。如果你在变量定义之前使用 `bind()` 绑定了它。变量默认会被当作 `NULL` 创建。
 
-### Global Variables
+### 全局变量
 
-An application may several view files that need access to the same variables. For example, to display a page title in both the header of your template and in the body of the page content. You can create variables that are accessible in any view using the [View::set_global] and [View::bind_global] methods.
+在程序中可能有多个视图文件而同时调用同样的变量。比如，在两个模板的 header 块中显示一个页面的相同标题而不同的内容。通过 [View::set_global] 和 [View::bind_global] 方法创建全局变量。
 
-    // Assign $page_title to all views
+    // 赋值 $page_title 到所有的视图
     View::bind_global('page_title', $page_title);
 
-If the application has three views that are rendered for the home page: `template`, `template/sidebar`, and `pages/home`. First, an abstract controller to create the template will be created:
+假如程序中首页有三个视图需要输出呈现：`template`，`template/sidebar` 和 `pages/home`。首先，创建一个抽象类控制器去初始化视图模板:
 
     abstract class Controller_Website extends Controller_Template {
 
@@ -71,16 +71,16 @@ If the application has three views that are rendered for the home page: `templat
         {
             parent::before();
 
-            // Make $page_title available to all views
+            // 定义 $page_title 变量到所有视图中使用
             View::bind_global('page_title', $this->page_title);
 
-            // Load $sidebar into the template as a view
+            // 加载视图为 $sidebar 变量到模板
             $this->template->sidebar = View::factory('template/sidebar');
         }
 
     }
 
-Next, the home controller will extend `Controller_Website`:
+下一步，在 home 控制器继承 `Controller_Website`:
 
     class Controller_Home extends Controller_Website {
 
@@ -93,28 +93,26 @@ Next, the home controller will extend `Controller_Website`:
 
     }
 
-## Views Within Views
+## 视图嵌套
 
-If you want to include another view within a view, there are two choices. By calling [View::factory] you can sandbox the included view. This means that you will have to provide all of the variables to the view using [View::set] or [View::bind]:
+如果你想在视图中加载另外一个视图，这里提供两个方案。通过调用 [View::factory] 你可以实现沙盒加载视图。这意味着你可以使用 [View::set] 或 [View::bind] 赋值:
 
-    // Only the $user variable will be available in "views/user/login.php"
+    // 只有 $user 变量可用在 "views/user/login.php" 视图文件
     <?php echo View::factory('user/login')->bind('user', $user) ?>
 
-The other option is to include the view directly, which makes all of the current variables available to the included view:
+另外一种选择是直接加载视图，这会使得当前所有变量加载并在视图中使用:
 
-    // Any variable defined in this view will be included in "views/message.php"
+    // 所有定义在此视图中的变量都会加载到 "views/message.php" 文件
     <?php include Kohana::find_file('views', 'user/login') ?>
 
-Of course, you can also load an entire [Request] within a view:
+另外，你也可以在整个 [Request] 中加载一个视图中:
 
     <?php echo Request::factory('user/login')->execute() ?>
 
-This is an example of [HMVC](about.mvc), which makes it possible to create and read calls to other URLs within your application.
+这是一个 [HMVC](about.mvc) 的例子已确保它可以创建并从程序其他的 URL 调用。
 
-# Upgrading From v2.x
+# 升级 v2.x 版本
 
-Unlike version 2.x of Kohana, the view is not loaded within the context of
-the [Controller], so you will not be able to access `$this` as the controller
-that loaded the view. Passing the controller to the view must be done explictly:
+不同于 Kohana v2.x 版本，视图不在 [Controller] 环境中加载，因此你不能够把 `$this` 当作加载视图的控制器访问。传递控制器到视图必须这样实现:
 
     $view->bind('controller', $this);
