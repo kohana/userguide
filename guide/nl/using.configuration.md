@@ -1,28 +1,28 @@
-# General Configuration
+# Algemene Configuratie
 
-Kohana uses both static properties and files for configuration. Static properties are typically used for static classes, such as [Cookie], [Security], and [Upload]. Files are typically used for objects such as [Database], [Encrypt], and [Session].
+Kohana gebruikt zowel static properties als bestanden worden gebruikt voor de configuratie. Static properties zijn worden meestal gebruikt voor static classes, zoals [Cookie], [Security] en [Upload]. Bestanden worden meestal gebruikt voor objecten zoals [Database], [Encrypt] en [Session].
 
-Static properties can be set in `APPPATH/bootstrap.php` or by [class extension](using.autoloading#class-extension). The benefit of static properties is that no additional files need to be loaded. The problem with this method is that it causes the class to be loaded when the property is set, if you do not use an extension. However, using extensions will overload extensions made in modules. It is generally recommended to do static property configuration in the bootstrap.
+Static properties kunnen ingesteld worden in `APPPATH/bootstrap.php` of door [class uitbreding](using.autoloading#class-extension). Het voordeel van static properties is dat er geen extra bestanden moeten worden ingeladen. Het probleem met deze methode is dat de class ingeladen word wanneer een property is ingesteld, als je geen uitbreiding gebruikt. Echter, met gebruik van uitbreidingen worden uitbreidingen uit modules overladen. Het is aanbevolen om static property te gebruiken voor configuraties in de bootstrap.
 
-[!!] When using opcode caching, such as [APC](http://php.net/apc) or [eAccelerator](http://eaccelerator.net/), class loading time is significantly reduced. It is highly recommended to use opcode caching with *any* production website, no matter the size.
+[!!] Wanneer je opcode caching gebruikt, zoals [APC](http://php.net/apc) of [eAccelerator](http://eaccelerator.net/), dan is het inladen van classes merkbaar vermindert. Het is dan ook streng aanbevolen om opcode caching te bruiken bij *elke* website in productie, of die nu groot of klein is.
 
-## Initial Settings
+## Noodzakelijke instellingen
 
-Every new Kohana installation will require changing [Kohana::init] settings in `APPPATH/bootstrap.php`. Any setting that is not set will use the default setting. These settings can be accessed and modified later by using the static property of the [Kohana] class. For instance, to get the current character set, read the [Kohana::$charset] property.
+Bij iedere nieuwe Kohana installatie is het vereist om de [Kohana::init] instellingen aan te passen in `APPPATH/bootstrap.php`. Iedere instelling die niet specifiek is ingesteld zal de standaard instelling gebruiken. Deze instellingen kunnen aangeroepen worden en/of aangepast worden op een later tijdstip door de static property van de [Kohana] class te gebruiken. Bijvoorbeeld, om de huidige karakterset te verkrijgen lees je de [Kohana::$charset] property in.
 
-## Security Settings
+## Veiligheids instellingen
 
-There are several settings which need to be changed to make Kohana secure. The most important of these is [Cookie::$salt], which is used to create a "signature" on cookies that prevents them from being modified outside of Kohana.
+Er zijn verschillende instellingen dat je moet veranden om Kohana veilig te maken. De belangrijkste is [Cookie::$salt], deze wordt gebruikt om een "handtekening" te maken op cookies zodat ze niet kunnen worden aangepast van buiten Kohana.
 
-If you plan to use the [Encrypt] class, you will also need to create an `encrypt` configuration file and set the encryption `key` value. The encryption key should include letters, numbers, and symbols for the best security.
+Als je de [Encrypt] class wilt gebruiken, maak je best ook een `encrypt` configuratie bestand en stel je een encryption `key` in. Deze key bevat best letters, nummers en symbolen om de veiligheid te optimaliseren.
 
-[!!] **Do not use a hash for the encryption key!** Doing so will make the encryption key much easier to crack.
+[!!] **Gebruik geen hash als encryption key!** Indien je dit doet zal de encryption key gemakkelijker te kraken zijn.
 
-# Configuration Files {#config-files}
+# Configuratie bestanden {#config-files}
 
-Configuration files are slightly different from other files within the [cascading filesystem](about.filesystem) in that they are **merged** rather than overloaded. This means that all configuration files with the same file path are combined to produce the final configuration. The end result is that you can overload *individual* settings rather than duplicating an entire file.
+Configuratie bestanden zijn licht anders dan andere bestanden in het [cascading bestandssyteem](about.filesystem). Configuratie bestanden worden **gemerged** in plaats van overladen. Dit wil zeggen dat alle configuratie bestanden hetzelfde path worden gecombineerd om יי configuratie te vormen. Wat wil zeggen dat je *individuele* instellingen kan overladen in plaats van een volledig bestand te dupliceren. 
 
-Configuration files are plain PHP files, stored in the `config/` directory, which return an associative array:
+Configuratie bestanden zijn pure PHP bestanden, opgeslaan in de `config/` folder, die een associatieve array teruggeven:
 
     <?php defined('SYSPATH') or die('No direct script access.');
 
@@ -33,25 +33,25 @@ Configuration files are plain PHP files, stored in the `config/` directory, whic
         ),
     );
 
-If the above configuration file was called `myconf.php`, you could acess it using:
+Als het bovenstaande bestand `myconf.php` werd genoemd, dan kon je deze benaderen via:
 
     $config = Kohana::config('myconf');
     $options = $config['options'];
 
-[Kohana::config] also provides a shortcut for accessing individual keys from configuration arrays using "dot paths".
+[Kohana::config] biedt ook een shortcut om individuele keys van configuratie arrays te benaderen door gebruik te maken van "dot paths".
 
-Get the "options" array:
+Verkrijg de "options" array:
 
     $options = Kohana::config('myconf.options');
 
-Get the "foo" key from the "options" array:
+Verkrijg de "foo" key van de "options" array:
 
     $foo = Kohana::config('myconf.options.foo');
 
-Configuration arrays can also be accessed as objects, if you prefer that method:
+Configuratie arrays kunnen ook worden benaderd als objecten, indien je deze manier wilt gebruiken:
 
     $options = Kohana::config('myconf')->options;
 
-Please note that you can only access the top level of keys as object properties, all child keys must be accessed using standard array syntax:
+Let wel, je kan enkel keys op het bovenste niveau aanspreken als object properties, alle lagere keys moeten benaderd worden via de standaard array syntax:
 
     $foo = Kohana::config('myconf')->options['foo'];

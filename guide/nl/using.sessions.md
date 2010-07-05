@@ -1,149 +1,149 @@
-# Using Sessions and Cookies
+# Gebruik van Sessies en Cookies
 
-Kohana provides a couple of classes that make it easy to work with both cookies and session. At a high level both sessions and cookies provide the same function. They allow the developer to store temporary or persistent information about a specific client for later retrieval.
+Kohana biedt een paar classes die het gemakkelijk maken om te werken met cookies en sessies. Op een hoog niveau, zowel sessies en cookies geven dezelfde functionaliteit. Ze laten de ontwikkelaar toe om tijdelijke of blijvende informatie over een specifieke klant voor later op te slaan.
 
-Cookies should be used for storing non-private data that is persistent for a long period of time. For example storing a user id or a language preference. Use the [Cookie] class for getting and setting cookies.
+Cookies moeten worden gebruikt voor de opslag van niet-private gegevens die persistent is voor een lange periode van tijd. Bijvoorbeeld het opslaan van een gebruikers-id of een taalvoorkeur. Gebruik de [Cookie] class voor het verkrijgen en instellen van cookies.
 
-[!!] Kohana uses "signed" cookies. Every cookie that is stored is combined with a secure hash to prevent modification of the cookie. This hash is generated using [Cookie::salt], which uses the [Cookie::$salt] property. You should [change this setting](using.configuration) when your application is live.
+[!!] Kohana gebruikt "ondertekende" cookies. Elke cookie die wordt opgeslagen wordt gecombineerd met een veilige hash om een wijziging van de cookie te voorkomen. Deze hash wordt gegenereerd met behulp van [Cookie:: salt], die de [Cookie::$salt] property gebruikt. Je moet [deze instelling] (using.configuration) veranderen wanneer je applicatie live staat.
 
-Sessions should be used for storing temporary or private data. Very sensitive data should be stored using the [Session] class with the "database" or "native" adapters. When using the "cookie" adapter, the session should always be encrypted.
+Sessies worden gebruikt voor het opslaan van tijdelijke of prive-gegevens. Zeer gevoelige gegevens moeten worden opgeslagen met behulp van de [Session] class met de "database" of "native" adapters. Bij gebruik van de "cookie"-adapter, moet de sessie altijd worden versleuteld.
 
-[!!] For more information on best practices with session variables see [the seven deadly sins of sessions](http://lists.nyphp.org/pipermail/talk/2006-December/020358.html).
+[!!] Voor meer informatie over de beste manieren van werken met sessie-variabelen, zie [the seven deadly sins of sessions](http://lists.nyphp.org/pipermail/talk/2006-December/020358.html).
 
-# Storing, Retrieving, and Deleting Data
+# Het opslaan, ophalen en verwijderen van gegevens
 
-[Cookie] and [Session] provide a very similar API for storing data. The main difference between them is that sessions are accessed using an object, and cookies are accessed using a static class.
+[Cookie] en [Session] bieden een zeer gelijkaardige API voor het opslaan van gegevens. Het belangrijkste verschil tussen hen is dat sessies benaderd kunnen worden met behulp van een object, en cookies met behulp van een statische class.
 
-Accessing the session instance is done using the [Session::instance] method:
+De sessie instantie benaderen wordt gedaan met de [Session::instance] methode:
 
-    // Get the session instance
+    // Verkrijg de sessie instantie
     $session = Session::instance();
 
-When using sessions, you can also get all of the current session data using the [Session::as_array] method:
+Bij het gebruik van sessies, kan je alle huidige sessiegegevens krijgen met behulp van de [Session::as_array] methode:
 
-    // Get all of the session data as an array
+    // Verkrijg alle sessiegegevens als een array
     $data = $session->as_array();
 
-You can also use this to overload the `$_SESSION` global to get and set data in a way more similar to standard PHP:
+Je kan dit ook gebruiken om de `$_SESSION` global te overladen om data te krijgen en in te stellen in verlijkbare manier zoals standaard PHP:
 
-    // Overload $_SESSION with the session data
+    // Overlaad $_SESSION met sessiegegevens
     $_SESSION =& $session->as_array();
     
-    // Set session data
+    // Stel de sessiegegevens in
     $_SESSION[$key] = $value;
 
-## Storing Data {#setting}
+## Gegevens opslaan {#setting}
 
-Storing session or cookie data is done using the `set` method:
+Het opslaan van sessie- of cookie-gegevens wordt gedaan met behulp van de `set`-methode:
 
-    // Set session data
+    // Sla sessiegegevens op
     $session->set($key, $value);
 
-    // Set cookie data
+    // Sla cookiegegevens op
     Cookie::set($key, $value);
 
-    // Store a user id
+    // Sla een gebruikers id op
     $session->set('user_id', 10);
     Cookie::set('user_id', 10);
 
-## Retrieving Data {#getting}
+## Verkrijgen van gegevens {#getting}
 
-Getting session or cookie data is done using the `get` method:
+Verkrijgen van sessie- of cookie-gegevens wordt gedaan met behulp van de `get`-methode:
 
-    // Get session data
+    // Verkrijg sessiegegevens
     $data = $session->get($key, $default_value);
 
-    // Get cookie data
+    // Verkrijg cookiegegevens
     $data = Cookie::get($key, $default_value);
 
-    // Get the user id
+    // Verkrijg het gebruikers id
     $user = $session->get('user_id');
     $user = Cookie::get('user_id');
 
-## Deleting Data {#deleting}
+## Verwijderen van gegevens {#deleting}
 
-Deleting session or cookie data is done using the `delete` method:
+Het verwijderen van sessie- of cookie-gegevens wordt gedaan met behulp van de `delete`-methode:
 
-    // Delete session data
+    // Verwijderen van sessiegegevens
     $session->delete($key);
 
-    // Delete cookie data
+    // Verwijderen van cookiegegevens
     Cookie::delete($key);
 
-    // Delete the user id
+    // Verwijder een gebruikers id
     $session->delete('user_id');
     Cookie::delete('user_id');
 
-# Configuration {#configuration}
+# Configuratie {#configuration}
 
-Both cookies and sessions have several configuration settings which affect how data is stored. Always check these settings before making your application live, as many of them will have a direct affect on the security of your application.
+Zowel cookies als sessies hebben verschillende configuratie-instellingen die van invloed zijn hoe gegevens worden opgeslagen. Controleer altijd deze instellingen voordat u uw applicatie live zet, omdat veel van die instellingen een rechtstreeks effect zal hebben op de veiligheid van uw applicatie.
 
-## Cookie Settings
+## Cookie Instellingen
 
-All of the cookie settings are changed using static properties. You can either change these settings in `bootstrap.php` or by using a [class extension](using.autoloading#class-extension).
+Al de cookie instellingen worden verandert met behulp van statische properties. Je kan deze instellingen veranderen in `bootstrap.php` of door een [class extension](using.autoloading#class-extension) te gebruiken.
 
-The most important setting is [Cookie::$salt], which is used for secure signing. This value should be changed and kept secret:
+De meest belangrijke instelling is [Cookie::$salt], die wordt gebruikt om veilig te ondertekenen. Deze waarde zou moeten gewijzigd en geheim gehouden worden:
 
-    Cookie::$salt = 'your secret is safe with me';
+    Cookie::$salt = 'Uw geheim is veilig bij mij';
 
-[!!] Changing this value will render all cookies that have been set before invalid.
+[!!] Door het veranderen van deze waarde zullen alle bestaande cookies niet meer geldig zijn.
 
-By default, cookies are stored until the browser is closed. To use a specific lifetime, change the [Cookie::$expiration] setting:
+Standaard worden cookies bewaard tot het browservenster wordt gesloten. Om een specifieke leeftijd te gebruiken, verander de [Cookie::$expiration] instelling:
 
-    // Set cookies to expire after 1 week
+    // Stel in dat cookies vervallen na één week
     Cookie::$expiration = 604800;
 
-    // Alternative to using raw integers, for better clarity
+    // Alternatief voor het gebruik van getallen, voor meer duidelijkheid
     Cookie::$expiration = Date::WEEK;
 
-The path that the cookie can be accessed from can be restricted using the [Cookie::$path] setting.
+Het path waarvan de cookie kan worden opgevraagd kan worden beperkt met behulp van de [Cookie::$path] instelling.
 
-    // Allow cookies only when going to /public/*
+    // Enkel cookies toelaten wanneer je gaat naar /public/*
     Cookie::$path = '/public/';
 
-The domain that the cookie can be accessed from can also be restricted, using the [Cookie::$domain] setting.
+Het domein waarvan de cookie kan worden geopend kan ook worden beperkt, met behulp van de [Cookie::$domain] instelling.
 
-    // Allow cookies only on the domain www.example.com
+    // Enkel cookies toelaten voor www.example.com
     Cookie::$domain = 'www.example.com';
 
-If you want to make the cookie accessible on all subdomains, use a dot at the beginning of the domain.
+Als u de cookie toegankelijk wilt maken op alle subdomeinen, gebruik dan een punt aan het begin van het domein.
 
-    // Allow cookies to be accessed on example.com and *.example.com
+    // Cookies toegankelijk maken voor example.com en *.example.com
     Cookie::$domain = '.example.com';
 
-To only allow the cookie to be accessed over a secure (HTTPS) connection, use the [Cookie::$secure] setting.
+Als je de cookie alleen wilt kunnen benaderen via een beveiligde (HTTPS) verbinding, gebruik dan de [Cookie::$secure] instelling.
 
-    // Allow cookies to be accessed only on a secure connection
+    // Cookies enkel toegangekijk maken via een beveiligde verbinding
     Cookie::$secure = TRUE;
     
-    // Allow cookies to be accessed on any connection
+    // Cookies toegankelijk maken voor elke verbinding
     Cookie::$secure = FALSE;
 
-To prevent cookies from being accessed using Javascript, you can change the [Cookie::$httponly] setting.
+Om te voorkomen dat cookies worden geopend met behulp van Javascript, kunt u de [Cookie::$httponly] instelling aanpassen.
 
-    // Make cookies inaccessible to Javascript
+    // Maak cookies niet toegankelijk via Javascript
     Cookie::$httponly = TRUE;
 
-## Session Adapters {#adapters}
+## Sessie Adapters {#adapters}
 
-When creating or accessing an instance of the [Session] class you can decide which session adapter you wish to use. The session adapters that are available to you are:
+Bij het maken van of het aanroepen van een instantie van de [Sessie] class kan je kiezen welke sessie adapter je wilt gebruiken. De sessie adapters die beschikbaar zijn voor je:
 
 Native
-: Stores session data in the default location for your web server. The storage location is defined by [session.save_path](http://php.net/manual/session.configuration.php#ini.session.save-path) in `php.ini` or defined by [ini_set](http://php.net/ini_set).
+: Slaat sessiegegevens op in de standaard locatie voor uw web server. De opslaglocatie is gedefinieerd door [session.save_path](http://php.net/manual/session.configuration.php#ini.session.save-path) in `php.ini` of gedefinieerd door [ini_set](http://php.net/ini_set).
 
 Database
-: Stores session data in a database table using the [Session_Database] class. Requires the [Database] module to be enabled.
+: Slaat de sessiesgegevens op in een database tabel door gebruik te maken van de [Session_Database] class. De [Database] module is vereist.
 
 Cookie
-: Stores session data in a cookie using the [Cookie] class. **Sessions will have a 4KB limit when using this adapter.**
+: Slaat de sessiegegevens op in een cookie door gebruikt te maken van de [Cookie] class. **Sessies hebben een 4KB limiet wanneer je deze adapter gebruikt.**
 
-The default datapter can be set by changing the value of [Session::$default]. The default adapter is "native".
+De standaard adapter kan ingesteld worden door de waarde aan te passen van [Session::$default]. De standaard adapter is "native".
 
-[!!] As with cookies, a "lifetime" setting of "0" means that the session will expire when the browser is closed.
+[!!] Zoals bij cookies bekent een "lifetime" instelling van "0" dat de sessie zal vervallen bij het sluiten van de het browservenster.
 
-### Session Adapter Settings
+### Sessie Adapter Instellingen
 
-You can apply configuration settings to each of the session adapters by creating a session config file at `APPPATH/config/session.php`. The following sample configuration file defines all the settings for each adapater:
+Je kan configuratie-instellingen voor elk van de sessie adapters instellen door het creëren van een sessie configuratiebestand in `APPPATH/config/session.php`. Het volgende voorbeeld van een configuratie bestand definiëert alle instellingen voor elke adapter:
 
     return array(
         'native' => array(
@@ -172,34 +172,34 @@ You can apply configuration settings to each of the session adapters by creating
 
 #### Native Adapter {#adapter-native}
 
-Type      | Setting   | Description                                       | Default
-----------|-----------|---------------------------------------------------|-----------
-`string`  | name      | name of the session                               | `"session"`
-`integer` | lifetime  | number of seconds the session should live for     | `0`
+Type      | Instelling | Omschrijving                                        | Standaard
+----------|------------|-----------------------------------------------------|-----------
+`string`  | name       | naam van de sessie                                  | `"session"`
+`integer` | lifetime   | aantal seconden dat de sessie moet bestaan          | `0`
 
 #### Cookie Adapter {#adapter-cookie}
 
-Type      | Setting   | Description                                       | Default
-----------|-----------|---------------------------------------------------|-----------
-`string`  | name      | name of the cookie used to store the session data | `"session"`
-`boolean` | encrypted | encrypt the session data using [Encrypt]?         | `FALSE`
-`integer` | lifetime  | number of seconds the session should live for     | `0`
+Type      | Instelling | Omschrijving                                        | Standaard
+----------|------------|-----------------------------------------------------|-----------
+`string`  | name       | naam van de cookie om de sessiegegevens op te slaan | `"session"`
+`boolean` | encrypted  | de sessiegegevens coderen met [Encrypt]?            | `FALSE`
+`integer` | lifetime   | aantal seconden dat de sessie moet bestaan          | `0`
 
 #### Database Adapter {#adapter-database}
 
-Type      | Setting   | Description                                       | Default
-----------|-----------|---------------------------------------------------|-----------
-`string`  | group     | [Database::instance] group name                   | `"default"`
-`string`  | table     | table name to store sessions in                   | `"sessions"`
-`array`   | columns   | associative array of column aliases               | `array`
-`integer` | gc        | 1:x chance that garbage collection will be run    | `500`
-`string`  | name      | name of the cookie used to store the session data | `"session"`
-`boolean` | encrypted | encrypt the session data using [Encrypt]?         | `FALSE`
-`integer` | lifetime  | number of seconds the session should live for     | `0`
+Type      | Instelling | Omschrijving                                        | Standaard
+----------|------------|-----------------------------------------------------|-----------
+`string`  | group      | [Database::instance] groep naam                     | `"default"`
+`string`  | table      | de tabelnaam waar de gegevens worden in opgeslagen  | `"sessions"`
+`array`   | columns    | associatieve array met kolom aliassen               | `array`
+`integer` | gc         | 1:x kans dat de garbage collection uitgevoerd wordt | `500`
+`string`  | name       | naam van de cookie om de sessiegegevens op te slaan | `"session"`
+`boolean` | encrypted  | de sessiegegevens coderen met [Encrypt]?            | `FALSE`
+`integer` | lifetime   | aantal seconden dat de sessie moet bestaan          | `0`
 
-##### Table Schema
+##### Tabel Schema
 
-You will need to create the session storage table in the database. This is the default schema:
+Je moet de sessie-opslag tabel in de database aanmaken. Dit is het standaard schema:
 
     CREATE TABLE  `sessions` (
         `session_id` VARCHAR(24) NOT NULL,
@@ -209,15 +209,15 @@ You will need to create the session storage table in the database. This is the d
         INDEX (`last_active`)
     ) ENGINE = MYISAM;
 
-##### Table Columns
+##### Tabel kolommen
 
-You can change the column names to match an existing database schema when connecting to a legacy session table. The default value is the same as the key value.
+Je kunt de namen van kolommen aanpassen om overeen te komen met een bestaand database-schema. De standaard waarde is hetzelfde als de key waarde.
 
 session_id
-: the name of the "id" column
+: de naam van de "id" kolom
 
 last_active
-: UNIX timestamp of the last time the session was updated
+: UNIX timestamp van het laatste tijdstip dat de sessie werd aangepast
 
 contents
-: session data stored as a serialized string, and optionally encrypted
+: sessiongegevens opgeslaan in een serialized string, en optioneel gecodeerd
