@@ -38,7 +38,7 @@ When a view is assigned as the [Request::$response], as in the example above, it
         $this->request->response = $about_page;
     }
 
-## Varibles in Views
+## Variables in Views
 
 Once view has been loaded, variables can be assigned to it using the [View::set] and [View::bind] methods.
 

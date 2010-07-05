@@ -1,6 +1,6 @@
 # Using Sessions and Cookies
 
-Kohana provides a couple of classes that make it easy to work with both cookies and session. At a high level both sessions and cookies provide the same function. They allow the developer to store temporary or persistent information about a specific client for later retrieval.
+Kohana provides a couple of classes that make it easy to work with both cookies and sessions. At a high level both sessions and cookies provide the same function. They allow the developer to store temporary or persistent information about a specific client for later retrieval.
 
 Cookies should be used for storing non-private data that is persistent for a long period of time. For example storing a user id or a language preference. Use the [Cookie] class for getting and setting cookies.
 
@@ -137,13 +137,13 @@ Database
 Cookie
 : Stores session data in a cookie using the [Cookie] class. **Sessions will have a 4KB limit when using this adapter.**
 
-The default datapter can be set by changing the value of [Session::$default]. The default adapter is "native".
+The default adapter can be set by changing the value of [Session::$default]. The default adapter is "native".
 
 [!!] As with cookies, a "lifetime" setting of "0" means that the session will expire when the browser is closed.
 
 ### Session Adapter Settings
 
-You can apply configuration settings to each of the session adapters by creating a session config file at `APPPATH/config/session.php`. The following sample configuration file defines all the settings for each adapater:
+You can apply configuration settings to each of the session adapters by creating a session config file at `APPPATH/config/session.php`. The following sample configuration file defines all the settings for each adapter:
 
     return array(
         'native' => array(
