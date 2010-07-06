@@ -1,3 +1,3 @@
-# Cookie Security
+# Cookie Veiligheid
 
-[!!] stub
+[!!] Nog niet beschikbaar
