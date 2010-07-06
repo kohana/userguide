@@ -1,12 +1,12 @@
-# Using Views
+# Het gebruik van Views
 
-Views are files that contain the display information for your application. This is most commonly HTML, CSS and Javascript but can be anything you require such as XML or JSON for AJAX output. The purpose of views is to keep this information separate from your application logic for easy reusability and cleaner code.
+Views zijn bestanden die de visuele informatie bevatten voor je applicatie. Dit is meestal HTML, CSS en Javascript maar kan van alles zijn die je nodig hebt zoals XML of JSON voor AJAX output. Het doel van views is om deze informatie af te scheiden van de applicatie logica zodat je nettere code hebt en deze gemakkelijker kunt hergebruiken.
 
-While this is true, views themselves can contain code used for displaying the data you pass into them. For example, looping through an array of product information and display each one on a new table row. Views are still PHP files so you can use any code you normally would.
+Hoewel dit waar is, kunnen views zelf ook code bevatten die je gebruikt om gegevens te tonen die je meegestuurd hebt met de view. Bijvoorbeeld, het loopen door een array met producten en voor elk product een nieuwe tabelrij tonen. Views zijn nog altijd PHP bestanden dus kan je erin coderen zoals je normaal zou doen.
 
-# Creating View Files
+# Aanmaken van View bestanden
 
-View files are stored in the `views` directory of the [filesystem](about.filesystem). You can also create sub-directories within the `views` directory to organize your files. All of the following examples are reasonable view files:
+De View bestanden worden opgeslagen in de `views` folder van het [bestandssysteem](about.filesystem). Je kan ook subfolders aanmaken in de `views` folder om je bestanden meer te organiseren. Alle mogelijkheden uit de volgende voorbeelden zijn goed:
 
     APPPATH/views/home.php
     APPPATH/views/pages/about.php
@@ -14,33 +14,33 @@ View files are stored in the `views` directory of the [filesystem](about.filesys
     MODPATH/error/views/errors/404.php
     MODPATH/common/views/template.php
 
-## Loading Views
+## Inladen van Views
 
-[View] objects will typically be created inside a [Controller] using the [View::factory] method. Typically the view is then assigned as the [Request::$response] property or to another view.
+[View] objecten worden gewoonlijk aangemaakt binnenin een [Controller] via de [View::factory] methode. De view wordt dan gewoonlijk aan de [Request::$response] property toegewezen of aan een andere view.
 
     public function action_about()
     {
         $this->request->response = View::factory('pages/about');
     }
 
-When a view is assigned as the [Request::$response], as in the example above, it will automatically be rendered when necessary. To get the rendered result of a view you can call the [View::render] method or just type cast it to a string. When a view is rendered, the view file is loaded and HTML is generated.
+Wanneer een view wordt toegewezen aan de [Request::$response], zoals in bovenstaand voorbeeld, dan zal het automatisch worden gerenderd wanneer noodzakelijk. Om het gerenderde resultaat van een view te verkrijgen kan je de [View::render] methode aanspreken of gewoon laten casten naar een string. Wanneer een view gerenderd is, wordt de view ingeladen en wordt de HTML gegenereerd.
 
     public function action_index()
     {
         $view = View::factory('pages/about');
 
-        // Render the view
+        // View wordt gerenderd
         $about_page = $view->render();
 
-        // Or just type cast it to a string
+        // Of gewoon laten casten naar een string
         $about_page = (string) $view;
 
         $this->request->response = $about_page;
     }
 
-## Varibles in Views
+## Variabelen in Views
 
-Once view has been loaded, variables can be assigned to it using the [View::set] and [View::bind] methods.
+Eenmaal een view is ingeladen, kunnen variabelen eraan toegewezen worden door de [View::set] en [View::bind] methodes.
 
     public function action_roadtrip()
     {
@@ -48,20 +48,20 @@ Once view has been loaded, variables can be assigned to it using the [View::set]
             ->set('places', array('Rome', 'Paris', 'London', 'New York', 'Tokyo'));
             ->bind('user', $this->user);
 
-        // The view will have $places and $user variables
+        // De view zal de variabelen $places en $user hebben
         $this->request->response = $view;
     }
 
-[!!] The only difference between `set()` and `bind()` is that `bind()` assigns the variable by reference. If you `bind()` a variable before it has been defined, the variable will be created as `NULL`.
+[!!] Het enige verschil tussen `set()` en `bind()` is dat `bind()` de variabele toewijst via referentie. Als je een variabele `bind()` vooraleer ze gedefineerd is, zal de variable als `NULL` worden gecreëerd.
 
-### Global Variables
+### Globale Variabelen
 
-An application may several view files that need access to the same variables. For example, to display a page title in both the header of your template and in the body of the page content. You can create variables that are accessible in any view using the [View::set_global] and [View::bind_global] methods.
+Een applicatie kan verschillende views hebben die toegang hebben tot dezelfde variabelen. Bijvoorbeeld, een titel van een pagina wil je zowel tonen in de header van je template als in de body van de pagina inhoud. Je kan variabelen creëren dat toegankelijk zijn in elke view dankzij de [View::set_global] en [View::bind_global] methoden.
 
-    // Assign $page_title to all views
+    // Wijs $page_title toe aan alle views
     View::bind_global('page_title', $page_title);
 
-If the application has three views that are rendered for the home page: `template`, `template/sidebar`, and `pages/home`. First, an abstract controller to create the template will be created:
+Als de applicatie drie views heeft die gerenderd zijn voor de home-pagina: `template`, `template/sidebar` en `pages/home`. Eerst zal je een abstracte controller maken om de template te maken:
 
     abstract class Controller_Website extends Controller_Template {
 
@@ -71,16 +71,16 @@ If the application has three views that are rendered for the home page: `templat
         {
             parent::before();
 
-            // Make $page_title available to all views
+            // Maak $page_title toegankelijk in alle views
             View::bind_global('page_title', $this->page_title);
 
-            // Load $sidebar into the template as a view
+            // Laad $sidebar in de template als een view
             $this->template->sidebar = View::factory('template/sidebar');
         }
 
     }
 
-Next, the home controller will extend `Controller_Website`:
+Dan moet de home controller de `Controller_Website` uitbreiden:
 
     class Controller_Home extends Controller_Website {
 
@@ -93,28 +93,26 @@ Next, the home controller will extend `Controller_Website`:
 
     }
 
-## Views Within Views
+## Views in Views
 
-If you want to include another view within a view, there are two choices. By calling [View::factory] you can sandbox the included view. This means that you will have to provide all of the variables to the view using [View::set] or [View::bind]:
+Als je een andere view wilt gebruiken in een view heb je twee keuzes. Door [View::factory] aan te roepen kan je de opgenomen view sandboxen. Dit betekent dat je alle variabelen moet meegeven aan de view door middel van [View::set] of [View::bind]:
 
-    // Only the $user variable will be available in "views/user/login.php"
+    // Enkel de $user variabele zal toegankelijk zijn in "views/user/login.php"
     <?php echo View::factory('user/login')->bind('user', $user) ?>
 
-The other option is to include the view directly, which makes all of the current variables available to the included view:
+De andere optie is om de view rechtstreeks in te voegen, dat maakt alle huidige variabelen beschikbaar in de ingesloten view:
 
-    // Any variable defined in this view will be included in "views/message.php"
+    // Elke variabele gedefinieerd in deze view zal worden ingesloten in "views/message.php"
     <?php include Kohana::find_file('views', 'user/login') ?>
 
-Of course, you can also load an entire [Request] within a view:
+Natuurlijk kan je ook een volledige [Request] inladen in een view:
 
     <?php echo Request::factory('user/login')->execute() ?>
 
-This is an example of [HMVC](about.mvc), which makes it possible to create and read calls to other URLs within your application.
+Dit is een voorbeeld van [HMVC](about.mvc), dit maakt het mogelijk om aanroepingen te maken en te lezen via andere URLs binnenin je applicatie.
 
-# Upgrading From v2.x
+# Upgraden van v2.x
 
-Unlike version 2.x of Kohana, the view is not loaded within the context of
-the [Controller], so you will not be able to access `$this` as the controller
-that loaded the view. Passing the controller to the view must be done explictly:
+In tegenstelling tot versie 2.x van Kohana, wordt de view niet ingeladen in de context van de [Controller], dus is het niet mogelijk om `$this` aan te spreken als controller binnenin de view. De controller doorgeven aan de view moet nu expliciet worden gedaan:
 
     $view->bind('controller', $this);

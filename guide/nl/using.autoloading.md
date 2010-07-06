@@ -1,40 +1,40 @@
-# Loading Classes
+# Laden van Classes
 
-Kohana takes advantage of PHP [autoloading](http://php.net/manual/language.oop5.autoload.php). This removes the need to call [include](http://php.net/include) or [require](http://php.net/require) before using a class. For instance, when you want to use the [Cookie::set] method, you just call:
+Kohana maakt dankbaar gebruik van PHP [autoloading](http://php.net/manual/language.oop5.autoload.php). Dit zorgt ervoor dat je niet [include](http://php.net/include) of [require](http://php.net/require) moet gebruiken vooraleer je de klasse kunt gebruiken. Bijvoorbeeld als je de [Cookie::set] method wilt gebruiken doe je:
 
     Cookie::set('mycookie', 'any string value');
 
-Or to load an [Encrypt] instance, just call [Encrypt::instance]:
+Of om een [Encrypt] instantie in te laten, gewoon [Encrypt::instance] aanroepen:
 
     $encrypt = Encrypt::instance();
 
-Classes are loaded via the [Kohana::auto_load] method, which makes a simple conversion from class name to file name:
+Classes worden ingeladen via de [Kohana::auto_load] methode, deze maakt een simpele conversie van de class naam naar de naam van het bestand:
 
-1. Classes are placed in the `classes/` directory of the [filesystem](about.filesystem)
-2. Any underscore characters are converted to slashes
-2. The filename is lowercase
+1. Classes worden geplaatst in de `classes/` folder van het [bestandssysteem](about.filesystem)
+2. Ieder underscore karakter wordt omgezet naar een slash.
+2. De bestandsnaam is met kleine letters
 
-When calling a class that has not been loaded (eg: `Session_Cookie`), Kohana will search the filesystem using [Kohana::find_file] for a file named `classes/session/cookie.php`.
+Wanneer je een class aanroept die nog niet is ingeladen (vb. `Session_Cookie`), zal Kohana zoeken in het bestandssysteem via [Kohana::find_file] voor een bestand met de naam `classes/session/cookie.php`.
 
-## Custom Autoloaders
+## Zelfgeschreven Autoloaders
 
-The default autoloader is enabled in `application/bootstrap.php` using [spl_autoload_register](http://php.net/spl_autoload_register):
+De standaard autoloader wordt ingesteld in `application/bootstrap.php` via [spl_autoload_register](http://php.net/spl_autoload_register):
 
     spl_autoload_register(array('Kohana', 'auto_load'));
 
-This allows [Kohana::auto_load] to attempt to load any class that does not yet exist when the class is first used.
+Dit laat [Kohana::auto_load] toe om te proberen eender welke class in te laden dat nog niet bestaat wanneer de class voor het eerst wordt gebruikt.
 
-# Transparent Class Extension {#class-extension}
+# Transparante Class Uitbreiding {#class-extension}
 
-The [cascading filesystem](about.filesystem) allows transparent class extension. For instance, the class [Cookie] is defined in `SYSPATH/classes/cookie.php` as:
+Het [cascading bestandssyteem](about.filesystem) laat transparante class uitbreiding toe. Bijvoorbeeld, de class [Cookie] is gedefinieerd in `SYSPATH/classes/cookie.php` als:
 
     class Cookie extends Kohana_Cookie {}
 
-The default Kohana classes, and many extensions, use this definition so that almost all classes can be extended. You extend any class transparently, by defining your own class in `APPPATH/classes/cookie.php` to add your own methods.
+De standaard Kohana classes, en vele uitbreidingen, gebruiken deze manier van definiëren zodat bijna alle classes kunnen worden uitgebreid. Je kan elke class transparant uitbreiden, door een eigen class te definiëren in `APPPATH/classes/cookie.php` om je eigen methodes toe te voegen.
 
-[!!] You should **never** modify any of the files that are distributed with Kohana. Always make modifications to classes using extensions to prevent upgrade issues.
+[!!] Je past best **nooit** bestanden aan die standaard in Kohana zitten. Maak aanpassingen aan classes altijd door ze uit te breiden om upgrade-problemen te vermijden.
 
-For instance, if you wanted to create method that sets encrypted cookies using the [Encrypt] class:
+Bijvoorbeeld, als je een methode wilt maken dat gecodeerde cookies maakt via de [Encrypt] class:
 
     <?php defined('SYSPATH') or die('No direct script access.');
 
@@ -46,7 +46,7 @@ For instance, if you wanted to create method that sets encrypted cookies using t
         public static $encryption = 'default';
 
         /**
-         * Sets an encrypted cookie.
+         * Maakt een gecodeerde cookie aan.
          *
          * @uses  Cookie::set
          * @uses  Encrypt::encode
@@ -59,7 +59,7 @@ For instance, if you wanted to create method that sets encrypted cookies using t
          }
 
          /**
-          * Gets an encrypted cookie.
+          * Krijg de inhoud van een gecodeerde cookie.
           *
           * @uses  Cookie::get
           * @uses  Encrypt::decode
@@ -76,20 +76,20 @@ For instance, if you wanted to create method that sets encrypted cookies using t
 
     } // End Cookie
 
-Now calling `Cookie::encrypt('secret', $data)` will create an encrypted cookie which we can decrypt with `$data = Cookie::decrypt('secret')`.
+Als je nu `Cookie::encrypt('secret', $data)` aanroept zal die een een gecodeerde cookie aanmaken die je kan decoderen met `$data = Cookie::decrypt('secret')`.
 
-## Multiple Levels of Extension {#multiple-extensions}
+## Meerdere niveau's van uitbreidingen {#multiple-extensions}
 
-If you are extending a Kohana class in a module, you should maintain transparent extensions. Instead of making the [Cookie] extension extend Kohana, you can create `MODPATH/mymod/encrypted/cookie.php`:
+Als je een Kohana class in een module uitbreidt, maak je best gebruik van transparante uitbreidingen. In plaats van de [Cookie] uitbreiding Kohana te laten uitbreiden, kan je `MODPATH/mymod/encrypted/cookie.php` aanmaken:
 
     class Encrypted_Cookie extends Kohana_Cookie {
 
-        // Use the same encrypt() and decrypt() methods as above
+        // Gebruik de encrypt() en decrypt() methodes van hierboven
 
     }
 
-And create `MODPATH/mymod/cookie.php`:
+En maak `MODPATH/mymod/cookie.php` aan:
 
     class Cookie extends Encrypted_Cookie {}
 
-This will still allow users to add their own extension to [Cookie] with your extensions intact. However, the next extension of [Cookie] will have to extend `Encrypted_Cookie` instead of `Kohana_Cookie`.
+Dit laat nog steeds toe om gebruikers hun eigen uitbreidingen te laten doen op [Cookie] zodat jouw uitbreidingen nog behouden blijven. Let wel, de volgende uitbreiding van [Cookie] zal `Encrypted_Cookie` moeten uitbreiden in plaats van `Kohana_Cookie`.

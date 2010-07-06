@@ -33,7 +33,7 @@ Configuration files are plain PHP files, stored in the `config/` directory, whic
         ),
     );
 
-If the above configuration file was called `myconf.php`, you could acess it using:
+If the above configuration file was called `myconf.php`, you could access it using:
 
     $config = Kohana::config('myconf');
     $options = $config['options'];
