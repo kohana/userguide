@@ -77,7 +77,7 @@ class Controller_Userguide extends Controller_Template {
 		if ( ! $page)
 		{
 			// Redirect to the default page
-			$this->request->redirect($this->guide->uri(array('page' => 'about.kohana')));
+			$this->request->redirect($this->guide->uri(array('page' => Kohana::config('userguide')->default_page)));
 		}
 
 		$file = $this->file($page);
