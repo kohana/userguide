@@ -1,13 +1,13 @@
 # Installation
 
-1. Download the latest **stable** release from the [Kohana website](http://kohanaframework.org/)
-2. Unzip the downloaded package to create a `kohana` directory
-3. Upload the contents of this folder to your webserver
+1. Download the latest **stable** release from the [Kohana website](http://kohanaframework.org/).
+2. Unzip the downloaded package to create a `kohana` directory.
+3. Upload the contents of this folder to your webserver.
 4. Open `application/bootstrap.php` and make the following changes:
-	- Set the default [timezone](http://php.net/timezones) for your application
-	- Set the `base_url` in the [Kohana::init] call to reflect the location of the kohana folder on your server
-6. Make sure the `application/cache` and `application/logs` directories are writable by the web server
-7. Test your installation by opening the URL you set as the `base_url` in your favorite browser
+	- Set the default [timezone](http://php.net/timezones) for your application.
+	- Set the `base_url` in the [Kohana::init] call to reflect the location of the kohana folder on your server.
+6. Make sure the `application/cache` and `application/logs` directories are writable by the web server.
+7. Test your installation by opening the URL you set as the `base_url` in your favorite browser.
 
 [!!] Depending on your platform, the installation's subdirs may have lost their permissions thanks to zip extraction. Chmod them all to 755 by running `find . -type d -exec chmod 0755 {} \;` from the root of your Kohana installation.
 
@@ -26,14 +26,14 @@ There are a few things you'll want to do with your application before moving int
 1. See the [Configuration page](about.configuration) in the docs. 
    This covers most of the global settings that would change between environments. 
    As a general rule, you should enable caching and disable profiling ([Kohana::init] settings) for production sites. 
-   Route caching can also help if you have a lot of routes.
-2. Catch all exceptions in application/bootstrap.php, so that sensitive data is cannot be leaked by stack traces. 
-   See the example below which was taken from Shadowhand's wingsc.com source.
+   [Route caching](api/Route#cache) can also help if you have a lot of routes.
+2. Catch all exceptions in `application/bootstrap.php`, so that sensitive data is cannot be leaked by stack traces.
+   See the example below which was taken from Shadowhand's [wingsc.com source](http://github.com/shadowhand/wingsc).
 3. Turn on APC or some kind of opcode caching. 
-   This is be the single easiest performance boost you can make to PHP itself. The more complex your application, the bigger the benefit of using opcode caching.
+   This is the single easiest performance boost you can make to PHP itself. The more complex your application, the bigger the benefit of using opcode caching.
 
 		/**
-		 * Set the environment string by the domain (defaults to 'development').
+		 * Set the environment string by the domain (defaults to Kohana::DEVELOPMENT).
 		 */
 		Kohana::$environment = ($_SERVER['SERVER_NAME'] !== 'localhost') ? Kohana::PRODUCTION : Kohana::DEVELOPMENT;
 		/**
@@ -59,7 +59,7 @@ There are a few things you'll want to do with your application before moving int
 		}
 		catch (Exception $e)
 		{
-			if ( Kohana::$environment == 'development' )
+			if (Kohana::$environment === Kohana::DEVELOPMENT)
 			{
 				// Just re-throw the exception
 				throw $e;
