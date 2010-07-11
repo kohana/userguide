@@ -1,8 +1,8 @@
 # ORM {#top}
 
-Kohana 3.0 includes a powerful ORM module that uses the active record pattern and database introspection to determine a model's column information.
+Kohana 3.0 bevat een krachtige ORM-module die het "active record"-patroon gebruikt en database introspectie gebruikt om kolominformatie te bepalen van een model.
 
-The ORM module is included with the Kohana 3.0 install but needs to be enabled before you can use it. In your `application/bootstrap.php` file modify the call to [Kohana::modules] and include the ORM module:
+De ORM-module is opgenomen in de Kohana 3.0 installatie maar moet worden ingeschakeld vooraleer je het kunt gebruiken. In je `application/bootstrap.php` bestand moet je de oproen naar [Kohana::modules] aanpassen en de ORM-module insluiten:
 
 	Kohana::modules(array(
 		...
@@ -10,111 +10,111 @@ The ORM module is included with the Kohana 3.0 install but needs to be enabled b
 		...
 	));
 
-## Configuration {#configuration}
+## Configuratie {#configuration}
 
-ORM requires little configuration to get started.  Extend your model classes with ORM to begin using the module:
+ORM vergt weinig configuratie om aan de slag te kunnen. Breid uw model classes uit met ORM om de module te kunnen gebruiken:
 
 	class Model_User extends ORM
 	{
 		...
 	}
 
-In the example above, the model will look for a `users` table in the default database.
+In het voorbeeld hierboven zal het model zoeken naar een tabel `users` in de standaard database.
 
-### Model Configuration Properties
+### Model Configuratie Properties
 
-The following properties are used to configure each model:
+De volgende eigenschappen worden gebruikt om ieder model te configureren:
 
-Type      | Option              |  Description                     | Default value
-----------|---------------------|----------------------------------| -------------------------
-`string`  |  _table_name        | Table name to use                | `singular model name`
-`string`  | _db                 | Name of the database to use      | `default`
-`string`  | _primary_key        | Column to use as primary key     | `id`
-`string`  | _primary_val        | Column to use as primary value   | `name`
-`bool`    | _table_names_plural | Whether tables names are plural  | `TRUE`
-`array`   | _sorting            | Array of column => direction     | `primary key => ASC`
-`string`  | _foreign_key_suffix | Suffix to use for foreign keys   | `_id`
+Type      | Eigenschap          |  Omschrijving                        | Standaard waarde
+----------|---------------------|--------------------------------------| -------------------------
+`string`  |  _table_name        | Tabelnaam om te gebruiken            | `singular model name`
+`string`  | _db                 | Naam van de database om te gebruiken | `default`
+`string`  | _primary_key        | Kolom die dient als primary key      | `id`
+`string`  | _primary_val        | Kolom die dient als primary value    | `name`
+`bool`    | _table_names_plural | Zijn de tabelnamen meervoudig?       | `TRUE`
+`array`   | _sorting            | Array met kolom => volgorde          | `primary key => ASC`
+`string`  | _foreign_key_suffix | Achtervoegsel voor foreign keys      | `_id`
 
-## Using ORM
+## Het gebruik van ORM
 
-### Loading a Record
+### Een Record inladen
 
-To create an instance of a model, you can use the [ORM::factory] method or the [ORM::__construct]:
+Om een instantie van een model aan te maken, kan je de [ORM::factory] methode of [ORM::__construct] gebruiken:
 
 	$user = ORM::factory('user');
-	// or
+	// of
 	$user = new Model_User();
 
-The constructor and factory methods also accept a primary key value to load the given model data:
+De constructor en factory methodes accepteren ook een primary key waarde om het gegeven model's data in te laden:
 
-	// Load user ID 5
+	// Laad gebruiker met ID 5
 	$user = ORM::factory('user', 5);
 
-	// See if the user was loaded successfully
+	// Kijk of de gebruiker succesvol werd ingeladen
 	if ($user->loaded()) { ... }
 
-You can optionally pass an array of key => value pairs to load a data object matching the given criteria:
+Je kan optioneel een array met keys => value paren meegeven om een data object in te laden die voldoet aan de gegeven criteria:
 
-	// Load user with email joe@example.com
+	// Laad een gebruiker met email joe@example.com
 	$user = ORM::factory('user', array('email' => 'joe@example.com'));
 
-### Searching for a Record or Records
+### Zoeken naar één of meerdere records
 
-ORM supports most of the [Database] methods for powerful searching of your model's data.  See the `_db_methods` property for a full list of supported method calls.  Records are retrieved using the [ORM::find] and [ORM::find_all] method calls.
+ORM ondersteunt de meeste krachtige [Database] methoden voor het doorzoeken van gegevens van uw model. Zie de `_db_methods` eigenschap voor een volledige lijst van ondersteunde methode oproepen. Records worden opgehaald met behulp van de [ORM::find] en [ORM::find_all] functies.
 
-	// This will grab the first active user with the name Bob
+	// Dit zal de eerste actieve gebruiker nemen met de naam Bob
 	$user = ORM::factory('user')
 		->where('active', '=', TRUE)
 		->where('name', '=', 'Bob')
 		->find();
 
-	// This will grab all users with the name Bob
+	// Dit zal alle gebruikers nemen met de naam Bob
 	$users = ORM::factory('user')
 		...
 		->find_all();
-	
-When you are retrieving a list of models using [ORM::find_all], you can iterate through them as you do with database results:
+
+Wanneer je een lijst van modellen ontvangt met behulp van [ORM::find_all], kan je deze doorlopen zoals je doet met database resultaten:
 
 	foreach ($users as $user)
 	{
 		...
 	}
 
-A powerful feature of ORM is the [ORM::as_array] method which will return the given record as an array.  If used with [ORM::find_all], an array of all records will be returned.  A good example of when this is useful is for a select list:
+Een zeer handige functie van ORM is de [ORM::as_array] methode die het record zal teruggeven als een array. Indien je dit gebruikt met [ORM::find_all], zal een array van alle records worden teruggegeven. Een goed voorbeeld van wanneer dit nuttig is, is voor select in het HTML formulier:
 
-	// Display a select field of usernames (using the id as values)
+	// Toon een dropdown/select met daarin alle gebruikersnamen (id als value van de options)
 	form::select('user', ORM::factory('user')->find_all()->as_array('id', 'username') ...
 
-### Counting Records
+### Het aantal records tellen
 
-Use [ORM::count_all] to return the number of records for a given query.
+Gebruik [ORM::count_all] om het aantal records terug te geven voor een bepaalde query.
 
-	// Number of users
+	// Aantal actieve gebruikers
 	$count = ORM::factory('user')->where('active', '=', TRUE)->count_all();
 
-If you wish to count the total number of users for a given query, while only returning a certain subset of these users, call the [ORM::reset] method with `FALSE` before using `count_all`:
+Als je het totaal aantal gebruikers wilt tellen voor een bepaalde query, terwijl je enkel een bepaalde set van deze gebruikers wilt tonen, gebruik dan de [ORM::reset] methode met `FALSE` vooraleer je `count_all` gebruikt:
 
 	$user = ORM::factory('user');
 
-	// Total number of users (reset FALSE prevents the query object from being cleared)
+	// Totaal aantal gebruikers (reset FALSE zorgt ervoor dat het query object dat het query object niet geleegd wordt)
 	$count = $user->where('active', '=', TRUE)->reset(FALSE)->count_all();
 
-	// Return only the first 10 of these results
+	// Geef enkel de eerste 10 resultaten terug van deze resultaten
 	$users = $user->limit(10)->find_all();
 
-### Accessing Model Properties
+### Properties van een model aanspreken
 
-All model properties are accessible using the `__get` and `__set` magic methods. 
+Alle model properties zijn toegankelijk via de `__get` en `__set` magic methodes. 
 
 	$user = ORM::factory('user', 5);
 	
-	// Output user name
+	// Geef de gebruikersnaam terug
 	echo $user->name;
 
-	// Change user name
+	// Verander de gebruiker zijn naam
 	$user->name = 'Bob';
 
-To store information/properties that don't exist in the model's table, you can use the `_ignored_columns` data member.  Data will be stored in the internal `_object` member, but ignored at the database level.
+Voor het opslaan van gegevens/properties die niet bestaan in de tabel van het model, kan je gebruik maken van het `_ignored_columns` data member. De gegevens zullen worden opgeslagen in het interne `_object` member, maar zal worden genegeerd op database-niveau.
 
 	class Model_User extends ORM
 	{
@@ -123,124 +123,124 @@ To store information/properties that don't exist in the model's table, you can u
 		...
 	}
 
-Multiple key => value pairs can be set by using the [ORM::values] method
+Meerdere key => value paren kunnen worden ingesteld door gebruik te maken van de [ORM::values] methode
 
 	$user->values(array('username' => 'Joe', 'password' => 'bob'));
 
-### Creating and Saving Records
+### Aanmaken en opslaan van records
 
-The [ORM::save] method is used to both create new records and update existing records.
+De methode [ORM::save] wordt gebruikt om zowel nieuwe records aan te maken als het upaten van bestaande.
 
-	// Creating a record
+	// Nieuw record aanmaken
 	$user = ORM::factory('user');
-	$user->name = 'New user';
+	$user->name = 'Nieuwe gebruiker';
 	$user->save();
 
-	// Updating a record
+	// Aanpassen van een bestaand record
 	$user = ORM::factory('user', 5);
-	$user->name = 'User 2';
+	$user->name = 'Gebruiker 2';
 	$user->save();
 
-	// Check to see if the record has been saved
+	// Controleer of het record opgeslagen is
 	if ($user->saved()) { ... }
 
-You can update multiple records by using the [ORM::save_all] method:
+Je kan meerdere records tegelijk veranderen met de [ORM::save_all] methode:
 
 	$user = ORM::factory('user');
 	$user->name = 'Bob';
 
-	// Change all active records to name 'Bob'
+	// Verander bij alle actieve gebruikers de naam naar 'Bob'
 	$user->where('active', '=', TRUE)->save_all();
 
-#### Using `Updated` and `Created` Columns
+#### Gebruik `Updated` en `Created` kolommen
 
-The `_updated_column` and `_created_column` members are provided to automatically be updated when a model is updated and created.  These are not used by default.  To use them:
+De `_updated_column` en `_created_column` members staan ter beschikking om automatisch aangepast te worden wanneer een model wordt gecreëerd of aangepast. Ze worden standaard niet gebruikt. Om ze te gebruiken:
 
-	// date_created is the column used for storing the creation date.  Use TRUE to store a timestamp
+	// date_created is de kolom die wordt gebruikt om de aanmaak datum op te slaan. Gebruik TRUE om een timestamp op te slaan
 	protected $_created_column = array('date_created' => TRUE);
 
-	// date_modified is the column used for storing the modified date.  In this case, a string specifying a date() format is used
+	// date_modified is de kolom die wordt gebruikt om de datum op te slaan wanneer het item is aangepast. In dit geval wordt een string gebruikt om een date() formaat te specificeren
 	protected $_updated_column = array('date_modified' => 'm/d/Y');
 
-### Deleting Records
+### Verwijderen van records
 
-Records are deleted with [ORM::delete] and [ORM::delete_all].  These methods operate in the same fashion as saving described above with the exception that [ORM::delete] takes one optional parameter, the `id` of the record to delete.  Otherwise, the currently loaded record is deleted.
+Records worden verwijderd met [ORM::delete] en [ORM::delete_all]. Deze methoden werken op dezelfde manier als het opslaan van records zoals hierboven beschreven, met de uitzondering dat [ORM::delete] nog een optionele parameter heeft, het `id` van het record om te verwijderen. Anders wordt het huidig ingeladen record verwijderd.
 
-### Relationships
+### Relaties
 
-ORM provides for powerful relationship support.  Ruby has a great tutorial on relationships at [http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html)
+ORM ondersteunt zeer goed relateies. Ruby heeft een goede tutorial omtrent relaties op [http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html)
 
-#### Belongs-To and Has-Many
+#### Belongs-To en Has-Many
 
-We'll assume we're working with a school that has many students.  Each student can belong to only one school.  You would define the relationships in this manner:
+We gaan er van uit dat we werken met een school dat veel (has many) studenten heeft. Iedere student kan enkel maar tot één school behoren (belong to). Dan zullen de relaties  als volgt gedefinieerd worden:
 
-	// Inside the school model
+	// In het model "school"
 	protected $_has_many = array('students' => array());
 
-	// Inside the student model
+	// In het model "student"
 	protected $_belongs_to = array('school' => array());
 
-To access a student's school you use:
+Om een student zijn school te verkrijgen gebruik je:
 
 	$school = $student->school;
 
-To access a school's students, you would use:
+Om een school zijn studenten te verkrijgen gebruik je:
 
-	// Note that find_all is required after students
+	// Merk op dat find_all is vereist na "students"
 	$students = $school->students->find_all();
 
-	// To narrow results:
+	// Om resultaten te "filteren":
 	$students = $school->students->where('active', '=', TRUE)->find_all();
 
-By default, ORM will look for a `school_id` model in the student table.  This can be overriden by using the `foreign_key` attribute:
+Standaard zal ORM willen zoeken naar een `school_id` model in de studenten tabel. Dit kan worden overschreven door gebruik te maken van het `foreign_key` attribuut:
 
 	protected $_belongs_to = array('school' => array('foreign_key' => 'schoolID'));
 	
-The foreign key should be overridden in both the student and school models.
+De foreign key moet overschreven worden in zowel het student als school model.
 
 #### Has-One
 
-Has-One is a special case of Has-Many, the only difference being that there is one and only one record.  In the above example, each school would have one and only one student (although this is a poor example).
+Has-One is een speciale versie van Has-Many, het enige verschil is dat er maar één enkel record is. In het bovenstaande voorbeeld zou iedere school maar één student hebben (al is dat wel een slecht voorbeeld).
 
-	// Inside the school model
+	// In het model "school"
 	protected $_has_one = array('student' => array());
 
-Like Belongs-To, you do not need to use the `find` method when referencing the Has-One related object - it is done automatically.
+Je moet niet zoals bij Belongs-To de `find` methode gebruiken wanneer je verwijst naar een het Has-One gerelateerd object, dit gebeurt automatisch.
 
 #### Has-Many "Through"
 
-The Has-Many "through" relationship (also known as Has-And-Belongs-To-Many) is used in the case of one object being related to multiple objects of another type, and visa-versa.  For instance, a student may have multiple classes and a class may have multiple students.  In this case, a third table and model known as a `pivot` is used.  In this case, we will call the pivot object/model `enrollment`.
+De Has-Many "through" relatie (ook bekend als Has-And-Belongs-To-Many) wordt gebruikt in het geval dat één object gerelateerd is met meerdere objecten van verschillende types en omgekeerd. Bijvoorbeeld, een student kan verschillende klassen volgen en een klass kan verschillende studenten hebben. In dit geval wordt een derde tabel gebruikt en een model die dienst doet als `pivot`. In dit geval noemen we het pivot object/model `enrollment` (=inschrijving).
 
-	// Inside the student model
+	// In het model "student"
 	protected $_has_many = array('classes' => array('through' => 'enrollment'));
 
-	// Inside the class model
+	// In het model "class"
 	protected $_has_many = array('students' => array('through' => 'enrollment'));
 
-The enrollment table should contain two foreign keys, one for `class_id` and the other for `student_id`.  These can be overriden using `foreign_key` and `far_key` when defining the relationship.  For example:
+De inschrijvingstabel (`enrollment`) moet twee foreign keys hebben, een voor `class_id` en de andere voor `student_id`. Deze kunnen worden overschreven door `foreign_key` en `far_key` te gebruiken bij het definiëren van de relatie. Bijvoorbeeld:
 
-	// Inside the student model (the foreign key refers to this model [student], while the far key refers to the other model [class])
+	// In het model "student" (de foreign key verwijst naar dit model [student], terwijl de far key verwijst naar het andere model [class])
 	protected $_has_many = array('classes' => array('through' => 'enrollment', 'foreign_key' => 'studentID', 'far_key' => 'classID'));
 
-	// Inside the class model
+	// In het model "class"
 	protected $_has_many = array('students' => array('through' => 'enrollment', 'foreign_key' => 'classID', 'far_key' => 'studentID'));
 
-The enrollment model should be defined as such:
+Het inschrijvings model (enrollment) zal als volgt gedefinieerd worden:
 
-	// Enrollment model belongs to both a student and a class
+	// Het model "enrollment" hoort bij zowel "student" als "class"
 	protected $_belongs_to = array('student' => array(), 'class' => array());
 
-To access the related objects, use:
+Om de gerelateerde objecten te bereiken, gebruik je:
 
-	// To access classes from a student
+	// Om de klassen van een student te verkrijgen
 	$student->classes->find_all();
 
-	// To access students from a class
+	// Om studenten te verkrijven vanuit de klas
 	$class->students->find_all();
 
-### Validation
+### Validatie
 	
-ORM is integrated tightly with the [Validate] library.  The ORM provides the following members for validation
+ORM werkt nauw samen met de [Validate] library. ORM biedt de volgende members aan voor validatie
 
 * _rules
 * _callbacks
@@ -255,7 +255,7 @@ ORM is integrated tightly with the [Validate] library.  The ORM provides the fol
 		'email'    => array('not_empty' => array(), 'email' => array()),
 	);
 
-`username` will be checked to make sure it's not empty.  `email` will be checked to also ensure it is a valid email address.  The empty arrays passed as values can be used to provide optional additional parameters to these validate method calls.
+`username` zal gecontroleerd worden om zeker niet leeg te zijn. `email` zal ook gecontroleerd worden om te verzekeren dat het een geldig emailadres is. De lege arrays die als values worden meegestuurd, kunnen worden gebruikt om optionele parameters mee te geven aan deze functie aanroepen.
 
 #### `_callbacks`
 	
@@ -264,11 +264,11 @@ ORM is integrated tightly with the [Validate] library.  The ORM provides the fol
 		'username' => array('username_unique'),
 	);
 
-`username` will be passed to a callback method `username_unique`.  If the method exists in the current model, it will be used, otherwise a global function will be called.  Here is an example of the definition of this method:
+`username` zal worden meegestuurd naar een callback methode `username_unique`. Als de methode bestaat in het huidige model, zal het worden gebruikt, anders zal een globale functie worden opgeroepen. Hier is een voorbeeld van z'n methode:
 
 	public function username_unique(Validate $data, $field)
 	{
-		// Logic to make sure a username is unique
+		// Logica om te controleren of de gebruikersnaam uniek is
 		...
 	}
 
@@ -280,19 +280,19 @@ ORM is integrated tightly with the [Validate] library.  The ORM provides the fol
 		'username' => array('stripslashes' => array()),
 	);
 
-`TRUE` indicates that the `trim` filter is to be used on all fields.  `username` will be filtered through `stripslashes` before it is validated.  The empty arrays passed as values can be used to provide additional parameters to these filter method calls.
+`TRUE` slaat erop dat de `trim` filter wordt gebruikt voor alle velden. `username` zal ook gefilterd worden door `stripslashes` vooraleer het gevalideerd wordt. De lege arrays die als values worden meegestuurd, kunnen worden gebruikt om optionele parameters mee te geven aan deze filter-functie aanroepen.
 	
-#### Checking if the Object is Valid
+#### Controleren of een Object Valid is
 
-Use [ORM::check] to see if the object is currently valid.
+Gebruik [ORM::check] om te kijken of het object momenteel valid is.
 
-	// Setting an object's values, then checking to see if it's valid
+	// Een object zijn values instellen en dan controleren of het valid is
 	if ($user->values($_POST)->check())
 	{
 		$user->save();
 	}
 
-You can use the `validate()` method to access the model's validation object
+Je kan de `validate()` methode gebruiken om een model zijn validatie object aan te roepen.
 
-	// Add an additional filter manually
+	// Een optionele filter manueel toevoegen
 	$user->validate()->filter('username', 'trim');

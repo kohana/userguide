@@ -1,14 +1,14 @@
 # Hello, World
 
-Just about every framework ever written has some kind of hello world example included, so it'd be pretty rude of us to break this tradition!
+Aangezien bijna ieder framework een soort van "hello world" voorbeeld heeft, zou het onbeleefd van ons zijn om deze traditie te doorbreken!
 
-We'll start out by creating a very very basic hello world, and then we'll expand it to follow MVC principles.
+We gaan starten met het maken van een zeer basis hello world, om vervolgens uit te breiden om het MVC principe te volgen.
 
-## Bare bones
+## Tot op het bot
 
-First off we have to make a controller that Kohana can use to handle a request.
+Eerst moeten we een controller maken dat Kohana kan gebruiken om de request af te handelen.
 
-Create the file `application/classes/controller/hello.php` in your application folder and fill it out like so:
+Maak het bestand `application/classes/controller/hello.php` in uw applicatie folder en zorg voor deze code erin:
 
     <?php defined('SYSPATH') OR die('No Direct Script Access');
 
@@ -20,34 +20,34 @@ Create the file `application/classes/controller/hello.php` in your application f
 		}
 	}
 
-Lets see what's going on here:
+Eens bekijken wat er hier allemaal gebeurd:
 
 `<?php defined('SYSPATH') OR die('No Direct Script Access');`
-:	You should recognise the first tag as an opening php tag (if you don't you should probably [learn php](http://php.net)).  What follows is a small check that makes sure that this file is being included by Kohana.  It stops people from accessing files directly from the url.
+:	Je zou de eerste tag moeten herkennen als een php openings-tag (indien niet, leer je best [php](http://php.net)). Wat volgt is een kleine controle dat er voor zorgt dat dit bestand enkel kan uitgevoerd worden indien het ingesloten is in Kohana. Op die manier kunnen mensen er niet direct naartoe surfen.
 
 `Class Controller_Hello extends Controller`
-:	This line declares our controller,  each controller class has to be prefixed with `Controller_` and an underscore delimited path to the folder the controller is in (see [Conventions and styles](about.conventions) for more info).  Each controller should also extend the base `Controller` class which provides a standard structure for controllers.
+:	Deze lijn declareert onze controller, iedere controller class moet een voorvoegsel `Controller_` hebben en een met-underscore-afgescheiden path naar de folder waarin de controller zich bevindt (zie [Conventies en codeerstijl](about.conventions) voor meer informatie). Iedere controller moet ook de basis `Controller` class uitbreiden, deze zorgt voor een standaard structuur voor controllers.
 
 
 `function action_index()`
-:	This defines the "index" action of our controller.  Kohana will attempt to call this action if the user hasn't specified an action. (See [Routes, URLs and Links](tutorials.urls))
+:	Dit definieerd de "index" actie van onze controller. Kohana zal proberen deze actie aan te roepen als de gebruiker geen actie heeft gespecifieerd. (Zie [Routes, URLs en Links](tutorials.urls))
 
 `echo 'hello, world!';`
-:	And this is the line which outputs the customary phrase!
+:	En dit is de lijn die zorgt voor de weergave van onze zin
 
-Now if you open your browser and go to http://localhost/index.php/hello you should see something like:
+Als je nu je browser opent en suft naar http://localhost/index.php/hello zou je zoiets moeten zien:
 
 ![Hello, World!](img/hello_world_1.png "Hello, World!")
 
-## That was good, but we can do better
+## Dit was al goed maar we kunnen beter
 
-What we did in the previous section was a good example of how easy it to create an *extremely* basic Kohana app. (In fact it's so basic, that you should never make it again!)
+Wat we deden in de vorige paragraaf was een goed voorbeeld van hoe gemakkelijk het is om een *zeer* elementaire Kohana applicatie te maken. (In feite is het zo basis, dat je het nooit meer opnieuw mag maken!)
 
-If you've ever heard anything about MVC you'll probably have realised that echoing content out in a controller is strictly against the principles of MVC.
+Als je ooit al eens gehoord hebt over MVC, dan zal je jezelf waarschijlijk al gerealiseerd hebben dat content tonen aan de hand van "echo" tegenstrijdig is met de principes van MVC.
 
-The proper way to code with an MVC framework is to use _views_ to handle the presentation of your application, and allow the controller to do what it does best – control the flow of the request!
+De goede manier van coderen met een MVC framework is het gebruik van _views_ om je applicatie te visualiseren en de controller laten doen waar hij goed in is, het controleren van de flow van het request!
 
-Lets change our original controller slightly:
+Laten we onze originele controller lichtjes aanpassen:
 
     <?php defined('SYSPATH') OR die('No Direct Script Access');
 
@@ -62,23 +62,23 @@ Lets change our original controller slightly:
 	}
 
 `extends Controller_Template`
-:	We're now extending the template controller,  it makes it more convenient to use views within our controller.
+:	We breiden nu uit van de template controller, dit maakt het meer logisch om views te gebruiken in onze controller.
 
 `public $template = 'site';`
-:	The template controller needs to know what template you want to use. It'll automatically load the view defined in this variable and assign the view object to it.
+:	De template controller moet weten welke template we willen gebruiken. Het zal automatisch de view inladen die gedefinieerd is in deze variabele en het view object eraan toewijzen.
 
 `$this->template->message = 'hello, world!';`
-:	`$this->template` is a reference to the view object for our site template.  What we're doing here is assigning a variable called "message", with a value of "hello, world!" to the view.
+:	`$this->template` is een referentie naar het view object voor onze site template. Wat we hier doen is een variabele "message", met waarde "hello, world", toewijzen aan de view.
 
-Now lets try running our code...
+Laten we nu proberen onze code uit te voeren...
 
 <div>{{userguide/examples/hello_world_error}}</div>
 
-For some reason Kohana's thrown a wobbly and isn't showing our amazing message.
+Voor de één of andere reden geeft Kohana een error en toont het niet ons cool bericht.
 
-If we look at the error message we can see that the View library wasn't able to find our site template, probably because we haven't made it yet – *doh*!
+Als we kijken naar het error-bericht kunnen we zien dat de View library onze site template niet kon vinden, waarschijnlijk omdat we er nog geen aangemaakt hebben - *doh*!
 
-Let's go and make the view file `application/views/site.php` for our message:
+Laten we het view bestand `application/views/site.php` aanmaken voor ons bericht:
 
 	<html>
 		<head>
@@ -95,12 +95,12 @@ Let's go and make the view file `application/views/site.php` for our message:
 		</body>
 	</html>
 
-If we refresh the page then we can see the fruits of our labour:
+Als we de pagina vernieuwen dan kunnen we de vruchten zien van ons *zwaar" werk:
 
 ![hello, world! We just wanted to say it!](img/hello_world_2.png "hello, world! We just wanted to say it!")
 
 ## Stage 3 – Profit!
 
-In this tutorial you've learnt how to create a controller and use a view to separate your logic from your display.
+In deze tutorial heb je geleerd hoe je een controller maakt en een view gebruikt om je logica te scheiden van het visuele.
 
-This is obviously a very basic introduction to working with Kohana and doesn't even scrape the potential you have when developing applications with it.
+Dit is natuurlijk een zeer elementaire inleiding over het werken met Kohana en toont zelfs niet de sterkte van het framework voor wanneer je applicaties hiermee ontwikkelt.
