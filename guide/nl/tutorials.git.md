@@ -1,33 +1,33 @@
-# Working With Git
+# Werken met Git
 
-Kohana uses [git](http://git-scm.com/) for version control and [github](http://github.com/kohana) for collaboration. This tutorial will show you how to use git and github to build a simple application.
+Kohana gebruikt [git](http://git-scm.com/) als versie controle systeem en [github](http://github.com/kohana) voor community-bijdragen. Deze tutorial zal je tonen hoe je beide platformen kunt gebruiken om een applicatie op te zetten.
 
-## Installing and setting up Git on your machine
+## Het installeren en instellen van Git op uw computer
 
-### Installing Git
+### Installeren van Git
 
 - OSX: [Git-OSX](http://code.google.com/p/git-osx-installer/)
 - Windows: [Msygit](http://code.google.com/p/msysgit/)
-- Or download it from [git-site](http://git-scm.com/) and install it manually (see git website)
+- Of download het van de [git-site](http://git-scm.com/) en installeer het manueel (zie de git website)
 
-### Basic global settings
+### Basis globale instellingen
 
-    git config --global user.name "Your Name"
-    git config --global user.email "youremail@website.com"
+    git config --global user.name "Uw Naam"
+    git config --global user.email "uwemail@website.com"
 
-### Additional but preferable settings
+### Extra, maar aan te raden instellingen
 
-To have a better visualisation of the git commandos and repositories in your command-line, you can set these:
+Om een beter visueel overzicht te hebben van de git commando's en repositories in je console stel je best volgende in:
 
     git config --global color.diff auto
     git config --global color.status auto
     git config --global color.branch auto
 
-### Setting auto-completion
+### Automatische aanvulling installeren
 
-[!!] These lines are only to use on an OSX machine
+[!!] Deze lijnen code zijn enkel van toepassing voor OSX
 
-These lines will do all the dirty work for you, so auto-completion can work for your git-environment
+Deze lijnen code doen al het vuile werk voor je zodat automatische aanvulling kan werken voor uw git-omgeving
 
     cd /tmp
     git clone git://git.kernel.org/pub/scm/git/git.git
@@ -38,56 +38,56 @@ These lines will do all the dirty work for you, so auto-completion can work for 
     rm -rf /tmp/git
     echo -e "source ~/.git-completion.bash" >> .profile
 	
-### Always use LF line endings
+### Gebruik altijd LF als regeleinden
 
-This is the convention that we make for Kohana. Please set this settings for your own good and especially if you want to contribute to the Kohana community.
+Dit is de conventie die we maken met Kohana. Stel deze instellingen voor uw eigen goed en vooral als je wilt bijdragen aan de Kohana community.
 
     git config --global core.autocrlf input
     git config --global core.savecrlf true
 
-[!!] More information about line endings at [github](http://help.github.com/dealing-with-lineendings/)
+[!!] Meer informatie over regeleinden kan je vinden op [github](http://help.github.com/dealing-with-lineendings/)
 
-### More information to get you on the track
+### Meer informatie op je op weg te zetten
 
 - [Git Screencasts](http://www.gitcasts.com/)
 - [Git Reference](http://gitref.org/)
 - [Pro Git book](http://progit.org/book/)
 
-## Initial Structure
+## Initiële structuur
 
-[!!] This tutorial will assume that your web server is already set up, and you are going to create a new application at <http://localhost/gitorial/>.
+[!!] Deze tutorial zal ervan uitgaan dat uw webserver al is ingesteld, en dat je een nieuwe applicatie zal maken op <http://localhost/gitorial/>.
 
-Using your console, change to the empty directory `gitorial` and run `git init`. This will create the bare structure for a new git repository.
+Met behulp van je console, ga naar de lege map `gitorial` en voer `git init` uit. Dit zal een ruwe structuur voor een nieuwe git repository aanmaken.
 
-Next, we will create a [submodule](http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html) for the `system` directory. Go to <http://github.com/kohana/core> and copy the "Clone URL":
+Vervolgend zullen we een [submodule](http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html) maken voor de `system` folder. Ga naar <http://github.com/kohana/core> en kopieer de "Clone URL":
 
 ![Github Clone URL](http://img.skitch.com/20091019-rud5mmqbf776jwua6hx9nm1n.png)
 
-Now use the URL to create the submodule for `system`:
+Gebruik nu de URL om de submodule aan te maken voor `system`:
 
     git submodule add git://github.com/kohana/core.git system
 
-[!!] This will create a link to the current development version of the next stable release. The development version should almost always be safe to use, have the same API as the current stable download with bugfixes applied.
+[!!] Dit creëert een link naar de huidige ontwikkelingsversie voor de volgende stabiele uitgave. De ontwikkelingsversie is meestal veilig om te gebruiken, het heeft dezelfde API als de huidige stabiele download maar met bugfixes al toegepast.
 
-Now add whatever submodules you need. For example if you need the [Database] module:
+Voeg nu elke submodule toe dat je wil. Bijvoorbeeld als je de [Database] module nodig hebt:
 
     git submodule add git://github.com/kohana/database.git modules/database
 
-After submodules are added, they must be initialized:
+Nadat de submodules zijn toegevoegd, moet je ze nog initialiseren:
 
     git submodule init
 
-Now that the submodules are added, you can commit them:
+Nu dat de submodules zijn toegevoegd en geinitialiseerd, kan je ze commit'en:
 
     git commit -m 'Added initial submodules'
 
-Next, create the application directory structure. This is the bare minimum required:
+Vervolgens creëren we de applicatie folder structuur. Hier is een absoluut minimum vereist:
 
     mkdir -p application/classes/{controller,model}
     mkdir -p application/{config,views}
     mkdir -m 0777 -p application/{cache,logs}
 
-If you run `find application` you should see this:
+Als je nu `find application` uitvoert, moet je dit zien:
 
     application
     application/cache
@@ -98,31 +98,31 @@ If you run `find application` you should see this:
     application/logs
     application/views
 
-We don't want git to track log or cache files, so add a `.gitignore` file to each of the directories. This will ignore all non-hidden files:
+We willen niet dat git de log of cache bestanden volgt dus voegen we een `.gitignore` bestand toe aan deze folders. Dit zal alle niet-verborgen bestanden negeren:
 
     echo '[^.]*' > application/{logs,cache}/.gitignore
 
-[!!] Git ignores empty directories, so adding a `.gitignore` file also makes sure that git will track the directory, but not the files within it.
+[!!] Git negeert lege folders, dus het toevoegen van een `.gitignore` bestand zorgt er voor dat git de folder volgt maar niet de bestanden er in.
 
-Now we need the `index.php` and `bootstrap.php` files:
+Nu hebben we nog de `index.php` en `bootstrap.php` bestanden nodig:
 
     wget http://github.com/kohana/kohana/raw/master/index.php
     wget http://github.com/kohana/kohana/raw/master/application/bootstrap.php -O application/bootstrap.php
 
-Commit these changes too:
+Commit deze veranderingen ook:
 
     git add application
     git commit -m 'Added initial directory structure'
 
-That's all there is to it. You now have an application that is using Git for versioning.
+Dit is alles wat je nodig hebt. Je hebt nu een applicatie dat Git gebruikt als versiesysteem.
 
-## Updating Submodules
+## Updaten van Submodules
 
-At some point you will probably also want to upgrade your submodules. To update all of your submodules to the latest `HEAD` version:
+Op een gegeven moment zal je waarschijnlijk ook je submodules willen upgraden. Om al je submodules te updaten naar de laatste "HEAD" versie:
 
     git submodule foreach 'git checkout master && git pull origin master'
 
-To update a single submodule, for example, `system`:
+Om een enkele submodule te update, bijvoorbeel `system`:
 
     cd system
     git checkout master
@@ -131,7 +131,7 @@ To update a single submodule, for example, `system`:
     git add system
     git commit -m 'Updated system to latest version'
 
-If you want to update a single submodule to a specific revision:
+Als je een enkele submodule wilt updaten naar een specifieke commit:
 
     cd modules/database
     git pull origin master
@@ -140,4 +140,10 @@ If you want to update a single submodule to a specific revision:
     git add database
     git commit -m 'Updated database module'
 
-All done!
+Merk op dat je ook een commit kunt uitchecken via een tag, zoals een officieel versie, bijvoorbeeld:
+
+    git checkout 3.0.6
+
+Voer gewoon `git tag` uit zonder parameters om een lijst van alle tags te krijgen.
+
+U weet nu "alles" over git!

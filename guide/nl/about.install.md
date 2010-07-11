@@ -1,8 +1,8 @@
 # Installatie
 
-1. Download de laatste **stabiele** release van de [Kohana website](http://kohanaframework.org/)
-2. Unzip het gedownloade pakket om de `kohana` folder aan te maken
-3. Upload de inhoud van deze folder naar je webserver
+1. Download de laatste **stabiele** release van de [Kohana website](http://kohanaframework.org/).
+2. Unzip het gedownloade pakket om de `kohana` folder aan te maken.
+3. Upload de inhoud van deze folder naar je webserver.
 4. Open `application/bootstrap.php` en maak de volgende aanpassingen:
 	- Stel de standaard [timezone](http://php.net/timezones) in voor je applicatie
 	- Stel de `base_url` in de [Kohana::init] methode in om te verwijzen naar de locatie van de kohana folder op je server
@@ -26,17 +26,17 @@ Er zijn enkele dingen dat je best doet met je applicatie vooraleer je deze in pr
 1. Bekijk de [configuratie pagina](about.configuration) in de documentatie. 
    Dit omvat het grootste gedeelte van de globale instellingen dat zouden moeten veranderen bij andere omgevingen. 
    Als algemene regel, zet je best caching aan en zet je profiling uit ([Kohana::init] settings) voor sites in productie. 
-   Route caching kan ook helpen als je heel wat routes hebt.
+   [Route caching](api/Route#cache) kan ook helpen als je heel wat routes hebt.
 2. Catch alle exceptions in `application/bootstrap.php`, zodat gevoelige gegevens niet kan worden gelekt door stack traces. 
-   Zie onderstaand voorbeeld van Shadowhand's wingsc.com broncode.
+   Zie onderstaand voorbeeld van Shadowhand's [wingsc.com broncode](http://github.com/shadowhand/wingsc).
 3. Zet APC of een andere soort opcode caching aan. Dit is het enige en eenvoudigste manier om de performantie te verbeteren dat je kunt doen in PHP zelf. Hoe complexer je applicatie, hoe groter het voordeel van opcode caching.
 
 		/**
-		 * Set the environment string by the domain (defaults to 'development').
+		 * Stel de omgeving in aan de hand van het domein (standaard Kohana::DEVELOPMENT).
 		 */
 		Kohana::$environment = ($_SERVER['SERVER_NAME'] !== 'localhost') ? Kohana::PRODUCTION : Kohana::DEVELOPMENT;
 		/**
-		 * Initialise Kohana based on environment
+		 * Initialiseer Kohana op basis van de omgeving
 		 */
 		Kohana::init(array(
 			'base_url'   => '/',
@@ -46,28 +46,28 @@ Er zijn enkele dingen dat je best doet met je applicatie vooraleer je deze in pr
 		));
 		
 		/**
-		 * Execute the main request using PATH_INFO. If no URI source is specified,
-		 * the URI will be automatically detected.
+		 * Voer de algemene request uit met PATH_INFO. Als er geen URI is gespecifeerd,
+		 * dan zal de URI automatisch worden gedetecteerd.
 		 */
 		$request = Request::instance($_SERVER['PATH_INFO']);
 		
 		try
 		{
-			// Attempt to execute the response
+			// Propeer het request uit te voeren
 			$request->execute();
 		}
 		catch (Exception $e)
 		{
-			if ( Kohana::$environment == 'development' )
+			if (Kohana::$environment == Kohana::DEVELOPMENT)
 			{
 				// Just re-throw the exception
 				throw $e;
 			}
 		
-			// Log the error
+			// De error loggen
 			Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
 		
-			// Create a 404 response
+			// Maak een 404 uitvoer
 			$request->status = 404;
 			$request->response = View::factory('template')
 			  ->set('title', '404')
@@ -76,17 +76,17 @@ Er zijn enkele dingen dat je best doet met je applicatie vooraleer je deze in pr
 		
 		if ($request->send_headers()->response)
 		{
-			// Get the total memory and execution time
+			// Verkrijg totaal aantal geheugen en snelheids tijd
 			$total = array(
 			  '{memory_usage}' => number_format((memory_get_peak_usage() - KOHANA_START_MEMORY) / 1024, 2).'KB',
 			  '{execution_time}' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).' seconds');
 			
-			// Insert the totals into the response
+			// Stel de totalen in, in de uitvoer
 			$request->response = str_replace(array_keys($total), $total, $request->response);
 		}
 		
 		
 		/**
-		 * Display the request response.
+		 * Toon de uitvoer dan het request.
 		 */
 		echo $request->response;
