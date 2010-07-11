@@ -235,7 +235,7 @@ This query would generate the following SQL:
 
 #### Database Functions {#database_functions}
 
-Eventually you will probably run into a situation where you need to call `COUNT` or some other database function within your query. The query builder supports these functions in two ways. The first is using by using quotes within aliases:
+Eventually you will probably run into a situation where you need to call `COUNT` or some other database function within your query. The query builder supports these functions in two ways. The first is by using quotes within aliases:
 
     $query = DB::select(array('COUNT("username")', 'total_users'))->from('users');
 
