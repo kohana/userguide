@@ -123,6 +123,9 @@ class Controller_Userguide extends Controller_Template {
 
 	public function action_api()
 	{
+		// Enable the missing class autoloader
+		spl_autoload_register(array('Kodoc_Missing', 'create_class'));
+
 		// Get the class from the request
 		$class = $this->request->param('class');
 
