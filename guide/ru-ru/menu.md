@@ -13,6 +13,7 @@
    - [Представление и HTML](using.views)
    - [Сессии и Cookies](using.sessions)
    - [Сообщения (Messages)](using.messages)
+   - [Интернационализация](using.translation)
 3. **Отладка**
    - [Отладка кода](debugging.code)
    - [Обработка ошибок](debugging.errors)
