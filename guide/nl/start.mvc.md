@@ -1,3 +1,0 @@
-# Model View Controller
-
-[!!] Stub

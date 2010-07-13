@@ -1,6 +1,6 @@
 # Cross-Site Scripting (XSS) Security
 
-The first step to preventing [XSS](http://wikipedia.org/wiki/Cross-Site_Scripting) attacks is knowing when you need to protect youself. XSS can only be triggered when it is displayed within HTML content, sometimes via a form input or being displayed from database results. Any global variable that contains client information can be tainted. This includes `$_GET`, `$_POST`, and `$_COOKIE` data.
+The first step to preventing [XSS](http://wikipedia.org/wiki/Cross-Site_Scripting) attacks is knowing when you need to protect yourself. XSS can only be triggered when it is displayed within HTML content, sometimes via a form input or being displayed from database results. Any global variable that contains client information can be tainted. This includes `$_GET`, `$_POST`, and `$_COOKIE` data.
 
 ## Prevention
 

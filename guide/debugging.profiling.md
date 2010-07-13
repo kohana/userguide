@@ -11,11 +11,9 @@ Kohana provides a very simple way to display statistics about your application:
 
 You can display or collect the current [profiler] statistics at any time:
 
-~~~
-<div id="kohana-profiler">
-<?php echo View::factory('profiler/stats') ?>
-</div>
-~~~
+    <div id="kohana-profiler">
+    <?php echo View::factory('profiler/stats') ?>
+    </div>
 
 ## Preview
 

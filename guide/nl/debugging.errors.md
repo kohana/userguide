@@ -1,24 +1,22 @@
 # Error/Exception Handling
 
-Kohana provides both an exception handler and an error handler that transforms errors into exceptions using PHP's [ErrorException](http://php.net/errorexception) class. Many details of the error and the internal state of the application is displayed by the handler:
+Kohana biedt zowel een exception handler als een error handler aan die errors transformeert in exceptions met behulp van PHP's [ErrorException](http://php.net/errorexception) class. Veel details over de error en de interne toestand van de applicatie wordt weergegeven door de handler:
 
 1. Exception class
-2. Error level
-3. Errror message
-4. Source of the error, with the error line highlighted
-5. A [debug backtrace](http://php.net/debug_backtrace) of the execution flow
-6. Included files, loaded extensions, and global variables
+2. Error niveau
+3. Error bericht
+4. Bron van de error, met de errorlijn gehighlight
+5. Een [debug backtrace](http://php.net/debug_backtrace) van de uitvoerings flow
+6. Ingeladen bestanden, extensies en globale variablen
 
-## Example
+## Voorbeeld
 
-Click any of the links to toggle the display of additional information:
+Klik op een van de links om extra informatie te tonen:
 
 <div>{{userguide/examples/error}}</div>
 
-## Disabling Error/Exception Handling
+## Error/Exception Handling uitzetten
 
-If you do not want to use the internal error handling, you can disable it when calling [Kohana::init]:
+Als je niet de interne error handling wilt gebruiken, kan je deze uitschakelen wanneer je [Kohana::init] aanroept:
 
-~~~
-Kohana::init(array('errors' => FALSE));
-~~~
+    Kohana::init(array('errors' => FALSE));

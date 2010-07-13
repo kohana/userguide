@@ -2,7 +2,8 @@
 /**
  * Kohana user guide and api browser.
  *
- * @package    Userguide
+ * @package    Kohana/Userguide
+ * @category   Controllers
  * @author     Kohana Team
  */
 class Controller_Userguide extends Controller_Template {
@@ -25,7 +26,6 @@ class Controller_Userguide extends Controller_Template {
 		{
 			// Grab the necessary routes
 			$this->media = Route::get('docs/media');
-			$this->api   = Route::get('docs/api');
 			$this->guide = Route::get('docs/guide');
 
 			if (isset($_GET['lang']))
@@ -48,11 +48,19 @@ class Controller_Userguide extends Controller_Template {
 			// Set the translation language
 			I18n::$lang = Cookie::get('userguide_language', Kohana::config('userguide')->lang);
 
+			if (defined('MARKDOWN_PARSER_CLASS'))
+			{
+				throw new Kohana_Exception('Markdown parser already registered. Live documentation will not work in your environment.');
+			}
+
 			// Use customized Markdown parser
 			define('MARKDOWN_PARSER_CLASS', 'Kodoc_Markdown');
 
-			// Load Markdown support
-			require Kohana::find_file('vendor', 'markdown/markdown');
+			if ( ! class_exists('Markdown', FALSE))
+			{
+				// Load Markdown support
+				require Kohana::find_file('vendor', 'markdown/markdown');
+			}
 
 			// Set the base URL for links and images
 			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/';
@@ -69,15 +77,15 @@ class Controller_Userguide extends Controller_Template {
 		if ( ! $page)
 		{
 			// Redirect to the default page
-			$this->request->redirect($this->guide->uri(array('page' => 'about.kohana')));
+			$this->request->redirect($this->guide->uri(array('page' => Kohana::config('userguide')->default_page)));
 		}
 
 		$file = $this->file($page);
 
 		if ( ! $file)
 		{
-			throw new Kohana_Exception('User guide page not found: :page',
-				array(':page' => $page));
+			$this->error(__('Userguide page not found'));
+			return;
 		}
 
 		// Set the page title
@@ -88,6 +96,20 @@ class Controller_Userguide extends Controller_Template {
 
 		// Attach the menu to the template
 		$this->template->menu = Markdown(file_get_contents($this->file('menu')));
+		
+		// Bind module menu items
+		$this->template->bind('module_menus', $module_menus);
+		
+		// Attach module-specific menu items
+		$module_menus = array();
+		
+		foreach(Kohana::modules() as $module => $path)
+		{
+			if ($file = $this->file('menu.'.$module))
+			{
+				$module_menus[$module] = Markdown(file_get_contents($file)); 
+			}
+		}
 
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
@@ -101,11 +123,26 @@ class Controller_Userguide extends Controller_Template {
 
 	public function action_api()
 	{
+		// Enable the missing class autoloader
+		spl_autoload_register(array('Kodoc_Missing', 'create_class'));
+
 		// Get the class from the request
 		$class = $this->request->param('class');
 
 		if ($class)
 		{
+			try
+			{
+				$_class = Kodoc_Class::factory($class);
+			
+				if ( ! Kodoc::show_class($_class))
+					throw new Exception(__('That class is hidden'));
+			}
+			catch (Exception $e)
+			{
+				return $this->error(__('API Reference: Class not found.'));
+			}
+			
 			$this->template->title = $class;
 
 			$this->template->content = View::factory('userguide/api/class')
@@ -139,6 +176,9 @@ class Controller_Userguide extends Controller_Template {
 
 	public function action_media()
 	{
+		// Generate and check the ETag for this file
+		$this->request->check_cache(sha1($this->request->uri));
+
 		// Get the file path from the request
 		$file = $this->request->param('file');
 
@@ -159,8 +199,20 @@ class Controller_Userguide extends Controller_Template {
 			$this->request->status = 404;
 		}
 
-		// Set the content type for this extension
-		$this->request->headers['Content-Type'] = File::mime_by_ext($ext);
+		// Set the proper headers to allow caching
+		$this->request->headers['Content-Type']   = File::mime_by_ext($ext);
+		$this->request->headers['Content-Length'] = filesize($file);
+		$this->request->headers['Last-Modified']  = date('r', filemtime($file));
+	}
+	
+	// Display an error if a page isn't found
+	public function error($message)
+	{
+		$this->request->status = 404;
+		$this->template->title = __('User Guide').' - '.__('Error');
+		$this->template->content = View::factory('userguide/error',array('message'=>$message));
+		$this->template->menu = Kodoc::menu();
+		$this->template->breadcrumb = array($this->guide->uri() =>  __('User Guide'), __('Error'));
 	}
 
 	public function after()
@@ -175,12 +227,16 @@ class Controller_Userguide extends Controller_Template {
 				$media->uri(array('file' => 'css/print.css'))  => 'print',
 				$media->uri(array('file' => 'css/screen.css')) => 'screen',
 				$media->uri(array('file' => 'css/kodoc.css'))  => 'screen',
+				$media->uri(array('file' => 'css/shCore.css')) => 'screen',
+				$media->uri(array('file' => 'css/shThemeKodoc.css')) => 'screen',
 			);
 
 			// Add scripts
 			$this->template->scripts = array(
-				'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
+				$media->uri(array('file' => 'js/jquery.min.js')),
 				$media->uri(array('file' => 'js/kodoc.js')),
+				$media->uri(array('file' => 'js/shCore.js')),
+				$media->uri(array('file' => 'js/shBrushPhp.js')),
 			);
 
 			// Add languages
@@ -203,33 +259,56 @@ class Controller_Userguide extends Controller_Template {
 
 	public function section($page)
 	{
-		$file = $this->file('menu');
-
-		if ($file AND $text = file_get_contents($file))
+		$markdown = $this->_get_all_menu_markdown();
+		
+		if (preg_match('~\*{2}(.+?)\*{2}[^*]+\[[^\]]+\]\('.preg_quote($page).'\)~mu', $markdown, $matches))
 		{
-			if (preg_match('~\*{2}(.+?)\*{2}[^*]+\[[^\]]+\]\('.preg_quote($page).'\)~mu', $text, $matches))
-			{
-				return $matches[1];
-			}
+			return $matches[1];
 		}
-
+		
 		return $page;
 	}
 
 	public function title($page)
 	{
-		$file = $this->file('menu');
-
-		if ($file AND $text = file_get_contents($file))
+		$markdown = $this->_get_all_menu_markdown();
+		
+		if (preg_match('~\[([^\]]+)\]\('.preg_quote($page).'\)~mu', $markdown, $matches))
 		{
-			if (preg_match('~\[([^\]]+)\]\('.preg_quote($page).'\)~mu', $text, $matches))
+			// Found a title for this link
+			return $matches[1];
+		}
+		
+		return $page;
+	}
+	
+	protected function _get_all_menu_markdown()
+	{
+		// Only do this once per request...
+		static $markdown = '';
+		
+		if (empty($markdown))
+		{
+			// Get core menu items
+			$file = $this->file('menu');
+	
+			if ($file AND $text = file_get_contents($file))
 			{
-				// Found a title for this link
-				return $matches[1];
+				$markdown .= $text;
+			}
+			
+			// Look in module specific files
+			foreach(Kohana::modules() as $module => $path)
+			{
+				if ($file = $this->file('menu.'.$module) AND $text = file_get_contents($file))
+				{
+					// Concatenate markdown to produce one string containing all menu items
+					$markdown .="\n".$text;
+				}
 			}
 		}
-
-		return $page;
+		
+		return $markdown;
 	}
 
 } // End Userguide

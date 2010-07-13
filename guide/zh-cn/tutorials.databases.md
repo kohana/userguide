@@ -107,7 +107,7 @@ QUERY_PROFILING
 `string`  | password   | Database password          | `NULL`
 `boolean` | persistent | Persistent connections     | `FALSE`
 
-!! 如果你使用的是 PDO 而且并不确定如何去配置 `dsn` 选项，请查阅 [PDO::__construct](http://php.net/pdo.construct) 的相关资料。
+[!!] 如果你使用的是 PDO 而且并不确定如何去配置 `dsn` 选项，请查阅 [PDO::__construct](http://php.net/pdo.construct) 的相关资料。
 
 ## 连接并实例化 {#connections}
 

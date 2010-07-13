@@ -6,37 +6,51 @@ $(document).ready(function()
 		$(this).parents('form').submit();
 	});
 
+	// Syntax highlighter
+	$('pre:not(.debug) code').each(function()
+	{
+		$(this).addClass('brush: php');
+	});
+
+	SyntaxHighlighter.config.tagName = 'code';
+	// Don't show the toolbar or line-numbers.
+	SyntaxHighlighter.defaults.toolbar = false;
+	SyntaxHighlighter.defaults.gutter = false;
+	SyntaxHighlighter.all();
+
 	// Striped tables
 	$('#content tbody tr:even').addClass('alt');
 
 	// Toggle menus
-	$('#menu ol > li').each(function()
+	$('#menu ol li strong').each(function()
 	{
-		var link = $(this).find('strong');
-		var menu = $(this).find('ul');
-		// var togg = $('<span class="toggle">[ + ]</span>');
+		var link = $(this);
+		var menu = link.parent().find('ol:first, ul:first');
+		var togg = $('<span class="toggle">+</span>').appendTo(link);
 
-		var open  = function()
+		link.click(function()
 		{
-			// togg.html('[ &ndash; ]');
-			menu.stop().slideDown();
-		};
+			if (menu.is(':visible'))
+			{
+				// Hide visible menus
+				togg.html('+');
+				menu.stop(true, true).slideUp('fast');
+			}
+			else
+			{
+				// Show hidden menus
+				togg.html('&ndash;');
+				menu.stop(true, true).slideDown('fast');
+			}
+		});
 
-		var close = function()
-		{
-			// togg.html('[ + ]');
-			menu.stop().slideUp();
-		};
+		// Hide all menus that do not contain the active link
+		menu.not(':has(a[href="'+ window.location.pathname +'"])').hide();
 
-		if (menu.find('a[href="'+ window.location.pathname +'"]').length)
+		if (menu.is(':visible'))
 		{
-			// Currently active menu
-			link.toggle(close, open);
-		}
-		else
-		{
-			menu.slideUp(0);
-			link.toggle(open, close);
+			// Display the toggle as being open
+			togg.html('&ndash;');
 		}
 	});
 
@@ -49,13 +63,32 @@ $(document).ready(function()
 		$('<span class="toggle">[ + ]</span>').toggle(function()
 		{
 			$(this).html('[ &ndash; ]');
-			content.stop().slideDown();
+			content.stop(true, true).slideDown();
 		},
 		function()
 		{
 			$(this).html('[ + ]');
-			content.stop().slideUp();
+			content.stop(true, true).slideUp();
 		})
 		.appendTo(header);
+	});
+	
+	// Show source links
+	$('#content .method-source').each(function()
+	{
+		var self = $(this);
+		var togg = $('<span class="toggle">+</span>').appendTo($('h5', self));
+		var code = self.find('pre').hide();
+
+		self.toggle(function()
+		{
+			togg.html('&ndash;');
+			code.stop(true, true).slideDown();
+		},
+		function()
+		{
+			togg.html('+');
+			code.stop(true, true).slideUp();
+		});
 	});
 });

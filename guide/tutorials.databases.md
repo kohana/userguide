@@ -107,7 +107,7 @@ Type      | Option     |  Description               | Default value
 `string`  | password   | Database password          | `NULL`
 `boolean` | persistent | Persistent connections     | `FALSE`
 
-!! If you are using PDO and are not sure what to use for the `dsn` option, review [PDO::__construct](http://php.net/pdo.construct).
+[!!] If you are using PDO and are not sure what to use for the `dsn` option, review [PDO::__construct](http://php.net/pdo.construct).
 
 ## Connections and Instances {#connections}
 
@@ -235,11 +235,11 @@ This query would generate the following SQL:
 
 #### Database Functions {#database_functions}
 
-Eventually you will probably run into a situation where you need to call `COUNT` or some other database function within your query. The query builder supports these functions in two ways. The first is using by using quotes within aliases:
+Eventually you will probably run into a situation where you need to call `COUNT` or some other database function within your query. The query builder supports these functions in two ways. The first is by using quotes within aliases:
 
     $query = DB::select(array('COUNT("username")', 'total_users'))->from('users');
 
-This looks almost exactly the same as a standard `AS` alias, but note how the column name is wrapped in double quotes. Any time a double-quoted value appears inside of a column name, **only** the part that inside the double quotes will be escaped. This query would generate the following SQL:
+This looks almost exactly the same as a standard `AS` alias, but note how the column name is wrapped in double quotes. Any time a double-quoted value appears inside of a column name, **only** the part inside the double quotes will be escaped. This query would generate the following SQL:
 
     SELECT COUNT(`username`) AS `total_users` FROM `users`
 

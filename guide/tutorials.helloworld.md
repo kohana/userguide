@@ -26,7 +26,7 @@ Lets see what's going on here:
 :	You should recognise the first tag as an opening php tag (if you don't you should probably [learn php](http://php.net)).  What follows is a small check that makes sure that this file is being included by Kohana.  It stops people from accessing files directly from the url.
 
 `Class Controller_Hello extends Controller`
-:	This line declares our controller,  each controller class has to be prefixed with `Controller_` and an underscore delimited path to the folder the controller is in (see [Conventions and styles](start.conventions) for more info).  Each controller should also extend the base `Controller` class which provides a standard structure for controllers.
+:	This line declares our controller,  each controller class has to be prefixed with `Controller_` and an underscore delimited path to the folder the controller is in (see [Conventions and styles](about.conventions) for more info).  Each controller should also extend the base `Controller` class which provides a standard structure for controllers.
 
 
 `function action_index()`
@@ -35,7 +35,7 @@ Lets see what's going on here:
 `echo 'hello, world!';`
 :	And this is the line which outputs the customary phrase!
 
-Now if you open your browser and go to http://your/kohana/website/index.php/hello you should see something like:
+Now if you open your browser and go to http://localhost/index.php/hello you should see something like:
 
 ![Hello, World!](img/hello_world_1.png "Hello, World!")
 

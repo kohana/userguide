@@ -1,8 +1,9 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Class documentation generator.
+ * Documentation generator.
  *
- * @package    Userguide
+ * @package    Kohana/Userguide
+ * @category   Base
  * @author     Kohana Team
  * @copyright  (c) 2008-2009 Kohana Team
  * @license    http://kohanaphp.com/license
@@ -11,9 +12,14 @@ class Kohana_Kodoc {
 
 	public static function factory($class)
 	{
-		return new Kodoc($class);
+		return new Kodoc_Class($class);
 	}
 
+	/**
+	 * Creates an html list of all classes sorted by category (or package if no category)
+	 *
+	 * @return   string   the html for the menu
+	 */
 	public static function menu()
 	{
 		$classes = Kodoc::classes();
@@ -35,7 +41,11 @@ class Kohana_Kodoc {
 
 		foreach ($classes as $class)
 		{
-			$class = Kodoc::factory($class);
+			$class = Kodoc_Class::factory($class);
+
+			// Test if we should show this class
+			if ( ! Kodoc::show_class($class))
+				continue;
 
 			$link = HTML::anchor($route->uri(array('class' => $class->class->name)), $class->class->name);
 
@@ -43,36 +53,40 @@ class Kohana_Kodoc {
 			{
 				foreach ($class->tags['package'] as $package)
 				{
-					$menu[$package][] = $link;
+					if (isset($class->tags['category']))
+					{
+						foreach ($class->tags['category'] as $category)
+						{
+							$menu[$package][$category][] = $link;
+						}
+					}
+					else
+					{
+						$menu[$package]['Base'][] = $link;
+					}
 				}
 			}
 			else
 			{
-				$menu['Kohana'][] = $link;
+				$menu['[Unknown]']['Base'][] = $link;
 			}
 		}
 
 		// Sort the packages
 		ksort($menu);
 
-		$output = array('<ol>');
-
-		foreach ($menu as $package => $list)
-		{
-			// Sort the class list
-			sort($list);
-
-			$output[] =
-				"<li><strong>$package</strong>\n\t<ul><li>".
-				implode("</li><li>", $list).
-				"</li></ul>\n</li>";
-		}
-
-		$output[] = '</ol>';
-
-		return implode("\n", $output);
+		return View::factory('userguide/api/menu')
+			->bind('menu', $menu);
 	}
 
+	/**
+	 * Returns an array of all the classes available, built by listing all files in the classes folder and then trying to create that class.
+	 *
+	 * This means any empty class files (as in complety empty) will cause an exception
+	 *
+	 * @param   array   array of files, obtained using Kohana::list_files
+	 * @return  array   an array of all the class names
+	 */
 	public static function classes(array $list = NULL)
 	{
 		if ($list === NULL)
@@ -103,6 +117,14 @@ class Kohana_Kodoc {
 		return $classes;
 	}
 
+	/**
+	 * Get all classes and methods of files in a list.
+	 *
+	 * >  I personally don't like this as it was used on the index page.  Way too much stuff on one page.  It has potential for a package index page though.
+	 * >  For example:  class_methods( Kohana::list_files('classes/sprig') ) could make a nice index page for the sprig package in the api browser
+	 * >     ~bluehawk
+	 *
+	 */
 	public static function class_methods(array $list = NULL)
 	{
 		$list = Kodoc::classes($list);
@@ -123,7 +145,18 @@ class Kohana_Kodoc {
 
 			foreach ($_class->getMethods() as $_method)
 			{
-				$methods[] = $_method->name;
+				$declares = $_method->getDeclaringClass()->name;
+
+				if (stripos($declares, 'Kohana') === 0)
+				{
+					// Remove "Kohana_"
+					$declares = substr($declares, 7);
+				}
+
+				if ($declares === $_class->name)
+				{
+					$methods[] = $_method->name;
+				}
 			}
 
 			sort($methods);
@@ -134,6 +167,12 @@ class Kohana_Kodoc {
 		return $classes;
 	}
 
+	/**
+	 * Parse a comment to extract the description and the tags
+	 *
+	 * @param   string  the comment retreived using ReflectionClass->getDocComment()
+	 * @return  array   array(string $description, array $tags)
+	 */
 	public static function parse($comment)
 	{
 		// Normalize all new lines to \n
@@ -168,6 +207,10 @@ class Kohana_Kodoc {
 							$text = HTML::anchor($text);
 						}
 					break;
+					case 'link':
+						$text = preg_split('/\s+/', $text, 2);
+						$text = HTML::anchor($text[0], isset($text[1]) ? $text[1] : $text[0]);
+					break;
 					case 'copyright':
 						if (strpos($text, '(c)') !== FALSE)
 						{
@@ -176,7 +219,14 @@ class Kohana_Kodoc {
 						}
 					break;
 					case 'throws':
-						$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $text)), $text);
+						if (preg_match('/^(\w+)\W(.*)$/',$text,$matches))
+						{
+							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])), $matches[1]).' '.$matches[2];
+						}
+						else
+						{
+							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $text)), $text);
+						}
 					break;
 					case 'uses':
 						if (preg_match('/^([a-z_]+)::([a-z_]+)$/i', $text, $matches))
@@ -185,6 +235,9 @@ class Kohana_Kodoc {
 							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])).'#'.$matches[2], $text);
 						}
 					break;
+					// Don't show @access lines, they are shown elsewhere
+					case 'access':
+						continue 2;
 				}
 
 				// Add the tag
@@ -207,6 +260,13 @@ class Kohana_Kodoc {
 		return array($comment, $tags);
 	}
 
+	/**
+	 * Get the source of a function
+	 *
+	 * @param  string   the filename
+	 * @param  int      start line?
+	 * @param  int      end line?
+	 */
 	public static function source($file, $start, $end)
 	{
 		if ( ! $file)
@@ -231,79 +291,35 @@ class Kohana_Kodoc {
 		return implode("\n", $file);
 	}
 
-	public $class;
-
-	public $modifiers;
-
-	public $description;
-
-	public $tags = array();
-
-	public $constants = array();
-
-	public function __construct($class)
+	/**
+	 * Test whether a class should be shown, based on the api_packages config option
+	 *
+	 * @param  Kodoc_Class  the class to test
+	 * @return  bool  whether this class should be shown
+	 */
+	public static function show_class(Kodoc_Class $class)
 	{
-		$this->class = $parent = new ReflectionClass($class);
+		$api_packages = Kohana::config('userguide.api_packages');
 
-		if ($modifiers = $this->class->getModifiers())
+		// If api_packages is true, all packages should be shown
+		if ($api_packages === TRUE)
+			return TRUE;
+
+		// Get the package tags for this class (as an array)
+		$packages = Arr::get($class->tags,'package',Array('None'));
+
+		$show_this = FALSE;
+
+		// Loop through each package tag
+		foreach ($packages as $package)
 		{
-			$this->modifiers = '<small>'.implode(' ', Reflection::getModifierNames($modifiers)).'</small> ';
+			// If this package is in the allowed packages, set show this to true
+			if (in_array($package,explode(',',$api_packages)))
+				$show_this = TRUE;
 		}
 
-		if ($constants = $this->class->getConstants())
-		{
-			foreach ($constants as $name => $value)
-			{
-				$this->constants[$name] = Kohana::debug($value);
-			}
-		}
-
-		do
-		{
-			if ($comment = $parent->getDocComment())
-			{
-				// Found a description for this class
-				break;
-			}
-		}
-		while ($parent = $parent->getParentClass());
-
-		list($this->description, $this->tags) = Kodoc::parse($comment);
+		return $show_this;
 	}
 
-	public function properties()
-	{
-		$props = $this->class->getProperties();
-
-		sort($props);
-
-		foreach ($props as $key => $property)
-		{
-			if ($property->isPublic())
-			{
-				$props[$key] = new Kodoc_Property($this->class->name, $property->name);
-			}
-			else
-			{
-				unset($props[$key]);
-			}
-		}
-
-		return $props;
-	}
-
-	public function methods()
-	{
-		$methods = $this->class->getMethods();
-
-		sort($methods);
-
-		foreach ($methods as $key => $method)
-		{
-			$methods[$key] = new Kodoc_Method($this->class->name, $method->name);
-		}
-
-		return $methods;
-	}
 
 } // End Kodoc

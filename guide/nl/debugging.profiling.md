@@ -1,22 +1,20 @@
 # Profiling
 
-Kohana provides a very simple way to display statistics about your application:
+Kohana biedt een zeer eenvoudige manier aan om statistieken over uw aanvraag te tonen:
 
-1. Common [Kohana] method calls
+1. Gewone [Kohana] methodes dat aangeroepen worden
 2. Requests
 3. [Database] queries
-4. Average execution times for your application
+4. Gemiddelde uitvoeringstijden voor uw applicatie
 
-## Example
+## Voorbeeld
 
-You can display or collect the current [profiler] statistics at any time:
+Je kan op elk tijdstip de huidige [profiler] statistieken tonen of opvragen:
 
-~~~
-<div id="kohana-profiler">
-<?php echo View::factory('profiler/stats') ?>
-</div>
-~~~
+    <div id="kohana-profiler">
+    <?php echo View::factory('profiler/stats') ?>
+    </div>
 
-## Preview
+## Voorbeeld
 
 {{profiler/stats}}

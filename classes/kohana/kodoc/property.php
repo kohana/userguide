@@ -2,19 +2,32 @@
 /**
  * Class property documentation generator.
  *
- * @package    Userguide
+ * @package    Kohana/Userguide
+ * @category   Base
  * @author     Kohana Team
  * @copyright  (c) 2009 Kohana Team
  * @license    http://kohanaphp.com/license
  */
 class Kohana_Kodoc_Property extends Kodoc {
 
+	/**
+	 * @var  object  ReflectionProperty
+	 */
 	public $property;
 
+	/**
+	 * @var  string   modifiers: public, private, static, etc
+	 */
 	public $modifiers = 'public';
 
+	/**
+	 * @var  string  variable type, retrieved from the comment
+	 */
 	public $type;
 
+	/**
+	 * @var  string  value of the property
+	 */
 	public $value;
 
 	public function __construct($class, $property)

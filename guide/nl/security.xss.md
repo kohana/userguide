@@ -1,15 +1,15 @@
-# Cross-Site Scripting (XSS) Security
+# Cross-Site Scripting (XSS) Veiligheid
 
-The first step to preventing [XSS](http://wikipedia.org/wiki/Cross-Site_Scripting) attacks is knowing when you need to protect youself. XSS can only be triggered when it is displayed within HTML content, sometimes via a form input or being displayed from database results. Any global variable that contains client information can be tainted. This includes $_GET, $_POST, and $_COOKIE data.
+De eerste stap om [XSS](http://wikipedia.org/wiki/Cross-Site_Scripting)-aanvallen te voorkomen is weten wanneer je jezelf moet beschermen. XSS kan enkel worden geactiveerd wanneer het wordt weergegeven in de HTML-inhoud, dit kan soms via een formulier-veld of worden getoond van database resultaten. Elke globale variabele dat gebruikersgegevens bevat kan worden aangetast. Dit omvat `$ _GET`, `$ _POST` en `$ _COOKIE` gegevens.
 
-## Prevention
+## Het voorkomen
 
-There are a few simple rules to follow to guard your application HTML against XSS. The first is to use the [Security::xss] method to clean any input data that comes from a global variable. If you do not want HTML in an variable, use [strip_tags](http://php.net/strip_tags) to remove all unwanted HTML tags from a value.
+Er zijn maar een paar eenvoudige regels te volgen om uw applicatie HTML te beschermen tegen XSS. De eerste stap is om de [Security::xss] methode te gebruiken om alle ingevoerde gegevens op te kuisen die afkomstig zijn van een globale variabele. Als je geen HTML wilt in een variable, gebruik dan [strip_tags](http://php.net/strip_tags) om alle ongewenste HTML tags te verwijderen van de ingevoerde waarde.
 
-[!!] If you allow users to submit HTML to your application, it is highly recommended to use an HTML cleaning tool such as [HTML Purifier](http://htmlpurifier.org/) or [HTML Tidy](http://php.net/tidy).
+[!!] Als je gebruikers toelaat om HTML in te voeren in je applicatie, dan is het streng aanbevolen om een HTML "opkuis-tool" te gebruiken zoals [HTML Purifier](http://htmlpurifier.org/) of [HTML Tidy](http://php.net/tidy).
 
-The second is to always escape data when inserting into HTML. The [HTML] class provides generators for many common tags, including script and stylesheet links, anchors, images, and email (mailto) links. Any untrusted content should be escaped using [HTML::chars].
+De tweede stap is om altijd de ingevoerde HTML te escapen. De [HTML] class voorziet generatoren voor veelvoorkomende tags, zo ook script en stylesheet links, ankers, afbeeldingen en e-mail (mailto) links. Elke niet-vertrouwde inhoud moet worden ge-escaped met [HTML::chars].
 
-## References
+## Referenties
 
 * [OWASP XSS Cheat Sheet](http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet)

@@ -1,0 +1,3 @@
+# Sécurité des Cookies
+
+[!!] stub

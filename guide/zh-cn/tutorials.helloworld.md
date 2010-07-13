@@ -26,7 +26,7 @@
 :	首先你应该知道代码开头是 PHP 的开始标签（如果你不知道请先好好[学习 PHP](http://php.net)）。紧跟着它后面的是一段检测代码，以它来确保此文件是由 Kohana 来加载的。它会阻止访问者由 URL 上面直接访问本文件。
 
 `Class Controller_Hello extends Controller`
-:	这行代码是声明我们的控制器，每个控制器类都必须使用 `Controller_` 作为前缀，下划线的作用是划定文件夹路径下的控制器（详情请参见 [公约和样式](start.conventions)）。每个控制器都必须继承基控制器 `Controller` 类，它提供了一个控制器的标准结构。
+:	这行代码是声明我们的控制器，每个控制器类都必须使用 `Controller_` 作为前缀，下划线的作用是划定文件夹路径下的控制器（详情请参见 [约定和样式](start.conventions)）。每个控制器都必须继承基控制器 `Controller` 类，它提供了一个控制器的标准结构。
 
 
 `function action_index()`
@@ -35,7 +35,7 @@
 `echo 'hello, world!';`
 :	这行就是输出 Hello world 的语句！
 
-现在，打开浏览器敲入 http://your/kohana/website/index.php/hello 你将会看到：
+现在，打开浏览器敲入 http://localhost/index.php/hello 你将会看到:
 
 ![Hello, World!](img/hello_world_1.png "Hello, World!")
 
@@ -78,7 +78,7 @@
 
 如果我们仔细查看错误信息，我们可以发现 View 库无法找到我们设定的模板文件，这可能是我们还没有创建它 – *doh*！（译注：doh 表达当发现事情朝坏的、不随人意的方向发展或某人说了傻话、做了蠢事时的情绪低落）
 
-马上开始创建视图文件 `application/views/site.php`：
+马上开始创建视图文件 `application/views/site.php`:
 
 	<html>
 		<head>
@@ -95,7 +95,7 @@
 		</body>
 	</html>
 
-再次刷新刚才的错误页面，怎么样看到正确的结果了吧：
+再次刷新刚才的错误页面，怎么样看到正确的结果了吧:
 
 ![hello, world! We just wanted to say it!](img/hello_world_2.png "hello, world! We just wanted to say it!")
 

@@ -280,5 +280,7 @@ hr.space {background:#fff;color:#fff;}
 .error a {color:#8a1f11; background:none; padding:0; margin:0; }
 .notice a {color:#514721; background:none; padding:0; margin:0; }
 .success a {color:#264409; background:none; padding:0; margin:0; }
+.left { text-align: left;}
+.right {text-align: right;}
 .center {text-align: center;}
 
