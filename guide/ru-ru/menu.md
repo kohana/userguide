@@ -1,26 +1,31 @@
 1. **Первые шаги**
    - [Что такое Kohana?](about.kohana)
    - [Соглашения и стили](about.conventions)
-   - [Установка](about.install)
-   - [Обновление](about.upgrading)
-   - [Настройка](about.configuration)
    - [Модель-Представление-Контроллер](about.mvc)
    - [Файловая система](about.filesystem)
-   - [Автозагрузка](about.autoloading)
    - [Порядок выполнения](about.flow)
+   - [Установка](about.install)
+   - [Обновление](about.upgrading)
    - [Обзор API](api)
-2. **Обучение**
-   - [Hello, World](tutorials.helloworld)
-   - [Маршруты, URL и ссылки](tutorials.urls)
-   - [Базы данных](tutorials.databases)
-   - [ORM](tutorials.orm)
-   - [Работа с Git](tutorials.git)
-3. **Безопасность**
+2. **Основные операции**
+   - [Настройка](using.configuration)
+   - [Автозагрузка](using.autoloading)
+   - [Представление и HTML](using.views)
+   - [Сессии и Cookies](using.sessions)
+   - [Сообщения (Messages)](using.messages)
+3. **Отладка**
+   - [Отладка кода](debugging.code)
+   - [Обработка ошибок](debugging.errors)
+   - [Профилирование](debugging.profiling)
+4. **Безопасность**
    - [XSS](security.xss)
    - [Валидация](security.validation)
    - [Cookies](security.cookies)
    - [База данных](security.database)
-4. **Отладка**
-   - [Отладка кода](debugging.code)
-   - [Обработка ошибок](debugging.errors)
-   - [Профилирование](debugging.profiling)
+5. **Обучение**
+   - [Hello, World](tutorials.helloworld)
+   - [Маршруты, URL и ссылки](tutorials.urls)
+   - [Clean URLs](tutorials.removeindex)
+   - [Базы данных](tutorials.databases)
+   - [ORM](tutorials.orm)
+   - [Работа с Git](tutorials.git)
