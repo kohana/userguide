@@ -1,11 +1,11 @@
-1. **Ga van slag**
+1. **Ga aan de slag**
    - [Wat is Kohana?](about.kohana)
    - [Conventies and Codeerstijl](about.conventions)
    - [Model View Controller](about.mvc)
    - [Cascading Filesystem](about.filesystem)
    - [Request Flow](about.flow)
    - [Installatie](about.install)
-   - [Upgrading](about.upgrading)
+   - [Upgraden](about.upgrading)
    - [API Browser](api)
 3. **Basis gebruik**
    - [Configuratie](using.configuration)
@@ -13,19 +13,19 @@
    - [Views en HTML](using.views)
    - [Sessies en Cookies](using.sessions)
    - [Berichten (Messages)](using.messages)
-4. **Debugging**
+4. **Debuggen**
    - [Code](debugging.code)
    - [Error Handling](debugging.errors)
    - [Profiling](debugging.profiling)
-5. **Security**
+5. **Beveiliging**
    - [XSS](security.xss)
    - [Validatie](security.validation)
    - [Cookies](security.cookies)
    - [Database](security.database)
 6. **Tutorials**
    - [Hello, World](tutorials.helloworld)
-   - [Routes, URLs, en Links](tutorials.urls)
-   - [Clean URLs](tutorials.removeindex)
+   - [Routes, URLs en Links](tutorials.urls)
+   - [URLs opschonen](tutorials.removeindex)
    - [Databases](tutorials.databases)
    - [ORM](tutorials.orm)
    - [Werken met Git](tutorials.git)

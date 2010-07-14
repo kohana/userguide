@@ -1,8 +1,8 @@
 # Databases {#top}
 
-Kohana 3.0 comes with a robust module to working with databases. By default the database module supports drivers for [MySQL](http://php.net/mysql) and [PDO](http://php.net/pdo).
+Kohana 3.0 heeft een goede module ingebouwd om te kunnen werken met databases. Standaard ondersteund de database module drivers voor [MySQL](http://php.net/mysql) en [PDO](http://php.net/pdo).
 
-The database module is included with the Kohana 3.0 install but needs to be enabled before you can use it. In your `application/bootstrap.php` file modify the call to [Kohana::modules] and include the database module:
+De database module zit bij de Kohana 3.0 installatie maar het moet nog worden ingesteld vooraleer je het kan gebruiken. In je `application/bootstrap.php` bestand moet je de aanroep naar [Kohana::modules] aanpassen en de database module eraan toevoegen:
 
     Kohana::modules(array(
         ...
@@ -10,11 +10,11 @@ The database module is included with the Kohana 3.0 install but needs to be enab
         ...
     ));
 
-## Configuration {#configuration}
+## Configuratie {#configuration}
 
-After the module has been enabled you will need to provide a configuration file so that the module knows how to connect to your database. An example config file can be found at `modules/database/config/database.php`.
+Nadat de module is ingesteld moet je een configuratie bestand aanmaken zodat de module weet hoe het moet connecteren met je database. Een voorbeeld configuratie bestand kan je vinden in `modules/database/config/database.php`.
 
-The structure of a database configuration group, called an "instance", looks like this:
+De structuur van een database configuratie groep, genoemd "instantie", ziet er als volgt uit:
 
     string INSTANCE_NAME => array(
         'type'         => string DATABASE_TYPE,
@@ -24,28 +24,28 @@ The structure of a database configuration group, called an "instance", looks lik
         'profiling'    => boolean QUERY_PROFILING,
     ),
 
-[!!] Multiple instances of these settings can be defined within the configuration file.
+[!!] Meerdere instanties van deze instellingen kunnen worden gedefinieerd binnen het configuratie bestand.
 
-Understanding each of these settings is important.
+Het verstaan van elk van deze instellingen is belangrijk.
 
 INSTANCE_NAME
-:  Connections can be named anything you want, but you should always have at least one connection called "default".
+:  Connecties kunnen elke naam hebben, maar je moet minstens één connectie hebben met de naam "default".
 
 DATABASE_TYPE
-:  One of the installed database drivers. Kohana comes with "mysql" and "pdo" drivers.
+:  Eén van de geïnstalleerde database drivers. Kohana heeft standaard de "mysql" en "pdo" drivers.
 
 CONNECTION_ARRAY
-:  Specific driver options for connecting to your database. (Driver options are explained [below](#connection_settings).)
+:  Specifieke driver opties om te connecteren naar je database. (Driver opties worden uitgelegd [beneden](#connection_settings).)
 
 TABLE_PREFIX
-:  Prefix that will be added to all table names by the [query builder](#query_building).
+:  Voorvoegsel dat wordt toegevoegd aan al je tabelnamen door de [query builder](#query_building).
 
 QUERY_PROFILING
-:  Enables [profiling](debugging.profiling) of database queries.
+:  Zet [profiling](debugging.profiling) aan van database queries.
 
-### Example
+### Voorbeeld
 
-The example file below shows 2 MySQL connections, one local and one remote.
+Het voorbeeld bestand hieronder toont 2 MySQL connecties, een lokale en één op afstand (=remote).
 
     return array
     (
@@ -55,9 +55,9 @@ The example file below shows 2 MySQL connections, one local and one remote.
             'connection' => array(
                 'hostname'   => 'localhost',
                 'username'   => 'dbuser',
-                'password'   => 'mypassword',
+                'password'   => 'mijnwachtwoord',
                 'persistent' => FALSE,
-                'database'   => 'my_db_name',
+                'database'   => 'mijn_db_naam',
             ),
             'table_prefix' => '',
             'charset'      => 'utf8',
@@ -68,9 +68,9 @@ The example file below shows 2 MySQL connections, one local and one remote.
             'connection' => array(
                 'hostname'   => '55.55.55.55',
                 'username'   => 'remote_user',
-                'password'   => 'mypassword',
+                'password'   => 'mijnwachtwoord',
                 'persistent' => FALSE,
-                'database'   => 'my_remote_db_name',
+                'database'   => 'mijn_remote_db_naam',
             ),
             'table_prefix' => '',
             'charset'      => 'utf8',
@@ -78,87 +78,87 @@ The example file below shows 2 MySQL connections, one local and one remote.
         ),
     );
 
-### Connection Settings {#connection_settings}
+### Connectie instellingen {#connection_settings}
 
-Every database driver has different connection settings.
+Iedere database driver heeft verschillende connectie instellingen.
 
 #### MySQL
 
-A MySQL database can accept the following options in the `connection` array:
+Een MySQL database accepteert de volgende opties in de `connection` array:
 
-Type      | Option     |  Description               | Default value
+Type      | Optie      |  Omschrijving              | Standaard Waarde
 ----------|------------|----------------------------| -------------------------
-`string`  | hostname   | Hostname of the database   | `localhost`
-`integer` | port       | Port number                | `NULL`
+`string`  | hostname   | Hostname van de database   | `localhost`
+`integer` | port       | Poort nummer               | `NULL`
 `string`  | socket     | UNIX socket                | `NULL`
-`string`  | username   | Database username          | `NULL`
-`string`  | password   | Database password          | `NULL`
-`boolean` | persistent | Persistent connections     | `FALSE`
-`string`  | database   | Database name              | `kohana`
+`string`  | username   | Database gebruikersnaam    | `NULL`
+`string`  | password   | Database wachtwoord        | `NULL`
+`boolean` | persistent | Persistente connecties     | `FALSE`
+`string`  | database   | Database naam              | `kohana`
 
 #### PDO
 
-A PDO database can accept these options in the `connection` array:
+Een PDO database accepteert de volgende opties in de `connection` array:
 
-Type      | Option     |  Description               | Default value
+Type      | Optie      |  Omschrijving              | Standaard Waarde
 ----------|------------|----------------------------| -------------------------
 `string`  | dsn        | PDO data source identifier | `localhost`
-`string`  | username   | Database username          | `NULL`
-`string`  | password   | Database password          | `NULL`
-`boolean` | persistent | Persistent connections     | `FALSE`
+`string`  | username   | Database gebruikersnaam    | `NULL`
+`string`  | password   | Database wachtwoord        | `NULL`
+`boolean` | persistent | Persistente connecties     | `FALSE`
 
-[!!] If you are using PDO and are not sure what to use for the `dsn` option, review [PDO::__construct](http://php.net/pdo.construct).
+[!!] Als je PDO gebruikt en je bent niet zeker wat je moet gebruiken voor de `dsn` optie, bekijk dan [PDO::__construct](http://php.net/pdo.construct).
 
-## Connections and Instances {#connections}
+## Connecties en Instanties {#connections}
 
-Each configuration group is referred to as a database instance. Each instance can be accessed by calling [Database::instance]:
+Iedere configuratie groep verwijst naar een database instantie. Iedere instantie kan worden aangesproken via [Database::instance]:
 
     $default = Database::instance();
     $remote  = Database::instance('remote');
 
-To disconnect the database, simply destroy the object:
+Om de database los te koppelen, moet je gewoonweg het object vernietigen:
 
     unset($default, Database::$instances['default']);
 
-If you want to disconnect all of the database instances at once:
+Om all database instanties in één keer los te koppelen, gebruik je:
 
     Database::$instances = array();
 
-## Making Queries {#making_queries}
+## Het maken van Queries {#making_queries}
 
-There are two different ways to make queries. The simplest way to make a query is to use the [Database_Query], via [DB::query], to create queries. These queries are called "prepared statements" and allow you to set query parameters which are automatically escaped. The second way to make a query is by building the query using method calls. This is done using the [query builder](#query_building).
+Er zijn twee verschillende manieren om queries te maken. De eenvoudigste manier om een query te maken is het gebruik van [Database_Query], via [DB::query]. Deze queries worden "prepared statements" genoemd en laat je toe om query parameters instellen die automatisch worden "geescaped". De tweede manier om een query te maken is door deze op te bouwen met behulp van methode-aanroepen. Dit wordt gedaan met behulp van de [query builder](#query_building).
 
-[!!] All queries are run using the `execute` method, which accepts a [Database] object or instance name. See [Database_Query::execute] for more information.
+[!!] Alle queries worden uitgevoerd via de `execute` methode, deze verwacht een [Database] object of een instantienaam. Zie [Database_Query::execute] voor meer informatie.
 
 ### Prepared Statements
 
-Using prepared statements allows you to write SQL queries manually while still escaping the query values automatically to prevent [SQL injection](http://wikipedia.org/wiki/SQL_Injection). Creating a query is simple:
+Het gebruik van prepared statements laat je toe om SQL queries manueel te schrijven terwijl de query waarden nog steeds automatisch worden "geescaped" om [SQL injectie](http://wikipedia.org/wiki/SQL_Injection) te voorkomen. Een query aanmaken is relatief gemakkelijk:
 
     $query = DB::query(Database::SELECT, 'SELECT * FROM users WHERE username = :user');
 
-The [DB::query] factory method creates a new [Database_Query] class for us, to allow method chaining. The query contains a `:user` parameter, which we can assign to a value:
+De [DB::query] factory methode creëert een nieuwe [Database_Query] class voor ons, zodat "methode-chaining" mogelijk is. De query bevat een `:user` parameter, die we kunnen toewijzen aan een waarde:
 
     $query->param(':user', 'john');
 
-[!!] Parameter names can be any string, as they are replaced using [strtr](http://php.net/strtr). It is highly recommended to **not** use dollars signs as parameter names to prevent confusion.
+[!!] Parameter namen kunnen elke string zijn aangezien worden vervangen via het gebruik van [strtr](http://php.net/strtr). Het wordt ten zeerste aanbevolen om **geen** dollar tekens te gebruiken als parameter namen om verwarring te voorkomen.
 
-If you want to display the SQL that will be executed, simply cast the object to a string:
+Als je de SQL wilt tonen dat zal worden uitgevoerd, moet je het object gewoonweg casten naar een string:
 
     echo Kohana::debug((string) $query);
-    // Should display:
+    // Zou moeten tonen:
     // SELECT * FROM users WHERE username = 'john'
 
-You can also update the `:user` parameter by calling [Database_Query::param] again:
+Je kan ook altijd de `:user` parameter aanpassen door de [Database_Query::param] opnieuw aan te roepen:
 
     $query->param(':user', $_GET['search']);
 
-[!!] If you want to set multiple parameters at once, you can use [Database_Query::parameters].
+[!!] Indien je meerdere paramters in één keer wilt instellen kan je dat doen met [Database_Query::parameters].
 
-Once you have assigned something to each of the parameters, you can execute the query:
+Eénmaal je iets hebt toegewezen aan elke parameter, kan je de query uitvoeren:
 
     $query->execute();
 
-It is also possible to bind a parameter to a variable, using a [variable reference]((http://php.net/language.references.whatdo)). This can be extremely useful when running the same query many times:
+Het is ook mogelijk om een parameter te "verbinden" met een variabele, door het gebruik van een [variabele referentie]((http://php.net/language.references.whatdo)). Dit kan extreem gebruikvol zijn wanneer je dezelfde query meerdere keren moet uitvoeren:
 
     $query = DB::query(Database::INSERT, 'INSERT INTO users (username, password) VALUES (:user, :pass)')
         ->bind(':user', $username)
@@ -169,80 +169,80 @@ It is also possible to bind a parameter to a variable, using a [variable referen
         $query->execute();
     }
 
-In the above example, the variables `$username` and `$password` are changed for every loop of the `foreach` statement. When the parameter changes, it effectively changes the `:user` and `:pass` query parameters. Careful parameter binding can save a lot of code when it is used properly.
+In het bovenstaand voorbeeld worden de variabelen `$username` en `$password` gewijzigd in iedere loop van het `foreach` statement. Wanneer de parameter verandert, veranderen infeite de `:user` en `:pass` query parameters. Het zorgvuldig gebruik van parameter binding kan een pak code besparen.
 
 ### Query Building {#query_building}
 
-Creating queries dynamically using objects and methods allows queries to be written very quickly in an agnostic way. Query building also adds identifier (table and column name) quoting, as well as value quoting.
+Het maken van dynamische queries via objecten en methodes zorgt ervoor dat queries zeer snel kunnen worden geschreven op een agnostische manier. Query building voegt ook identifier (tabel en kolom naam) en value quoting toe.
 
-[!!] At this time, it is not possible to combine query building with prepared statements.
+[!!] Op dit moment, is het niet mogelijk om query building te combineren met prepared statements.
 
 #### SELECT
 
-Each type of database query is represented by a different class, each with their own methods. For instance, to create a SELECT query, we use [DB::select]:
+Elk type database query wordt vertegenwoordigd door een andere class, elk met hun eigen methoden. Bijvoorbeeld, om een SELECT-query te maken, gebruiken we [DB::select]:
 
     $query = DB::select()->from('users')->where('username', '=', 'john');
 
-By default, [DB::select] will select all columns (`SELECT * ...`), but you can also specify which columns you want returned:
+Standaard zal [DB::select] alle kolommen selecteren (`SELECT * ...`), maar je kan ook specificeren welke kolommen je wilt teruggeven:
 
     $query = DB::select('username', 'password')->from('users')->where('username', '=', 'john');
 
-Now take a minute to look at what this method chain is doing. First, we create a new selection object using the [DB::select] method. Next, we set table(s) using the `from` method. Last, we search for a specific records using the `where` method. We can display the SQL that will be executed by casting the query to a string:
+Neem nu een minuut de tijd om te kijken wat deze methode-keten doet. Eerst maken we een selectie object met behulp van [DB::select]. Vervolgens stellen we tabel(len) in door de `from` methode te gebruiken. Als laatste stap zoeken we voor specifieke records door gebruik te maken van de `where` methode. We kunnen de SQL tonen dat zal worden uitgevoerd door deze te casten naar een string:
 
     echo Kohana::debug((string) $query);
-    // Should display:
+    // Zou moeten tonen:
     // SELECT `username`, `password` FROM `users` WHERE `username` = 'john'
 
-Notice how the column and table names are automatically escaped, as well as the values? This is one of the key benefits of using the query builder.
+Merk op hoe de kolom en tabel namen automatisch worden "geescaped", eveneens de waarden? Dit is een van de belangrijkste voordelen van het gebruik van de query builder.
 
-It is also possible to create `AS` aliases when selecting:
+Het is mogelijk om `AS` aliassen te maken wanneer je iets selecteert:
 
     $query = DB::select(array('username', 'u'), array('password', 'p'))->from('users');
 
-This query would generate the following SQL:
+Deze query zal de volgende SQL genereren:
 
     SELECT `username` AS `u`, `password` AS `p` FROM `users`
 
 #### INSERT
 
-To create records into the database, use [DB::insert] to create an INSERT query:
+Om records aan te maken in de database gebruik je [DB::insert] om een INSERT query aan te maken:
 
     $query = DB::insert('users', array('username', 'password'))->values(array('fred', 'p@5sW0Rd'));
 
-This query would generate the following SQL:
+Deze query zal de volgende SQL genereren:
 
     INSERT INTO `users` (`username`, `password`) VALUES ('fred', 'p@5sW0Rd')
 
 #### UPDATE
 
-To modify an existing record, use [DB::update] to create an UPDATE query:
+Om een bestaande record aan te passen gebruik je [DB::update] om een UPDATE query aan te maken:
 
     $query = DB::update('users')->set(array('username' => 'jane'))->where('username', '=', 'john');
 
-This query would generate the following SQL:
+Deze query zal de volgende SQL genereren:
 
     UPDATE `users` SET `username` = 'jane' WHERE `username` = 'john'
 
 #### DELETE
 
-To remove an existing record, use [DB::delete] to create a DELETE query:
+Om een bestaande record te verwijderen gebruik je [DB::delete] om een DELETE query aan te maken:
 
     $query = DB::delete('users')->where('username', 'IN', array('john', 'jane'));
 
-This query would generate the following SQL:
+Deze query zal de volgende SQL genereren:
 
     DELETE FROM `users` WHERE `username` IN ('john', 'jane')
 
-#### Database Functions {#database_functions}
+#### Database Functies {#database_functions}
 
-Eventually you will probably run into a situation where you need to call `COUNT` or some other database function within your query. The query builder supports these functions in two ways. The first is using by using quotes within aliases:
+Uiteindelijk zal je waarschijnlijk uitdraaien in een situatie waar je beroep moet doen op `COUNT` of een andere database functie binnenin je query. De query builder ondersteunt deze functies op twee manieren. De eerste mogelijkheid is met behulp van aanhalingstekens binnenin de aliassen:
 
     $query = DB::select(array('COUNT("username")', 'total_users'))->from('users');
 
-This looks almost exactly the same as a standard `AS` alias, but note how the column name is wrapped in double quotes. Any time a double-quoted value appears inside of a column name, **only** the part inside the double quotes will be escaped. This query would generate the following SQL:
+Dit ziet er bijna precies hetzelfde uit als een standaard "AS" alias, maar let op hoe de kolom naam is verpakt in dubbele aanhalingstekens. Iedere keer als er een waarde met dubbele aanhalingstekens verschijnt binnenin een kolom naam, wordt **alleen** het gedeelte binnen de dubbele aanhalingstekens "geescaped". Deze query zal de volgende SQL genereren:
 
     SELECT COUNT(`username`) AS `total_users` FROM `users`
 
-#### Complex Expressions
+#### Complexe Expressies
 
-Quoted aliases will solve most problems, but from time to time you may run into a situation where you need a complex expression. In these cases, you will need to use a database expression created with [DB::expr].  A database expression is taken as direct input and no escaping is performed.
+Aliassen met aanhalingstekens zullen de meeste problemen oplossen, maar van tijd tot tijd kan je in een situatie komen waar je een complexe expressie kunt gebruiken. In deze gevallen moet je een database expressie gebruiken die je kan creëren met [DB::expr]. Een database expressie wordt als directe input genomen en er wordt geen "escaping" uitgevoerd.

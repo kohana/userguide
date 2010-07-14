@@ -1,12 +1,12 @@
-# Routes, URLs, and Links
+# Routes, URLs en Links
 
-This section will provide you with the basic idea behind Kohana's request routing, url generation and links.
+Dit onderdeel zal je een basis idee geven achter Kohana's request routing, de generatie van url's en links.
 
 ## Routing
 
-As mentioned in the [Request Flow](about.flow) section, a request is handled by the [Request] class which finds a matching [Route] and loads the appropriate controller to handle the request. This system provides much flexibility as well as a common sense default behavior.
+Zoals gezegd in de [Request Flow](about.flow) sectie, wordt een request afgehandeld door de [Request] class die een juiste [Route] vindt en de juiste controller inlaadt om het request af te handelen. Dit systeem biedt veel flexibiliteit en een logische manier van werken.
 
-If you look in `APPPATH/bootstrap.php` you will see the following code which is run immediately before the request is handed off to [Request::instance]:
+Als je kijkt in `APPPATH/bootstrap.php` zal je zien dat de volgende code onmiddelijk wordt aangeroepen vooraleer de request wordt toegewezen aan [Request::instance]:
 
     Route::set('default', '(<controller>(/<action>(/<id>)))')
       ->defaults(array(
@@ -14,13 +14,13 @@ If you look in `APPPATH/bootstrap.php` you will see the following code which is 
         'action'     => 'index',
       ));
 
-This sets the `default` route with a uri in the format of `(<controller>(/<action>(/<id>)))`. The tokens surrounded with `<>` are *keys* and the tokens surrounded with `()` are *optional* parts of the uri. In this case, the entire uri is optional, so a blank uri would match and the default controller and action would be assumed resulting in the `Controller_Welcome` class being loaded and eventually the `action_index` method being called to handle the request.
+Dit stelt de `default` route in voor een uri met het formaat `(<controller>(/<action>(/<id>)))`. De karakters omringd met `<>` zijn *keys* en de karakters omringd met `()` zijn optionele onderdelen van de uri. In dit geval is de gehele uri optioneel, zodat bij een lege uri de standaard controller en actie worden uitgevoerd wat ervoor zou zorgen dat de `Controller_Welcome` class wordt ingeladen en eventueel wordt de methode `action_index` aangeroepen om de request af te handelen.
 
-Notice that in Kohana routes, any characters are allowed aside from `()<>` and the `/` has no special meaning. In the default route the `/` is used as a static separator but as long as the regex makes sense there is no restriction to how you can format your routes.
+Merk op dat in Kohana routes, alle karakters zijn toegestaan behalve `()<>` en de `/`, die hebben namelijk een speciale betekenis. In de standaard route wordt de "/" gebruikt als scheidingsteken, maar zolang de reguliere expressie logisch en doordacht is, kan je kiezen hoe je routes er laat uitzien.
 
-### Directories
+### Folders
 
-For organizational purposes you may wish to place some of your controllers in subdirectories. A common case is for an admin backend to your site:
+Om je controllers wat meer te gaan organiseren kan je ervoor kiezen om ze te plaatsen in subfolders. Een veel voorkomend geval is voor een backend van je website:
 
     Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
       ->defaults(array(
@@ -29,11 +29,11 @@ For organizational purposes you may wish to place some of your controllers in su
         'action'     => 'index',
       ));
 
-This route specifies that the uri must begin with `admin` to match and the directory is statically assigned to `admin` in the defaults. Now a request to `admin/users/create` would load the `Controller_Admin_Users` class and call the `action_create` method.
+Deze route vereist dat de uri moet beginnen met `admin` en dat de folder statisch wordt toegewezen aan `admin` in de standaard instellingen van de route. Een request naar `admin/users/create` zal nu de `Controller_Admin_Users` class laden en de methode `action_create` aanroepen.
 
-### Patterns
+### Patronen
 
-The Kohana route system uses perl compatible regular expressions in its matching process. By default the keys (surrounded by `<>`) are matched by `[a-zA-Z0-9_]++` but you can define your own patterns for each key by passing an associative array of keys and patterns as an additional argument to [Route::set]. To extend our previous example let's say you have an admin section and an affiliates section. You could specify those in separate routes or you could do something like this:
+Het Kohana route systeem gebruikt perl compatibele reguliere expressies in zijn vergelijkings proces. Standaar worden de *keys* (omringd door `<>`) vergeleken met `[a-zA-Z0-9_]++` maar je kan je eigen patronen definiëren voor elke key door een associatieve array mee te geven als extra argument aan [Route::set] met daarin de keys and patronen. We kunnen het vorige voorbeeld uitbreiden met een admin sectie en een filialen (affliates) sectie. Je kan deze in verschillende routes specificeren of je kan iets doen zoals dit:
 
     Route::set('sections', '<directory>(/<controller>(/<action>(/<id>)))',
       array(
@@ -44,14 +44,14 @@ The Kohana route system uses perl compatible regular expressions in its matching
         'action'     => 'index',
       ));
       
-This would provide you with two sections of your site, 'admin' and 'affiliate' which would let you organize the controllers for each into subdirectories but otherwise work like the default route.
+Dit zorgt voor twee secties van uw site, 'admin' en 'affiliate', deze laten je toe om de controllers te organiseren in subfolders voor elk maar dat ze nog steeds blijven werken als de standaard route.
 
-### More Route Examples
+### Meer Route voorbeelden
 
-There are countless other possibilities for routes. Here are some more examples:
+Er zijn oneindig veel andere mogelijkheden voor routes. Hier zijn er enkele:
 
     /*
-     * Authentication shortcuts
+     * Authenticatie
      */
     Route::set('auth', '<action>',
       array(
@@ -62,7 +62,7 @@ There are countless other possibilities for routes. Here are some more examples:
       ));
       
     /*
-     * Multi-format feeds
+     * Multi-formaat feeds
      *   452346/comments.rss
      *   5373.json
      */
@@ -77,7 +77,7 @@ There are countless other possibilities for routes. Here are some more examples:
       ));
     
     /*
-     * Static pages
+     * Statische pagina's
      */
     Route::set('static', '<path>.html',
       array(
@@ -89,7 +89,7 @@ There are countless other possibilities for routes. Here are some more examples:
       ));
       
     /*
-     * You don't like slashes?
+     * Je houdt niet van slashes?
      *   EditGallery:bahamas
      *   Watch:wakeboarding
      */
@@ -103,7 +103,7 @@ There are countless other possibilities for routes. Here are some more examples:
       ));
       
     /*
-     * Quick search
+     * Vlug zoeken
      */
     Route::set('search', ':<query>', array('query' => '.*'))
       ->defaults(array(
@@ -111,32 +111,32 @@ There are countless other possibilities for routes. Here are some more examples:
         'action' => 'index',
       ));
 
-Routes are matched in the order specified so be aware that if you set routes after the modules have been loaded a module could specify a route that conflicts with your own. This is also the reason that the default route is set last, so that custom routes will be tested first.
-      
+Routes worden vergeleken in de gespecifieerde volgorde dus wees er van bewust dat als je routes insteld nadat de modules zijn ingeladen, een module een route kan specifiëren dat voor een conflict zorgt met een route van jezelf. Dit is ook de reden waarom de standaard route als laatste wordt ingesteld, zodat zelfgeschreven routes eerst worden getest.
+
 ### Request Parameters
 
-The directory, controller and action can be accessed from the [Request] instance in either of these two ways:
+De directory, controller en action kunnen worden benaderd via de [Request] instantie op de volgende manieren:
 
     $this->request->action;
     Request::instance()->action;
-    
-All other keys specified in a route can be accessed from within the controller via:
+
+Alle andere gespecifieerde keys in een route kunnen worden benaderd van binnenin de controller via:
 
     $this->request->param('key_name');
     
-The [Request::param] method takes an optional second argument to specify a default return value in case the key is not set by the route. If no arguments are given, all keys are returned as an associative array.
+De [Request::param] methode heeft een optioneel tweede argument om een standaard waarde terug te geven indien de key niet is ingesteld door de route. Indien er geen argumenten worden gegeven, worden alle keys als teruggegeven als een associatieve array.
 
-### Convention
+### Conventie
 
-The established convention is to either place your custom routes in the `MODPATH/<module>/init.php` file of your module if the routes belong to a module, or simply insert them into the `APPPATH/bootstrap.php` file above the default route if they are specific to the application. Of course, they could also be included from an external file or even generated dynamically.
-    
+De gebruikelijke conventie is je eigen routes te plaatsen in het `MODPATH/<module>/init.php` bestand van je module als de routes bij een module horen, of gewoonweg te plaatsen in het `APPPATH/bootstrap.php` bestand boven de standaard route als de routes specifiek voor de applicatie zijn. Natuurlijk kunnen ze ook worden geimporteerd vanuit een extern bestand of zelfs dynamisch gegenereerd worden.
+
 ## URLs
 
-Along with Kohana's powerful routing capabilities are included some methods for generating URLs for your routes' uris. You can always specify your uris as a string using [URL::site] to create a full URL like so:
+Naast Kohana's sterke routing mogelijkheden zitten er ook enkele methodes in om URLs te genereren voor je routes' uris. Je kan je uris altijd specificeren als een string door gebruik te maken van [URL::site] om een volledige URL te maken:
 
     URL::site('admin/edit/user/'.$user_id);
 
-However, Kohana also provides a method to generate the uri from the route's definition. This is extremely useful if your routing could ever change since it would relieve you from having to go back through your code and change everywhere that you specified a uri as a string. Here is an example of dynamic generation that corresponds to the `feeds` route example from above:
+Kohana biedt echter ook een methode om de URI genereren op basis van de route's definitie. Dit is zeer handig als je routing ooit zou veranderen omdat het je zou verlossen van om overal uw code te veranderen waar je de URI als string hebt gespecificeerd. Hier is een voorbeeld van dynamische generatie die overeenkomt met het `feeds`-route voorbeeld van hierboven:
 
     Route::get('feeds')->uri(array(
       'user_id' => $user_id,
@@ -144,16 +144,16 @@ However, Kohana also provides a method to generate the uri from the route's defi
       'format' => 'rss'
     ));
 
-Let's say you decided later to make that route definition more verbose by changing it to `feeds/<user_id>(/<action>).<format>`. If you wrote your code with the above uri generation method you wouldn't have to change a single line! When a part of the uri is enclosed in parentheses and specifies a key for which there in no value provided for uri generation and no default value specified in the route, then that part will be removed from the uri. An example of this is the `(/<id>)` part of the default route; this will not be included in the generated uri if an id is not provided.
+Laten we zeggen dat je later zou besluiten om die route definitie meer verstaanbaar te maken door ze te veranderen in `feeds/<user_id>(/<action>).<format>`. Wanneer je je code hebt geschreven met de uri generatie methode van hierboven dan zal je niets moeten veranderen aan je code! Wanneer een deel van de URI tussen haakjes staat en waarvoor er geen waarde is meegegeven voor uri generatie en er geen standaard waarde is meegegeven in de route, dan zal dat stuk verwijderd worden van de uri. Een voorbeeld hiervan is het `(/<id>)` deel van de standaard route, dit zal niet worden opgenomen in de gegenereerde uri als er geen id is voorzien.
 
-One method you might use frequently is the shortcut [Request::uri] which is the same as the above except it assumes the current route, directory, controller and action. If our current route is the default and the uri was `users/list`, we can do the following to generate uris in the format `users/view/$id`:
+De methode [Request::uri] zal er één zijn dat je regelmatig zult gebruiken, het heeft dezelfde functionaliteit als hierboven maar het gaat gebruikt de huidige route, directory, controller en action. Als onze huidige route de standaard route is en de uri `users/list` is, dan kunnen we het volgende doen om uris te genereren in het formaat `users/view/$id`:
 
     $this->request->uri(array('action' => 'view', 'id' => $user_id));
-    
-Or if within a view, the preferable method is:
+
+Of een meer aangeraden methode voor in een view:
 
     Request::instance()->uri(array('action' => 'view', 'id' => $user_id));
 
 ## Links
 
-[!!] links stub
+[!!] Nog geen informatie beschikbaar.

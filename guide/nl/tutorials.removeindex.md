@@ -1,58 +1,58 @@
-# Removing `index.php` From the URL
+# `index.php` verwijderen uit de URL
 
-To keep your URLs clean, you will probably want to be able to access your app without having `/index.php/` in the URL. There are two steps to remove `index.php` from the URL.
+Om uw URLs proper te houden, wil je hoogtswaarschijnlijk je applicatie kunnen benaderen zonder /index.php/` in uw URL te gebruiken. Er zijn twee stappen om `index.php` te verwijderen uit de URL.
 
-1. Edit the bootstrap file
-2. Set up rewriting
+1. Het bootstrap bestand aanpassen
+2. Herschrijven van URL's instellen
 
-# Configure Bootstrap
+# Configuratie van de Bootstrap
 
-The first thing you will need to change is the `index_file` setting of [Kohana::init]:
+Het eerste dat je moet veranderen is de `index_file` instelling van [Kohana::init]:
 
     Kohana::init(array(
         'base_url'   => '/myapp/',
         'index_file' => FALSE,
     ));
 
-Now all of the links generated using [URL::site], [URL::base], and [HTML::anchor] will no longer include "index.php" in the URL. All generated links will start with `/myapp/` instead of `/myapp/index.php/`.
+Nu zullen alle links die gegeneerd worden met [URL::site], [URL::base] en [HTML::anchor] niet meer "index.php" gebruiken in de URL. Alle gegenereerde links zullen starten met `/myapp/` in plaats van `/myapp/index.php/`.
 
-# URL Rewriting
+# URL Herschrijven
 
-Enabling rewriting is done differently, depending on your web server.
+Het herschrijven van URL kan verschillen, naargelang je web server.
 
 ## Apache
 
-Rename `example.htaccess` to only `.htaccess` and alter the following line of code:
+Hernoem `example.htaccess` naar `.htaccess` en verander de volgende regel code:
 
     RewriteBase /kohana/
 
-This needs to match the `base_url` setting of [Kohana::init]:
+Dit moet gelijk zijn met de `base_url` instelling van [Kohana::init]:
 
     RewriteBase /myapp/
 
-In most cases, this is all you will need to change.
+In de meeste gevallen is dit het enige dat je moet veranderen.
 
-### Failed!
+### Er loopt iets fout!
 
-If you get a "Internal Server Error" or "No input file specified" error, try changing:
+Als je een "Internal Server Error" of "No input file specified" error krijgt, probeer dan hetvolgende te veranderen:
 
     RewriteRule ^(?:application|modules|system)\b - [F,L]
 
-Instead, we can try a slash:
+Door enkel een slash te gebruiken:
 
     RewriteRule ^(application|modules|system)/ - [F,L]
 
-If that doesn't work, try changing:
+Als het nog steeds niet werkt, probeer dan hetvolgende te veranderen:
 
     RewriteRule .* index.php/$0 [PT]
 
-To something more simple:
+Naar iets simpeler:
 
     RewriteRule .* index.php [PT]
 
-### Still Failed!
+### Nog steeds niet loopt het fout!
 
-If you are still getting errors, check to make sure that your host supports URL `mod_rewrite`. If you can change the Apache configuration, add these lines to the the configuration, usually `httpd.conf`:
+Als je nog steeds fouten krijgt, controleer dan zeker dat je host wel URL `mod_rewrite` ondersteund. Als je de Apache configuratie kunt aanpassen, voeg dan deze lijnen toe aan de configuratie, meestal in `httpd.conf`:
 
     <Directory "/var/www/html/myapp">
         Order allow,deny
@@ -62,7 +62,7 @@ If you are still getting errors, check to make sure that your host supports URL 
 
 ## NGINX
 
-It is hard to give examples of nginx configuration, but here is a sample for a server:
+Het is moeilijk om voorbeelden te geven van een nginx configuratie, maar hier is een voorbeeld voor een server:
 
     location / {
         index index.php index.html index.htm;
@@ -81,8 +81,8 @@ It is hard to give examples of nginx configuration, but here is a sample for a s
         fastcgi_index index.php;
     }
 
-The two things to note are the use of [try_files](http://wiki.nginx.org/NginxHttpCoreModule#try_files) and [fastcgi_split_path_info](http://wiki.nginx.org/NginxHttpFcgiModule#fastcgi_split_path_info).
+Er zijn twee dingen te melden: het gebruik van [try_files](http://wiki.nginx.org/NginxHttpCoreModule#try_files) en [fastcgi_split_path_info](http://wiki.nginx.org/NginxHttpFcgiModule#fastcgi_split_path_info).
 
-[!!] This assumes that you are running PHP as a FastCGI server on port 9000 and are using nginx v0.7.31 or later.
+[!!] Dit in de veronderstelling dat je PHP draait als een FastCGI server op poort 9000 en dat je nginx v0.7.31 of later gebruikt.
 
-If you are having issues getting this working, enable debug level logging in nginx and check the access and error logs.
+Als je problemen hebt om dit te laten werken, zet dan het deub level logging aan in nginx en controleer de toegangs- en foutenlogs.
