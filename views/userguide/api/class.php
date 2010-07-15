@@ -61,25 +61,25 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 <?php if ($doc->constants): ?>
 <div class="constants">
 <h2 id="constants"><?php echo __('Constants'); ?></h2>
-<dt>
+<dl>
 <?php foreach ($doc->constants as $name => $value): ?>
 <dt id="constant:<?php echo $name ?>"><?php echo $name ?></dt>
 <dd><?php echo $value ?></dd>
 <?php endforeach; ?>
-</dt>
+</dl>
 </div>
 <?php endif ?>
 
 <?php if ($properties = $doc->properties()): ?>
 <h2 id="properties"><?php echo __('Properties'); ?></h2>
 <div class="properties">
-<dt>
+<dl>
 <?php foreach ($properties as $prop): ?>
 <dt id="property:<?php echo $prop->property->name ?>"><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> $<?php echo $prop->property->name ?></dt>
 <dd><?php echo $prop->description ?></dd>
 <dd><?php echo $prop->value ?></dd>
 <?php endforeach ?>
-</dt>
+</dl>
 </div>
 <?php endif ?>
 
