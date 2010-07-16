@@ -229,7 +229,7 @@
 .syntaxhighlighter.printing .line.alt2 .content,
 .syntaxhighlighter.printing .line.highlighted .number,
 .syntaxhighlighter.printing .line.highlighted.alt1 .content,
-.syntaxhighlighter.printing .line.highlighted.alt2 .content,
+.syntaxhighlighter.printing .line.highlighted.alt2 .content
 {
 	background: none !important;
 }

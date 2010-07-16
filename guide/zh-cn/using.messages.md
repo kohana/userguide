@@ -1,26 +1,26 @@
-# Message Basics
+# 消息的基本使用
 
-Kohana messages are human friendly strings represented by a shorter word or phrase, called a "key". Messages are accessed using the [Kohana::message] method, which an return either an entire group of messages, or a single message.
+Kohana 消息(messages) 是一种友好化短小的词或短语的字符串，通常被叫做 "key"。消息通过 [Kohana::message] 方法调用访问并返回整个消息组或者单个消息。
 
-As an example, when a user is not logged in and attempts to access a page that requires authentication, an error such as "You must be logged in to access this page" might be displayed. This message could be stored in the `auth` file with a `must_login` key:
+举个简单的例子，当用户没有登录并试图访问一个需要验证的页面，通常会一个类似"你必须登录后才能访问此页面"的提示，而此消息可以保存在 auth 文件的 'must_login' 的键值中:
 
     $message = Kohana::message('auth', 'must_login');
 
-Messages are not translated. To translate a message, use the [translation function](using.translation):
+消息并不能直接翻译，如果想翻译一个消息，你需要配合使用[翻译函数](using.translation):
 
     $translated = __(Kohana::message('auth', 'must_login'));
 
-[!!] In Kohana v2, the message system was used for translation. However, it is highly recommended to use the new translation system instead of messages, as it provides readable text even when a translation is not available.
+[!!] 在 Kohana v2 版本中，消息系统是可以翻译的，尽管如此，我们还是强烈推荐大家使用新的翻译系统代替消息，因为当翻译不存时它可以提供可读性文本。
 
-## Message Files
+## 消息文件
 
-All message files are plain PHP files, stored in the `messages/` directory, that return an associative array:
+所有的消息文件都是保存在 `messages/` 目录下的纯 PHP 文件的配对数组:
 
     <?php defined('SYSPATH') or die('No direct script access.');
 
     return array(
-        'must_login' => 'You must login to access this page',
-        'no_access'  => 'You do not have privileges to access this page',
+        'must_login' => '你必须登录后才能访问此页面',
+        'no_access'  => '你没有访问此页面的权限',
     );
 
-Message files are similar to [config files](using.configuration#config-files) in that they are merged together. This means that all of the messages stored in a file called `auth` will be combined into a single array, so it is not necessary to duplicate all of the messages when you create a new `auth` file.
+消息文件有些类似于[配置文件](using.configuration#config-files)，它们都可以合并在一起。这意味着所有的消息都可以设置为一个数组并保存在 'auth' 文件之中。因此当你需要一个新的 'auth' 文件而没有必要创建多个重复文件。

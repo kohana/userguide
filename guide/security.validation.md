@@ -127,8 +127,6 @@ All validation callbacks are defined as a field name and a method or function (u
 
     $object->callback($field, $callback);
 
-[!!] Unlike filters and rules, no parameters can be passed to a callback.
-
 The user password must be hashed if it validates, so we will hash it using a callback:
 
     $post->callback('password', array($model, 'hash_password'));
