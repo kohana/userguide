@@ -205,7 +205,7 @@ Ensuite nous avons besoin d'un controleur et d'une action pour traiter l'inscrip
                 $user->register($post);
 
                 // Toujours rediriger l'utilisateur après une validation de formulaire réussie afin de ne pas avoir les avertissement de rafraichissement
-                URL::redirect('user/profile');
+                $this->request->redirect('user/profile');
             }
 
             // La validation a échoué, récupérons les erreurs
