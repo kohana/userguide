@@ -54,7 +54,7 @@ Naam van de regel         | Functie
 [Validate::color]         | Waarde moet een geldige HEX kleurencode zijn
 [Validate::matches]       | Waarde moet gelijk zijn aan een ander veld
 
-[!!] Iedere methode dat bestaat binnenin de [Validate] class kan gebruikt worden als validatie-regel zonder een volledige callback te definiëren. Bijvoorbeeld, `'not_empty'` toevoegen is hetzelfde als `array('Validate', 'not_empty')`.
+[!!] Iedere methode dat bestaat binnenin de [Validate] class kan gebruikt worden als validatie-regel zonder een volledige callback te definiÃ«ren. Bijvoorbeeld, `'not_empty'` toevoegen is hetzelfde als `array('Validate', 'not_empty')`.
 
 ## Toevoegen van filters
 
@@ -206,7 +206,7 @@ Vervolgens hebben we een controller nodig en een actie om de registratie uit te 
                 $user->register($post);
 
                 // Altijd een redirect uitvoeren na een succesvolle POST om herladingsberichten te voorkomen.
-                URL::redirect('user/profile');
+                $this->request->redirect('user/profile');
             }
 
             // Validatie is fout gelopen, verzamel alle errors
