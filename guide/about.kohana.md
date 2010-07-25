@@ -10,6 +10,9 @@ Anything can be extended using the unique [filesystem](about.filesystem) design,
 
 To help secure your applications, tools for [XSS removal](security.xss), [input validation](security.validation), [signed cookies](security.cookies), [form](security.forms) and [HTML](security.html) generators are all included. The [database](security.database) layer provides protection against [SQL injection](http://wikipedia.org/wiki/SQL_Injection). Of course, all official code is carefully written and reviewed for security.
 
-## This Documentation Sucks!
+## Contribute to the Documentation
 
-We are working very hard to provide complete documentation. If you are having trouble finding an answer, check the [unofficial wiki](http://kerkness.ca/wiki/doku.php). If you would like to add or change something in the guide, please [fork the userguide](http://github.com/kohana/userguide), make your changes, and send a pull request. If you are not familar with git, you can also submit a [feature request](http://dev.kohanaframework.org/projects/kohana3/issues) (requires registration).
+We are working very hard to provide complete documentation. To help improve the guide, please [fork the userguide](http://github.com/kohana/userguide), make your changes, and send a pull request. If you are not familiar with git, you can also submit a [feature request](http://dev.kohanaframework.org/projects/kohana3/issues) (requires registration).
+
+## Help, I can't find the answer?
+If you are having trouble finding an answer here, have a look through the [unofficial wiki](http://kerkness.ca/wiki/doku.php). Your answer may also be found by searching the [forum](http://forum.kohanaphp.com/) or [stackoverflow](http://stackoverflow.com/questions/tagged/kohana) followed by asking your question on either.  Additionally, you can chat with the community of developers on the freenode [#kohana](irc://irc.freenode.net/kohana) IRC channel.  
