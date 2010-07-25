@@ -26,7 +26,7 @@
 5. **Обучение**
    - [Hello, World](tutorials.helloworld)
    - [Маршруты, URL и ссылки](tutorials.urls)
-   - [Clean URLs](tutorials.removeindex)
+   - [Очистка URL, ЧПУ](tutorials.removeindex)
    - [Базы данных](tutorials.databases)
    - [ORM](tutorials.orm)
    - [Работа с Git](tutorials.git)
