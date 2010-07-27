@@ -156,11 +156,11 @@ You can update multiple records by using the [ORM::save_all] method:
 
 The `_updated_column` and `_created_column` members are provided to automatically be updated when a model is updated and created.  These are not used by default.  To use them:
 
-	// date_created is the column used for storing the creation date.  Use TRUE to store a timestamp
-	protected $_created_column = array('date_created' => TRUE);
+	// date_created is the column used for storing the creation date.  Use format => TRUE to store a timestamp
+	protected $_created_column = array('date_created', 'format' => TRUE);
 
 	// date_modified is the column used for storing the modified date.  In this case, a string specifying a date() format is used
-	protected $_updated_column = array('date_modified' => 'm/d/Y');
+	protected $_updated_column = array('date_modified', 'format' => 'm/d/Y');
 
 ### Deleting Records
 
