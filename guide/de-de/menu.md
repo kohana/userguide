@@ -1,26 +1,31 @@
 1. **Erste Schritte**
    - [Was ist Kohana?](about.kohana)
    - [Regeln und Stil](about.conventions)
+   - [Model-View-Controller](about.mvc)
+   - [Kaskaden-Dateisystem](about.filesystem)
+   - [Anfrageablauf](about.flow)
    - [Installation](about.install)
    - [Upgrading](about.upgrading)
-   - [Einstellungen](about.configuration)
-   - [Model-View-Controller](about.mvc)
-   - [Dateisystem](about.filesystem)
-   - [autom. Laden](about.autoloading)
-   - [Anfrageablauf](about.flow)
-   - [Schnittstellen√ºbersicht](api)
-2. **Tutorials**
-   - [Hallo Welt](tutorials.helloworld)
-   - [Routen, URLs und Verweise](tutorials.urls)
-   - [Datenbanken](tutorials.databases)
-   - [ORM](tutorials.orm)
-   - [Arbeit mit Git](tutorials.git)
-3. **Sicherheit**
+   - [Schnittstellenübersicht](api)
+2. **Allgemeine Verwendung**
+   - [Einstellungen](using.configuration)
+   - [autom. Klassen-Aufruf](using.autoloading)
+   - [Views und HTML](using.views)
+   - [Sessions und Cookies](using.sessions)
+   - [Nachrichten](using.messages)
+3. **Fehlersuche**
+   - [Quelltext](debugging.code)
+   - [Fehlerbehandlung](debugging.errors)
+   - [Programmanalyse](debugging.profiling)
+4. **Sicherheit**
    - [XSS](security.xss)
    - [Validierung](security.validation)
    - [Cookies](security.cookies)
    - [Datenbank](security.database)
-4. **Fehlersuche**
-   - [Quelltext](debugging.code)
-   - [Fehlerbehandlung](debugging.errors)
-   - [Profiling](debugging.profiling)
+5. **Tutorials**
+   - [Hallo Welt](tutorials.helloworld)
+   - [Routen, URLs und Verweise](tutorials.urls)
+   - [Bereinigte URLs](tutorials.removeindex)
+   - [Datenbanken](tutorials.databases)
+   - [ORM](tutorials.orm)
+   - [Arbeit mit Git](tutorials.git)
