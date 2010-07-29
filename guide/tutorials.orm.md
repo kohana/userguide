@@ -12,7 +12,7 @@ The ORM module is included with the Kohana 3.0 install but needs to be enabled b
 
 ## Configuration {#configuration}
 
-ORM requires little configuration to get started.  Extend your model classes with ORM to begin using the module:
+ORM requires little configuration to get started. Extend your model classes with ORM to begin using the module:
 
 	class Model_User extends ORM
 	{
@@ -60,7 +60,7 @@ You can optionally pass an array of key => value pairs to load a data object mat
 
 ### Searching for a Record or Records
 
-ORM supports most of the [Database] methods for powerful searching of your model's data.  See the `_db_methods` property for a full list of supported method calls.  Records are retrieved using the [ORM::find] and [ORM::find_all] method calls.
+ORM supports most of the [Database] methods for powerful searching of your model's data. See the `_db_methods` property for a full list of supported method calls. Records are retrieved using the [ORM::find] and [ORM::find_all] method calls.
 
 	// This will grab the first active user with the name Bob
 	$user = ORM::factory('user')
@@ -70,7 +70,7 @@ ORM supports most of the [Database] methods for powerful searching of your model
 
 	// This will grab all users with the name Bob
 	$users = ORM::factory('user')
-		...
+		->where('name', '=', 'Bob')
 		->find_all();
 	
 When you are retrieving a list of models using [ORM::find_all], you can iterate through them as you do with database results:
@@ -80,10 +80,10 @@ When you are retrieving a list of models using [ORM::find_all], you can iterate 
 		...
 	}
 
-A powerful feature of ORM is the [ORM::as_array] method which will return the given record as an array.  If used with [ORM::find_all], an array of all records will be returned.  A good example of when this is useful is for a select list:
+A powerful feature of ORM is the [ORM::as_array] method which will return the given record as an array. If used with [ORM::find_all], an array of all records will be returned. A good example of when this is useful is for a select list:
 
 	// Display a select field of usernames (using the id as values)
-	form::select('user', ORM::factory('user')->find_all()->as_array('id', 'username') ...
+	echo Form::select('user', ORM::factory('user')->find_all()->as_array('id', 'username'));
 
 ### Counting Records
 
@@ -114,16 +114,16 @@ All model properties are accessible using the `__get` and `__set` magic methods.
 	// Change user name
 	$user->name = 'Bob';
 
-To store information/properties that don't exist in the model's table, you can use the `_ignored_columns` data member.  Data will be stored in the internal `_object` member, but ignored at the database level.
+To store information/properties that don't exist in the model's table, you can use the `_ignored_columns` data member. Data will be stored in the internal `_object` member, but ignored at the database level.
 
 	class Model_User extends ORM
 	{
 		...
-		protected $_ignored_columns = array('field1', 'field2', ...)
+		protected $_ignored_columns = array('field1', 'field2', ...);
 		...
 	}
 
-Multiple key => value pairs can be set by using the [ORM::values] method
+Multiple key => value pairs can be set by using the [ORM::values] method.
 
 	$user->values(array('username' => 'Joe', 'password' => 'bob'));
 
@@ -154,25 +154,25 @@ You can update multiple records by using the [ORM::save_all] method:
 
 #### Using `Updated` and `Created` Columns
 
-The `_updated_column` and `_created_column` members are provided to automatically be updated when a model is updated and created.  These are not used by default.  To use them:
+The `_updated_column` and `_created_column` members are provided to automatically be updated when a model is updated and created. These are not used by default. To use them:
 
-	// date_created is the column used for storing the creation date.  Use format => TRUE to store a timestamp
+	// date_created is the column used for storing the creation date. Use format => TRUE to store a timestamp.
 	protected $_created_column = array('date_created', 'format' => TRUE);
 
-	// date_modified is the column used for storing the modified date.  In this case, a string specifying a date() format is used
+	// date_modified is the column used for storing the modified date. In this case, a string specifying a date() format is used.
 	protected $_updated_column = array('date_modified', 'format' => 'm/d/Y');
 
 ### Deleting Records
 
-Records are deleted with [ORM::delete] and [ORM::delete_all].  These methods operate in the same fashion as saving described above with the exception that [ORM::delete] takes one optional parameter, the `id` of the record to delete.  Otherwise, the currently loaded record is deleted.
+Records are deleted with [ORM::delete] and [ORM::delete_all]. These methods operate in the same fashion as saving described above with the exception that [ORM::delete] takes one optional parameter, the `id` of the record to delete. Otherwise, the currently loaded record is deleted.
 
 ### Relationships
 
-ORM provides for powerful relationship support.  Ruby has a great tutorial on relationships at [http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html)
+ORM provides for powerful relationship support. Ruby has [a great tutorial on relationships](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html).
 
 #### Belongs-To and Has-Many
 
-We'll assume we're working with a school that has many students.  Each student can belong to only one school.  You would define the relationships in this manner:
+We'll assume we're working with a school that has many students. Each student can belong to only one school. You would define the relationships in this manner:
 
 	// Inside the school model
 	protected $_has_many = array('students' => array());
@@ -192,7 +192,7 @@ To access a school's students, you would use:
 	// To narrow results:
 	$students = $school->students->where('active', '=', TRUE)->find_all();
 
-By default, ORM will look for a `school_id` model in the student table.  This can be overriden by using the `foreign_key` attribute:
+By default, ORM will look for a `school_id` model in the student table. This can be overriden by using the `foreign_key` attribute:
 
 	protected $_belongs_to = array('school' => array('foreign_key' => 'schoolID'));
 	
@@ -200,7 +200,7 @@ The foreign key should be overridden in both the student and school models.
 
 #### Has-One
 
-Has-One is a special case of Has-Many, the only difference being that there is one and only one record.  In the above example, each school would have one and only one student (although this is a poor example).
+Has-One is a special case of Has-Many, the only difference being that there is one and only one record. In the above example, each school would have one and only one student (although this is a poor example).
 
 	// Inside the school model
 	protected $_has_one = array('student' => array());
@@ -209,7 +209,7 @@ Like Belongs-To, you do not need to use the `find` method when referencing the H
 
 #### Has-Many "Through"
 
-The Has-Many "through" relationship (also known as Has-And-Belongs-To-Many) is used in the case of one object being related to multiple objects of another type, and visa-versa.  For instance, a student may have multiple classes and a class may have multiple students.  In this case, a third table and model known as a `pivot` is used.  In this case, we will call the pivot object/model `enrollment`.
+The Has-Many "through" relationship (also known as Has-And-Belongs-To-Many) is used in the case of one object being related to multiple objects of another type, and visa-versa. For instance, a student may have multiple classes and a class may have multiple students. In this case, a third table and model known as a `pivot` is used. In this case, we will call the pivot object/model `enrollment`.
 
 	// Inside the student model
 	protected $_has_many = array('classes' => array('through' => 'enrollment'));
@@ -217,7 +217,7 @@ The Has-Many "through" relationship (also known as Has-And-Belongs-To-Many) is u
 	// Inside the class model
 	protected $_has_many = array('students' => array('through' => 'enrollment'));
 
-The enrollment table should contain two foreign keys, one for `class_id` and the other for `student_id`.  These can be overriden using `foreign_key` and `far_key` when defining the relationship.  For example:
+The enrollment table should contain two foreign keys, one for `class_id` and the other for `student_id`. These can be overriden using `foreign_key` and `far_key` when defining the relationship. For example:
 
 	// Inside the student model (the foreign key refers to this model [student], while the far key refers to the other model [class])
 	protected $_has_many = array('classes' => array('through' => 'enrollment', 'foreign_key' => 'studentID', 'far_key' => 'classID'));
@@ -240,7 +240,7 @@ To access the related objects, use:
 
 ### Validation
 	
-ORM is integrated tightly with the [Validate] library.  The ORM provides the following members for validation
+ORM is integrated tightly with the [Validate] library. The ORM provides the following members for validation:
 
 * _rules
 * _callbacks
@@ -255,7 +255,7 @@ ORM is integrated tightly with the [Validate] library.  The ORM provides the fol
 		'email'    => array('not_empty' => array(), 'email' => array()),
 	);
 
-`username` will be checked to make sure it's not empty.  `email` will be checked to also ensure it is a valid email address.  The empty arrays passed as values can be used to provide optional additional parameters to these validate method calls.
+`username` will be checked to make sure it's not empty. `email` will be checked to also ensure it is a valid email address. The empty arrays passed as values can be used to provide optional additional parameters to these validate method calls.
 
 #### `_callbacks`
 	
@@ -264,7 +264,7 @@ ORM is integrated tightly with the [Validate] library.  The ORM provides the fol
 		'username' => array('username_unique'),
 	);
 
-`username` will be passed to a callback method `username_unique`.  If the method exists in the current model, it will be used, otherwise a global function will be called.  Here is an example of the definition of this method:
+`username` will be passed to a callback method `username_unique`. If the method exists in the current model, it will be used, otherwise a global function will be called. Here is an example of the definition of this method:
 
 	public function username_unique(Validate $data, $field)
 	{
@@ -280,7 +280,7 @@ ORM is integrated tightly with the [Validate] library.  The ORM provides the fol
 		'username' => array('stripslashes' => array()),
 	);
 
-`TRUE` indicates that the `trim` filter is to be used on all fields.  `username` will be filtered through `stripslashes` before it is validated.  The empty arrays passed as values can be used to provide additional parameters to these filter method calls.
+`TRUE` indicates that the `trim` filter is to be used on all fields. `username` will be filtered through `stripslashes` before it is validated. The empty arrays passed as values can be used to provide additional parameters to these filter method calls.
 	
 #### Checking if the Object is Valid
 
@@ -292,7 +292,7 @@ Use [ORM::check] to see if the object is currently valid.
 		$user->save();
 	}
 
-You can use the `validate()` method to access the model's validation object
+You can use the `validate()` method to access the model's validation object.
 
 	// Add an additional filter manually
 	$user->validate()->filter('username', 'trim');
