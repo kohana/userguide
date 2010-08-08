@@ -39,20 +39,14 @@ Kohana uses under_score naming, not camelCase naming.
 
 #### Classes
 
-	// Library, uses _Core suffix
-	class Beer_Core {
+	// Controller class, uses Controller_ prefix
+	class Controller_Apple extends Controller {
 
-	// Library extension, uses no suffix
-	class Beer extends Beer_Core
+	// Model class, uses Model_ prefix
+	class Model_Cheese extends Model {
 
-	// Controller class, uses _Controller suffix
-	class Apple_Controller extends Controller {
-
-	// Model class, uses _Model suffix
-	class Cheese_Model extends Model {
-
-	// Helper class
-	class peanut {
+	// Regular class
+	class Peanut {
 
 When creating an instance of a class, don't use parentheses if you're not passing something on to the constructor:
 
