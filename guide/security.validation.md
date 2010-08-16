@@ -105,11 +105,13 @@ Note that all array parameters must still be wrapped in an array! Without the wr
 
 Any custom rules can be added using a [PHP callback](http://php.net/manual/language.pseudo-types.php#language.types.callback]:
 
-    $post->rule('username', array($model, 'unique_username'));
+    $post->rule('username', 'User_Model::unique_username');
+
+[!!] Currently (v3.0.7) it is not possible to use an object for a rule, only static methods and functions.
 
 The method `$model->unique_username()` would be defined similar to:
 
-    public function unique_username($username)
+    public static function unique_username($username)
     {
         // Check if the username already exists in the database
         return ! DB::select(array(DB::expr('COUNT(username)'), 'total'))
