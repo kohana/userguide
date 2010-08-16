@@ -109,7 +109,7 @@ Any custom rules can be added using a [PHP callback](http://php.net/manual/langu
 
 [!!] Currently (v3.0.7) it is not possible to use an object for a rule, only static methods and functions.
 
-The method `$model->unique_username()` would be defined similar to:
+The method `User_Model::unique_username()` would be defined similar to:
 
     public static function unique_username($username)
     {
