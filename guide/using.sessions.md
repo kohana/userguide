@@ -78,7 +78,7 @@ Deleting session or cookie data is done using the `delete` method:
 
 Both cookies and sessions have several configuration settings which affect how data is stored. Always check these settings before making your application live, as many of them will have a direct affect on the security of your application.
 
-## Cookie Settings
+## Cookie Settings {#cookie-settings}
 
 All of the cookie settings are changed using static properties. You can either change these settings in `bootstrap.php` or by using a [class extension](using.autoloading#class-extension).
 
