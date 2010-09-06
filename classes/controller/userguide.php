@@ -106,7 +106,7 @@ class Controller_Userguide extends Controller_Template {
 	public function action_docs()
 	{
 		$module = $this->request->param('module');
-		$page = $module.'/'.$this->request->param('page');
+		$page = $this->request->param('page');
 
 		// Trim trailing slash
 		$page = rtrim($page,'/');
@@ -117,6 +117,12 @@ class Controller_Userguide extends Controller_Template {
 			return $this->index();
 		}
 		
+		// Prevent "guide/module" and "guide/module/index" from having duplicate content
+		if ( $page == 'index')
+		{
+			$this->error(__('Userguide page not found'));
+		}
+		
 		// If a module is set, but no page is specified, default to index.
 		if ( ! $page )
 		{
@@ -124,7 +130,7 @@ class Controller_Userguide extends Controller_Template {
 		}
 
 		// Find the markdown file for this page
-		$file = $this->file($page);
+		$file = $this->file($module.'/'.$page);
 
 		// If it's not found, show the error page
 		if ( ! $file)
