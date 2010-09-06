@@ -69,23 +69,59 @@ class Controller_Userguide extends Controller_Template {
 
 		parent::before();
 	}
+	
+	// List all modules that have userguides
+	public function index()
+	{
+		$this->template->title = "Userguide";
+		$this->template->breadcrumb = array('User Guide');
+		$this->template->content = View::factory('userguide/index',array('modules'=>Kohana::config('userguide.modules')));
+		$this->template->menu = View::factory('userguide/menu',array('modules'=>Kohana::config('userguide.modules')));
+	}
+	
+	// Display an error if a page isn't found
+	public function error($message)
+	{
+		$this->request->status = 404;
+		$this->template->title = "Userguide - Error";
+		$this->template->content = View::factory('userguide/error',array('message'=>$message));
+
+		// If we are in a module and that module has a menu, show that, otherwise use the index page menu
+		if ($module = $this->request->param('module') AND $config = Kohana::config("userguide.modules.$module"))
+		{
+			$menu = $this->file($config['menu']);
+			$this->template->menu = Markdown(file_get_contents($menu));
+			$this->template->breadcrumb = array(
+				$this->guide->uri() => 'User Guide',
+				$this->guide->uri().'/'.$module => $config['name'],
+				'Error');
+		}
+		else
+		{
+			$this->template->menu = View::factory('userguide/menu',array('modules'=>Kohana::config('userguide.userguide')));
+			$this->template->breadcrumb = array($this->guide->uri() => 'User Guide','Error');
+		}
+	}
 
 	public function action_docs()
 	{
-		$page = $this->request->param('page');
+		$module = $this->request->param('module');
+		$page = $module.'/'.$this->request->param('page');
 
-		if ( ! $page)
+		// Trim trailing slash
+		$page = rtrim($page,'/');
+
+		// If no module specified, show the index page, which lists the modules.
+		if ( ! $module)
 		{
-			// Redirect to the default page
-			$this->request->redirect($this->guide->uri(array('page' => Kohana::config('userguide')->default_page)));
+			return $this->index();
 		}
 
 		$file = $this->file($page);
 
 		if ( ! $file)
 		{
-			$this->error(__('Userguide page not found'));
-			return;
+			return $this->error(__('Userguide page not found'));
 		}
 
 		// Set the page title
@@ -94,8 +130,8 @@ class Controller_Userguide extends Controller_Template {
 		// Parse the page contents into the template
 		$this->template->content = Markdown(file_get_contents($file));
 
-		// Attach the menu to the template
-		$this->template->menu = Markdown(file_get_contents($this->file('menu')));
+		// Attach this modules menu to the template
+		$this->template->menu = Markdown(file_get_contents($this->file($module.'/menu')));
 		
 		// Bind module menu items
 		$this->template->bind('module_menus', $module_menus);
@@ -203,16 +239,6 @@ class Controller_Userguide extends Controller_Template {
 		$this->request->headers['Content-Type']   = File::mime_by_ext($ext);
 		$this->request->headers['Content-Length'] = filesize($file);
 		$this->request->headers['Last-Modified']  = date('r', filemtime($file));
-	}
-	
-	// Display an error if a page isn't found
-	public function error($message)
-	{
-		$this->request->status = 404;
-		$this->template->title = __('User Guide').' - '.__('Error');
-		$this->template->content = View::factory('userguide/error',array('message'=>$message));
-		$this->template->menu = Kodoc::menu();
-		$this->template->breadcrumb = array($this->guide->uri() =>  __('User Guide'), __('Error'));
 	}
 
 	public function after()
