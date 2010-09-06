@@ -2,11 +2,11 @@
 
 return array
 (
-	// Default userguide page.
-	'default_page' => 'about.kohana',
-
 	// Default the userguide language.
 	'lang'         => 'en-us',
+	
+	// Modules array for User Guide section.  Each module adds itself to this array.  This does not affect whether they show up in the API
+	'modules' => array(),
 	
 	// Enable the API browser.  TRUE or FALSE
 	'api_browser'  => TRUE,
