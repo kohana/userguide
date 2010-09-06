@@ -119,7 +119,7 @@ class Controller_Userguide extends Controller_Template {
 		// Prevent "guide/module" and "guide/module/index" from having duplicate content
 		if ( $page == 'index')
 		{
-			$this->error(__('Userguide page not found'));
+			return $this->error(__('Userguide page not found'));
 		}
 		
 		// If a module is set, but no page is specified, default to index.
