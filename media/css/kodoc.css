@@ -17,7 +17,27 @@ table td { background: #f4f4f4; }
 	#topbar form { margin: 0 1em; padding: 0; }
 		#topbar form select { width: 98%; }
 
-#menu { background: #eee; padding: 1em 0; }
+#menu-tabs {
+	padding:0; margin:0;
+	background:white;
+	border-bottom:0.6em solid #eee;
+}
+	#menu-tabs a {
+		padding:0.4em 0.8em;
+		background:#ccc;
+		color:black;
+		margin-right:0.3em;
+		font-weight:bold;
+		text-decoration:none;
+	}
+	#menu-tabs a:hover {
+		background:#ddd;
+	}
+	#menu-tabs a.active {
+		background:#eee;
+	}
+
+#menu { background: #eee; padding: 0 0 1em; }
 	#menu ol,
 	#menu ul { margin: 0; padding: 0; list-style: none; }
 		#menu li { margin: 0; padding: 0; }
