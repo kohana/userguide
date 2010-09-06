@@ -111,14 +111,22 @@ class Controller_Userguide extends Controller_Template {
 		// Trim trailing slash
 		$page = rtrim($page,'/');
 
-		// If no module specified, show the index page, which lists the modules.
+		// If no module specified, show the user guide index page, which lists the modules.
 		if ( ! $module)
 		{
 			return $this->index();
 		}
+		
+		// If a module is set, but no page is specified, default to index.
+		if ( ! $page )
+		{
+			$page = 'index';
+		}
 
+		// Find the markdown file for this page
 		$file = $this->file($page);
 
+		// If it's not found, show the error page
 		if ( ! $file)
 		{
 			return $this->error(__('Userguide page not found'));
