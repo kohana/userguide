@@ -136,12 +136,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 				}
 				catch (Exception $e)
 				{
-					ob_start();
-
-					// Capture the exception handler output and insert it instead
-					Kohana::exception_handler($e);
-
-					$replace[$search] = ob_get_clean();
+					// Ignore curly braces when view file is not found
 				}
 			}
 
