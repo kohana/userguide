@@ -87,18 +87,17 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->content = View::factory('userguide/error',array('message'=>$message));
 
 		// If we are in a module and that module has a menu, show that, otherwise use the index page menu
-		if ($module = $this->request->param('module') AND $config = Kohana::config("userguide.modules.$module"))
+		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu'))
 		{
-			$menu = $this->file($config['menu']);
 			$this->template->menu = Markdown(file_get_contents($menu));
 			$this->template->breadcrumb = array(
 				$this->guide->uri() => 'User Guide',
-				$this->guide->uri().'/'.$module => $config['name'],
+				$this->guide->uri(array('module'=>$module)) => Kohana::config("userguide.modules.$module.name"),
 				'Error');
 		}
 		else
 		{
-			$this->template->menu = View::factory('userguide/menu',array('modules'=>Kohana::config('userguide.userguide')));
+			$this->template->menu = View::factory('userguide/menu',array('modules'=>Kohana::config('userguide.modules')));
 			$this->template->breadcrumb = array($this->guide->uri() => 'User Guide','Error');
 		}
 	}
