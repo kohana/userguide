@@ -27,5 +27,4 @@ Route::set('docs/guide', 'guide(/<module>(/<page>))', array(
 		'controller' => 'userguide',
 		'action'     => 'docs',
 		'module'     => '',
-		'page'       => 'index',
 	));

@@ -123,6 +123,10 @@ class Controller_Userguide extends Controller_Template {
 		{
 			return $this->error(__('Userguide page not found'));
 		}
+		
+		// Namespace the markdown parser
+		Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/'.$module.'/';
+		Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
 
 		// Set the page title
 		$this->template->title = $this->title($page);
