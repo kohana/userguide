@@ -38,19 +38,13 @@ table td { background: #f4f4f4; }
 	}
 
 #menu { background: #eee; padding: 0 0 1em; }
-	#menu ol,
-	#menu ul { margin: 0; padding: 0; list-style: none; }
-		#menu li { margin: 0; padding: 0; }
-			#menu li { display: block; }
-			#menu li strong { display: block; margin-bottom: 0.4em; padding: 0.2em 0.4em; font-weight: normal; color: #eee; background: #111; cursor: pointer; }
-			#menu li li strong { background-color: #ccc; color: #111; }
-	#menu ol { padding: 0 0.6em; margin: 0; }
-		#menu ol ul,
-		#menu ol ol { margin-left: 1em; padding: 0 0 0.6em; }
-	#menu h3 { font-size: 1em; margin: 1em 0 0; padding: 1em 1em 0.5em; border-top: 5px solid #fff; }
+	#menu ul { list-style-position:inside; margin: 0; padding: 0; padding-left:10px; }
+		#menu ul li { margin:0; padding: 0; }
 
 #footer { margin-top: 1em; padding: 1em 0; color: #666; }
 	#footer p { font-size: 0.8em; text-transform: uppercase; }
+	
+#content {min-height:1px;} /* this makes in so if the content is empty, the menu stays on the right, instead of falling to the left */
 #content h1 { margin-top: 0; }
 #content h1,
 #content h2,
