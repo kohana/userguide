@@ -89,6 +89,10 @@ class Controller_Userguide extends Controller_Template {
 		// If we are in a module and that module has a menu, show that, otherwise use the index page menu
 		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu'))
 		{
+			// Namespace the markdown parser
+			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/'.$module.'/';
+			Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
+		
 			$this->template->menu = Markdown(file_get_contents($menu));
 			$this->template->breadcrumb = array(
 				$this->guide->uri() => 'User Guide',
@@ -147,30 +151,16 @@ class Controller_Userguide extends Controller_Template {
 		// Parse the page contents into the template
 		$this->template->content = Markdown(file_get_contents($file));
 
-		// Attach this modules menu to the template
+		// Attach this module's menu to the template
 		$this->template->menu = Markdown(file_get_contents($this->file($module.'/menu')));
 		
-		// Bind module menu items
-		$this->template->bind('module_menus', $module_menus);
-		
-		// Attach module-specific menu items
-		$module_menus = array();
-		
-		foreach(Kohana::modules() as $module => $path)
-		{
-			if ($file = $this->file('menu.'.$module))
-			{
-				$module_menus[$module] = Markdown(file_get_contents($file)); 
-			}
-		}
-
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
 
-		// Add the breadcrumb
+		// Add the breadcrumb trail
 		$breadcrumb = array();
 		$breadcrumb[$this->guide->uri()] = __('User Guide');
-		$breadcrumb[] = $this->section($page);
+		$breadcrumb[$this->guide->uri(array('module'=>$module))] = Kohana::config("userguide.modules.$module.name");
 		$breadcrumb[] = $this->template->title;
 	}
 
@@ -333,22 +323,13 @@ class Controller_Userguide extends Controller_Template {
 		if (empty($markdown))
 		{
 			// Get core menu items
-			$file = $this->file('menu');
+			$file = $this->file($this->request->param('module').'/menu');
 	
 			if ($file AND $text = file_get_contents($file))
 			{
 				$markdown .= $text;
 			}
 			
-			// Look in module specific files
-			foreach(Kohana::modules() as $module => $path)
-			{
-				if ($file = $this->file('menu.'.$module) AND $text = file_get_contents($file))
-				{
-					// Concatenate markdown to produce one string containing all menu items
-					$markdown .="\n".$text;
-				}
-			}
 		}
 		
 		return $markdown;
