@@ -49,17 +49,14 @@
 		<?php endif ?>
 	</div>
 
+	<div id="menu-tabs">
+		<?php $api = Request::instance()->action == 'api'; ?>
+		<?php echo HTML::anchor(Route::get('docs/guide')->uri(),__('User Guide'),( ( ! $api) ? array('class'=>'active'):NULL)) ?>
+		<?php echo HTML::anchor(Route::get('docs/api')->uri(),__('API Browser'),( $api ? array('class'=>'active'):NULL)) ?>
+	</div>
+	
 	<div id="menu" class="span-6 last">
-		<div id="menu-tabs">
-			<?php $api = Request::instance()->action == 'api'; ?>
-			<?php echo HTML::anchor(Route::get('docs/guide')->uri(),__('User Guide'),( ( ! $api) ? array('class'=>'active'):NULL)) ?>
-			<?php echo HTML::anchor(Route::get('docs/api')->uri(),__('API Browser'),( $api ? array('class'=>'active'):NULL)) ?>
-		</div>
 		<?php echo $menu ?>
-		<?php if (isset($module_menus) AND ! empty($module_menus)) : ?>
-			<h3><?php echo __('Modules'); ?></h3>
-			<?php echo implode("\n", $module_menus) ?>
-		<?php endif; ?>
 	</div>
 </div>
 

@@ -1,5 +1,5 @@
 html { margin: 0; }
-body { margin: 0 }
+body { margin: 0; }
 body.he { direction: rtl }
 pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; }
 table th { color: #444; background: #eee; }
@@ -19,8 +19,6 @@ table td { background: #f4f4f4; }
 
 #menu-tabs {
 	padding:0; margin:0;
-	background:white;
-	border-bottom:0.6em solid #eee;
 }
 	#menu-tabs a {
 		padding:0.4em 0.8em;
@@ -38,13 +36,18 @@ table td { background: #f4f4f4; }
 	}
 
 #menu { background: #eee; padding: 0 0 1em; }
-	#menu ul { list-style-position:inside; margin: 0; padding: 0; padding-left:10px; }
-		#menu ul li { margin:0; padding: 0; }
+	#menu ul { list-style-type:none; margin: 0; padding: 0; padding-left:5px;}
+	#menu ul ul {padding-left:0;}
+		#menu ul li { margin:0; padding: 0; background:url('../img/arrows.png') -40px -1px no-repeat scroll; padding-left:13px; position:relative; }
+		#menu ul li.toggle-close { background-position: -21px -22px; }
+		#menu ul li.toggle-open { background-position: -1px -42px; }
+		#menu ul li a.menu-toggle { width:10px; height:10px; position:absolute; left:0px; text-decoration:none; cursor:pointer;}
+		#menu ul li a.current {font-weight:bold;}
 
 #footer { margin-top: 1em; padding: 1em 0; color: #666; }
 	#footer p { font-size: 0.8em; text-transform: uppercase; }
 	
-#content {min-height:1px;} /* this makes in so if the content is empty, the menu stays on the right, instead of falling to the left */
+#content {min-height:30px;} /* this makes in so if the content is empty, the menu stays on the right, instead of falling to the left */
 #content h1 { margin-top: 0; }
 #content h1,
 #content h2,

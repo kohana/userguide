@@ -21,6 +21,7 @@ $(document).ready(function()
 	// Striped tables
 	$('#content tbody tr:even').addClass('alt');
 
+	/*
 	// Toggle menus
 	$('#menu ol li strong').each(function()
 	{
@@ -53,6 +54,51 @@ $(document).ready(function()
 			togg.html('&ndash;');
 		}
 	});
+	*/
+	
+	$('#menu li').has('li').each(function()
+	{
+		var link = $(this);
+		var menu = link.find('ul:first');
+		var togg = $('<a class="menu-toggle"></a>');
+		link.prepend(togg);
+		
+		// When you click the arrow, hide or show the mune
+		togg.click(function()
+		{
+			if (menu.is(':visible'))
+			{
+				// hide menu
+				menu.stop(true,true).slideUp('fast');
+				link.addClass('toggle-close').removeClass('toggle-open');
+			}
+			else
+			{
+				// show menu
+				menu.stop(true,true).slideDown('fast');
+				link.addClass('toggle-open').removeClass('toggle-close');
+			}
+		})
+		
+		// Hide all menus that do not contain the active link
+		menu.not(':has(a[href="'+ window.location.pathname +'"])').hide();
+		
+		// If the current page is a parent, then show the children
+		link.has('a[href="'+ window.location.pathname +'"]').find('ul:first').show();
+
+		// Add the classes to make the arrows show
+		if (menu.is(':visible'))
+		{
+			link.addClass('toggle-open');
+		}
+		else
+		{
+			link.addClass('toggle-close');
+		}
+	});
+	
+	$('a[href="'+ window.location.pathname +'"]').addClass('current');
+
 
 	// Collapsable class contents
 	$('#content #toc').each(function()
