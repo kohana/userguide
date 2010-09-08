@@ -36,6 +36,8 @@ table td { background: #f4f4f4; }
 	}
 
 #menu { background: #eee; padding: 0 0 1em; }
+	#menu h2 { font-size: 14px; margin:0; padding:0; margin: .5em .5em .3em; }
+
 	#menu ul { list-style-type:none; margin: 0; padding: 0; padding-left:5px;}
 	#menu ul ul {padding-left:0;}
 		#menu ul li { margin:0; padding: 0; background:url('../img/arrows.png') -40px -1px no-repeat scroll; padding-left:13px; position:relative; }

@@ -20,41 +20,6 @@ $(document).ready(function()
 
 	// Striped tables
 	$('#content tbody tr:even').addClass('alt');
-
-	/*
-	// Toggle menus
-	$('#menu ol li strong').each(function()
-	{
-		var link = $(this);
-		var menu = link.parent().find('ol:first, ul:first');
-		var togg = $('<span class="toggle">+</span>').appendTo(link);
-
-		link.click(function()
-		{
-			if (menu.is(':visible'))
-			{
-				// Hide visible menus
-				togg.html('+');
-				menu.stop(true, true).slideUp('fast');
-			}
-			else
-			{
-				// Show hidden menus
-				togg.html('&ndash;');
-				menu.stop(true, true).slideDown('fast');
-			}
-		});
-
-		// Hide all menus that do not contain the active link
-		menu.not(':has(a[href="'+ window.location.pathname +'"])').hide();
-
-		if (menu.is(':visible'))
-		{
-			// Display the toggle as being open
-			togg.html('&ndash;');
-		}
-	});
-	*/
 	
 	$('#menu li').has('li').each(function()
 	{

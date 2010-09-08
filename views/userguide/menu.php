@@ -1,3 +1,5 @@
+<h2>Modules</h2>
+
 <?php if( ! empty($modules)): ?>
 
 	<ul>

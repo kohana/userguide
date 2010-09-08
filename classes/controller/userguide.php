@@ -146,7 +146,7 @@ class Controller_Userguide extends Controller_Template {
 		Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
 
 		// Set the page title
-		$this->template->title = $this->title($page);
+		$this->template->title = $page == 'index' ? Kohana::config("userguide.modules.$module.name") : $this->title($page);
 
 		// Parse the page contents into the template
 		$this->template->content = Markdown(file_get_contents($file));
@@ -220,7 +220,7 @@ class Controller_Userguide extends Controller_Template {
 	public function action_media()
 	{
 		// Generate and check the ETag for this file
-		$this->request->check_cache(sha1($this->request->uri));
+		//$this->request->check_cache(sha1($this->request->uri));
 
 		// Get the file path from the request
 		$file = $this->request->param('file');

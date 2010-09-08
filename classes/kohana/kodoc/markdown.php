@@ -83,7 +83,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	public function doBaseURL($text)
 	{
 		// URLs containing "://" are left untouched
-		return preg_replace('~(?<!!)(\[.+?\]\()(?!\w++://)([^#]\S*(?:\s*+".+?")?\))~', '$1'.Kodoc_Markdown::$base_url.'$2', $text);
+		return preg_replace('~(?<!!)(\[.+?\]\()(?!\w++://)(?!#)(\S*(?:\s*+".+?")?\))~', '$1'.Kodoc_Markdown::$base_url.'$2', $text);
 	}
 
 	/**
