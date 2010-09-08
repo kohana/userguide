@@ -4,17 +4,19 @@ Most of Kohana v3 works very differently from Kohana 2.3, here's a list of commo
 
 ## Naming conventions
 
-The 2.x series differentiated between different 'types' of class (i.e. controller, model etc.) using suffixes.  Folders within model / controller folders didn't have any bearing on the name of the class.
+The 2.x series used suffixes to differentiate between different 'types' of class (i.e. controller, model etc.).  Folders within model / controller folders didn't have any bearing on the name of the class.
 
-In 3.0 this approach has been scrapped in favour of the Zend framework filesystem conventions, where the name of the class is a path to the class itself, separated by underscores instead of slashes (i.e. `/some/class/file.php` becomes `Some_Class_File`).
+In 3.0 this approach has been scrapped in favour of the Zend framework filesystem conventions, where the name of the class is a path to the class itself, separated by underscores instead of slashes (i.e. `Some_Class_File` becomes `/some/class/file.php`).
 
 See the [conventions documentation](start.conventions) for more information.
 
 ## Input Library
 
-The Input Library has been removed from 3.0 in favour of just using `$_GET` and `$_POST`. 
+The Input Library has been removed from 3.0 in favour of just using `$_GET` and `$_POST`.
 
-### XSS Protection
+Some of its features, such as [value retrieval with defaults](#post_and_get), still exist in other forms.
+
+### XSS Protection {#xss_protection}
 
 If you need to XSS clean some user input you can use [Security::xss_clean] to sanitise it, like so:
 
@@ -26,7 +28,7 @@ You can also use the [Security::xss_clean] as a filter with the [Validate] libra
 	
 	$validate->filter('description', 'Security::xss_clean');
 
-### POST & GET
+### POST & GET {#post_and_get}
 
 One of the great features of the Input library was that if you tried to access the value in one of the superglobal arrays and it didn't exist the Input library would return a default value that you could specify i.e.:
 
@@ -51,6 +53,10 @@ In 3.0 you can duplicate this functionality using [Arr::get]:
 	
 	// $id is assigned the value 42
 	$id = Arr::get($_GET, 'id', 1);
+
+You can of course combine this with the [XSS protection](#xss_protection) library to sanitise your input:
+
+	$input = Security::xss_clean(Arr::get($_POST, 'input', 'Default Value'));
 
 ## ORM Library
 
@@ -211,7 +217,18 @@ And if you wanted to force the user to specify a controller:
 
 	Route::set('admin', 'admin/<controller>(/<id>(/<action>))');
 	
-Also, Kohana does not use any 'default defaults'.  If you want Kohana to assume your default action is 'index', then you have to tell it so! You can do this via [Route::defaults].  If you need to use custom regex for uri segments then pass an array of `segment => regex` i.e.:
+Optional route variables need default values in order to function correctly, you specify these as follows:
+
+	Route::set('reversed','(<controller>(/<id>(/<action>)))')
+		->defaults(array(
+			'controller' => 'post',
+			'action'     => 'list',
+			'id'         => 1
+		));
+
+[!!] Kohana has only one 'default default': Kohana assumes your default 'action' is 'index' unless you tell it otherwise, you can change this super-default by setting [Route::$default_action].
+
+If you need to use custom regex for uri segments then pass an array of `segment => regex` i.e.:
 
 	Route::set('reversed', '(<controller>(/<id>(/<action>)))', array('id' => '[a-z_]+'))
 			->defaults(array('controller' => 'posts', 'action' => 'index'))
@@ -220,17 +237,23 @@ This would force the `id` value to consist of lowercase alpha characters and und
 
 ### Actions
 
-One more thing we need to mention is that methods in a controller that can be accessed via the url are now called "actions", and are prefixed with 'action_'. E.g. in the above example, if the user calls `admin/posts/1/edit` then the action is `edit` but the method called on the controller will be `action_edit`.  See [the url tutorial](tutorials.urls) for more info.
+One more thing we need to mention is that methods in a controller that can be accessed via the url are now called "actions", and are prefixed with 'action_'.
+
+For example, in the above routes, if the user calls `admin/posts/1/edit` then the action is `edit` but the method called on the controller will be `action_edit`.  See [the url tutorial](tutorials.urls) for more info.
 
 ## Sessions
 
-There are no longer any Session::set_flash(), Session::keep_flash() or Session::expire_flash() methods, instead you must use [Session::get_once].
+There are no longer any `Session::set_flash()`, `Session::keep_flash()` or `Session::expire_flash()` methods, instead you must use [Session::get_once].
 
 ## URL Helper
 
-Only a few things have changed with the url helper - `url::redirect()` has been moved into `$this->request->redirect()` within controllers) and `Request::instance()->redirect()` instead.
+Only a few things have changed with the url helper
 
-`url::current` has now been replaced with `$this->request->uri()` 
+* `url::redirect()` has been moved into [Request::redirect]
+
+	This instance function can be accessed by `$this->request->redirect()` within controllers and `Request::instance()->redirect()` globally.
+
+* `url::current` has now been replaced with `$this->request->uri()`
 
 ## Valid / Validation
 
