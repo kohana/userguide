@@ -21,12 +21,6 @@
 			<?php endforeach ?>
 			</ul>
 		</div>
-
-		<div class="translations span-6 last">
-			<?php echo form::open(NULL, array('method' => 'get')) ?>
-				<?php echo form::select('lang', $translations, I18n::$lang) ?>
-			<?php echo form::close() ?>
-		</div>
 	</div>
 </div>
 

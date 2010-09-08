@@ -28,26 +28,6 @@ class Controller_Userguide extends Controller_Template {
 			$this->media = Route::get('docs/media');
 			$this->guide = Route::get('docs/guide');
 
-			if (isset($_GET['lang']))
-			{
-				$lang = $_GET['lang'];
-
-				// Load the accepted language list
-				$translations = array_keys(Kohana::message('userguide', 'translations'));
-
-				if (in_array($lang, $translations))
-				{
-					// Set the language cookie
-					Cookie::set('userguide_language', $lang, Date::YEAR);
-				}
-
-				// Reload the page
-				$this->request->redirect($this->request->uri);
-			}
-
-			// Set the translation language
-			I18n::$lang = Cookie::get('userguide_language', Kohana::config('userguide')->lang);
-
 			if (defined('MARKDOWN_PARSER_CLASS'))
 			{
 				throw new Kohana_Exception('Markdown parser already registered. Live documentation will not work in your environment.');
@@ -284,13 +264,7 @@ class Controller_Userguide extends Controller_Template {
 
 	public function file($page)
 	{
-		if ( ! ($file = Kohana::find_file('guide', I18n::$lang.'/'.$page, 'md')))
-		{
-			// Use the default file
-			$file = Kohana::find_file('guide', $page, 'md');
-		}
-
-		return $file;
+		return Kohana::find_file('guide',$page,'md');
 	}
 
 	public function section($page)
