@@ -38,13 +38,13 @@ table td { background: #f4f4f4; }
 #menu { background: #eee; padding: 0 0 1em; }
 	#menu h2 { font-size: 14px; margin:0; padding:0; margin: .5em .5em .3em; }
 
-	#menu ul { list-style-type:none; margin: 0; padding: 0; padding-left:5px;}
-	#menu ul ul {padding-left:0;}
-		#menu ul li { margin:0; padding: 0; background:url('../img/arrows.png') -40px -1px no-repeat scroll; padding-left:13px; position:relative; }
-		#menu ul li.toggle-close { background-position: -21px -22px; }
-		#menu ul li.toggle-open { background-position: -1px -42px; }
-		#menu ul li a.menu-toggle { width:10px; height:10px; position:absolute; left:0px; text-decoration:none; cursor:pointer;}
-		#menu ul li a.current {font-weight:bold;}
+	#menu ul , #menu ol{ list-style-type:none; margin: 0; padding: 0; padding-left:5px;}
+	#menu ul ul, #menu ol ol {padding-left:0;}
+		#menu ul li, #menu ol li { margin:0; padding: 0; background:url('../img/arrows.png') -80px -1px no-repeat scroll; padding-left:13px; position:relative; }
+		#menu ul li.toggle-close, #menu ol li.toggle-close{ background-position: -21px -22px; }
+		#menu ul li.toggle-open, #menu ol li.toggle-open { background-position: -1px -42px; }
+		#menu ul li a.menu-toggle, #menu ol li a.menu-toggle { width:10px; height:10px; position:absolute; left:0px; text-decoration:none; cursor:pointer;}
+		#menu ul li a.current, #menu ol li a.current {font-weight:bold;}
 
 #footer { margin-top: 1em; padding: 1em 0; color: #666; }
 	#footer p { font-size: 0.8em; text-transform: uppercase; }

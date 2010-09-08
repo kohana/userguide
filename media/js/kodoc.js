@@ -24,7 +24,7 @@ $(document).ready(function()
 	$('#menu li').has('li').each(function()
 	{
 		var link = $(this);
-		var menu = link.find('ul:first');
+		var menu = link.find('ul:first, ol:first');
 		var togg = $('<a class="menu-toggle"></a>');
 		link.prepend(togg);
 		
@@ -49,7 +49,7 @@ $(document).ready(function()
 		menu.not(':has(a[href="'+ window.location.pathname +'"])').hide();
 		
 		// If the current page is a parent, then show the children
-		link.has('a[href="'+ window.location.pathname +'"]').find('ul:first').show();
+		link.has('a[href="'+ window.location.pathname +'"]').find('ul:first, ol:first').show();
 
 		// Add the classes to make the arrows show
 		if (menu.is(':visible'))
