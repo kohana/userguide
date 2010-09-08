@@ -156,6 +156,9 @@ class Controller_Userguide extends Controller_Template {
 		
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
+		
+		// Bind the copyright
+		$this->template->copyright = Kohana::config("userguide.modules.$module.copyright");
 
 		// Add the breadcrumb trail
 		$breadcrumb = array();
