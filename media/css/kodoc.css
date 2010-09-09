@@ -33,11 +33,12 @@ ul ul, ul ol, ol ol, ol ul {
 
 a {
 	color:#3E7B9A;
-	text-decoration:none
+	text-decoration:none;
 }
 
 a:hover {
-	color:#3e7c9c
+	color:#3e7c9c;
+	text-decoration:underline;
 }
 
 code {
@@ -48,7 +49,7 @@ pre {
 	background:#eee;
 	border-radius:10px;
 	padding:1.5em;
-	font-size:0.8em;
+	font-size:0.9em;
 }
 
 table {
@@ -164,6 +165,12 @@ header h1 {
 	padding:0 20px;
 	width:198px;
 }
+	#menu ul , #menu ol{ list-style-type:none; margin: 0; padding: 0;}
+		#menu ul li, #menu ol li { margin:0; padding: 0; background:url('../img/arrows.png') -80px -1px no-repeat scroll; padding-left:12px; position:relative; }
+		#menu ul li.toggle-close, #menu ol li.toggle-close{ background-position: -22px -22px; }
+		#menu ul li.toggle-open, #menu ol li.toggle-open { background-position: -2px -42px; }
+		#menu ul li a.menu-toggle, #menu ol li a.menu-toggle { width:14px; height:18px; position:absolute; left:0px; text-decoration:none; cursor:pointer;}
+		#menu ul li a.current, #menu ol li a.current {font-weight:bold;}
 
 header .container {
 	margin:0 auto 0;
