@@ -1,3 +1,203 @@
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.clearfix { zoom: 1; }
+
+html {
+/*	background:url(bg.png) repeat top center;*/
+}
+/*
+ Line height = 24px;
+*/
+body {
+	color:#555;
+	font:16px/1.5 Helvetica,Arial;
+}
+
+p, ul {
+	margin:1.5em 0;
+}
+
+.note {
+	background:#eee url('../img/lightbulb_48.png') no-repeat 1em center;
+	padding:1.5em 1.5em 1.5em 4.5em;
+	border-radius:10px;
+}
+
+ul, ol {
+	margin-left:1.5em
+}
+
+ul ul, ul ol, ol ol, ol ul {
+	margin-top:0;
+	margin-bottom:0;
+}
+
+a {
+	color:#3E7B9A;
+	text-decoration:none
+}
+
+a:hover {
+	color:#3e7c9c
+}
+
+code {
+	color:#6BAA3D;
+}
+
+pre {
+	background:#eee;
+	border-radius:10px;
+	padding:1.5em;
+	font-size:0.8em;
+}
+
+table {
+	background:#eee;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+}
+
+table td, table th {
+	padding:0.2em 0.8em;
+	border-right: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+}
+
+table th {
+	background: #ddd;
+}
+
+table tr:nth-child(even) {
+	background: #fff;
+}
+
+h1 {
+	font-size:2.2em;
+	line-height:0.681;
+	margin:0.681em 0;
+}
+
+h2 {
+	font-size:1.5em;
+	line-height:1;
+	margin:1em 0;
+}
+
+h3 {
+	font-size:1.2em;
+	line-height:1.25;
+	margin:1.25em 0;
+}
+
+header {
+	background:#85da4c url('../img/header.png') bottom left repeat-x scroll;
+	padding:20px 0 0 0;
+}
+
+nav {
+	background:url('../img/breadcrumbs.png') top left repeat-x scroll;
+	padding:10px 0;
+}
+
+nav .container {
+	margin:0 auto;
+}
+
+nav ul {
+	float:left;
+	margin:0;
+}
+
+nav li {
+	display:inline-block;
+	margin-right:.4em;
+}
+
+nav a {
+
+}
+
+nav li:before {
+	content:'» ';
+	padding-right:.3em;
+}
+
+footer {
+	background:#eee;
+	margin:0 auto;
+	padding:0 30px;
+	width:1060px;
+	border-radius:10px;
+	margin-bottom:20px;
+}
+
+header h1 {
+}
+
+.container {
+	width:1060px;
+	margin:20px auto;
+}
+
+#main {
+	float:left;
+	width:800px;
+}
+
+#menu {
+	border-left:2px solid #eee;
+	float:right;
+	margin:0 0 0 20px;
+	padding:0 20px;
+	width:198px;
+}
+
+header .container {
+	margin:0 auto 0;
+	position:relative;
+	padding:0 0 20px 0;
+}
+
+#mode {
+	position:absolute;
+	bottom:0;
+	right:0;
+}
+
+#mode a {
+	background:#f3b812 url('../img/orange-tab.png') bottom left repeat-x scroll;
+	border:2px solid #fff;
+	border-bottom:none;
+	color:#fff;
+	padding:2px 15px;
+	border-top-left-radius:10px;
+	-moz-border-radius-topleft:10px;
+	border-top-right-radius:10px;
+	-moz-border-radius-topright:10px;
+	display:block;
+	float:left;
+	margin-right:10px;
+}
+
+#mode a:hover {
+	background:#f3b812 url('../img/orange-tab.png') 10px left repeat-x scroll;
+}
+
+#mode a.current {
+	background:#fff;
+	color:	#555555;
+	font-weight:bold;
+}
+
+
+
+
+
+
+
+
+/*
+
 html { margin: 0; }
 body { margin: 0; }
 body.he { direction: rtl }
@@ -49,7 +249,7 @@ table td { background: #f4f4f4; }
 #footer { margin-top: 1em; padding: 1em 0; color: #666; }
 	#footer p { font-size: 0.8em; text-transform: uppercase; }
 	
-#content {min-height:30px;} /* this makes in so if the content is empty, the menu stays on the right, instead of falling to the left */
+#content {min-height:30px;} /* this makes in so if the content is empty, the menu stays on the right, instead of falling to the left 
 #content h1 { margin-top: 0; }
 #content h1,
 #content h2,
@@ -80,3 +280,4 @@ table td { background: #f4f4f4; }
 #content dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; }
 	#content dl.tags dt { margin: 0 0 0.4em; clear: both; float: left; width: 25%; }
 	#content dl.tags dd { margin: 0; padding: 0; clear: right; float: right; }
+						   */

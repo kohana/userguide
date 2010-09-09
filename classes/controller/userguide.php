@@ -241,18 +241,18 @@ class Controller_Userguide extends Controller_Template {
 			// Add styles
 			$this->template->styles = array(
 				$media->uri(array('file' => 'css/print.css'))  => 'print',
-				$media->uri(array('file' => 'css/screen.css')) => 'screen',
+				$media->uri(array('file' => 'css/reset.css')) => 'screen',
 				$media->uri(array('file' => 'css/kodoc.css'))  => 'screen',
-				$media->uri(array('file' => 'css/shCore.css')) => 'screen',
-				$media->uri(array('file' => 'css/shThemeKodoc.css')) => 'screen',
 			);
 
 			// Add scripts
 			$this->template->scripts = array(
 				$media->uri(array('file' => 'js/jquery.min.js')),
 				$media->uri(array('file' => 'js/kodoc.js')),
-				$media->uri(array('file' => 'js/shCore.js')),
-				$media->uri(array('file' => 'js/shBrushPhp.js')),
+				$media->uri(array('file' => 'js/eCCStender.js')),
+				$media->uri(array('file' => 'js/eCSStender.ecsstender.css3-selectors.js')),
+				$media->uri(array('file' => 'js/eCSStender.css3-backgrounds-and-borders.js')),
+				$media->uri(array('file' => 'js/sizzle.js')),
 			);
 
 			// Add languages

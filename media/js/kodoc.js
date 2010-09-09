@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+	
 	// Translation selector
 	$('#topbar form select').change(function()
 	{
