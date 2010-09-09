@@ -99,6 +99,8 @@ h4 small,
 h5 small,
 h6 small { font-size: 0.8em; font-weight: normal; color: #444; }
 
+h1 small { font-size: 0.6em; }
+
 h1 a.permalink,
 h2 a.permalink,
 h3 a.permalink,
@@ -112,49 +114,47 @@ h6 a.permalink {
 
 /* layout stuff */
 
-header {
+#header {
 	background:#85da4c url('../img/header.png') bottom left repeat-x scroll;
 	padding:20px 0 0 0;
 }
 
-nav {
+#nav {
 	background:url('../img/breadcrumbs.png') top left repeat-x scroll;
 	padding:10px 0;
 }
 
-nav .container {
+#nav .container {
 	margin:0 auto;
 }
 
-nav ul {
+#nav ul {
 	float:left;
 	margin:0;
 }
 
-nav li {
+#nav li {
 	display:inline-block;
-	margin-right:.4em;
+	margin-right:.6em;
+	float:left;
 }
 
-nav a {
+#nav a {
 
 }
 
-nav li:not(:first-child):before {
+#nav li:not(:first-child):before {
 	content:'» ';
 	padding-right:.3em;
 }
 
-footer {
+#footer {
 	background:#eee;
 	margin:0 auto;
 	padding:0 30px;
 	width:1000px;
 	border-radius:10px;
 	margin-bottom:20px;
-}
-
-header h1 {
 }
 
 .container {
@@ -181,7 +181,7 @@ header h1 {
 		#menu ul li a.menu-toggle, #menu ol li a.menu-toggle { width:14px; height:18px; position:absolute; left:0px; text-decoration:none; cursor:pointer;}
 		#menu ul li a.current, #menu ol li a.current {font-weight:bold;}
 
-header .container {
+#header .container {
 	margin:0 auto 0;
 	position:relative;
 	padding:0 0 20px 0;

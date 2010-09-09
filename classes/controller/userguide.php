@@ -252,10 +252,10 @@ class Controller_Userguide extends Controller_Template {
 				$media->uri(array('file' => 'js/jquery.min.js')),
 				$media->uri(array('file' => 'js/kodoc.js')),
 				// eCCStender
-				$media->uri(array('file' => 'js/eCSStender.js')),
+				/*$media->uri(array('file' => 'js/eCSStender.js')),
 				$media->uri(array('file' => 'js/sizzle.js')),
 				$media->uri(array('file' => 'js/ecsstender.css3-selectors.js')),
-				$media->uri(array('file' => 'js/eCSStender.css3-backgrounds-and-borders.js')),
+				$media->uri(array('file' => 'js/eCSStender.css3-backgrounds-and-borders.js')),*/
 				// Syntax Highlighter
 				$media->uri(array('file' => 'js/shCore.js')),
 				$media->uri(array('file' => 'js/shBrushPhp.js')),

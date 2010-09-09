@@ -1,9 +1,11 @@
+
+<h2>Modules</h2>
 <ol class="menu">
 <?php foreach ($menu as $package => $categories): ksort($categories); ?>
 <li><strong><?php echo $package ?></strong>
 	<ol>
 	<?php foreach ($categories as $category => $classes): sort($classes); ?>
-		<li><?php if ($category !== 'Base'): ?><strong><?php echo $category ?></strong>
+		<li><?php if ($category !== 'Base'): ?><?php echo $category ?>
 			<ol><?php endif ?>
 			<?php foreach ($classes as $class): ?>
 				<li><?php echo $class ?></li>

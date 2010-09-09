@@ -21,7 +21,7 @@ $(document).ready(function()
 		var togg = $('<a class="menu-toggle"></a>');
 		link.prepend(togg);
 		
-		// When you click the arrow, hide or show the mune
+		// When you click the arrow, hide or show the menu
 		togg.click(function()
 		{
 			if (menu.is(':visible'))

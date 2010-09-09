@@ -9,10 +9,14 @@
 
 <?php foreach ($scripts as $script) echo HTML::script($script, NULL, TRUE), "\n" ?>
 
+<!--[if lt IE 9]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+<![endif]-->
+
 </head>
 <body>
 
-	<header>
+	<div id="header">
 		<div class="container clearfix">
 			<div id="logo">
 				<?php echo HTML::image(Route::get('docs/media')->uri(array('file'=>'img/kohana.png'))) ?>
@@ -23,8 +27,8 @@
 				<?php echo HTML::anchor(Route::get('docs/api')->uri(),'API Browser',Route::get('docs/api') == $route ? array('class'=>'current'):array()) ?>
 			</div>
 		</div>
-	</header>
-	<nav>
+	</div>
+	<div id="nav">
 		<div class="container clearfix">
 			<ul>
 				<?php foreach ($breadcrumb as $link => $title): ?>
@@ -32,7 +36,7 @@
 				<?php endforeach ?>
 			</ul>
 		</div>
-	</nav>
+	</div>
 	<div class="container clearfix">
 		<div id="main">
 			<?php echo $content ?>
@@ -55,10 +59,10 @@
 			<?php echo $menu ?>
 		</div>
 	</div>
-	<footer style="overflow:hidden;">
+	<div id="footer" style="overflow:hidden;">
 		<p style="float:right">Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?></p>
 		<p><?php if (isset($copyright)) echo $copyright; ?></p>
-	</footer>
+	</div>
 	
 </div>
 
