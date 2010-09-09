@@ -50,6 +50,7 @@ pre {
 	border-radius:10px;
 	padding:1.5em;
 	font-size:0.9em;
+	margin-bottom:1.5em;
 }
 
 table {
@@ -91,6 +92,13 @@ h3 {
 	margin:1.25em 0;
 }
 
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small { font-size: 0.8em; font-weight: normal; color: #444; }
+
 h1 a.permalink,
 h2 a.permalink,
 h3 a.permalink,
@@ -102,6 +110,7 @@ h6 a.permalink {
 	font-weight:normal;
 }
 
+/* layout stuff */
 
 header {
 	background:#85da4c url('../img/header.png') bottom left repeat-x scroll;
@@ -211,76 +220,7 @@ header .container {
 
 
 
-
-
-
-
-
-/*
-
-html { margin: 0; }
-body { margin: 0; }
-body.he { direction: rtl }
-pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; }
-table th { color: #444; background: #eee; }
-table td { background: #f4f4f4; }
-	table tr.alt td { background: #fff; }
-
-.container .toggle { font-size: 0.7em; float: right; padding: 0 1em; cursor: pointer; color: #777; text-decoration: none; }
-.container table { width: 100%; }
-
-#topbar { padding: 1em 0; margin-bottom: 2em; background: #111; border-bottom: solid 0.2em #eee; color: #ccc; }
-	#topbar ul.breadcrumb { display: block; margin: 0; padding: 0; overflow: auto; }
-		#topbar ul.breadcrumb li { display: block; float: left; margin: 0; padding: 0; padding-left: 0.6em; }
-		#topbar ul.breadcrumb li:before { content: '» '; color: #888; }
-			#topbar ul.breadcrumb li a { color: #ccc; text-decoration: underline; }
-	#topbar form { margin: 0 1em; padding: 0; }
-		#topbar form select { width: 98%; }
-
-#menu-tabs {
-	padding:0; margin:0;
-}
-	#menu-tabs a {
-		padding:0.4em 0.8em;
-		background:#ccc;
-		color:black;
-		margin-right:0.3em;
-		font-weight:bold;
-		text-decoration:none;
-	}
-	#menu-tabs a:hover {
-		background:#ddd;
-	}
-	#menu-tabs a.active {
-		background:#eee;
-	}
-
-#menu { background: #eee; padding: 0 0 1em; }
-	#menu h2 { font-size: 14px; margin:0; padding:0; margin: .5em .5em .3em; }
-
-	#menu ul , #menu ol{ list-style-type:none; margin: 0; padding: 0; padding-left:5px;}
-	#menu ul ul, #menu ol ol {padding-left:0;}
-		#menu ul li, #menu ol li { margin:0; padding: 0; background:url('../img/arrows.png') -80px -1px no-repeat scroll; padding-left:13px; position:relative; }
-		#menu ul li.toggle-close, #menu ol li.toggle-close{ background-position: -21px -22px; }
-		#menu ul li.toggle-open, #menu ol li.toggle-open { background-position: -1px -42px; }
-		#menu ul li a.menu-toggle, #menu ol li a.menu-toggle { width:10px; height:10px; position:absolute; left:0px; text-decoration:none; cursor:pointer;}
-		#menu ul li a.current, #menu ol li a.current {font-weight:bold;}
-
-#footer { margin-top: 1em; padding: 1em 0; color: #666; }
-	#footer p { font-size: 0.8em; text-transform: uppercase; }
-	
-#content {min-height:30px;} /* this makes in so if the content is empty, the menu stays on the right, instead of falling to the left 
-#content h1 { margin-top: 0; }
-#content h1,
-#content h2,
-#content h3 { margin-left: -20px; padding: 0.4em 20px; padding-right: 0; background: #eee; }
-#content h1 small,
-#content h2 small,
-#content h3 small,
-#content h4 small,
-#content h5 small,
-#content h6 small { font-size: 0.8em; font-weight: normal; color: #444; }
-#content pre { font-size: 1em; line-height: 1.4em; direction: ltr }
+/* Api browser stuff */
 
 #content div.class-list div.class { width: 50%; }
 #content div.class-list div.class.left { float: left; clear: both; }
@@ -291,13 +231,9 @@ table td { background: #f4f4f4; }
 	#content div.toc ul { margin: 0.6em 1em; padding: 0; list-style: none; }
 		#content div.toc li { margin: 0; padding: 0; }
 	#content div.toc h3 { margin: 0; padding: 0.2em 1em; font-size: 1em; color: #eee; background: #111; }
-#content div.method,
-#content div.properties,
-#content div.constants { margin-bottom: 1em; }
-	#content div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
-	#content div.method h3 abbr.param { text-transform: none; font-size: 1em; }
-#content p.note { display: block; padding: 0.4em 0.6em; padding-left: 3em; background: #efefef url(../img/note.png) 1em 0.6em no-repeat; color: #444; border: solid 1px #eee; }
-#content dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; }
-	#content dl.tags dt { margin: 0 0 0.4em; clear: both; float: left; width: 25%; }
-	#content dl.tags dd { margin: 0; padding: 0; clear: right; float: right; }
-						   */
+
+#main div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
+#main div.method h3 abbr.param { text-transform: none; font-size: 1em; }
+#main dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; margin-bottom:1.5em; }
+	#main dl.tags dt { margin: 0 0 0.4em; clear: both; float: left; width: 25%; }
+	#main dl.tags dd { margin: 0; padding: 0; clear: right; float: right; }

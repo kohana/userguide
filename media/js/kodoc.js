@@ -60,10 +60,10 @@ $(document).ready(function()
 
 
 	// Collapsable class contents
-	$('#content #toc').each(function()
+	$('#main #toc').each(function()
 	{
 		var header  = $(this);
-		var content = $('#content div.toc').hide();
+		var content = $('#main div.toc').hide();
 
 		$('<span class="toggle">[ + ]</span>').toggle(function()
 		{
@@ -80,7 +80,7 @@ $(document).ready(function()
 	
 
 	// Show source links
-	$('#content .method-source').each(function()
+	$('#main .method-source').each(function()
 	{
 		var self = $(this);
 		var togg = $('<span class="toggle">+</span>').appendTo($('h5', self));
