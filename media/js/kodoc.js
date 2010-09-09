@@ -1,27 +1,7 @@
 $(document).ready(function()
 {
-	
-	// Translation selector
-	$('#topbar form select').change(function()
-	{
-		$(this).parents('form').submit();
-	});
 
-	// Syntax highlighter
-	$('pre:not(.debug) code').each(function()
-	{
-		$(this).addClass('brush: php');
-	});
-
-	SyntaxHighlighter.config.tagName = 'code';
-	// Don't show the toolbar or line-numbers.
-	SyntaxHighlighter.defaults.toolbar = false;
-	SyntaxHighlighter.defaults.gutter = false;
-	SyntaxHighlighter.all();
-
-	// Striped tables
-	$('#content tbody tr:even').addClass('alt');
-	
+	// Collapsable menus
 	$('#menu li').has('li').each(function()
 	{
 		var link = $(this);
@@ -51,7 +31,7 @@ $(document).ready(function()
 		
 		// If the current page is a parent, then show the children
 		link.has('a[href="'+ window.location.pathname +'"]').find('ul:first, ol:first').show();
-
+		
 		// Add the classes to make the arrows show
 		if (menu.is(':visible'))
 		{
@@ -63,6 +43,7 @@ $(document).ready(function()
 		}
 	});
 	
+	// Any link that has the current page as its href should be class="current"
 	$('a[href="'+ window.location.pathname +'"]').addClass('current');
 
 

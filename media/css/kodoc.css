@@ -9,7 +9,7 @@ html {
 */
 body {
 	color:#555;
-	font:16px/1.5 Helvetica,Arial;
+	font:14px/1.5 Helvetica,Arial;
 }
 
 p, ul {
@@ -55,6 +55,7 @@ table {
 	background:#eee;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
+	margin-bottom:1.5em;
 }
 
 table td, table th {
@@ -117,7 +118,7 @@ nav a {
 
 }
 
-nav li:before {
+nav li:not(:first-child):before {
 	content:'» ';
 	padding-right:.3em;
 }
@@ -126,7 +127,7 @@ footer {
 	background:#eee;
 	margin:0 auto;
 	padding:0 30px;
-	width:1060px;
+	width:1000px;
 	border-radius:10px;
 	margin-bottom:20px;
 }
