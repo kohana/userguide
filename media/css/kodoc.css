@@ -247,16 +247,27 @@ h6:hover a.permalink {
 
 /* Api browser stuff */
 
+/* api index page */
 #main div.class-list div.class { width: 50%; }
 #main div.class-list div.class.left { float: left; clear: both; }
 #main div.class-list div.class.right { float: right; }
 	#content div.class-list div.class h2 { margin: 0.4em; padding: 0.2em 0.4em; font-size: 1em; }
 
+/* table of contents at the top of each class */
 #content div.toc { margin-bottom: 1em; padding-bottom: 1em; background: #eee; }
 	#content div.toc ul { margin: 0.6em 1em; padding: 0; list-style: none; }
 		#content div.toc li { margin: 0; padding: 0; }
 	#content div.toc h3 { margin: 0; padding: 0.2em 1em; font-size: 1em; color: #eee; background: #111; }
 
+/* constants */
+div.constants dl dt {font-weight:bold;}
+
+/* properties */
+div.properties dl dt { font-weight:bold; margin-top:1.5em; }
+div.properties dl dt small, div.properties dl dt code { font-weight:normal; font-size:0.9em; }
+div.properties dl dd {margin-left:1em; }
+
+/* functions */
 #main div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
 #main div.method h3 abbr.param { text-transform: none; font-size: 1em; }
 #main dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; margin-bottom:1.5em; }
