@@ -13,47 +13,52 @@ $(document).ready(function()
 	SyntaxHighlighter.defaults.gutter = false;
 	SyntaxHighlighter.all();
 	
-	// Collapsable menus
-	$('#menu li').has('li').each(function()
-	{
-		var link = $(this);
-		var menu = link.find('ul:first, ol:first');
-		var togg = $('<a class="menu-toggle"></a>');
-		link.prepend(togg);
+	// IE is stupid
+	if ( ! $.browser.msie) {
 		
-		// When you click the arrow, hide or show the menu
-		togg.click(function()
+		// Collapsable menus
+		$('#menu li').has('li').each(function()
 		{
+			var link = $(this);
+			var menu = link.find('ul:first, ol:first');
+			var togg = $('<a class="menu-toggle"></a>');
+			link.prepend(togg);
+			
+			// When you click the arrow, hide or show the menu
+			togg.click(function()
+			{
+				if (menu.is(':visible'))
+				{
+					// hide menu
+					menu.stop(true,true).slideUp('fast');
+					link.addClass('toggle-close').removeClass('toggle-open');
+				}
+				else
+				{
+					// show menu
+					menu.stop(true,true).slideDown('fast');
+					link.addClass('toggle-open').removeClass('toggle-close');
+				}
+				return
+			})
+			
+			// Hide all menus that do not contain the active link
+			menu.not(':has(a[href="'+ window.location.pathname +'"])').hide();
+			
+			// If the current page is a parent, then show the children
+			link.has('a[href="'+ window.location.pathname +'"]').find('ul:first, ol:first').show();
+			
+			// Add the classes to make the arrows show
 			if (menu.is(':visible'))
 			{
-				// hide menu
-				menu.stop(true,true).slideUp('fast');
-				link.addClass('toggle-close').removeClass('toggle-open');
+				link.addClass('toggle-open');
 			}
 			else
 			{
-				// show menu
-				menu.stop(true,true).slideDown('fast');
-				link.addClass('toggle-open').removeClass('toggle-close');
+				link.addClass('toggle-close');
 			}
-		})
-		
-		// Hide all menus that do not contain the active link
-		menu.not(':has(a[href="'+ window.location.pathname +'"])').hide();
-		
-		// If the current page is a parent, then show the children
-		link.has('a[href="'+ window.location.pathname +'"]').find('ul:first, ol:first').show();
-		
-		// Add the classes to make the arrows show
-		if (menu.is(':visible'))
-		{
-			link.addClass('toggle-open');
-		}
-		else
-		{
-			link.addClass('toggle-close');
-		}
-	});
+		});
+	}
 	
 	// Any link that has the current page as its href should be class="current"
 	$('a[href="'+ window.location.pathname +'"]').addClass('current');
@@ -83,17 +88,17 @@ $(document).ready(function()
 	$('#main .method-source').each(function()
 	{
 		var self = $(this);
-		var togg = $('<span class="toggle">+</span>').appendTo($('h5', self));
+		var togg = $(' <a class="sourcecode-toggle">[show]</a>').appendTo($('h5', self));
 		var code = self.find('pre').hide();
 
 		self.toggle(function()
 		{
-			togg.html('&ndash;');
+			togg.html('[hide]');
 			code.stop(true, true).slideDown();
 		},
 		function()
 		{
-			togg.html('+');
+			togg.html('[show]');
 			code.stop(true, true).slideUp();
 		});
 	});
@@ -102,7 +107,7 @@ $(document).ready(function()
 	$('#main')
 		.children('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')
 		.append(function(index, html){
-			return '<a href="#' + $(this).attr('id') + '" class="permalink">Link to this</a>';
+			return '<a href="#' + $(this).attr('id') + '" class="permalink">link to this</a>';
 		});
 
 });

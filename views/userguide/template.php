@@ -37,7 +37,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="container clearfix">
+	<div class="container clearfix" id="body">
 		<div id="main">
 			<?php echo $content ?>
 			
@@ -60,8 +60,10 @@
 		</div>
 	</div>
 	<div id="footer" style="overflow:hidden;">
-		<p style="float:right">Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?></p>
-		<p><?php if (isset($copyright)) echo $copyright; ?></p>
+		<p>
+			<?php if (isset($copyright)) echo "<span style='float:left'>$copyright</span>"; ?>
+			Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?>
+		</p>
 	</div>
 	
 </div>

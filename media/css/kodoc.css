@@ -110,18 +110,33 @@ h6 a.permalink {
 	font-size:12px;
 	margin-left:1em;
 	font-weight:normal;
+	display:none;
 }
+
+h1:hover a.permalink,
+h2:hover a.permalink,
+h3:hover a.permalink,
+h4:hover a.permalink,
+h5:hover a.permalink,
+h6:hover a.permalink {
+	display:inline;
+}
+
+.sourcecode-toggle {
+	margin-left:.3em;
+}
+
 
 /* layout stuff */
 
 #header {
 	background:#85da4c url('../img/header.png') bottom left repeat-x scroll;
-	padding:20px 0 0 0;
+	padding:20px 20px 0;
 }
 
 #nav {
 	background:url('../img/breadcrumbs.png') top left repeat-x scroll;
-	padding:10px 0;
+	padding:10px 20px;
 }
 
 #nav .container {
@@ -140,7 +155,7 @@ h6 a.permalink {
 }
 
 #nav a {
-
+	font-weight:bold;
 }
 
 #nav li:not(:first-child):before {
@@ -149,12 +164,22 @@ h6 a.permalink {
 }
 
 #footer {
-	background:#eee;
 	margin:0 auto;
-	padding:0 30px;
-	width:1000px;
-	border-radius:10px;
+	padding:0 20px;
+	width:1060px;
 	margin-bottom:20px;
+}
+
+#footer p {
+	margin:0;
+	padding:1.5em 30px;
+	background:#eee;
+	border-radius:10px;
+	text-align:right;
+}
+
+#body {
+	padding:0 20px;
 }
 
 .container {
@@ -222,9 +247,9 @@ h6 a.permalink {
 
 /* Api browser stuff */
 
-#content div.class-list div.class { width: 50%; }
-#content div.class-list div.class.left { float: left; clear: both; }
-#content div.class-list div.class.right { float: right; }
+#main div.class-list div.class { width: 50%; }
+#main div.class-list div.class.left { float: left; clear: both; }
+#main div.class-list div.class.right { float: right; }
 	#content div.class-list div.class h2 { margin: 0.4em; padding: 0.2em 0.4em; font-size: 1em; }
 
 #content div.toc { margin-bottom: 1em; padding-bottom: 1em; background: #eee; }
