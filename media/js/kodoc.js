@@ -88,7 +88,7 @@ $(document).ready(function()
 	$('#main .method-source').each(function()
 	{
 		var self = $(this);
-		var togg = $(' <a class="sourcecode-toggle">[show]</a>').appendTo($('h5', self));
+		var togg = $(' <a class="sourcecode-toggle">[show]</a>').appendTo($('h4', self));
 		var code = self.find('pre').hide();
 
 		togg.toggle(function()

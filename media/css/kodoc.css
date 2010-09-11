@@ -93,6 +93,10 @@ h3 {
 	margin:1.25em 0;
 }
 
+h4 {
+	margin:1.5em 0;
+}
+
 h1 small,
 h2 small,
 h3 small,
@@ -268,10 +272,10 @@ h6:hover a.permalink {
 /* functions */
 
 #main div.method { padding-left:1.5em; }
-#main div.method h3 { margin-left:-1.5em; }
-
+#main div.method h3 { margin-left:-1.25em; }
 #main div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
 #main div.method h3 abbr.param { text-transform: none; font-size: 1em; }
+
 #main dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; margin-bottom:1.5em; }
 	#main dl.tags dt { margin: 0; clear: both; float: left; width: 25%; }
 	#main dl.tags dd { margin: 0; padding: 0; clear: right; float: right; }

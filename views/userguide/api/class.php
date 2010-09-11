@@ -48,7 +48,16 @@
 
 <?php echo $doc->description ?>
 
-<?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
+<?php if ($doc->tags): ?>
+<dl class="tags">
+<?php foreach ($doc->tags as $name => $set): ?>
+<dt><?php echo $name ?></dt>
+<?php foreach ($set as $tag): ?>
+<dd><?php echo $tag ?></dd>
+<?php endforeach ?>
+<?php endforeach ?>
+</dl>
+<?php endif; ?>
 
 <p class="note">
 <?php if ($path = $doc->class->getFilename()): ?>
