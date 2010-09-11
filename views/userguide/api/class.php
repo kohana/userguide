@@ -60,10 +60,10 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 
 <?php if ($doc->constants): ?>
 <div class="constants">
-<h2 id="constants"><?php echo __('Constants'); ?></h2>
+<h1 id="constants"><?php echo __('Constants'); ?></h1>
 <dl>
 <?php foreach ($doc->constants as $name => $value): ?>
-<dt id="constant:<?php echo $name ?>"><?php echo $name ?></dt>
+<dt><h4 id="constant:<?php echo $name ?>"><?php echo $name ?></h4></dt>
 <dd><?php echo $value ?></dd>
 <?php endforeach; ?>
 </dl>
@@ -71,11 +71,11 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 <?php endif ?>
 
 <?php if ($properties = $doc->properties()): ?>
-<h2 id="properties"><?php echo __('Properties'); ?></h2>
+<h1 id="properties"><?php echo __('Properties'); ?></h1>
 <div class="properties">
 <dl>
 <?php foreach ($properties as $prop): ?>
-<dt id="property:<?php echo $prop->property->name ?>"><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> $<?php echo $prop->property->name ?></dt>
+<dt><h4 id="property:<?php echo $prop->property->name ?>"><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> $<?php echo $prop->property->name ?></h4></dt>
 <dd><?php echo $prop->description ?></dd>
 <dd><?php echo $prop->value ?></dd>
 <?php endforeach ?>
@@ -84,7 +84,7 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 <?php endif ?>
 
 <?php if ($methods = $doc->methods()): ?>
-<h2 id="methods"><?php echo __('Methods'); ?></h2>
+<h1 id="methods"><?php echo __('Methods'); ?></h1>
 <div class="methods">
 <?php foreach ($methods as $method): ?>
 <?php echo View::factory('userguide/api/method')->set('doc', $method)->set('route', $route) ?>

@@ -51,6 +51,7 @@ pre {
 	padding:1.5em;
 	font-size:0.9em;
 	margin-bottom:1.5em;
+	overflow:auto;
 }
 
 table {
@@ -120,10 +121,6 @@ h4:hover a.permalink,
 h5:hover a.permalink,
 h6:hover a.permalink {
 	display:inline;
-}
-
-.sourcecode-toggle {
-	margin-left:.3em;
 }
 
 
@@ -260,16 +257,26 @@ h6:hover a.permalink {
 	#content div.toc h3 { margin: 0; padding: 0.2em 1em; font-size: 1em; color: #eee; background: #111; }
 
 /* constants */
-div.constants dl dt {font-weight:bold;}
+#main div.constants dl dt {font-weight:bold; margin-bottom:1.5em;}
+#main div.constants dl dd {margin-left:1.5em; margin-bottom:1.5em;}
 
 /* properties */
-div.properties dl dt { font-weight:bold; margin-top:1.5em; }
-div.properties dl dt small, div.properties dl dt code { font-weight:normal; font-size:0.9em; }
-div.properties dl dd {margin-left:1em; }
+#main div.properties dl dt { font-weight:bold; margin-top:1.5em; margin-bottom:1.5em;}
+#main div.properties dl dt small, div.properties dl dt code { font-weight:normal; font-size:0.9em; }
+#main div.properties dl dd {margin-left:1.5em; margin-bottom:1.5em;}
 
 /* functions */
+
+#main div.method { padding-left:1.5em; }
+#main div.method h3 { margin-left:-1.5em; }
+
 #main div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
 #main div.method h3 abbr.param { text-transform: none; font-size: 1em; }
 #main dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; margin-bottom:1.5em; }
-	#main dl.tags dt { margin: 0 0 0.4em; clear: both; float: left; width: 25%; }
+	#main dl.tags dt { margin: 0; clear: both; float: left; width: 25%; }
 	#main dl.tags dd { margin: 0; padding: 0; clear: right; float: right; }
+	
+.sourcecode-toggle {
+	margin-left:.3em;
+	cursor:pointer;
+}

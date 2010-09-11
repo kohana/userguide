@@ -91,7 +91,7 @@ $(document).ready(function()
 		var togg = $(' <a class="sourcecode-toggle">[show]</a>').appendTo($('h5', self));
 		var code = self.find('pre').hide();
 
-		self.toggle(function()
+		togg.toggle(function()
 		{
 			togg.html('[hide]');
 			code.stop(true, true).slideDown();
@@ -105,7 +105,7 @@ $(document).ready(function()
 
 	// "Link to" headers
 	$('#main')
-		.children('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')
+		.find('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')
 		.append(function(index, html){
 			return '<a href="#' + $(this).attr('id') + '" class="permalink">link to this</a>';
 		});
