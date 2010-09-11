@@ -271,8 +271,8 @@ h6:hover a.permalink {
 
 /* functions */
 
-#main div.method { padding-left:1.5em; }
-#main div.method h3 { margin-left:-1.25em; }
+#main div.method { padding:0 1.5em; border:1px solid #aaa; border-radius:10px; margin-bottom:1.5em; }
+#main div.method h3 { margin-top:0; margin-left:-1.25em; margin-right:-1.25em; padding:.75em 0 .75em 1.25em; background:#eee; border-top-left-radius:10px; border-top-right-radius:10px; }
 #main div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
 #main div.method h3 abbr.param { text-transform: none; font-size: 1em; }
 
