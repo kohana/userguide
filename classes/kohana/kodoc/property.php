@@ -60,7 +60,14 @@ class Kohana_Kodoc_Property extends Kodoc {
 
 		if ($property->isStatic())
 		{
-			$this->value = Kohana::debug($property->getValue($class));
+			if (is_object($property->getValue($class)))
+			{
+				$this->value = '<pre>object '.get_class($property->getValue($class)).'()</pre>';
+			}
+			else
+			{
+				$this->value = Kohana::debug($property->getValue($class));
+			}
 		}
 	}
 
