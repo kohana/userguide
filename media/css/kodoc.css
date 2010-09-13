@@ -50,7 +50,7 @@ pre {
 	border-radius:10px;
 	padding:1.5em;
 	font-size:0.9em;
-	margin-bottom:1.5em;
+	margin-bottom:1.65em;
 	overflow:auto;
 }
 
@@ -255,10 +255,10 @@ h6:hover a.permalink {
 	#content div.class-list div.class h2 { margin: 0.4em; padding: 0.2em 0.4em; font-size: 1em; }
 
 /* table of contents at the top of each class */
-#content div.toc { margin-bottom: 1em; padding-bottom: 1em; background: #eee; }
-	#content div.toc ul { margin: 0.6em 1em; padding: 0; list-style: none; }
-		#content div.toc li { margin: 0; padding: 0; }
-	#content div.toc h3 { margin: 0; padding: 0.2em 1em; font-size: 1em; color: #eee; background: #111; }
+#main div.toc { }
+#main div.toc div {float:left; width: 33%;}
+#main div.toc div h3 {margin-top:0;}
+
 
 /* constants */
 #main div.constants dl dt {font-weight:bold; margin-bottom:1.5em;}
@@ -271,8 +271,8 @@ h6:hover a.permalink {
 
 /* functions */
 
-#main div.method { padding:0 1.5em; border:1px solid #aaa; border-radius:10px; margin-bottom:1.5em; }
-#main div.method h3 { margin-top:0; margin-left:-1.25em; margin-right:-1.25em; padding:.75em 0 .75em 1.25em; background:#eee; border-top-left-radius:10px; border-top-right-radius:10px; }
+#main div.method { padding:0 1.5em; border:1px solid #aaa; border-radius:5px; margin-bottom:1.5em; }
+#main div.method h3 { margin-top:0; margin-left:-1.25em; margin-right:-1.25em; padding:.75em 0 .75em 1.25em; background:#eee; border-top-left-radius:5px; border-top-right-radius:5px; }
 #main div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
 #main div.method h3 abbr.param { text-transform: none; font-size: 1em; }
 

@@ -63,7 +63,7 @@ $(document).ready(function()
 	// Any link that has the current page as its href should be class="current"
 	$('a[href="'+ window.location.pathname +'"]').addClass('current');
 
-
+	/*
 	// Collapsable class contents
 	$('#main #toc').each(function()
 	{
@@ -82,6 +82,7 @@ $(document).ready(function()
 		})
 		.appendTo(header);
 	});
+	*/
 	
 
 	// Show source links
