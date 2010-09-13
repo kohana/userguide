@@ -229,7 +229,7 @@ class Kohana_Kodoc {
 						}
 					break;
 					case 'uses':
-						if (preg_match('/^([a-z_]+)::([a-z_]+)$/i', $text, $matches))
+						if (preg_match('/^([a-z_]+)::([a-z_]+)(?:\(\))?$/i', $text, $matches))
 						{
 							// Make a class#method API link
 							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])).'#'.$matches[2], $text);
