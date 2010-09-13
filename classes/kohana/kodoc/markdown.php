@@ -189,7 +189,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 */
 	public function doAPI($text)
 	{
-		return preg_replace_callback('/\[([a-z_]++(?:::\$?[a-z_]++)?)\]/i', array($this, '_convert_api_link'), $text);
+		return preg_replace_callback('/\[([a-z_]++(?:::\$?[a-z_]++)?(?:\(\))?)\]/i', array($this, '_convert_api_link'), $text);
 	}
 
 	public function _convert_api_link($matches)
@@ -207,10 +207,13 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		{
 			// Split the class and method
 			list($class, $method) = explode('::', $link, 2);
+			
+			// Trim the optional parenthesis for methods
+			$method = rtrim($method,'()');
 
+			// If the first char is a $ its a property, e.g. Kohana::$base_url
 			if ($method[0] === '$')
 			{
-				// Class property, not method
 				$method = 'property:'.substr($method, 1);
 			}
 
