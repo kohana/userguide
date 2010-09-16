@@ -1,5 +1,3 @@
-[Click here to go to the guide](guide)
-
 ## A brief explaination of how the userguide works:
 
 The userguide uses [Markdown](http://daringfireball.net/projects/markdown/) and [Markdown Extra](http://michelf.com/projects/php-markdown/extra/) for the documentation.  Here is a short intro to [Markdown syntax](http://kohanut.com/docs/using.markdown), as well as the [complete guide](http://daringfireball.net/projects/markdown/syntax), and the things [Markdown Extra adds](http://michelf.com/projects/php-markdown/extra/).  ((The userguide also adds some things we need to mention.))
