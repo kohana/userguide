@@ -1,9 +1,9 @@
 html { margin: 0; }
 body { margin: 0 }
 body.he { direction: rtl }
-pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; }
+pre { background: #eee; padding: 0.5em 0.6em 0.4em; overflow: auto; }
 table th { color: #444; background: #eee; }
-table td { background: #f4f4f4; }
+table td { background: #fafafa; }
 	table tr.alt td { background: #fff; }
 
 .container .toggle { font-size: 0.7em; float: right; padding: 0 1em; cursor: pointer; color: #777; text-decoration: none; }
@@ -31,10 +31,9 @@ table td { background: #f4f4f4; }
 
 #footer { margin-top: 1em; padding: 1em 0; color: #666; }
 	#footer p { font-size: 0.8em; text-transform: uppercase; }
-#content h1 { margin-top: 0; }
-#content h1,
-#content h2,
-#content h3 { margin-left: -20px; padding: 0.4em 20px; padding-right: 0; background: #eee; }
+#content h1 { font-size: 3em; letter-spacing: -0.02em; }
+#content h2 { margin-top: 1.5em; margin-left: -20px; padding: 0.6em 20px 0.5em 20px; background: #e5e5e5; font-size: 2em; letter-spacing: -0.01em; text-shadow: 0 -1px 0 #fff; }
+#content h3 { border-bottom: 2px solid #eee; font-size: 1.6em; }
 #content h1 small,
 #content h2 small,
 #content h3 small,
@@ -57,7 +56,7 @@ table td { background: #f4f4f4; }
 #content div.constants { margin-bottom: 1em; }
 	#content div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
 	#content div.method h3 abbr.param { text-transform: none; font-size: 1em; }
-#content p.note { display: block; padding: 0.4em 0.6em; padding-left: 3em; background: #efefef url(../img/note.png) 1em 0.6em no-repeat; color: #444; border: solid 1px #eee; }
+#content p.note { display: block; padding: 0.4em 0.6em; padding-left: 3em; background: url(../img/note.png) 1em 0.6em no-repeat; border: 1px solid #e5e5e5; font-family: Georgia, serif; font-size: 1.05em; font-style: italic; color: #555; }
 #content dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; }
 	#content dl.tags dt { margin: 0 0 0.4em; clear: both; float: left; width: 25%; }
 	#content dl.tags dd { margin: 0; padding: 0; clear: right; float: right; }
