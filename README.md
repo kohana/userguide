@@ -12,7 +12,7 @@ If you feel a menu needs to be rearranged or a module needs new pages, please op
 
 ## A brief explanation of how the userguide works:
 
-The userguide uses [Markdown](http://daringfireball.net/projects/markdown/) and [Markdown Extra](http://michelf.com/projects/php-markdown/extra/) for the documentation.  Here is a short intro to [Markdown syntax](http://kohanut.com/docs/using.markdown), as well as the [complete guide](http://daringfireball.net/projects/markdown/syntax), and the things [Markdown Extra adds](http://michelf.com/projects/php-markdown/extra/).  ((The userguide also adds some things we need to mention.))
+The userguide uses [Markdown](http://daringfireball.net/projects/markdown/) and [Markdown Extra](http://michelf.com/projects/php-markdown/extra/) for the documentation.  Here is a short intro to [Markdown syntax](http://kohanut.com/docs/using.markdown), as well as the [complete guide](http://daringfireball.net/projects/markdown/syntax), and the things [Markdown Extra adds](http://michelf.com/projects/php-markdown/extra/).  Also read what the userguide adds to markdown at the end of this readme.
 
 ### Userguide pages
 
@@ -77,3 +77,42 @@ To make pulling all the docs branches easier, the "docs" branch of [http://githu
 		git push <your name> docs
 
  1. Send a pull request on github.
+
+
+# What the userguide adds to markdown:
+
+In addition to the features and syntax of [Markdown](http://daringfireball.net/projects/markdown/) and [Markdown Extra](http://michelf.com/projects/php-markdown/extra/) the following apply to userguide pages and api documentation:
+
+### Namespacing
+
+The first thing to note is that all urls are "namespaced". The name of the module is automatically added to links and image urls, you do not need to include it.  For example, to link to the hello world tutorial page from another page in the Kohana userguide, you should use `[Hello World Tutorial](tutorials/hello-world)` rather than `(kohana/tutorials/hello-world)`.  To link to pages in a different section of the guide, you can use `../`, for example `[Cache](../cache/usage)`.
+
+### Notes
+
+If you put [!!] in front of line it will be a note, put in a box with a lightbulb.
+
+    [!!] This is a note.
+
+### Headers automatically get IDs
+
+Headers are automatically assigned an id, based on the content of the header, so each header can be linked to.  You can manually assign a different id using the syntax as defined in Markdown Extra.  If multiple headers have the same content, like if more than one header is "Examples", only the first will get be automatically assigned an id, so you should manually assign more descriptive ids.  For example:
+
+    ### Examples     {#header-id-examples}
+
+### API links
+
+You can make links to the api browser by wrapping any class name in brackets.  You may also include a function and it will link to that function.  All of the following will link to the API browser:
+
+    [Request]
+	[Request::factory]
+	[Request::factory()]
+
+If you want to have parameters, only put the brackets around the class and function (not the params), and put a backslash in front of the opening parenthesis. 
+
+	[Kohana::config]\('foobar','baz')
+
+### Including Views
+
+You may include a view by putting the name of the view in double curly brackets.  **If the view is not found, no exception or error will be shown!** The curly brackets and view will simply be shown an the page as is.
+
+    {{some/view}}
