@@ -26,7 +26,7 @@ Just submit a [bug report](http://dev.kohanaframework.org/projects/userguide3/is
 
 ### If you know git:
 
-**Bluehawk's forks all have a `docs` branch.  Please do all work in that branch.**  As a side note, the "docs" branch of <github.com/bluehawk/kohana> contains git submodule links to all the other "docs" branches.  The main Kohana docs are in <github.cm/bluehawk/core>. 
+**Bluehawk's forks all have a `docs` branch.  Please do all work in that branch.**  As a side note, the "docs" branch of [http://github.com/bluehawk/kohana] contains git submodule links to all the other "docs" branches, so you can clone that to easily get all the docs.  The main Kohana docs are in [http://github.com/bluehawk/core/tree/docs/guide/kohana/], and docs for each module are in each module in the guide folder.
 
 **Short version**: Fork bluehawk's fork of the module whose docs you wish to improve (e.g. `git://github.com/bluehawk/orm.git` or `git://github.com/bluehawk/core.git`), checkout the `docs` branch, make changes, and then send bluehawk a pull request.
 
