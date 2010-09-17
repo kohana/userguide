@@ -26,7 +26,7 @@ Just submit a [bug report](http://dev.kohanaframework.org/projects/userguide3/is
 
 ### If you know git:
 
-[!!] Bluehawk's forks all have a `docs` branch.  Please do all work in that branch.  As a side note, the "kohana" repo contains the index.php file, the (mostly empty) application folder, example.htaccess, and git submodule links to system and the other modules.  The "core" repo contains the system folder (and the main Kohana docs).  Each module has it's own repo, e.g. "orm", "auth", "database", etc. which contains the docs for that module.
+**Bluehawk's forks all have a `docs` branch.  Please do all work in that branch.**  As a side note, the "docs" branch of <github.com/bluehawk/kohana> contains git submodule links to all the other "docs" branches.  The main Kohana docs are in <github.cm/bluehawk/core>. 
 
 **Short version**: Fork bluehawk's fork of the module whose docs you wish to improve (e.g. `git://github.com/bluehawk/orm.git` or `git://github.com/bluehawk/core.git`), checkout the `docs` branch, make changes, and then send bluehawk a pull request.
 
