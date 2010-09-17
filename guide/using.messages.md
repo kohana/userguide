@@ -1,6 +1,6 @@
 # Message Basics
 
-Kohana messages are human friendly strings represented by a shorter word or phrase, called a "key". Messages are accessed using the [Kohana::message] method, which an return either an entire group of messages, or a single message.
+Kohana messages are human friendly strings represented by a shorter word or phrase, called a "key". Messages are accessed using the [Kohana::message] method, which returns either an entire group of messages, or a single message.
 
 As an example, when a user is not logged in and attempts to access a page that requires authentication, an error such as "You must be logged in to access this page" might be displayed. This message could be stored in the `auth` file with a `must_login` key:
 
