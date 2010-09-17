@@ -1,4 +1,16 @@
-## A brief explaination of how the userguide works:
+## What needs to be done?
+
+Most articles are stubs, with a couple links to pages to be used as a reference when writing the page.  The idea is to use the information on those links to help write the new ones.  Some of the old userguide pages can probably be mostly copied, with a few improvements, others will be better to be completely rewritten.  If you ever have questions, please feel free to jump in the kohana irc channel.
+
+## Guidelines
+
+Documentation should use complete sentences, good grammar, and be as clear as possible.  Use lots of example code, but make sure the examples follow the Kohana conventions and style.
+
+Try to commit often, with each commit only changing a file or two, rather than changing a ton of files and commiting it all at once.  This will make it easier to offer feedback and merge your changes.   Make sure your commit messages are clear and descriptive.  Good: "Added initial draft of hello world tutorial."  Bad: "working on docs".
+
+If you feel a menu needs to be rearranged or a module needs new pages, please open a [bug report](http://dev.kohanaframework.org/projects/userguide3/issues/new) to discuss it.
+
+## A brief explanation of how the userguide works:
 
 The userguide uses [Markdown](http://daringfireball.net/projects/markdown/) and [Markdown Extra](http://michelf.com/projects/php-markdown/extra/) for the documentation.  Here is a short intro to [Markdown syntax](http://kohanut.com/docs/using.markdown), as well as the [complete guide](http://daringfireball.net/projects/markdown/syntax), and the things [Markdown Extra adds](http://michelf.com/projects/php-markdown/extra/).  ((The userguide also adds some things we need to mention.))
 
@@ -8,7 +20,7 @@ Userguide pages are in the module they apply to, in `guide/<module>`. Documentat
 
 Each module has an index page at `guide/<module>/index.md`.
 
-Each module's menu is in `guide/<module>/menu.md`.  If you feel a menu need to be changed or a module needs new pages, please open a [bug report](http://dev.kohanaframework.org/projects/userguide3/issues/new) to discuss it.
+Each module's menu is in `guide/<module>/menu.md`. 
 
 ### Images
 
@@ -26,7 +38,9 @@ Just submit a [bug report](http://dev.kohanaframework.org/projects/userguide3/is
 
 ### If you know git:
 
-**Bluehawk's forks all have a `docs` branch.  Please do all work in that branch.**  As a side note, the "docs" branch of [http://github.com/bluehawk/kohana] contains git submodule links to all the other "docs" branches, so you can clone that to easily get all the docs.  The main Kohana docs are in [http://github.com/bluehawk/core/tree/docs/guide/kohana/], and docs for each module are in each module in the guide folder.
+**Bluehawk's forks all have a `docs` branch.  Please do all work in that branch.**
+
+To make pulling all the docs branches easier, the "docs" branch of [http://github.com/bluehawk/kohana](http://github.com/bluehawk/kohana) contains git submodule links to all the other "docs" branches, so you can clone that to easily get all the docs.  The main Kohana docs are in [http://github.com/bluehawk/core/tree/docs/guide/kohana/], and docs for each module are in each module in the guide folder. (Again, make sure you are in the `docs` branch.)
 
 **Short version**: Fork bluehawk's fork of the module whose docs you wish to improve (e.g. `git://github.com/bluehawk/orm.git` or `git://github.com/bluehawk/core.git`), checkout the `docs` branch, make changes, and then send bluehawk a pull request.
 
