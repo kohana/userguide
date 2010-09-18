@@ -16,6 +16,30 @@ $(document).ready(function()
 	// IE is stupid
 	if ( ! $.browser.msie) {
 		
+		
+		// Api browser, clickable Titles
+		var categories = $("#menu li").find('span');
+		// When you click the arrow, hide or show the menu
+		categories.click(function()
+		{
+			var menu = $(this).next('ol');
+			var link = $(this).parent();
+			if (menu.is(':visible'))
+			{
+				// hide menu
+				menu.stop(true,true).slideUp('fast');
+				link.addClass('toggle-close').removeClass('toggle-open');
+			}
+			else
+			{
+				// show menu
+				menu.stop(true,true).slideDown('fast');
+				link.addClass('toggle-open').removeClass('toggle-close');
+			}
+			return
+		});
+		
+		
 		// Collapsable menus
 		$('#menu li').has('li').each(function()
 		{
@@ -40,7 +64,7 @@ $(document).ready(function()
 					link.addClass('toggle-open').removeClass('toggle-close');
 				}
 				return
-			})
+			});
 			
 			// Hide all menus that do not contain the active link
 			menu.not(':has(a[href="'+ window.location.pathname +'"])').hide();
