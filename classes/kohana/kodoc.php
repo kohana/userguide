@@ -219,7 +219,7 @@ class Kohana_Kodoc {
 						}
 					break;
 					case 'throws':
-						if (preg_match('/^(\w+)\W(.*)$/',$text,$matches))
+						if (preg_match('/^(\w+)\W(.*)$/', $text, $matches))
 						{
 							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])), $matches[1]).' '.$matches[2];
 						}
@@ -276,10 +276,7 @@ class Kohana_Kodoc {
 	 */
 	public static function source($file, $start, $end)
 	{
-		if ( ! $file)
-		{
-			return FALSE;
-		}
+		if ( ! $file) return FALSE;
 
 		$file = file($file, FILE_IGNORE_NEW_LINES);
 
@@ -313,7 +310,7 @@ class Kohana_Kodoc {
 			return TRUE;
 
 		// Get the package tags for this class (as an array)
-		$packages = Arr::get($class->tags,'package',Array('None'));
+		$packages = Arr::get($class->tags, 'package', array('None'));
 
 		$show_this = FALSE;
 
@@ -321,7 +318,7 @@ class Kohana_Kodoc {
 		foreach ($packages as $package)
 		{
 			// If this package is in the allowed packages, set show this to true
-			if (in_array($package,explode(',',$api_packages)))
+			if (in_array($package, explode(',', $api_packages)))
 				$show_this = TRUE;
 		}
 

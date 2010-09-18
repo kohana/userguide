@@ -55,8 +55,8 @@ class Controller_Userguide extends Controller_Template {
 	{
 		$this->template->title = "Userguide";
 		$this->template->breadcrumb = array('User Guide');
-		$this->template->content = View::factory('userguide/index',array('modules'=>Kohana::config('userguide.modules')));
-		$this->template->menu = View::factory('userguide/menu',array('modules'=>Kohana::config('userguide.modules')));
+		$this->template->content = View::factory('userguide/index', array('modules' => Kohana::config('userguide.modules')));
+		$this->template->menu = View::factory('userguide/menu', array('modules' => Kohana::config('userguide.modules')));
 	}
 	
 	// Display an error if a page isn't found
@@ -64,7 +64,7 @@ class Controller_Userguide extends Controller_Template {
 	{
 		$this->request->status = 404;
 		$this->template->title = "Userguide - Error";
-		$this->template->content = View::factory('userguide/error',array('message'=>$message));
+		$this->template->content = View::factory('userguide/error',array('message' => $message));
 
 		// If we are in a module and that module has a menu, show that, otherwise use the index page menu
 		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu'))
@@ -76,12 +76,13 @@ class Controller_Userguide extends Controller_Template {
 			$this->template->menu = Markdown(file_get_contents($menu));
 			$this->template->breadcrumb = array(
 				$this->guide->uri() => 'User Guide',
-				$this->guide->uri(array('module'=>$module)) => Kohana::config("userguide.modules.$module.name"),
-				'Error');
+				$this->guide->uri(array('module' => $module)) => Kohana::config('userguide.modules.'.$module.'.name'),
+				'Error'
+			);
 		}
 		else
 		{
-			$this->template->menu = View::factory('userguide/menu',array('modules'=>Kohana::config('userguide.modules')));
+			$this->template->menu = View::factory('userguide/menu',array('modules' => Kohana::config('userguide.modules')));
 			$this->template->breadcrumb = array($this->guide->uri() => 'User Guide','Error');
 		}
 	}
@@ -92,7 +93,7 @@ class Controller_Userguide extends Controller_Template {
 		$page = $this->request->param('page');
 
 		// Trim trailing slash
-		$page = rtrim($page,'/');
+		$page = rtrim($page, '/');
 
 		// If no module specified, show the user guide index page, which lists the modules.
 		if ( ! $module)
@@ -126,7 +127,7 @@ class Controller_Userguide extends Controller_Template {
 		Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
 
 		// Set the page title
-		$this->template->title = $page == 'index' ? Kohana::config("userguide.modules.$module.name") : $this->title($page);
+		$this->template->title = $page == 'index' ? Kohana::config('userguide.modules.'.$module.'.name') : $this->title($page);
 
 		// Parse the page contents into the template
 		$this->template->content = Markdown(file_get_contents($file));
@@ -138,12 +139,12 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->bind('breadcrumb', $breadcrumb);
 		
 		// Bind the copyright
-		$this->template->copyright = Kohana::config("userguide.modules.$module.copyright");
+		$this->template->copyright = Kohana::config('userguide.modules.'.$module.'.copyright');
 
 		// Add the breadcrumb trail
 		$breadcrumb = array();
 		$breadcrumb[$this->guide->uri()] = __('User Guide');
-		$breadcrumb[$this->guide->uri(array('module'=>$module))] = Kohana::config("userguide.modules.$module.name");
+		$breadcrumb[$this->guide->uri(array('module' => $module))] = Kohana::config('userguide.modules.'.$module.'.name');
 		$breadcrumb[] = $this->template->title;
 	}
 
@@ -160,7 +161,7 @@ class Controller_Userguide extends Controller_Template {
 			try
 			{
 				$_class = Kodoc_Class::factory($class);
-			
+
 				if ( ! Kodoc::show_class($_class))
 					throw new Exception(__('That class is hidden'));
 			}
@@ -265,7 +266,7 @@ class Controller_Userguide extends Controller_Template {
 
 	public function file($page)
 	{
-		return Kohana::find_file('guide',$page,'md');
+		return Kohana::find_file('guide', $page, 'md');
 	}
 
 	public function section($page)

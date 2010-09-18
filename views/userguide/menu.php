@@ -5,11 +5,11 @@
 	<ul>
 	<?php foreach($modules as $url => $options): ?>
 	
-		<li><?php echo html::anchor(Route::get('docs/guide')->uri(array('module'=>$url)),$options['name']) ?></li>
+		<li><?php echo html::anchor(Route::get('docs/guide')->uri(array('module' => $url)), $options['name']) ?></li>
 	
 	<?php endforeach; ?>
 	</ul>
-	
+
 <?php else: ?>
 
 	<p class="error">No modules.</p>

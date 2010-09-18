@@ -23,8 +23,8 @@
 			</div>
 			<div id="mode">
 				<?php $route = Request::instance()->route; ?>
-				<?php echo HTML::anchor(Route::get('docs/guide')->uri(),'User Guide',Route::get('docs/guide') == $route ? array('class'=>'current'):array()) ?>
-				<?php echo HTML::anchor(Route::get('docs/api')->uri(),'API Browser',Route::get('docs/api') == $route ? array('class'=>'current'):array()) ?>
+				<?php echo HTML::anchor(Route::get('docs/guide')->uri(), 'User Guide',Route::get('docs/guide') == $route ? array('class' => 'current'):array()) ?>
+				<?php echo HTML::anchor(Route::get('docs/api')->uri(), 'API Browser',Route::get('docs/api') == $route ? array('class' => 'current'):array()) ?>
 			</div>
 		</div>
 	</div>
