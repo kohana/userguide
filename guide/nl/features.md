@@ -1,1 +1,0 @@
-This page lists the features of Kohana v3
