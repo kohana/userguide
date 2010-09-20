@@ -42,19 +42,13 @@ Kohana gebruikt underscore namen, geen camelCase.
 
 	<?php
 
-	// Library, gebruikt _Core achtervoegsel
-	class Beer_Core {
+	// Controller class, gebruikt Controller_ voorvoegsel
+	class Controller_Apple extends Controller {
 
-	// Library extension, gebruikt geen achtervoegsel
-	class Beer extends Beer_Core
+	// Model class, gebruikt Model_ voorvoegsel
+	class Model_Cheese extends Model {
 
-	// Controller class, gebruikt _Controller achtervoegsel
-	class Apple_Controller extends Controller {
-
-	// Model class, gebruikt _Model achtervoegsel
-	class Cheese_Model extends Model {
-
-	// Helper class
+	// Regular class
 	class peanut {
 
 Wanneer je een instantie aanmaakt van een class, gebruik dan haakjes als je niets meegeeft aan de constructor:

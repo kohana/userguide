@@ -78,7 +78,7 @@ Het verwijderen van sessie- of cookie-gegevens wordt gedaan met behulp van de `d
 
 Zowel cookies als sessies hebben verschillende configuratie-instellingen die van invloed zijn hoe gegevens worden opgeslagen. Controleer altijd deze instellingen voordat u uw applicatie live zet, omdat veel van die instellingen een rechtstreeks effect zal hebben op de veiligheid van uw applicatie.
 
-## Cookie Instellingen
+## Cookie Instellingen {#cookie-settings}
 
 Al de cookie instellingen worden verandert met behulp van statische properties. Je kan deze instellingen veranderen in `bootstrap.php` of door een [class extension](using.autoloading#class-extension) te gebruiken.
 

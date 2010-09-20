@@ -70,7 +70,7 @@ ORM ondersteunt de meeste krachtige [Database] methoden voor het doorzoeken van 
 
 	// Dit zal alle gebruikers nemen met de naam Bob
 	$users = ORM::factory('user')
-		...
+		->where('name', '=', 'Bob')
 		->find_all();
 
 Wanneer je een lijst van modellen ontvangt met behulp van [ORM::find_all], kan je deze doorlopen zoals je doet met database resultaten:
@@ -83,7 +83,7 @@ Wanneer je een lijst van modellen ontvangt met behulp van [ORM::find_all], kan j
 Een zeer handige functie van ORM is de [ORM::as_array] methode die het record zal teruggeven als een array. Indien je dit gebruikt met [ORM::find_all], zal een array van alle records worden teruggegeven. Een goed voorbeeld van wanneer dit nuttig is, is voor select in het HTML formulier:
 
 	// Toon een dropdown/select met daarin alle gebruikersnamen (id als value van de options)
-	form::select('user', ORM::factory('user')->find_all()->as_array('id', 'username') ...
+	echo Form::select('user', ORM::factory('user')->find_all()->as_array('id', 'username'));
 
 ### Het aantal records tellen
 
@@ -119,11 +119,11 @@ Voor het opslaan van gegevens/properties die niet bestaan in de tabel van het mo
 	class Model_User extends ORM
 	{
 		...
-		protected $_ignored_columns = array('field1', 'field2', ...)
+		protected $_ignored_columns = array('field1', 'field2', …);
 		...
 	}
 
-Meerdere key => value paren kunnen worden ingesteld door gebruik te maken van de [ORM::values] methode
+Meerdere key => value paren kunnen worden ingesteld door gebruik te maken van de [ORM::values] methode.
 
 	$user->values(array('username' => 'Joe', 'password' => 'bob'));
 
@@ -156,11 +156,11 @@ Je kan meerdere records tegelijk veranderen met de [ORM::save_all] methode:
 
 De `_updated_column` en `_created_column` members staan ter beschikking om automatisch aangepast te worden wanneer een model wordt gecreëerd of aangepast. Ze worden standaard niet gebruikt. Om ze te gebruiken:
 
-	// date_created is de kolom die wordt gebruikt om de aanmaak datum op te slaan. Gebruik TRUE om een timestamp op te slaan
-	protected $_created_column = array('date_created' => TRUE);
+	// date_created is de kolom die wordt gebruikt om de aanmaak datum op te slaan. Gebruik format => TRUE om een timestamp op te slaan
+	protected $_created_column = array('date_created', 'format' => TRUE);
 
 	// date_modified is de kolom die wordt gebruikt om de datum op te slaan wanneer het item is aangepast. In dit geval wordt een string gebruikt om een date() formaat te specificeren
-	protected $_updated_column = array('date_modified' => 'm/d/Y');
+	protected $_updated_column = array('date_modified', 'format' => 'm/d/Y');
 
 ### Verwijderen van records
 
@@ -168,7 +168,7 @@ Records worden verwijderd met [ORM::delete] en [ORM::delete_all]. Deze methoden 
 
 ### Relaties
 
-ORM ondersteunt zeer goed relateies. Ruby heeft een goede tutorial omtrent relaties op [http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html)
+ORM ondersteunt zeer goed relateies. Ruby heeft een [goede tutorial omtrent relaties](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html).
 
 #### Belongs-To en Has-Many
 

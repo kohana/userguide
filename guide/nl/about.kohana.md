@@ -10,6 +10,6 @@ Alles kan worden uitgebreid door het unieke design van het [filesystem](about.fi
 
 Om je te helpen je applicatie te beveiligen zijn er tools voor [XSS te verwijderen](security.xss), [input validatie](security.validation), [gesigneerde cookies](security.cookies), [formulieren](security.forms) en [HTML](security.html) generators toegevoegd aan het systeem. De [database](security.database) layer voorkomt [SQL injectie](http://wikipedia.org/wiki/SQL_Injection). En natuurlijk, alle officiële code is met zorg geschreven en herbekeken inzake veiligheid.
 
-## Deze documentatie trekt nergens op!
+## Vul mee deze documentatie aan
 
-We zijn keihard en volop bezig om je van een complete documentatie te voorzien. Indien je problemen ondervindt bij het zoeken van een antwoord, bekijk dan de [onofficiële wiki (en)](http://kerkness.ca/wiki/doku.php). Als je iets wilt toevoegen of wijzigen in de documentatie, gelieve dan [de gebruiksaanwijzing te forken](http://github.com/kohana/userguide), uw veranderingen te maken, en een pull request zenden. Als je nog geen ervaring hebt met git kan je altijd een [feature request](http://dev.kohanaframework.org/projects/kohana3/issues) aanmaken (vereist registratie).
+We zijn keihard en volop bezig om je van een complete documentatie te voorzien. Om deze documentatie te helpen verbeteren, gelieve dan de userguide te [forken](http://github.com/kohana/userguide), uw aanpassingen te doen en een pull request te sturen. Als je nog geen ervaring hebt met git kan je altijd een [feature request](http://dev.kohanaframework.org/projects/kohana3/issues) aanmaken (vereist registratie).
