@@ -10,7 +10,27 @@
  */
 class Kohana_Kodoc {
 
-	public static $regex_class_method = '([a-z_]+)(?:::([a-z_]+))?(?:\(\))?';
+	public static $regex_class_method = '(([a-z_]+)(?:::([a-z_]+))?(?:\(\))?)';
+
+	/**
+	 * Make a class#method API link using an array of matches from the $regex_class_method regex
+	 *
+	 * @param   array   $matches    array( 1 => link text, 2 => class name, [3 => method name] )
+	 * @return  string
+	 */
+	public static function link_class_method($matches)
+	{
+		$link = $matches[1];
+		$class = $matches[2];
+		$method = NULL;
+
+		if (isset($matches[3]))
+		{
+			$method = '#'.$matches[3];
+		}
+
+		return HTML::anchor(Route::get('docs/api')->uri(array('class' => $class)).$method, $link);
+	}
 
 	public static function factory($class)
 	{
@@ -233,15 +253,7 @@ class Kohana_Kodoc {
 					case 'uses':
 						if (preg_match('/^'.Kodoc::$regex_class_method.'$/i', $text, $matches))
 						{
-							// Make a class#method API link
-							if (isset($matches[2]))
-							{
-								$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])).'#'.$matches[2], $text);
-							}
-							else
-							{
-								$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])), $text);
-							}
+							$text = Kodoc::link_class_method($matches);
 						}
 					break;
 					// Don't show @access lines, they are shown elsewhere
