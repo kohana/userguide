@@ -177,52 +177,14 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	/**
 	 * Parses links to the API browser.
 	 *
-	 *     [Class_Name] or [Class::$property]
+	 *     [Class_Name], [Class::method] or [Class::$property]
 	 *
 	 * @param   string   span text
 	 * @return  string
 	 */
 	public function doAPI($text)
 	{
-		return preg_replace_callback('/\[([a-z_]++(?:::\$?[a-z_]++)?(?:\(\))?)\]/i', array($this, '_convert_api_link'), $text);
-	}
-
-	public function _convert_api_link($matches)
-	{
-		static $route;
-
-		if ($route === NULL)
-		{
-			$route = Route::get('docs/api');
-		}
-
-		$link = $matches[1];
-
-		if (strpos($link, '::'))
-		{
-			// Split the class and method
-			list($class, $method) = explode('::', $link, 2);
-			
-			// Trim the optional parenthesis for methods
-			$method = rtrim($method,'()');
-
-			// If the first char is a $ its a property, e.g. Kohana::$base_url
-			if ($method[0] === '$')
-			{
-				$method = 'property:'.substr($method, 1);
-			}
-
-			// Add the id symbol to the method
-			$method = '#'.$method;
-		}
-		else
-		{
-			// Class with no method
-			$class  = $link;
-			$method = NULL;
-		}
-
-		return HTML::anchor($route->uri(array('class' => $class)).$method, $link);
+		return preg_replace_callback('/\['.Kodoc::$regex_class_member.'\]/i', 'Kodoc::link_class_member', $text);
 	}
 
 	/**

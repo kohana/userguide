@@ -10,10 +10,13 @@
  */
 class Kohana_Kodoc {
 
-	public static $regex_class_member = '(([a-z_]+)(?:::(\$?[a-z_]+))?(?:\(\))?)';
+	/**
+	 * @var string  PCRE fragment for matching 'Class', 'Class::method', 'Class::method()' or 'Class::$property'
+	 */
+	public static $regex_class_member = '(([a-z_]++)(?:::(\$?[a-z_]++))?(?:\(\))?)';
 
 	/**
-	 * Make a class#member API link using an array of matches from the $regex_class_member regex
+	 * Make a class#member API link using an array of matches from [Kodoc::$regex_class_member]
 	 *
 	 * @param   array   $matches    array( 1 => link text, 2 => class name, [3 => member name] )
 	 * @return  string
