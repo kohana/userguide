@@ -206,6 +206,8 @@ h6:hover a.permalink {
 		#menu ul li.toggle-open, #menu ol li.toggle-open { background-position: -2px -42px; }
 		#menu ul li a.menu-toggle, #menu ol li a.menu-toggle { width:14px; height:18px; position:absolute; left:0px; text-decoration:none; cursor:pointer;}
 		#menu ul li a.current, #menu ol li a.current {font-weight:bold;}
+		
+	#menu li span { cursor:pointer; }
 
 #header .container {
 	margin:0 auto 0;
