@@ -10,6 +10,8 @@
  */
 class Kohana_Kodoc {
 
+	public static $regex_class_method = '([a-z_]+)(?:::([a-z_]+))?(?:\(\))?';
+
 	public static function factory($class)
 	{
 		return new Kodoc_Class($class);
@@ -229,7 +231,7 @@ class Kohana_Kodoc {
 						}
 					break;
 					case 'uses':
-						if (preg_match('/^([a-z_]+)(?:::([a-z_]+))?(?:\(\))?$/i', $text, $matches))
+						if (preg_match('/^'.Kodoc::$regex_class_method.'$/i', $text, $matches))
 						{
 							// Make a class#method API link
 							if (isset($matches[2]))
