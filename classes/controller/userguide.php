@@ -73,7 +73,7 @@ class Controller_Userguide extends Controller_Template {
 			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/'.$module.'/';
 			Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
 		
-			$this->template->menu = Markdown(file_get_contents($menu));
+			$this->template->menu = Markdown($this->_get_all_menu_markdown());
 			$this->template->breadcrumb = array(
 				$this->guide->uri() => 'User Guide',
 				$this->guide->uri(array('module' => $module)) => Kohana::config('userguide.modules.'.$module.'.name'),
@@ -133,7 +133,7 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->content = Markdown(file_get_contents($file));
 
 		// Attach this module's menu to the template
-		$this->template->menu = Markdown(file_get_contents($this->file($module.'/menu')));
+		$this->template->menu = Markdown($this->_get_all_menu_markdown());
 		
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
@@ -301,11 +301,17 @@ class Controller_Userguide extends Controller_Template {
 		
 		if (empty($markdown))
 		{
-			// Get core menu items
+			// Get menu items
 			$file = $this->file($this->request->param('module').'/menu');
 	
 			if ($file AND $text = file_get_contents($file))
 			{
+				// Add spans around non-link categories. This is a terrible hack.
+				//echo Kohana::debug($text);
+				
+				//$text = preg_replace('/(\s*[\-\*\+]\s*)(.*)/','$1<span>$2</span>',$text);
+				$text = preg_replace('/^(\s*[\-\*\+]\s*)([^\[\]]+)$/m','$1<span>$2</span>',$text);
+				//echo Kohana::debug($text);
 				$markdown .= $text;
 			}
 			

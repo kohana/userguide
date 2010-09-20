@@ -22,7 +22,7 @@ $(document).ready(function()
 		// When you click the arrow, hide or show the menu
 		categories.click(function()
 		{
-			var menu = $(this).next('ol');
+			var menu = $(this).next('ol,ul');
 			var link = $(this).parent();
 			if (menu.is(':visible'))
 			{
