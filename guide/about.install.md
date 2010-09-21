@@ -32,7 +32,7 @@ There are a few things you'll want to do with your application before moving int
 3. Turn on APC or some kind of opcode caching. 
    This is the single easiest performance boost you can make to PHP itself. The more complex your application, the bigger the benefit of using opcode caching.
 
-[!!] Note: The default bootstrap will set Kohana::$environment = $_ENV['KOHANA_ENV'] if set. Docs on how to supply this variable are available in your web server's documentation (e.g. [Apache](http://httpd.apache.org/docs/1.3/mod/mod_env.html#setenv), [Lighttpd](http://redmine.lighttpd.net/wiki/1/Docs:ModSetEnv#Options)). This is considered better practice than many alternative methods to set Kohana::$enviroment.
+[!!] Note: The default bootstrap will set Kohana::$environment = $_ENV['KOHANA_ENV'] if set. Docs on how to supply this variable are available in your web server's documentation (e.g. [Apache](http://httpd.apache.org/docs/1.3/mod/mod_env.html#setenv), [Lighttpd](http://redmine.lighttpd.net/wiki/1/Docs:ModSetEnv#Options), [Nginx](http://wiki.nginx.org/NginxHttpFcgiModule#fastcgi_param)). This is considered better practice than many alternative methods to set Kohana::$enviroment.
 
 		/**
 		 * Set the environment string by the domain (defaults to Kohana::DEVELOPMENT).
