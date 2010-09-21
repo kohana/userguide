@@ -13,7 +13,7 @@ class Kohana_Kodoc {
 	/**
 	 * @var string  PCRE fragment for matching 'Class', 'Class::method', 'Class::method()' or 'Class::$property'
 	 */
-	public static $regex_class_member = '(([a-z_]++)(?:::(\$?[a-z_]++))?(?:\(\))?)';
+	public static $regex_class_member = '((\w++)(?:::(\$?\w++))?(?:\(\))?)';
 
 	/**
 	 * Make a class#member API link using an array of matches from [Kodoc::$regex_class_member]
