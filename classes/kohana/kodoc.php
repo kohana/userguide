@@ -10,6 +10,39 @@
  */
 class Kohana_Kodoc {
 
+	/**
+	 * @var string  PCRE fragment for matching 'Class', 'Class::method', 'Class::method()' or 'Class::$property'
+	 */
+	public static $regex_class_member = '(([a-z_]++)(?:::(\$?[a-z_]++))?(?:\(\))?)';
+
+	/**
+	 * Make a class#member API link using an array of matches from [Kodoc::$regex_class_member]
+	 *
+	 * @param   array   $matches    array( 1 => link text, 2 => class name, [3 => member name] )
+	 * @return  string
+	 */
+	public static function link_class_member($matches)
+	{
+		$link = $matches[1];
+		$class = $matches[2];
+		$member = NULL;
+
+		if (isset($matches[3]))
+		{
+			// If the first char is a $ it is a property, e.g. Kohana::$base_url
+			if ($matches[3][0] === '$')
+			{
+				$member = '#property:'.substr($matches[3], 1);
+			}
+			else
+			{
+				$member = '#'.$matches[3];
+			}
+		}
+
+		return HTML::anchor(Route::get('docs/api')->uri(array('class' => $class)).$member, $link);
+	}
+
 	public static function factory($class)
 	{
 		return new Kodoc_Class($class);
@@ -229,17 +262,9 @@ class Kohana_Kodoc {
 						}
 					break;
 					case 'uses':
-						if (preg_match('/^([a-z_]+)(?:::([a-z_]+))?(?:\(\))?$/i', $text, $matches))
+						if (preg_match('/^'.Kodoc::$regex_class_member.'$/i', $text, $matches))
 						{
-							// Make a class#method API link
-							if (isset($matches[2]))
-							{
-								$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])).'#'.$matches[2], $text);
-							}
-							else
-							{
-								$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])), $text);
-							}
+							$text = Kodoc::link_class_member($matches);
 						}
 					break;
 					// Don't show @access lines, they are shown elsewhere
