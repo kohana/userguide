@@ -31,6 +31,8 @@ Er zijn enkele dingen dat je best doet met je applicatie vooraleer je deze in pr
    Zie onderstaand voorbeeld van Shadowhand's [wingsc.com broncode](http://github.com/shadowhand/wingsc).
 3. Zet APC of een andere soort opcode caching aan. Dit is het enige en eenvoudigste manier om de performantie te verbeteren dat je kunt doen in PHP zelf. Hoe complexer je applicatie, hoe groter het voordeel van opcode caching.
 
+[!!] Opmerking: De standaard bootstrap zal Kohana::$environment = $_ENV['KOHANA_ENV'] instellen indien ingesteld. Documentatie hoe je deze variable moet invullen kan je vinden in je webservers documentatie (e.g. [Apache](http://httpd.apache.org/docs/1.3/mod/mod_env.html#setenv), [Lighttpd](http://redmine.lighttpd.net/wiki/1/Docs:ModSetEnv#Options), [Nginx](http://wiki.nginx.org/NginxHttpFcgiModule#fastcgi_param))). Deze manier wordt als beste beschouwd in vergelijking met de alternatieve manieren om Kohana::$environment in te stellen.
+
 		/**
 		 * Stel de omgeving in aan de hand van het domein (standaard Kohana::DEVELOPMENT).
 		 */
