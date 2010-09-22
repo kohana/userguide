@@ -72,7 +72,7 @@ ORM supports most of the [Database] methods for powerful searching of your model
 	$users = ORM::factory('user')
 		->where('name', '=', 'Bob')
 		->find_all();
-	
+
 When you are retrieving a list of models using [ORM::find_all], you can iterate through them as you do with database results:
 
 	foreach ($users as $user)
@@ -104,10 +104,10 @@ If you wish to count the total number of users for a given query, while only ret
 
 ### Accessing Model Properties
 
-All model properties are accessible using the `__get` and `__set` magic methods. 
+All model properties are accessible using the `__get` and `__set` magic methods.
 
 	$user = ORM::factory('user', 5);
-	
+
 	// Output user name
 	echo $user->name;
 
@@ -157,10 +157,11 @@ You can update multiple records by using the [ORM::save_all] method:
 The `_updated_column` and `_created_column` members are provided to automatically be updated when a model is updated and created. These are not used by default. To use them:
 
 	// date_created is the column used for storing the creation date. Use format => TRUE to store a timestamp.
-	protected $_created_column = array('date_created', 'format' => TRUE);
+	protected $_created_column = array('column' => 'date_created', 'format' => TRUE);
+
 
 	// date_modified is the column used for storing the modified date. In this case, a string specifying a date() format is used.
-	protected $_updated_column = array('date_modified', 'format' => 'm/d/Y');
+	protected $_updated_column = array('column' => 'date_modified', 'format' => 'm/d/Y');
 
 ### Deleting Records
 
@@ -195,7 +196,7 @@ To access a school's students, you would use:
 By default, ORM will look for a `school_id` model in the student table. This can be overriden by using the `foreign_key` attribute:
 
 	protected $_belongs_to = array('school' => array('foreign_key' => 'schoolID'));
-	
+
 The foreign key should be overridden in both the student and school models.
 
 #### Has-One
@@ -239,7 +240,7 @@ To access the related objects, use:
 	$class->students->find_all();
 
 ### Validation
-	
+
 ORM is integrated tightly with the [Validate] library. The ORM provides the following members for validation:
 
 * _rules
@@ -248,7 +249,7 @@ ORM is integrated tightly with the [Validate] library. The ORM provides the foll
 * _labels
 
 #### `_rules`
-	
+
 	protected $_rules = array
 	(
 		'username' => array('not_empty' => array()),
@@ -258,7 +259,7 @@ ORM is integrated tightly with the [Validate] library. The ORM provides the foll
 `username` will be checked to make sure it's not empty. `email` will be checked to also ensure it is a valid email address. The empty arrays passed as values can be used to provide optional additional parameters to these validate method calls.
 
 #### `_callbacks`
-	
+
 	protected $_callbacks = array
 	(
 		'username' => array('username_unique'),
@@ -281,7 +282,7 @@ ORM is integrated tightly with the [Validate] library. The ORM provides the foll
 	);
 
 `TRUE` indicates that the `trim` filter is to be used on all fields. `username` will be filtered through `stripslashes` before it is validated. The empty arrays passed as values can be used to provide additional parameters to these filter method calls.
-	
+
 #### Checking if the Object is Valid
 
 Use [ORM::check] to see if the object is currently valid.
