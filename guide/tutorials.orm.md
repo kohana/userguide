@@ -159,7 +159,6 @@ The `_updated_column` and `_created_column` members are provided to automaticall
 	// date_created is the column used for storing the creation date. Use format => TRUE to store a timestamp.
 	protected $_created_column = array('column' => 'date_created', 'format' => TRUE);
 
-
 	// date_modified is the column used for storing the modified date. In this case, a string specifying a date() format is used.
 	protected $_updated_column = array('column' => 'date_modified', 'format' => 'm/d/Y');
 
