@@ -36,7 +36,7 @@ Kohana применяет [git](http://git-scm.com/) для контроля в�
 	cp contrib/completion/git-completion.bash ~/.git-completion.bash
 	cd ~
 	rm -rf /tmp/git
-	echo -e "source ~/.git-completion.bash" >> .profile
+	echo -e "source ~/.git-completion.bash" >> ~/.bash_profile
 
 ### Всегда используйте LF в окончаниях строк
 

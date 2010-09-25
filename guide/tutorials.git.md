@@ -36,7 +36,7 @@ These lines will do all the dirty work for you, so auto-completion can work for 
     cp contrib/completion/git-completion.bash ~/.git-completion.bash
     cd ~
     rm -rf /tmp/git
-    echo -e "source ~/.git-completion.bash" >> .profile
+    echo -e "source ~/.git-completion.bash" >> ~/.bash_profile
 	
 ### Always use LF line endings
 

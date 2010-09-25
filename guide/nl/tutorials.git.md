@@ -36,7 +36,7 @@ Deze lijnen code doen al het vuile werk voor je zodat automatische aanvulling ka
     cp contrib/completion/git-completion.bash ~/.git-completion.bash
     cd ~
     rm -rf /tmp/git
-    echo -e "source ~/.git-completion.bash" >> .profile
+    echo -e "source ~/.git-completion.bash" >> ~/.bash_profile
 	
 ### Gebruik altijd LF als regeleinden
 
