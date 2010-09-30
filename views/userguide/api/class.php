@@ -66,6 +66,8 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 	</div>
 </div>
 
+<div class="clearfix"></div>
+
 <?php if ($doc->constants): ?>
 <div class="constants">
 <h1 id="constants"><?php echo __('Constants'); ?></h1>

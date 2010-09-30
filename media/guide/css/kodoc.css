@@ -127,6 +127,11 @@ h6:hover a.permalink {
 	display:inline;
 }
 
+#main img {
+	padding:1em;
+	outline:1px solid #999;
+}
+
 
 /* layout stuff */
 
