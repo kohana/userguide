@@ -43,6 +43,7 @@ a:hover {
 
 code {
 	color:#6BAA3D;
+	font-family: Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
 }
 
 pre {
