@@ -31,6 +31,19 @@ ul ul, ul ol, ol ol, ol ul {
 	margin-bottom:0;
 }
 
+dl {
+	
+}
+
+dt {
+	font-weight:bold;
+	margin-top:1.5em;
+}
+
+dd {
+	margin-left:1.5em;
+}
+
 a {
 	color:#3E7B9A;
 	text-decoration:none;
@@ -131,6 +144,7 @@ h6:hover a.permalink {
 #main img {
 	padding:1em;
 	outline:1px solid #999;
+	max-width:772px;
 }
 
 
