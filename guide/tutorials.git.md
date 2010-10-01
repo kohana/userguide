@@ -43,7 +43,7 @@ These lines will do all the dirty work for you, so auto-completion can work for 
 This is the convention that we make for Kohana. Please set this settings for your own good and especially if you want to contribute to the Kohana community.
 
     git config --global core.autocrlf input
-    git config --global core.savecrlf true
+    git config --global core.safecrlf true
 
 [!!] More information about line endings at [github](http://help.github.com/dealing-with-lineendings/)
 
