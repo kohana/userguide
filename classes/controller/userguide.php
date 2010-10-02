@@ -55,8 +55,8 @@ class Controller_Userguide extends Controller_Template {
 	{
 		$this->template->title = "Userguide";
 		$this->template->breadcrumb = array('User Guide');
-		$this->template->content = View::factory('userguide/index', array('modules' => Kohana::config('userguide.modules')));
-		$this->template->menu = View::factory('userguide/menu', array('modules' => Kohana::config('userguide.modules')));
+		$this->template->content = View::factory('userguide/index', array('modules' => $this->_modules()));
+		$this->template->menu = View::factory('userguide/menu', array('modules' => $this->_modules()));
 	}
 	
 	// Display an error if a page isn't found
@@ -82,7 +82,7 @@ class Controller_Userguide extends Controller_Template {
 		}
 		else
 		{
-			$this->template->menu = View::factory('userguide/menu',array('modules' => Kohana::config('userguide.modules')));
+			$this->template->menu = View::factory('userguide/menu',array('modules' => $this->_modules()));
 			$this->template->breadcrumb = array($this->guide->uri() => 'User Guide','Error');
 		}
 	}
@@ -318,6 +318,21 @@ class Controller_Userguide extends Controller_Template {
 		}
 		
 		return $markdown;
+	}
+	
+	// Get the list of modules from the config, and reverses it so it displays in the order the modules are added, but move Kohana to the top.
+	protected function _modules()
+	{
+		$modules = array_reverse(Kohana::config('userguide.modules'));
+		
+		if (isset($modules['kohana']))
+		{
+			$kohana = $modules['kohana'];
+			unset($modules['kohana']);
+			array_unshift($modules, $kohana);
+		}
+		
+		return $modules;
 	}
 
 } // End Userguide
