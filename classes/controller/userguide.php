@@ -329,7 +329,7 @@ class Controller_Userguide extends Controller_Template {
 		{
 			$kohana = $modules['kohana'];
 			unset($modules['kohana']);
-			array_unshift($modules, $kohana);
+			$modules = array_merge(array('kohana' => $kohana), $modules);
 		}
 		
 		return $modules;
