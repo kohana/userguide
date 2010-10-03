@@ -12,7 +12,7 @@ body {
 	font:14px/1.5 Helvetica,Arial;
 }
 
-p, ul {
+p, ul, ol {
 	margin:1.5em 0;
 }
 
