@@ -203,9 +203,6 @@ class Controller_Userguide extends Controller_Template {
 
 	public function action_media()
 	{
-		// Generate and check the ETag for this file
-		//$this->request->check_cache(sha1($this->request->uri));
-
 		// Get the file path from the request
 		$file = $this->request->param('file');
 
@@ -217,6 +214,9 @@ class Controller_Userguide extends Controller_Template {
 
 		if ($file = Kohana::find_file('media/guide', $file, $ext))
 		{
+			// Check if the browser sent an "if-none-match: <etag>" header, and tell if the file hasn't changed
+			$this->request->check_cache(sha1($this->request->uri).filemtime($file));
+			
 			// Send the file content as the response
 			$this->request->response = file_get_contents($file);
 		}
