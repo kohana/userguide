@@ -16,19 +16,19 @@
 </head>
 <body>
 
-	<div id="header">
+	<div id="kodoc-header">
 		<div class="container clearfix">
-			<div id="logo">
+			<div id="kodoc-logo">
 				<?php echo HTML::image(Route::get('docs/media')->uri(array('file'=>'img/kohana.png'))) ?>
 			</div>
-			<div id="mode">
+			<div id="kodoc-tabs">
 				<?php $route = Request::instance()->route; ?>
 				<?php echo HTML::anchor(Route::get('docs/guide')->uri(), 'User Guide',Route::get('docs/guide') == $route ? array('class' => 'current'):array()) ?>
 				<?php echo HTML::anchor(Route::get('docs/api')->uri(), 'API Browser',Route::get('docs/api') == $route ? array('class' => 'current'):array()) ?>
 			</div>
 		</div>
 	</div>
-	<div id="nav">
+	<div id="kodoc-nav">
 		<div class="container clearfix">
 			<ul>
 				<?php foreach ($breadcrumb as $link => $title): ?>
@@ -37,8 +37,8 @@
 			</ul>
 		</div>
 	</div>
-	<div class="container clearfix" id="body">
-		<div id="main">
+	<div class="container clearfix" id="kodoc-body">
+		<div id="kodoc-main">
 			<?php echo $content ?>
 			
 			<?php if (Kohana::$environment === Kohana::PRODUCTION): ?>
@@ -55,11 +55,11 @@
 			<a href="http://disqus.com" class="dsq-brlink">Documentation comments powered by <span class="logo-disqus">Disqus</span></a>
 			<?php endif ?>
 		</div>
-		<div id="menu">
+		<div id="kodoc-menu">
 			<?php echo $menu ?>
 		</div>
 	</div>
-	<div id="footer" style="overflow:hidden;">
+	<div id="kodoc-footer" style="overflow:hidden;">
 		<p>
 			<?php if (isset($copyright)) echo "<span style='float:left'>$copyright</span>"; ?>
 			Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?>

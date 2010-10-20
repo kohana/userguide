@@ -118,11 +118,11 @@ h4 {
 	margin:1.5em 0;
 }
 
-#main h2 {
+#kodoc-main h2 {
 	background:transparent url('../img/h2_line.png') bottom left repeat-x scroll;
 }
 
-#main h3 {
+#kodoc-main h3 {
 	background:transparent url('../img/h3_line.png') bottom left repeat-x scroll;
 }
 
@@ -156,7 +156,7 @@ h6:hover a.permalink {
 	display:inline;
 }
 
-#main img {
+#kodoc-main img {
 	padding:1em;
 	outline:1px solid #999;
 	max-width:772px;
@@ -165,48 +165,48 @@ h6:hover a.permalink {
 
 /* layout stuff */
 
-#header {
+#kodoc-header {
 	background:#85da4c url('../img/header.png') bottom left repeat-x scroll;
 	padding:20px 20px 0;
 }
 
-#nav {
+#kodoc-nav {
 	background:url('../img/breadcrumbs.png') top left repeat-x scroll;
 	padding:10px 20px;
 }
 
-#nav .container {
+#kodoc-nav .container {
 	margin:0 auto;
 }
 
-#nav ul {
+#kodoc-nav ul {
 	float:left;
 	margin:0;
 }
 
-#nav li {
+#kodoc-nav li {
 	display:inline-block;
 	margin-right:.6em;
 	float:left;
 }
 
-#nav a {
+#kodoc-nav a {
 	font-weight:bold;
 }
 
-#nav li:not(:first-child):before {
+#kodoc-nav li:not(:first-child):before {
 	content:'» ';
 	padding-right:.3em;
 }
 
-#footer {
+#kodoc-footer {
 	margin:0 auto;
 	padding:0 20px;
 	width:1060px;
 	margin-bottom:20px;
 }
 
-#footer p {
+#kodoc-footer p {
 	margin:0;
 	padding:1.5em 30px;
 	background:#eee;
@@ -214,7 +214,7 @@ h6:hover a.permalink {
 	text-align:right;
 }
 
-#body {
+#kodoc-body {
 	padding:0 20px;
 }
 
@@ -223,41 +223,41 @@ h6:hover a.permalink {
 	margin:20px auto;
 }
 
-#main {
+#kodoc-main {
 	float:left;
 	width:800px;
 	/* background:transparent url('../img/lines.png') top left repeat scroll; */
 }
 
-#menu {
+#kodoc-menu {
 	border-left:2px solid #eee;
 	float:right;
 	margin:0 0 0 20px;
 	padding:0 20px;
 	width:198px;
 }
-	#menu ul , #menu ol{ list-style-type:none; margin: 0; padding: 0;}
-		#menu ul li, #menu ol li { margin:0; padding: 0; background:url('../img/arrows.png') -80px -1px no-repeat scroll; padding-left:12px; position:relative; }
-		#menu ul li.toggle-close, #menu ol li.toggle-close{ background-position: -22px -22px; }
-		#menu ul li.toggle-open, #menu ol li.toggle-open { background-position: -2px -42px; }
-		#menu ul li a.menu-toggle, #menu ol li a.menu-toggle { width:14px; height:18px; position:absolute; left:0px; text-decoration:none; cursor:pointer;}
-		#menu ul li a.current, #menu ol li a.current {font-weight:bold;}
+	#kodoc-menu ul , #kodoc-menu ol{ list-style-type:none; margin: 0; padding: 0;}
+		#kodoc-menu ul li, #kodoc-menu ol li { margin:0; padding: 0; background:url('../img/arrows.png') -80px -1px no-repeat scroll; padding-left:12px; position:relative; }
+		#kodoc-menu ul li.toggle-close, #kodoc-menu ol li.toggle-close{ background-position: -22px -22px; }
+		#kodoc-menu ul li.toggle-open, #kodoc-menu ol li.toggle-open { background-position: -2px -42px; }
+		#kodoc-menu ul li a.menu-toggle, #kodoc-menu ol li a.menu-toggle { width:14px; height:18px; position:absolute; left:0px; text-decoration:none; cursor:pointer;}
+		#kodoc-menu ul li a.current, #kodoc-menu ol li a.current {font-weight:bold;}
 		
-	#menu li span { cursor:pointer; }
+	#kodoc-menu li span { cursor:pointer; }
 
-#header .container {
+#kodoc-header .container {
 	margin:0 auto 0;
 	position:relative;
 	padding:0 0 20px 0;
 }
 
-#mode {
+#kodoc-tabs {
 	position:absolute;
 	bottom:0;
 	right:0;
 }
 
-#mode a {
+#kodoc-tabs a {
 	background:#f3b812 url('../img/orange-tab.png') bottom left repeat-x scroll;
 	border:2px solid #fff;
 	border-bottom:none;
@@ -272,11 +272,11 @@ h6:hover a.permalink {
 	margin-right:10px;
 }
 
-#mode a:hover {
+#kodoc-tabs a:hover {
 	background:#f3b812 url('../img/orange-tab.png') 10px left repeat-x scroll;
 }
 
-#mode a.current {
+#kodoc-tabs a.current {
 	background:#fff;
 	color:	#555555;
 	font-weight:bold;
@@ -285,36 +285,36 @@ h6:hover a.permalink {
 /* Api browser stuff */
 
 /* api index page */
-#main div.class-list div.class { width: 50%; }
-#main div.class-list div.class.left { float: left; clear: both; }
-#main div.class-list div.class.right { float: right; }
-	#main div.class-list div.class h2 { background:none; }
+#kodoc-main div.class-list div.class { width: 50%; }
+#kodoc-main div.class-list div.class.left { float: left; clear: both; }
+#kodoc-main div.class-list div.class.right { float: right; }
+	#kodoc-main div.class-list div.class h2 { background:none; }
 
 /* table of contents at the top of each class */
-#main div.toc { }
-#main div.toc div {float:left; width: 33%;}
-#main div.toc div h3 {margin-top:0; background:none; }
+#kodoc-main div.toc { }
+#kodoc-main div.toc div {float:left; width: 33%;}
+#kodoc-main div.toc div h3 {margin-top:0; background:none; }
 
 
 /* constants */
-#main div.constants dl dt {font-weight:bold; margin-bottom:1.5em;}
-#main div.constants dl dd {margin-left:1.5em; margin-bottom:1.5em;}
+#kodoc-main div.constants dl dt {font-weight:bold; margin-bottom:1.5em;}
+#kodoc-main div.constants dl dd {margin-left:1.5em; margin-bottom:1.5em;}
 
 /* properties */
-#main div.properties dl dt { font-weight:bold; margin-top:1.5em; margin-bottom:1.5em;}
-#main div.properties dl dt small, div.properties dl dt code { font-weight:normal; font-size:0.9em; }
-#main div.properties dl dd {margin-left:1.5em; margin-bottom:1.5em;}
+#kodoc-main div.properties dl dt { font-weight:bold; margin-top:1.5em; margin-bottom:1.5em;}
+#kodoc-main div.properties dl dt small, div.properties dl dt code { font-weight:normal; font-size:0.9em; }
+#kodoc-main div.properties dl dd {margin-left:1.5em; margin-bottom:1.5em;}
 
 /* functions */
 
-#main div.method { padding:0 1.5em; border:1px solid #aaa; border-radius:5px; margin-bottom:1.5em; }
-#main div.method h3 { background:none; margin-top:0; margin-left:-1.17em; margin-right:-1.17em; padding:.75em 0 .75em 1.17em; background:#eee; border-top-left-radius:5px; border-top-right-radius:5px; }
-#main div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
-#main div.method h3 abbr.param { text-transform: none; font-size: 1em; }
+#kodoc-main div.method { padding:0 1.5em; border:1px solid #aaa; border-radius:5px; margin-bottom:1.5em; }
+#kodoc-main div.method h3 { background:none; margin-top:0; margin-left:-1.17em; margin-right:-1.17em; padding:.75em 0 .75em 1.17em; background:#eee; border-top-left-radius:5px; border-top-right-radius:5px; }
+#kodoc-main div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
+#kodoc-main div.method h3 abbr.param { text-transform: none; font-size: 1em; }
 
-#main dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; margin-bottom:1.5em; }
-	#main dl.tags dt { margin: 0; clear: both; float: left; width: 25%; }
-	#main dl.tags dd { margin: 0; padding: 0; clear: right; float: right; }
+#kodoc-main dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; margin-bottom:1.5em; }
+	#kodoc-main dl.tags dt { margin: 0; clear: both; float: left; width: 25%; }
+	#kodoc-main dl.tags dd { margin: 0; padding: 0; clear: right; float: right; }
 	
 .sourcecode-toggle {
 	margin-left:.3em;
