@@ -84,7 +84,7 @@ class Kohana_Kodoc_Class extends Kodoc {
 	{
 		$props = $this->class->getProperties();
 
-		sort($props);
+		usort($props, array($this,'_prop_sort'));
 
 		foreach ($props as $key => $property)
 		{
@@ -93,6 +93,24 @@ class Kohana_Kodoc_Class extends Kodoc {
 		}
 
 		return $props;
+	}
+	
+	protected function _prop_sort($a, $b)
+	{
+		// If one property is public, and the other is not, it goes on top
+		if ($a->isPublic() AND ( ! $b->isPublic()))
+			return -1;
+		if ($b->isPublic() AND ( ! $a->isPublic()))
+			return 1;
+		
+		// If one property is protected and the other is private, it goes on top
+		if ($a->isProtected() AND $b->isPrivate())
+			return -1;
+		if ($b->isProtected() AND $a->isPrivate())
+			return 1;
+		
+		// Otherwise just do alphabetical
+		return strcmp($a->name, $b->name);
 	}
 
 	/**
@@ -113,9 +131,32 @@ class Kohana_Kodoc_Class extends Kodoc {
 
 		return $methods;
 	}
-
+	
+	/**
+	 * Sort methods based on their visibility and declaring class based on:
+	 *  - methods will be sorted public, protected, then private.
+	 *  - methods that are declared by an ancestor will be after classes
+	 *    declared by the current class
+	 *  - lastly, they will be sorted alphabetically
+	 * 
+	 */
 	protected function _method_sort($a, $b)
 	{
+		// If one method is public, and the other is not, it goes on top
+		if ($a->isPublic() AND ( ! $b->isPublic()))
+			return -1;
+		if ($b->isPublic() AND ( ! $a->isPublic()))
+			return 1;
+		
+		// If one method is protected and the other is private, it goes on top
+		if ($a->isProtected() AND $b->isPrivate())
+			return -1;
+		if ($b->isProtected() AND $a->isPrivate())
+			return 1;
+		
+		// The methods have the same visibility, so check the declaring class depth:
+		
+		
 		/*
 		echo kohana::debug('a is '.$a->class.'::'.$a->name,'b is '.$b->class.'::'.$b->name,
 						   'are the classes the same?', $a->class == $b->class,'if they are, the result is:',strcmp($a->name, $b->name),
@@ -124,7 +165,6 @@ class Kohana_Kodoc_Class extends Kodoc {
 						   'otherwise, the result is:',strcmp($a->class, $b->class)
 						   );
 		*/
-
 
 		// If both methods are defined in the same class, just compare the method names
 		if ($a->class == $b->class)
