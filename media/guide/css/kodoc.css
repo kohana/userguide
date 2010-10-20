@@ -288,7 +288,7 @@ h6:hover a.permalink {
 #main div.class-list div.class { width: 50%; }
 #main div.class-list div.class.left { float: left; clear: both; }
 #main div.class-list div.class.right { float: right; }
-	#content div.class-list div.class h2 { margin: 0.4em; padding: 0.2em 0.4em; font-size: 1em; }
+	#main div.class-list div.class h2 { background:none; }
 
 /* table of contents at the top of each class */
 #main div.toc { }
