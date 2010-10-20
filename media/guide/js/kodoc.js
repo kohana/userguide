@@ -15,9 +15,8 @@ $(document).ready(function()
 	// IE is stupid
 	if ( ! $.browser.msie) {
 		
-		
 		// Api browser, clickable Titles
-		var categories = $("#menu li").find('span');
+		var categories = $("#kodoc-menu li").find('span');
 		// When you click the arrow, hide or show the menu
 		categories.click(function()
 		{
@@ -40,7 +39,7 @@ $(document).ready(function()
 		
 		
 		// Collapsable menus
-		$('#menu li').has('li').each(function()
+		$('#kodoc-menu li').has('li').each(function()
 		{
 			var link = $(this);
 			var menu = link.find('ul:first, ol:first');
@@ -109,7 +108,7 @@ $(document).ready(function()
 	
 
 	// Show source links
-	$('#main .method-source').each(function()
+	$('#kodoc-main .method-source').each(function()
 	{
 		var self = $(this);
 		var togg = $(' <a class="sourcecode-toggle">[show]</a>').appendTo($('h4', self));
@@ -128,7 +127,7 @@ $(document).ready(function()
 	});
 
 	// "Link to" headers
-	$('#main')
+	$('#kodoc-main')
 		.find('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')
 		.append(function(index, html){
 			return '<a href="#' + $(this).attr('id') + '" class="permalink">link to this</a>';
