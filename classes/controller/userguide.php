@@ -145,7 +145,14 @@ class Controller_Userguide extends Controller_Template {
 		$breadcrumb = array();
 		$breadcrumb[$this->guide->uri()] = __('User Guide');
 		$breadcrumb[$this->guide->uri(array('module' => $module))] = Kohana::config('userguide.modules.'.$module.'.name');
-		$breadcrumb[] = $this->template->title;
+		
+		// TODO try and get parent category names (from menu).  Regex magic or javascript dom stuff perhaps?
+		
+		// Only add the current page title to breadcrumbs if it isn't the index, otherwise we get repeats.
+		if ($page != 'index')
+		{
+			$breadcrumb[] = $this->template->title;
+		}
 	}
 
 	public function action_api()
