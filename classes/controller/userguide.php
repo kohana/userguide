@@ -67,7 +67,7 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->content = View::factory('userguide/error',array('message' => $message));
 
 		// If we are in a module and that module has a menu, show that, otherwise use the index page menu
-		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu'))
+		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu') AND Kohana::config('userguide.modules.'.$module.'.enabled'))
 		{
 			// Namespace the markdown parser
 			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/'.$module.'/';
@@ -95,10 +95,16 @@ class Controller_Userguide extends Controller_Template {
 		// Trim trailing slash
 		$page = rtrim($page, '/');
 
-		// If no module specified, show the user guide index page, which lists the modules.
+		// If no module provided in the url, show the user guide index page, which lists the modules.
 		if ( ! $module)
 		{
 			return $this->index();
+		}
+		
+		// If this module's userguide pages are disabled, show the error page
+		if ( ! Kohana::config('userguide.modules'.$module.'.enabled'))
+		{
+			return $this->error(__('That module is disabled for the userguide'));
 		}
 		
 		// Prevent "guide/module" and "guide/module/index" from having duplicate content
@@ -107,7 +113,7 @@ class Controller_Userguide extends Controller_Template {
 			return $this->error(__('Userguide page not found'));
 		}
 		
-		// If a module is set, but no page is specified, default to index.
+		// If a module is set, but no page was provided in the url, show the index page
 		if ( ! $page )
 		{
 			$page = 'index';
@@ -337,6 +343,15 @@ class Controller_Userguide extends Controller_Template {
 			$kohana = $modules['kohana'];
 			unset($modules['kohana']);
 			$modules = array_merge(array('kohana' => $kohana), $modules);
+		}
+		
+		// Remove modules that have been disabled via config
+		foreach ($modules as $key => $value)
+		{
+			if ( ! Kohana::config('userguide.modules.'.$key.'.enabled'))
+			{
+				unset($modules[$key]);
+			}
 		}
 		
 		return $modules;
