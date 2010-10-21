@@ -102,7 +102,7 @@ class Controller_Userguide extends Controller_Template {
 		}
 		
 		// If this module's userguide pages are disabled, show the error page
-		if ( ! Kohana::config('userguide.modules'.$module.'.enabled'))
+		if ( ! Kohana::config('userguide.modules.'.$module.'.enabled'))
 		{
 			return $this->error(__('That module is disabled for the userguide'));
 		}
