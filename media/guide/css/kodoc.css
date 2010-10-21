@@ -118,14 +118,6 @@ h4 {
 	margin:1.5em 0;
 }
 
-#kodoc-main h2 {
-	background:transparent url('../img/h2_line.png') bottom left repeat-x scroll;
-}
-
-#kodoc-main h3 {
-	background:transparent url('../img/h3_line.png') bottom left repeat-x scroll;
-}
-
 h1 small,
 h2 small,
 h3 small,
