@@ -1,0 +1,7 @@
+## [Userguide]()
+ - [Configuration](config)
+ - [Using the Userguide](using)
+ - [How userguide works](works)
+ - [Adding your module](adding)
+ - [Contributing](contributing)
+ - [Markdown Syntax](markdown)
