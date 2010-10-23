@@ -51,7 +51,7 @@ class Kohana_Kodoc_Property extends Kodoc {
 
 				if (isset($matches[2]))
 				{
-					$this->description = $matches[2];
+					$this->description = Markdown($matches[2]);
 				}
 			}
 		}
