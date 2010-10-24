@@ -132,5 +132,32 @@ $(document).ready(function()
 		.append(function(index, html){
 			return '<a href="#' + $(this).attr('id') + '" class="permalink">link to this</a>';
 		});
+	
+	// When the show/hide link for the page toc is clicked, toggle visibility
+	$('#kodoc-toc-toggle').click(function()
+	{
+		if ($('#kodoc-page-toc-content').is(':visible'))
+		{
+			// Hide the contents
+			$(this).html('show');
+			$('#kodoc-page-toc').addClass('closed').removeClass('open')
+			$('#kodoc-page-toc-content').hide();
+			$.cookie('kodoc-toc-show',"false");
+		}
+		else
+		{
+			// Show the contents
+			$(this).html('hide');
+			$('#kodoc-page-toc').addClass('open').removeClass('closed')
+			$('#kodoc-page-toc-content').show();
+			$.cookie('kodoc-toc-show',"true");
+		}
+	});
+	
+	// If the cookie says to hide the toc, hide it by clicking the toggle
+	if ($.cookie('kodoc-toc-show') == "false")
+	{
+		$('#kodoc-toc-toggle').click();
+	}
 
 });

@@ -27,6 +27,11 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 */
 	protected $_heading_ids = array();
 	
+	/**
+	 * @var  string   the generated table of contents
+	 */
+	protected static $_toc = "";
+	
 	public function __construct()
 	{
 		// doImage is 10, add image url just before
@@ -42,7 +47,10 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		$this->span_gamut['doNotes'] = 100;
 
 		// Parse Kohana view inclusions at the very end
-		$this->document_gamut['doIncludeViews'] = 100;
+		$this->document_gamut['doIncludeViews'] = 99;
+		
+		// Add TOC at the very end
+		$this->document_gamut['doTOC'] = 100;
 
 		// PHP4 makes me sad.
 		parent::MarkdownExtra_Parser();
@@ -68,6 +76,9 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		if(empty($attr))
 			$attr = ' id="'.$this->make_heading_id($matches[1]).'"';
 		
+		// Add this header to the page toc
+		$this->_add_to_toc($level,$matches[1],$this->make_heading_id($matches[1]));
+		
 		$block = "<h$level$attr>".$this->runSpanGamut($matches[1])."</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
 	}
@@ -88,6 +99,9 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		// Only auto-generate id if one doesn't exist
 		if(empty($attr))
 			$attr = ' id="'.$this->make_heading_id($matches[2]).'"';
+		
+		// Add this header to the page toc
+		$this->_add_to_toc($level,$matches[2],$this->make_heading_id($matches[2]));
 		
 		$block = "<h$level$attr>".$this->runSpanGamut($matches[2])."</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
@@ -203,6 +217,29 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		}
 
 		return $this->hashBlock('<p class="note">'.$match[1].'</p>');
+	}
+	
+	protected function _add_to_toc($level, $name, $id)
+	{
+		self::$_toc[] = array(
+			'level' => $level,
+			'name'  => $name,
+			'id'    => $id);
+	}
+	
+	public function doTOC($text)
+	{
+		// Terrible, terrible hack to make the toc only show up on the content, and not the side menu
+		static $done = false;
+		
+		// Only add the toc do userguide pages, not api since they already have one
+		if ( ! $done AND Request::instance()->route->name(Request::instance()->route) == "docs/guide")
+		{
+			$done = true;
+			$toc = View::factory('userguide/page-toc',array('array' => self::$_toc));
+			return $toc . $text;
+		}
+		return $text;
 	}
 
 } // End Kodoc_Markdown

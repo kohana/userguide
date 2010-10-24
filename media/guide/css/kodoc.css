@@ -274,6 +274,28 @@ h6:hover a.permalink {
 	font-weight:bold;
 }
 
+
+#kodoc-page-toc {
+	float:right;
+	border:1px solid #CCC;
+	background:#EEE;
+	padding:0.5em;
+	margin-top:1em;
+	margin-left:1em;
+	border-radius:10px;
+}
+
+	.kodoc-toc-header {
+		font-weight:bold;
+		margin:0;padding:0;
+	}
+
+#kodoc-page-toc.closed { }
+	#kodoc-page-toc.closed .kodoc-toc-header { }
+
+#kodoc-page-toc.open { outline:1em solid white; }
+	#kodoc-page-toc.open .kodoc-toc-header { margin-bottom:1.5em; }
+
 /* Api browser stuff */
 
 /* api index page */

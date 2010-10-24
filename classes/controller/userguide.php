@@ -264,6 +264,7 @@ class Controller_Userguide extends Controller_Template {
 			// Add scripts
 			$this->template->scripts = array(
 				$media->uri(array('file' => 'js/jquery.min.js')),
+				$media->uri(array('file' => 'js/jquery.cookie.js')),
 				$media->uri(array('file' => 'js/kodoc.js')),
 				// Syntax Highlighter
 				$media->uri(array('file' => 'js/shCore.js')),
