@@ -104,7 +104,7 @@ class Controller_Userguide extends Controller_Template {
 		// If this module's userguide pages are disabled, show the error page
 		if ( ! Kohana::config('userguide.modules.'.$module.'.enabled'))
 		{
-			return $this->error(__('That module is disabled for the userguide'));
+			return $this->error(__('That module doesn\'t exist, or has userguide pages disabled.'));
 		}
 		
 		// Prevent "guide/module" and "guide/module/index" from having duplicate content
@@ -136,7 +136,9 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->title = $page == 'index' ? Kohana::config('userguide.modules.'.$module.'.name') : $this->title($page);
 
 		// Parse the page contents into the template
+		Kodoc_Markdown::$show_toc = true;
 		$this->template->content = Markdown(file_get_contents($file));
+		Kodoc_Markdown::$show_toc = false;
 
 		// Attach this module's menu to the template
 		$this->template->menu = Markdown($this->_get_all_menu_markdown());

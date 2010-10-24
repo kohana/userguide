@@ -32,6 +32,12 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 */
 	protected static $_toc = "";
 	
+	/**
+	 * Slightly less terrible way to make it so the TOC only shows up when we
+	 * want it to.  set this to true to show the toc.
+	 */
+	public static $show_toc = false;
+	
 	public function __construct()
 	{
 		// doImage is 10, add image url just before
@@ -48,8 +54,8 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 		// Parse Kohana view inclusions at the very end
 		$this->document_gamut['doIncludeViews'] = 99;
-		
-		// Add TOC at the very end
+
+		// Show table of contents for userguide pages
 		$this->document_gamut['doTOC'] = 100;
 
 		// PHP4 makes me sad.
@@ -229,13 +235,9 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	
 	public function doTOC($text)
 	{
-		// Terrible, terrible hack to make the toc only show up on the content, and not the side menu
-		static $done = false;
-		
 		// Only add the toc do userguide pages, not api since they already have one
-		if ( ! $done AND Request::instance()->route->name(Request::instance()->route) == "docs/guide")
+		if (self::$show_toc AND Request::instance()->route->name(Request::instance()->route) == "docs/guide")
 		{
-			$done = true;
 			$toc = View::factory('userguide/page-toc',array('array' => self::$_toc));
 			return $toc . $text;
 		}

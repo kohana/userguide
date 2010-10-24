@@ -20,6 +20,7 @@ p, ul, ol {
 	background:#eee url('../img/lightbulb_48.png') no-repeat 1em center;
 	padding:1.5em 1.5em 1.5em 4.5em;
 	border-radius:10px;
+	overflow:auto;
 }
 
 ul, ol {
@@ -281,7 +282,7 @@ h6:hover a.permalink {
 	background:#EEE;
 	padding:0.5em;
 	margin-top:1em;
-	margin-left:1em;
+	margin-left:1.5em;
 	border-radius:10px;
 }
 
@@ -293,7 +294,7 @@ h6:hover a.permalink {
 #kodoc-page-toc.closed { }
 	#kodoc-page-toc.closed .kodoc-toc-header { }
 
-#kodoc-page-toc.open { outline:1em solid white; }
+#kodoc-page-toc.open { }
 	#kodoc-page-toc.open .kodoc-toc-header { margin-bottom:1.5em; }
 
 /* Api browser stuff */
