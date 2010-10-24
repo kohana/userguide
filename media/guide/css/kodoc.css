@@ -217,15 +217,15 @@ h6:hover a.permalink {
 }
 
 #kodoc-main {
-	float:left;
+	float:right;
 	width:800px;
 	/* background:transparent url('../img/lines.png') top left repeat scroll; */
 }
 
 #kodoc-menu {
-	border-left:2px solid #eee;
-	float:right;
-	margin:0 0 0 20px;
+	border-right:2px solid #eee;
+	float:left;
+	margin:0 20px 0 0;
 	padding:0 20px;
 	width:198px;
 }

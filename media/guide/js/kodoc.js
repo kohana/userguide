@@ -12,11 +12,30 @@ $(document).ready(function()
 	SyntaxHighlighter.defaults.gutter = false;
 	SyntaxHighlighter.all();
 	
-	// IE is stupid
+	// Any link that has the current page as its href should be class="current"
+	$('a[href="'+ window.location.pathname +'"]').addClass('current');
+	
+	
+	// Breadcrumbs magic
+	
+	last = $('#kodoc-nav .breadcrumb-last');
+	li = $('<li></li>');
+	
+	$('#kodoc-menu li').has('a.current').each(function()
+	{
+		// Clone the empty li, set it's html as the link or span, then prepend it to the last breadcrumb item
+		last.before(li.clone().html($(this).find(':first-child').first().clone()));
+	});
+	
+	// Now kill the duplicate link for the current page
+	last.prev().remove();
+	
+	// IE is stupid, so it doesn't get collapsing side menus
 	if ( ! $.browser.msie) {
 		
 		// Api browser, clickable Titles
 		var categories = $("#kodoc-menu li").find('span');
+		
 		// When you click the arrow, hide or show the menu
 		categories.click(function()
 		{
@@ -82,31 +101,6 @@ $(document).ready(function()
 		});
 	}
 	
-	// Any link that has the current page as its href should be class="current"
-	$('a[href="'+ window.location.pathname +'"]').addClass('current');
-
-	/*
-	// Collapsable class contents
-	$('#main #toc').each(function()
-	{
-		var header  = $(this);
-		var content = $('#main div.toc').hide();
-
-		$('<span class="toggle">[ + ]</span>').toggle(function()
-		{
-			$(this).html('[ &ndash; ]');
-			content.stop(true, true).slideDown();
-		},
-		function()
-		{
-			$(this).html('[ + ]');
-			content.stop(true, true).slideUp();
-		})
-		.appendTo(header);
-	});
-	*/
-	
-
 	// Show source links
 	$('#kodoc-main .method-source').each(function()
 	{
@@ -126,7 +120,7 @@ $(document).ready(function()
 		});
 	});
 
-	// "Link to" headers
+	// "Link to this" link that appears when you hover over a header
 	$('#kodoc-main')
 		.find('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')
 		.append(function(index, html){

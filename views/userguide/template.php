@@ -32,7 +32,7 @@
 		<div class="container clearfix">
 			<ul>
 				<?php foreach ($breadcrumb as $link => $title): ?>
-					<li><?php echo is_int($link) ? $title : HTML::anchor($link, $title) ?></li>
+					<?php echo is_int($link) ? '<li class="breadcrumb-last">'.$title.'</li>' : '<li>'.HTML::anchor($link, $title).'</li>' ?>
 				<?php endforeach ?>
 			</ul>
 		</div>
