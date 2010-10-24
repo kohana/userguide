@@ -1,6 +1,6 @@
 ## [Userguide]()
- - [Configuration](config)
  - [Using the Userguide](using)
+ - [Configuration](config)
  - [How userguide works](works)
  - [Adding your module](adding)
  - [Contributing](contributing)
