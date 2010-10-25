@@ -218,7 +218,7 @@ h6:hover a.permalink {
 
 #kodoc-main {
 	float:right;
-	width:800px;
+	width:820px;
 	/* background:transparent url('../img/lines.png') top left repeat scroll; */
 }
 
@@ -226,7 +226,7 @@ h6:hover a.permalink {
 	border-right:2px solid #eee;
 	float:left;
 	margin:0 20px 0 0;
-	padding:0 20px;
+	padding:0 20px 0 0;
 	width:198px;
 }
 	#kodoc-menu ul , #kodoc-menu ol{ list-style-type:none; margin: 0; padding: 0;}
