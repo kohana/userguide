@@ -1,7 +1,8 @@
 $(document).ready(function()
 {
 
-	// Syntax highlighter
+// Syntax highlighter
+
 	$('pre:not(.debug) code').each(function()
 	{
 		$(this).addClass('brush: php, class-name: highlighted');
@@ -15,9 +16,8 @@ $(document).ready(function()
 	// Any link that has the current page as its href should be class="current"
 	$('a[href="'+ window.location.pathname +'"]').addClass('current');
 	
-	
-	// Breadcrumbs magic
-	
+// Breadcrumbs magic
+
 	last = $('#kodoc-nav .breadcrumb-last');
 	li = $('<li></li>');
 	
@@ -30,6 +30,8 @@ $(document).ready(function()
 	// Now kill the duplicate link for the current page
 	last.prev().remove();
 	
+// Collapsing menus
+
 	// IE is stupid, so it doesn't get collapsing side menus
 	if ( ! $.browser.msie) {
 		
@@ -101,7 +103,8 @@ $(document).ready(function()
 		});
 	}
 	
-	// Show source links
+// Show source links
+
 	$('#kodoc-main .method-source').each(function()
 	{
 		var self = $(this);
@@ -120,12 +123,15 @@ $(document).ready(function()
 		});
 	});
 
-	// "Link to this" link that appears when you hover over a header
+// "Link to this" link that appears when you hover over a header
+
 	$('#kodoc-main')
 		.find('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')
 		.append(function(index, html){
 			return '<a href="#' + $(this).attr('id') + '" class="permalink">link to this</a>';
 		});
+
+// Table of contents for userguide pages
 	
 	// When the show/hide link for the page toc is clicked, toggle visibility
 	$('#kodoc-toc-toggle').click(function()
