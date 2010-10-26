@@ -6,7 +6,7 @@
  * @category   Controllers
  * @author     Kohana Team
  */
-class Controller_Userguide extends Controller_Template {
+class Controller_Userguide extends Kohana_Controller_Template {
 
 	public $template = 'userguide/template';
 
