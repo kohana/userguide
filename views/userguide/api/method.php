@@ -13,9 +13,9 @@
 
 <?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
 
-<?php // param tables disabled, removed the FALSE AND below to activate ?>
-<?php if ( FALSE AND $doc->params): ?>
-<h4><?php echo __('Parameters'); ?></h4>
+<?php if ($doc->params): ?>
+<?php // table format ============================= ?>
+<h4>Parameters (table)</h4>
 <table>
 <tr>
 	<th><?php echo __('Parameter'); ?></th>
@@ -25,13 +25,27 @@
 </tr>
 <?php foreach ($doc->params as $param): ?>
 <tr>
-<td><strong><code><?php echo '$'.$param->name ?></code></strong></td>
-<td><code><?php echo $param->byref?'byref ':''.$param->type?$param->type:'unknown' ?></code></td>
+<td><strong><?php echo '$'.$param->name ?></strong></td>
+<td><code><?php echo ($param->reference?'byref ':'').($param->type?$param->type:'unknown') ?></code></td>
 <td><?php echo ucfirst($param->description) ?></td>
 <td><?php echo $param->default ?></td>
 </tr>
 <?php endforeach; ?>
 </table>
+
+<?php // list format =========================== ?>
+<h4>Parameters (list)</h4>
+<ul>
+<?php foreach ($doc->params as $param): ?>
+<li>
+<code><?php echo ($param->reference?'byref ':'').($param->type?$param->type:'unknown') ?></code>
+<strong><?php echo '$'.$param->name ?></strong>
+<?php echo $param->default?'<small> = '.$param->default.'</small>':'<small>required</small>'  ?>
+<?php echo $param->description?' - '.$param->description:'' ?>
+</li>
+<?php endforeach; ?>
+</ul>
+<?php // end =================================== ?>
 <?php endif ?>
 
 <?php if ($doc->return): ?>

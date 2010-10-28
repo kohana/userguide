@@ -16,6 +16,10 @@ p, ul, ol {
 	margin:1.5em 0;
 }
 
+small {
+	font-size:0.9em;
+}
+
 .note {
 	background:#eee url('../img/lightbulb_48.png') no-repeat 1em center;
 	padding:1.5em 1.5em 1.5em 4.5em;
@@ -54,6 +58,13 @@ a:hover {
 	color:#3e7c9c;
 	text-decoration:underline;
 }
+
+a[href^="http:"] {
+	padding-right:14px;
+	background:transparent url('../img/ext_link.png') center right no-repeat;
+}
+
+a[href^="http://192.168"] { background:none; padding:0; margin:0; }
 
 code {
 	color:#6BAA3D;
