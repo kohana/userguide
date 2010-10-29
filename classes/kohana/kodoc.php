@@ -168,9 +168,9 @@ class Kohana_Kodoc {
 		{
 			$_class = new ReflectionClass($class);
 
-			if (stripos($_class->name, 'Kohana') === 0)
+			if (stripos($_class->name, 'Kohana_') === 0)
 			{
-				// Skip the extension stuff stuff
+				// Skip transparent extension classes
 				continue;
 			}
 
@@ -180,13 +180,13 @@ class Kohana_Kodoc {
 			{
 				$declares = $_method->getDeclaringClass()->name;
 
-				if (stripos($declares, 'Kohana') === 0)
+				if (stripos($declares, 'Kohana_') === 0)
 				{
 					// Remove "Kohana_"
 					$declares = substr($declares, 7);
 				}
 
-				if ($declares === $_class->name)
+				if ($declares === $_class->name OR $declares === "Core")
 				{
 					$methods[] = $_method->name;
 				}
