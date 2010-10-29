@@ -55,7 +55,7 @@
 })(jQuery);
 
 $(document).ready(function(){
-    $('#api-filter-box').api_filter('#main');
+    $('#api-filter-box').api_filter('#kodoc-main');
 });
 </script>
 
