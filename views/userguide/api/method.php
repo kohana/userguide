@@ -6,35 +6,12 @@
 	<small>(defined in <?php echo html::anchor($route->uri(array('class' => $declares->name)), $declares->name) ?>)</small>
 </h3>
 
-
 <div class="description">
 <?php echo $doc->description ?>
 </div>
 
-<?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
-
 <?php if ($doc->params): ?>
-<?php // table format ============================= ?>
-<h4>Parameters (table)</h4>
-<table>
-<tr>
-	<th><?php echo __('Parameter'); ?></th>
-	<th><?php echo __('Type'); ?></th>
-	<th><?php echo __('Description'); ?></th>
-	<th><?php echo __('Default'); ?></th>
-</tr>
-<?php foreach ($doc->params as $param): ?>
-<tr>
-<td><strong><?php echo '$'.$param->name ?></strong></td>
-<td><code><?php echo ($param->reference?'byref ':'').($param->type?$param->type:'unknown') ?></code></td>
-<td><?php echo ucfirst($param->description) ?></td>
-<td><?php echo $param->default ?></td>
-</tr>
-<?php endforeach; ?>
-</table>
-
-<?php // list format =========================== ?>
-<h4>Parameters (list)</h4>
+<h4>Parameters</h4>
 <ul>
 <?php foreach ($doc->params as $param): ?>
 <li>
@@ -45,14 +22,15 @@
 </li>
 <?php endforeach; ?>
 </ul>
-<?php // end =================================== ?>
 <?php endif ?>
+
+<?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
 
 <?php if ($doc->return): ?>
 <h4><?php echo __('Return Values'); ?></h4>
 <ul class="return">
 <?php foreach ($doc->return as $set): list($type, $text) = $set; ?>
-<li><code><?php echo HTML::chars($type) ?></code><?php if ($text) echo ' - '.HTML::chars($text) ?></li>
+<li><code><?php echo HTML::chars($type) ?></code><?php if ($text) echo ' - '.HTML::chars(ucfirst($text)) ?></li>
 <?php endforeach ?>
 </ul>
 <?php endif ?>

@@ -74,7 +74,7 @@ class Kohana_Kodoc_Method extends Kodoc {
 
 					if (isset($matches[2]))
 					{
-						$param->description = $matches[2];
+						$param->description = ucfirst($matches[2]);
 					}
 				}
 				$params[] = $param;

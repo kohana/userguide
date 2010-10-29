@@ -23,13 +23,17 @@ $(document).ready(function()
 	
 	$('#kodoc-menu li').has('a.current').each(function()
 	{
-		// Clone the empty li, set it's html as the link or span, then prepend it to the last breadcrumb item
-		last.before(li.clone().html($(this).find(':first-child').first().clone()));
+		// Only add if we aren't already on that page
+		if ($(this).find(':first-child').first().attr('href') != window.location.pathname)
+		{
+			// Clone the empty li, set it's html as the link or span, then prepend it to the last breadcrumb item
+			last.before(li.clone().html($(this).find(':first-child').first().clone()));
+		}
 	});
 	
 	// Now kill the duplicate link for the current page
-	last.prev().remove();
-	
+	//last.prev().remove();
+
 // Collapsing menus
 
 	// IE is stupid, so it doesn't get collapsing side menus

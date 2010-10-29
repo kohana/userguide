@@ -66,7 +66,7 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->title = "Userguide - Error";
 		$this->template->content = View::factory('userguide/error',array('message' => $message));
 
-		// If we are in a module and that module has a menu, show that, otherwise use the index page menu
+		// If we are in a module and that module has a menu, show that
 		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu') AND Kohana::config('userguide.modules.'.$module.'.enabled'))
 		{
 			// Namespace the markdown parser
@@ -80,10 +80,23 @@ class Controller_Userguide extends Controller_Template {
 				'Error'
 			);
 		}
+		// If we are in the api browser, show the menu and show the api browser in the breadcrumbs
+		else if (Route::name($this->request->route) == 'docs/api')
+		{
+			$this->template->menu = Kodoc::menu();
+
+			// Bind the breadcrumb
+			$this->template->breadcrumb = array(
+				$this->guide->uri(array('page' => NULL)) => 'User Guide',
+				$this->request->route->uri() => 'API Browser',
+				'Error'
+			);
+		}
+		// Otherwise, show the userguide module menu on the side
 		else
 		{
 			$this->template->menu = View::factory('userguide/menu',array('modules' => $this->_modules()));
-			$this->template->breadcrumb = array($this->guide->uri() => 'User Guide','Error');
+			$this->template->breadcrumb = array($this->request->route->uri() => 'User Guide','Error');
 		}
 	}
 
@@ -165,38 +178,40 @@ class Controller_Userguide extends Controller_Template {
 
 	public function action_api()
 	{
-		// Enable the missing class autoloader
+		// Enable the missing class autoloader.  If a class cannot be found a
+		// fake class will be created that extends Kodoc_Missing
 		spl_autoload_register(array('Kodoc_Missing', 'create_class'));
 
 		// Get the class from the request
 		$class = $this->request->param('class');
 
-		if ($class)
-		{
-			try
-			{
-				$_class = Kodoc_Class::factory($class);
-
-				if ( ! Kodoc::show_class($_class))
-					throw new Exception(__('That class is hidden'));
-			}
-			catch (Exception $e)
-			{
-				return $this->error(__('API Reference: Class not found.'));
-			}
-			
-			$this->template->title = $class;
-
-			$this->template->content = View::factory('userguide/api/class')
-				->set('doc', Kodoc::factory($class))
-				->set('route', $this->request->route);
-		}
-		else
+		// If no class was passed to the url, display the API index page
+		if ( ! $class)
 		{
 			$this->template->title = __('Table of Contents');
 
 			$this->template->content = View::factory('userguide/api/toc')
 				->set('classes', Kodoc::class_methods())
+				->set('route', $this->request->route);
+		}
+		else
+		{
+			// Create the Kodoc_Class version of this class.
+			$_class = Kodoc_Class::factory($class);
+
+			// If this classes immediate parent is Kodoc_Missing, then it should 404
+			if ($_class->class->getParentClass()->name == 'Kodoc_Missing')
+				return $this->error('That class was not found. Check your url and make sure that the module with that class is enabled.');
+
+			// If this classes package has been disabled via the config, 404
+			if ( ! Kodoc::show_class($_class))
+				return $this->error('That class is in package that is hidden.  Check the <code>api_packages</code> config setting.');
+		
+			// Everything is fine, display the class.
+			$this->template->title = $class;
+
+			$this->template->content = View::factory('userguide/api/class')
+				->set('doc', Kodoc::factory($class))
 				->set('route', $this->request->route);
 		}
 

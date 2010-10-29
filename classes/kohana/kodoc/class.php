@@ -73,6 +73,20 @@ class Kohana_Kodoc_Class extends Kodoc {
 		while ($parent = $parent->getParentClass());
 
 		list($this->description, $this->tags) = Kodoc::parse($comment);
+		
+		// If this class extends Kodoc_Missing, add a warning about possible
+		// incomplete documentation
+		while ($parent = $parent->getParentClass())
+		{
+			if ($parent->name == 'Kodoc_Missing')
+			{
+				$warning = "[!!] **This class, or a class parent, could not be
+				           found or loaded. This could be caused by a missing
+						   module or other dependancy. The documentation for
+						   class may not be complete!**";
+				$this->description = Markdown($warning).$this->description;
+			}
+		}
 	}
 
 	/**
