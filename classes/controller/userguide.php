@@ -57,6 +57,9 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->breadcrumb = array('User Guide');
 		$this->template->content = View::factory('userguide/index', array('modules' => $this->_modules()));
 		$this->template->menu = View::factory('userguide/menu', array('modules' => $this->_modules()));
+		
+		// Don't show disqus on the index page
+		$this->template->hide_disqus = TRUE;
 	}
 	
 	// Display an error if a page isn't found
@@ -65,6 +68,9 @@ class Controller_Userguide extends Controller_Template {
 		$this->request->status = 404;
 		$this->template->title = "Userguide - Error";
 		$this->template->content = View::factory('userguide/error',array('message' => $message));
+		
+		// Don't show disqus on error pages
+		$this->template->hide_disqus = TRUE;
 
 		// If we are in a module and that module has a menu, show that
 		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu') AND Kohana::config('userguide.modules.'.$module.'.enabled'))

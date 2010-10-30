@@ -41,7 +41,8 @@
 		<div id="kodoc-main">
 			<?php echo $content ?>
 			
-			<?php if (Kohana::$environment === Kohana::PRODUCTION): ?>
+			<?php if ( ! isset($hide_disqus)) $hide_disqus = FALSE; ?>
+			<?php if (Kohana::$environment === Kohana::PRODUCTION AND $hide_disqus === FALSE): ?>
 			<div id="disqus_thread" class="clear"></div>
 			<script type="text/javascript">
 				var disqus_identifier = '<?php echo HTML::chars(Request::instance()->uri) ?>';
