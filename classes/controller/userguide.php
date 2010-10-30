@@ -213,7 +213,7 @@ class Controller_Userguide extends Controller_Template {
 			}
 
 			// If this classes immediate parent is Kodoc_Missing, then it should 404
-			if ($_class->class->getParentClass()->name == 'Kodoc_Missing')
+			if ($_class->class->getParentClass() AND $_class->class->getParentClass()->name == 'Kodoc_Missing')
 				return $this->error('That class was not found. Check your url and make sure that the module with that class is enabled.');
 
 			// If this classes package has been disabled via the config, 404
