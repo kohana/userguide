@@ -76,6 +76,8 @@ class Kohana_Kodoc_Class extends Kodoc {
 		
 		// If this class extends Kodoc_Missing, add a warning about possible
 		// incomplete documentation
+		$parent = $this->class;
+		
 		while ($parent = $parent->getParentClass())
 		{
 			if ($parent->name == 'Kodoc_Missing')
