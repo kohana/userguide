@@ -18,7 +18,7 @@ System 路径
 
 ![级联文件系统示意图](img/cascading_filesystem.png)
 
-如果在 `APPPATH/views` 目录和 `APPPATH/views` 目录均有一个名为 `welcome.php` 视图文件，
+如果在 `APPPATH/views` 目录和 `SYSPATH/views` 目录均有一个名为 `welcome.php` 视图文件，
 当 `welcome.php` 被加载的时候由于 application 目录在文件系统的最上面所以只有它会被返回。
 
 ## 文件类型
