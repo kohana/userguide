@@ -9,7 +9,7 @@ Iedere applicatie volgt de zelfde flow:
 5. De [Kohana] class wordt ingeladen.
 6. Het bootstrap bestand, `APPPATH/bootstrap.php`, wordt geinclude.
 7. [Kohana::init] wordt aangeroepen, deze stelt error handling, caching, en logging in.
-8. [Kohana_Config] lezers en [Kohana_Log] schrijvers worden toegevoegd.
+8. [Config] lezers en [Log] schrijvers worden toegevoegd.
 9. [Kohana::modules] wordt aangeroepen om additionele modules te activeren.
     * Module paden worden toegevoegd aan het [cascading filesystem](about.filesystem).
     * Includen van `init.php` bestand, als het bestaat. 

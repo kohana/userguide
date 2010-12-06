@@ -9,7 +9,7 @@
 5. 加载 [Kohana] 类
 6. 加载 `APPPATH/bootstrap.php` 引导文件
 7. 调用 [Kohana::init] 方法初始化错误句柄，缓存和日志设置
-8. 设置 [Kohana_Config] 读取器和 [Kohana_Log] 记录器
+8. 设置 [Config] 读取器和 [Log] 记录器
 9. 调用 [Kohana::modules] 方法加载激活的模块
     * 模块路径附加到[文件级联系统](about.filesystem).
     * 加载模块的 `init.php` 文件（如果存在的话）

@@ -9,7 +9,7 @@ Every application follows the same flow:
 5. The [Kohana] class is loaded.
 6. The bootstrap file, `APPPATH/bootstrap.php`, is included.
 7. [Kohana::init] is called, which sets up error handling, caching, and logging.
-8. [Kohana_Config] readers and [Kohana_Log] writers are attached.
+8. [Config] readers and [Log] writers are attached.
 9. [Kohana::modules] is called to enable additional modules.
     * Module paths are added to the [cascading filesystem](about.filesystem).
     * Includes the module `init.php` file, if it exists. 
