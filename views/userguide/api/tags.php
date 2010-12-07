@@ -1,8 +1,6 @@
-<dl class="tags">
+<h4>Tags</h4>
+<ul class="tags">
 <?php foreach ($tags as $name => $set): ?>
-<dt><?php echo $name ?></dt>
-<?php foreach ($set as $tag): ?>
-<dd><?php echo $tag ?></dd>
+<li><?php echo ucfirst($name).($set?' - '.implode(', ',$set):''); ?>
 <?php endforeach ?>
-<?php endforeach ?>
-</dl>
+</ul>
