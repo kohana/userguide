@@ -67,7 +67,7 @@ Er zijn enkele dingen dat je best doet met je applicatie vooraleer je deze in pr
 			}
 		
 			// De error loggen
-			Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
+			Kohana::$log->add(Log::ERROR, Kohana::exception_text($e));
 		
 			// Maak een 404 uitvoer
 			$request->status = 404;

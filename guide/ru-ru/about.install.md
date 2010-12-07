@@ -61,7 +61,7 @@
 			}
 
 			// Log the error
-			Kohana::$log->add(Kohana::ERROR, Kohana::exception_text($e));
+			Kohana::$log->add(Log::ERROR, Kohana::exception_text($e));
 
 			// Create a 404 response
 			$request->status = 404;
