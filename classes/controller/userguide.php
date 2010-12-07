@@ -285,7 +285,7 @@ class Controller_Userguide extends Controller_Template {
 			// Add styles
 			$this->template->styles = array(
 				$media->uri(array('file' => 'css/print.css'))  => 'print',
-				$media->uri(array('file' => 'css/reset.css')) => 'screen',
+				$media->uri(array('file' => 'css/screen.css')) => 'screen',
 				$media->uri(array('file' => 'css/kodoc.css'))  => 'screen',
 				$media->uri(array('file' => 'css/shCore.css')) => 'screen',
 				$media->uri(array('file' => 'css/shThemeKodoc.css')) => 'screen',

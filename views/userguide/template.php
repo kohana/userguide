@@ -12,63 +12,71 @@
 <!--[if lt IE 9]>
 <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
 <![endif]-->
-
 </head>
 <body>
 
-	<div id="kodoc-header">
-		<div class="container clearfix">
-			<div id="kodoc-logo">
-				<?php echo HTML::image(Route::get('docs/media')->uri(array('file'=>'img/kohana.png'))) ?>
+	<div id="header">
+		<div class="container">
+			<a href="<?php echo Route::url('docs/guide') ?>" id="logo">
+				<img src="<?php echo Route::url('docs/media', array('file' => 'img/kohana.png')) ?>" />
+			</a>
+			<div id="menu">
+				<ul>
+					<li class="guide first">
+						<a href="<?php echo Route::url('docs/guide') ?>"><?php echo __('User Guide') ?></a>
+					</li>
+					<li class="api">
+						<a href="<?php echo Route::url('docs/api') ?>"><?php echo __('API Browser') ?></a>
+					</li>
+				</ul>
 			</div>
-			<div id="kodoc-tabs">
-				<?php $route = Request::instance()->route; ?>
-				<?php echo HTML::anchor(Route::get('docs/guide')->uri(), 'User Guide',Route::get('docs/guide') == $route ? array('class' => 'current'):array()) ?>
-				<?php echo HTML::anchor(Route::get('docs/api')->uri(), 'API Browser',Route::get('docs/api') == $route ? array('class' => 'current'):array()) ?>
+		</div>
+	</div>
+
+	<div id="content">
+		<div class="wrapper">
+			<div class="container">
+				<div class="span-22 prefix-1 suffix-1">
+					<ul id="breadcrumb">
+						<?php foreach ($breadcrumb as $link => $title): ?>
+							<?php if (is_string($link)): ?>
+							<li><?php echo HTML::anchor($link, $title) ?></li>
+							<?php else: ?>
+							<li class="last"><?php echo $title ?></li>
+							<?php endif ?>
+						<?php endforeach ?>
+					</ul>
+				</div>
+				<div id="topics" class="span-6 prefix-1">
+					<?php echo $menu ?>
+				</div>
+				<div id="body" class="span-16 suffix-1 last">
+					<?php echo $content ?>
+
+					<?php if (Kohana::$environment === Kohana::PRODUCTION AND empty($hide_disqus)): ?>
+					<div id="disqus_thread" class="clear"></div>
+					<script type="text/javascript">
+						var disqus_identifier = '<?php echo HTML::chars(Request::instance()->uri) ?>';
+						(function() {
+							var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+							dsq.src = 'http://kohana.disqus.com/embed.js';
+							(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+							})();
+					</script>
+					<noscript><?php echo __('Please enable JavaScript to view the :anchor_open comments powered by Disqus.:anchor_close', array(':anchor_open' => '<a href="http://disqus.com/?ref_noscript=kohana">', ':anchor_close' => '</a>')); ?></noscript>
+					<a href="http://disqus.com" class="dsq-brlink">Documentation comments powered by <span class="logo-disqus">Disqus</span></a>
+					<?php endif ?>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div id="kodoc-nav">
-		<div class="container clearfix">
-			<ul>
-				<?php foreach ($breadcrumb as $link => $title): ?>
-					<?php echo is_int($link) ? '<li class="breadcrumb-last">'.$title.'</li>' : '<li>'.HTML::anchor($link, $title).'</li>' ?>
-				<?php endforeach ?>
-			</ul>
-		</div>
-	</div>
-	<div class="container clearfix" id="kodoc-body">
-		<div id="kodoc-main">
-			<?php echo $content ?>
-			
-			<?php if ( ! isset($hide_disqus)) $hide_disqus = FALSE; ?>
-			<?php if (Kohana::$environment === Kohana::PRODUCTION AND $hide_disqus === FALSE): ?>
-			<div id="disqus_thread" class="clear"></div>
-			<script type="text/javascript">
-				var disqus_identifier = '<?php echo HTML::chars(Request::instance()->uri) ?>';
-				(function() {
-					var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-					dsq.src = 'http://kohana.disqus.com/embed.js';
-					(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-					})();
-			</script>
-			<noscript><?php echo __('Please enable JavaScript to view the :anchor_open comments powered by Disqus.:anchor_close', array(':anchor_open' => '<a href="http://disqus.com/?ref_noscript=kohana">', ':anchor_close' => '</a>')); ?></noscript>
-			<a href="http://disqus.com" class="dsq-brlink">Documentation comments powered by <span class="logo-disqus">Disqus</span></a>
-			<?php endif ?>
-		</div>
-		<div id="kodoc-menu">
-			<?php echo $menu ?>
-		</div>
-	</div>
-	<div id="kodoc-footer" style="overflow:hidden;">
-		<p>
+
+	<div id="footer">
+		<div class="container">
 			<?php if (isset($copyright)) echo "<span style='float:left'>$copyright</span>"; ?>
 			Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?>
-		</p>
+		</div>
 	</div>
-	
-</div>
-
 
 <?php if (Kohana::$environment === Kohana::PRODUCTION): ?>
 <script type="text/javascript">
