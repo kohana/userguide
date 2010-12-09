@@ -29,3 +29,5 @@
    - [Databases](tutorials.databases)
    - [ORM](tutorials.orm)
    - [Working with Git](tutorials.git)
+7. **Advanced**
+   - [Developers Guide](developers)
