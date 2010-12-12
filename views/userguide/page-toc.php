@@ -1,6 +1,6 @@
-<div id="kodoc-page-toc" class="open">
-	<p class="kodoc-toc-header">Page Contents&nbsp;<span style="float:right">[<a href="#" id="kodoc-toc-toggle">hide</a>]</span></p>
-	<div id="kodoc-page-toc-content">
+<div class="page-toc open">
+	<p class="header"><strong>Page Contents</strong></p>
+	<div class="content">
 	<?php if (is_array($array)) : ?>
 		<?php foreach ($array as $item): ?>
 		
