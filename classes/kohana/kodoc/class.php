@@ -56,7 +56,7 @@ class Kohana_Kodoc_Class extends Kodoc {
 		{
 			foreach ($constants as $name => $value)
 			{
-				$this->constants[$name] = Kohana::debug($value);
+				$this->constants[$name] = Debug::vars($value);
 			}
 		}
 

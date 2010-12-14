@@ -53,7 +53,7 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 
 		if ($this->param->isDefaultValueAvailable())
 		{
-			$this->default = Kohana::dump($this->param->getDefaultValue());
+			$this->default = Debug::dump($this->param->getDefaultValue());
 		}
 
 		if ($this->param->isPassedByReference())
