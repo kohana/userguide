@@ -39,8 +39,7 @@ $(document).ready(function()
 	$('#topics li:has(li)').each(function()
 	{
 		var $this = $(this);
-		var span = $this.find('>span');
-		var toggle = $('<span class="toggle"></span>').prependTo($this);
+		var toggle = $('<span class="toggle"></span>');
 		var menu = $this.find('>ul,>ol');
 
 		toggle.click(function()
@@ -57,8 +56,9 @@ $(document).ready(function()
 			}
 		});
 
-		span.click(function()
+		$this.find('>span').click(function()
 		{
+			// Menu without a link
 			toggle.click();
 		});
 
@@ -67,7 +67,7 @@ $(document).ready(function()
 			menu.hide();
 		}
 
-		toggle.html(menu.is(':visible') ? '&ndash;' : '+');
+		toggle.html(menu.is(':visible') ? '&ndash;' : '+').prependTo($this);
 	});
 
 // Show source links
