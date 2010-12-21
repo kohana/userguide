@@ -99,10 +99,15 @@ table tr:nth-child(even) {
 #topics {  }
 	#topics ul,
 	#topics ol { list-style-type:none; margin: 0; padding: 0;}
-		#topics ul li, #topics ol li { margin:0; padding: 0; background:url('../img/arrows.png') -80px -1px no-repeat scroll; padding-left:12px; position:relative; }
-		#topics ul li.toggle-close, #topics ol li.toggle-close{ background-position: -22px -22px; }
-		#topics ul li.toggle-open, #topics ol li.toggle-open { background-position: -2px -42px; }
-		#topics ul li a.menu-toggle, #topics ol li a.menu-toggle { width:14px; height:18px; position:absolute; left:0px; text-decoration:none; cursor:pointer;}
-		#topics ul li a.current, #topics ol li a.current {font-weight:bold;}
+		#topics ul li,
+		#topics ol li { margin:0; padding: 0; padding-left: 1em; }
+		#topics ul li a.current,
+		#topics ol li a.current { font-weight: bold; }
+	#topics span { cursor: pointer; }
+	#topics span.toggle { display: block; float: left; width: 1em; padding-right: 0.4em; margin-left: -1.4em; text-align: right; }
 
 	#topics li span { cursor:pointer; }
+
+#footer { padding: 1em 0; background: #00262f; color: #405c63; text-shadow: #00262f 0.1em 0.1em 1px; font-size: 0.9em; }
+	#footer a { color: #809397; }
+	#footer div.last { text-align: right; }

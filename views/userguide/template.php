@@ -73,8 +73,16 @@
 
 	<div id="footer">
 		<div class="container">
-			<?php if (isset($copyright)) echo "<span style='float:left'>$copyright</span>"; ?>
-			Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?>
+			<div class="span-12">
+			<?php if (isset($copyright)): ?>
+				<p><?php echo $copyright ?></p>
+			<?php else: ?>
+				&nbsp;
+			<?php endif ?>
+			</div>
+			<div class="span-12 last right">
+			<p>Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?></p>
+			</div>
 		</div>
 	</div>
 

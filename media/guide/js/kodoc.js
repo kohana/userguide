@@ -36,77 +36,40 @@ $(document).ready(function()
 
 // Collapsing menus
 
-	// IE is stupid, so it doesn't get collapsing side menus
-	if ( ! $.browser.msie) {
-		
-		// Api browser, clickable Titles
-		var categories = $("#kodoc-menu li").find('span');
-		
-		// When you click the arrow, hide or show the menu
-		categories.click(function()
+	$('#topics li:has(li)').each(function()
+	{
+		var $this = $(this);
+		var span = $this.find('>span');
+		var toggle = $('<span class="toggle"></span>').prependTo($this);
+		var menu = $this.find('>ul,>ol');
+
+		toggle.click(function()
 		{
-			var menu = $(this).next('ol,ul');
-			var link = $(this).parent();
 			if (menu.is(':visible'))
 			{
-				// hide menu
-				menu.stop(true,true).slideUp('fast');
-				link.addClass('toggle-close').removeClass('toggle-open');
+				menu.stop(true, true).slideUp('fast');
+				toggle.html('+');
 			}
 			else
 			{
-				// show menu
-				menu.stop(true,true).slideDown('fast');
-				link.addClass('toggle-open').removeClass('toggle-close');
+				menu.stop(true, true).slideDown('fast');
+				toggle.html('&ndash;');
 			}
-			return
 		});
-		
-		
-		// Collapsable menus
-		$('#kodoc-menu li').has('li').each(function()
+
+		span.click(function()
 		{
-			var link = $(this);
-			var menu = link.find('ul:first, ol:first');
-			var togg = $('<a class="menu-toggle"></a>');
-			link.prepend(togg);
-			
-			// When you click the arrow, hide or show the menu
-			togg.click(function()
-			{
-				if (menu.is(':visible'))
-				{
-					// hide menu
-					menu.stop(true,true).slideUp('fast');
-					link.addClass('toggle-close').removeClass('toggle-open');
-				}
-				else
-				{
-					// show menu
-					menu.stop(true,true).slideDown('fast');
-					link.addClass('toggle-open').removeClass('toggle-close');
-				}
-				return
-			});
-			
-			// Hide all menus that do not contain the active link
-			menu.not(':has(a[href="'+ window.location.pathname +'"])').hide();
-			
-			// If the current page is a parent, then show the children
-			link.has('a[href="'+ window.location.pathname +'"]').find('ul:first, ol:first').show();
-			
-			// Add the classes to make the arrows show
-			if (menu.is(':visible'))
-			{
-				link.addClass('toggle-open');
-			}
-			else
-			{
-				link.addClass('toggle-close');
-			}
+			toggle.click();
 		});
-	}
-	
+
+		if ( ! $this.is(':has(a.current)'))
+		{
+			menu.hide();
+		}
+
+		toggle.html(menu.is(':visible') ? '&ndash;' : '+');
+	});
+
 // Show source links
 
 	$('#kodoc-main .method-source').each(function()
