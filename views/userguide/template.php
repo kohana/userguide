@@ -47,8 +47,10 @@
 						<?php endforeach ?>
 					</ul>
 				</div>
-				<div id="topics" class="span-6 prefix-1">
-					<?php echo $menu ?>
+				<div class="span-6 prefix-1">
+					<div id="topics">
+						<?php echo $menu ?>
+					</div>
 				</div>
 				<div id="body" class="span-16 suffix-1 last">
 					<?php echo $content ?>

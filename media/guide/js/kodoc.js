@@ -70,6 +70,27 @@ $(document).ready(function()
 		toggle.html(menu.is(':visible') ? '&ndash;' : '+').prependTo($this);
 	});
 
+	$('#topics').each(function()
+	{
+		var $this = $(this);
+		var $pane = $(window);
+		var $body = $('#body');
+		var _base = $this.offset().top;
+
+		$pane.scroll(function()
+		{
+			var _max = $body.height() - $this.height();
+			var _scroll = Math.max(0, $pane.scrollTop() - _base);
+
+			if (_scroll < _max)
+			{
+				$this.stop(true, false).animate({
+					marginTop: _scroll
+				}, 200);
+			}
+		});
+	});
+
 // Show source links
 
 	$('#kodoc-main .method-source').each(function()
