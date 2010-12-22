@@ -15,27 +15,24 @@ $(document).ready(function()
 	
 	// Any link that has the current page as its href should be class="current"
 	$('a[href="'+ window.location.pathname +'"]').addClass('current');
-	
-// Breadcrumbs magic
 
-	last = $('#kodoc-nav .breadcrumb-last');
-	li = $('<li></li>');
-	
-	$('#kodoc-menu li').has('a.current').each(function()
+	// Breadcrumbs magic
+	$('#breadcrumb li.last').each(function()
 	{
-		// Only add if we aren't already on that page
-		if ($(this).find(':first-child').first().attr('href') != window.location.pathname)
+		var $this = $(this);
+		var $topics = $('#topics li').has('a.current').slice(0, -1);
+
+		$topics.each(function()
 		{
-			// Clone the empty li, set it's html as the link or span, then prepend it to the last breadcrumb item
-			last.before(li.clone().html($(this).find(':first-child').first().clone()));
-		}
+			// Create a copy of the menu link
+			var $crumb = $(this).children('a:first, span:not(.toggle):first').clone();
+
+			// Insert the menu link into the breadcrumbs
+			$('<li></li>').html($crumb).insertBefore($this);
+		});
 	});
-	
-	// Now kill the duplicate link for the current page
-	//last.prev().remove();
 
-// Collapsing menus
-
+	// Collapsing menus
 	$('#topics li:has(li)').each(function()
 	{
 		var $this = $(this);
