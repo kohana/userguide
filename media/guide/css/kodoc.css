@@ -86,7 +86,7 @@ table tr:nth-child(even) {
 
 #content { background: #f1f8db url(../img/content.png) center top repeat-x; }
 	#content .wrapper { min-height: 390px; padding: 1em 0; background: transparent url(../img/wrapper.png) center top no-repeat; }
-	#content .page-toc { float: right; margin-left: 1em; padding: 1em; background: #f3f3f3; border-radius: 0.6em; }
+	#content div.page-toc { float: right; margin: 1em; margin-top: 0; padding: 1em; background: #fff; border: solid 0.1em #f3f3f3; border-radius: 0.6em; }
 	#content p.intro { padding: 1em 20px; padding-left: 20px; margin: 0 -20px; font-size: 1.2em; }
 	#content a { color: #004352; }
 	#content a:hover { color: #00758f; }
