@@ -48,7 +48,9 @@
 
 <?php echo $doc->description ?>
 
-<?php if ($doc->tags) echo View::factory('userguide/api/tags')->set('tags', $doc->tags) ?>
+<?php if ($doc->tags): ?>
+	<?php echo View::factory('userguide/api/tags')->set('tags', $doc->tags); ?>
+<?php endif; ?>
 
 <p class="note">
 <?php if ($path = $doc->class->getFilename()): ?>
