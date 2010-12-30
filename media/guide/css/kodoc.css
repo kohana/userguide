@@ -69,6 +69,28 @@ table tr:nth-child(even) {
 	overflow: auto;
 }
 
+h1 a.permalink,
+h2 a.permalink,
+h3 a.permalink,
+h4 a.permalink,
+h5 a.permalink,
+h6 a.permalink {
+	font-size: 0.6em;
+	margin-left: 1em;
+	font-weight: normal;
+/*	display: none;*/
+}
+
+h1:hover a.permalink,
+h2:hover a.permalink,
+h3:hover a.permalink,
+h4:hover a.permalink,
+h5:hover a.permalink,
+h6:hover a.permalink {
+/*	display: inline;*/
+}
+
+
 #header,
 #content,
 #footer { float: left; clear: both; width: 100%; }

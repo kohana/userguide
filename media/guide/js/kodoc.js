@@ -108,12 +108,12 @@ $(document).ready(function()
 		});
 	});
 
-// "Link to this" link that appears when you hover over a header
-
-	$('#kodoc-main')
-		.find('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')
-		.append(function(index, html){
-			return '<a href="#' + $(this).attr('id') + '" class="permalink">link to this</a>';
+	// "Link to this" link that appears when you hover over a header
+	$('#body')
+		.find('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]')
+		.append(function(){
+			var $this = $(this);
+			return '<a href="#' + $this.attr('id') + '" class="permalink">link to this</a>';
 		});
 
 // Table of contents for userguide pages

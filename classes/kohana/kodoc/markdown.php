@@ -236,11 +236,21 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	public function doTOC($text)
 	{
 		// Only add the toc do userguide pages, not api since they already have one
-		if (self::$show_toc AND Request::instance()->route->name(Request::instance()->route) == "docs/guide")
+		if (self::$show_toc AND Route::name(Request::instance()->route) == "docs/guide")
 		{
-			$toc = View::factory('userguide/page-toc',array('array' => self::$_toc));
-			return $toc . $text;
+			$toc = View::factory('userguide/page-toc')
+				->set('array', self::$_toc)
+				->render()
+				;
+
+			if (($offset = strpos($text, '<p>')) !== FALSE)
+			{
+				// Insert the page TOC just before the first <p>, which every
+				// Markdown page should (will?) have.
+				$text = substr_replace($text, $toc, $offset, 0);
+			}
 		}
+
 		return $text;
 	}
 
