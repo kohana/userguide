@@ -146,6 +146,8 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		{
 			$replace = array();
 
+			$replace = array();
+
 			foreach ($matches as $set)
 			{
 				list($search, $view) = $set;
@@ -156,7 +158,12 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 				}
 				catch (Exception $e)
 				{
-					// Ignore curly braces when view file is not found
+					ob_start();
+
+					// Capture the exception handler output and insert it instead
+					Kohana::exception_handler($e);
+
+					$replace[$search] = ob_get_clean();
 				}
 			}
 
