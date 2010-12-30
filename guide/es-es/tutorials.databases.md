@@ -1,3 +1,0 @@
-# Bases de Datos
-
-[!!] inacabado

@@ -28,26 +28,6 @@ class Controller_Userguide extends Controller_Template {
 			$this->media = Route::get('docs/media');
 			$this->guide = Route::get('docs/guide');
 
-			if (isset($_GET['lang']))
-			{
-				$lang = $_GET['lang'];
-
-				// Load the accepted language list
-				$translations = array_keys(Kohana::message('userguide', 'translations'));
-
-				if (in_array($lang, $translations))
-				{
-					// Set the language cookie
-					Cookie::set('userguide_language', $lang, Date::YEAR);
-				}
-
-				// Reload the page
-				$this->request->redirect($this->request->uri);
-			}
-
-			// Set the translation language
-			I18n::$lang = Cookie::get('userguide_language', Kohana::config('userguide')->lang);
-
 			if (defined('MARKDOWN_PARSER_CLASS'))
 			{
 				throw new Kohana_Exception('Markdown parser already registered. Live documentation will not work in your environment.');
@@ -69,92 +49,182 @@ class Controller_Userguide extends Controller_Template {
 
 		parent::before();
 	}
+	
+	// List all modules that have userguides
+	public function index()
+	{
+		$this->template->title = "Userguide";
+		$this->template->breadcrumb = array('User Guide');
+		$this->template->content = View::factory('userguide/index', array('modules' => $this->_modules()));
+		$this->template->menu = View::factory('userguide/menu', array('modules' => $this->_modules()));
+		
+		// Don't show disqus on the index page
+		$this->template->hide_disqus = TRUE;
+	}
+	
+	// Display an error if a page isn't found
+	public function error($message)
+	{
+		$this->request->status = 404;
+		$this->template->title = "Userguide - Error";
+		$this->template->content = View::factory('userguide/error',array('message' => $message));
+		
+		// Don't show disqus on error pages
+		$this->template->hide_disqus = TRUE;
+
+		// If we are in a module and that module has a menu, show that
+		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu') AND Kohana::config('userguide.modules.'.$module.'.enabled'))
+		{
+			// Namespace the markdown parser
+			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/'.$module.'/';
+			Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
+		
+			$this->template->menu = Markdown($this->_get_all_menu_markdown());
+			$this->template->breadcrumb = array(
+				$this->guide->uri() => 'User Guide',
+				$this->guide->uri(array('module' => $module)) => Kohana::config('userguide.modules.'.$module.'.name'),
+				'Error'
+			);
+		}
+		// If we are in the api browser, show the menu and show the api browser in the breadcrumbs
+		else if (Route::name($this->request->route) == 'docs/api')
+		{
+			$this->template->menu = Kodoc::menu();
+
+			// Bind the breadcrumb
+			$this->template->breadcrumb = array(
+				$this->guide->uri(array('page' => NULL)) => 'User Guide',
+				$this->request->route->uri() => 'API Browser',
+				'Error'
+			);
+		}
+		// Otherwise, show the userguide module menu on the side
+		else
+		{
+			$this->template->menu = View::factory('userguide/menu',array('modules' => $this->_modules()));
+			$this->template->breadcrumb = array($this->request->route->uri() => 'User Guide','Error');
+		}
+	}
 
 	public function action_docs()
 	{
+		$module = $this->request->param('module');
 		$page = $this->request->param('page');
 
-		if ( ! $page)
+		// Trim trailing slash
+		$page = rtrim($page, '/');
+
+		// If no module provided in the url, show the user guide index page, which lists the modules.
+		if ( ! $module)
 		{
-			// Redirect to the default page
-			$this->request->redirect($this->guide->uri(array('page' => Kohana::config('userguide')->default_page)));
+			return $this->index();
+		}
+		
+		// If this module's userguide pages are disabled, show the error page
+		if ( ! Kohana::config('userguide.modules.'.$module.'.enabled'))
+		{
+			return $this->error(__('That module doesn\'t exist, or has userguide pages disabled.'));
+		}
+		
+		// Prevent "guide/module" and "guide/module/index" from having duplicate content
+		if ( $page == 'index')
+		{
+			return $this->error(__('Userguide page not found'));
+		}
+		
+		// If a module is set, but no page was provided in the url, show the index page
+		if ( ! $page )
+		{
+			$page = 'index';
 		}
 
-		$file = $this->file($page);
+		// Find the markdown file for this page
+		$file = $this->file($module.'/'.$page);
 
+		// If it's not found, show the error page
 		if ( ! $file)
 		{
-			$this->error(__('Userguide page not found'));
-			return;
+			return $this->error(__('Userguide page not found'));
 		}
+		
+		// Namespace the markdown parser
+		Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/'.$module.'/';
+		Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
 
 		// Set the page title
-		$this->template->title = $this->title($page);
+		$this->template->title = $page == 'index' ? Kohana::config('userguide.modules.'.$module.'.name') : $this->title($page);
 
 		// Parse the page contents into the template
+		Kodoc_Markdown::$show_toc = true;
 		$this->template->content = Markdown(file_get_contents($file));
+		Kodoc_Markdown::$show_toc = false;
 
-		// Attach the menu to the template
-		$this->template->menu = Markdown(file_get_contents($this->file('menu')));
+		// Attach this module's menu to the template
+		$this->template->menu = Markdown($this->_get_all_menu_markdown());
 		
-		// Bind module menu items
-		$this->template->bind('module_menus', $module_menus);
-		
-		// Attach module-specific menu items
-		$module_menus = array();
-		
-		foreach(Kohana::modules() as $module => $path)
-		{
-			if ($file = $this->file('menu.'.$module))
-			{
-				$module_menus[$module] = Markdown(file_get_contents($file)); 
-			}
-		}
-
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
+		
+		// Bind the copyright
+		$this->template->copyright = Kohana::config('userguide.modules.'.$module.'.copyright');
 
-		// Add the breadcrumb
+		// Add the breadcrumb trail
 		$breadcrumb = array();
 		$breadcrumb[$this->guide->uri()] = __('User Guide');
-		$breadcrumb[] = $this->section($page);
-		$breadcrumb[] = $this->template->title;
+		$breadcrumb[$this->guide->uri(array('module' => $module))] = Kohana::config('userguide.modules.'.$module.'.name');
+		
+		// TODO try and get parent category names (from menu).  Regex magic or javascript dom stuff perhaps?
+		
+		// Only add the current page title to breadcrumbs if it isn't the index, otherwise we get repeats.
+		if ($page != 'index')
+		{
+			$breadcrumb[] = $this->template->title;
+		}
 	}
 
 	public function action_api()
 	{
-		// Enable the missing class autoloader
+		// Enable the missing class autoloader.  If a class cannot be found a
+		// fake class will be created that extends Kodoc_Missing
 		spl_autoload_register(array('Kodoc_Missing', 'create_class'));
 
 		// Get the class from the request
 		$class = $this->request->param('class');
 
-		if ($class)
-		{
-			try
-			{
-				$_class = Kodoc_Class::factory($class);
-			
-				if ( ! Kodoc::show_class($_class))
-					throw new Exception(__('That class is hidden'));
-			}
-			catch (Exception $e)
-			{
-				return $this->error(__('API Reference: Class not found.'));
-			}
-			
-			$this->template->title = $class;
-
-			$this->template->content = View::factory('userguide/api/class')
-				->set('doc', Kodoc::factory($class))
-				->set('route', $this->request->route);
-		}
-		else
+		// If no class was passed to the url, display the API index page
+		if ( ! $class)
 		{
 			$this->template->title = __('Table of Contents');
 
 			$this->template->content = View::factory('userguide/api/toc')
 				->set('classes', Kodoc::class_methods())
+				->set('route', $this->request->route);
+		}
+		else
+		{
+			// Create the Kodoc_Class version of this class.
+			$_class = Kodoc_Class::factory($class);
+			
+			// If the class requested and the actual class name are different
+			// (different case, orm vs ORM, auth vs Auth) redirect
+			if ($_class->class->name != $class)
+			{
+				$this->request->redirect($this->request->route->uri(array('class'=>$_class->class->name)));
+			}
+
+			// If this classes immediate parent is Kodoc_Missing, then it should 404
+			if ($_class->class->getParentClass() AND $_class->class->getParentClass()->name == 'Kodoc_Missing')
+				return $this->error('That class was not found. Check your url and make sure that the module with that class is enabled.');
+
+			// If this classes package has been disabled via the config, 404
+			if ( ! Kodoc::show_class($_class))
+				return $this->error('That class is in package that is hidden.  Check the <code>api_packages</code> config setting.');
+		
+			// Everything is fine, display the class.
+			$this->template->title = $class;
+
+			$this->template->content = View::factory('userguide/api/class')
+				->set('doc', Kodoc::factory($class))
 				->set('route', $this->request->route);
 		}
 
@@ -170,15 +240,12 @@ class Controller_Userguide extends Controller_Template {
 		// Add the breadcrumb
 		$breadcrumb = array();
 		$breadcrumb[$this->guide->uri(array('page' => NULL))] = __('User Guide');
-		$breadcrumb[$this->request->route->uri()] = $this->title('api');
+		$breadcrumb[$this->request->route->uri()] = 'API Browser';
 		$breadcrumb[] = $this->template->title;
 	}
 
 	public function action_media()
 	{
-		// Generate and check the ETag for this file
-		$this->request->check_cache(sha1($this->request->uri));
-
 		// Get the file path from the request
 		$file = $this->request->param('file');
 
@@ -188,8 +255,11 @@ class Controller_Userguide extends Controller_Template {
 		// Remove the extension from the filename
 		$file = substr($file, 0, -(strlen($ext) + 1));
 
-		if ($file = Kohana::find_file('media', $file, $ext))
+		if ($file = Kohana::find_file('media/guide', $file, $ext))
 		{
+			// Check if the browser sent an "if-none-match: <etag>" header, and tell if the file hasn't changed
+			$this->request->check_cache(sha1($this->request->uri).filemtime($file));
+			
 			// Send the file content as the response
 			$this->request->response = file_get_contents($file);
 		}
@@ -203,16 +273,6 @@ class Controller_Userguide extends Controller_Template {
 		$this->request->headers['Content-Type']   = File::mime_by_ext($ext);
 		$this->request->headers['Content-Length'] = filesize($file);
 		$this->request->headers['Last-Modified']  = date('r', filemtime($file));
-	}
-	
-	// Display an error if a page isn't found
-	public function error($message)
-	{
-		$this->request->status = 404;
-		$this->template->title = __('User Guide').' - '.__('Error');
-		$this->template->content = View::factory('userguide/error',array('message'=>$message));
-		$this->template->menu = Kodoc::menu();
-		$this->template->breadcrumb = array($this->guide->uri() =>  __('User Guide'), __('Error'));
 	}
 
 	public function after()
@@ -234,7 +294,9 @@ class Controller_Userguide extends Controller_Template {
 			// Add scripts
 			$this->template->scripts = array(
 				$media->uri(array('file' => 'js/jquery.min.js')),
+				$media->uri(array('file' => 'js/jquery.cookie.js')),
 				$media->uri(array('file' => 'js/kodoc.js')),
+				// Syntax Highlighter
 				$media->uri(array('file' => 'js/shCore.js')),
 				$media->uri(array('file' => 'js/shBrushPhp.js')),
 			);
@@ -248,13 +310,7 @@ class Controller_Userguide extends Controller_Template {
 
 	public function file($page)
 	{
-		if ( ! ($file = Kohana::find_file('guide', I18n::$lang.'/'.$page, 'md')))
-		{
-			// Use the default file
-			$file = Kohana::find_file('guide', $page, 'md');
-		}
-
-		return $file;
+		return Kohana::find_file('guide', $page, 'md');
 	}
 
 	public function section($page)
@@ -289,26 +345,47 @@ class Controller_Userguide extends Controller_Template {
 		
 		if (empty($markdown))
 		{
-			// Get core menu items
-			$file = $this->file('menu');
+			// Get menu items
+			$file = $this->file($this->request->param('module').'/menu');
 	
 			if ($file AND $text = file_get_contents($file))
 			{
+				// Add spans around non-link categories. This is a terrible hack.
+				//echo Kohana::debug($text);
+				
+				//$text = preg_replace('/(\s*[\-\*\+]\s*)(.*)/','$1<span>$2</span>',$text);
+				$text = preg_replace('/^(\s*[\-\*\+]\s*)([^\[\]]+)$/m','$1<span>$2</span>',$text);
+				//echo Kohana::debug($text);
 				$markdown .= $text;
 			}
 			
-			// Look in module specific files
-			foreach(Kohana::modules() as $module => $path)
-			{
-				if ($file = $this->file('menu.'.$module) AND $text = file_get_contents($file))
-				{
-					// Concatenate markdown to produce one string containing all menu items
-					$markdown .="\n".$text;
-				}
-			}
 		}
 		
 		return $markdown;
+	}
+	
+	// Get the list of modules from the config, and reverses it so it displays in the order the modules are added, but move Kohana to the top.
+	protected function _modules()
+	{
+		$modules = array_reverse(Kohana::config('userguide.modules'));
+		
+		if (isset($modules['kohana']))
+		{
+			$kohana = $modules['kohana'];
+			unset($modules['kohana']);
+			$modules = array_merge(array('kohana' => $kohana), $modules);
+		}
+		
+		// Remove modules that have been disabled via config
+		foreach ($modules as $key => $value)
+		{
+			if ( ! Kohana::config('userguide.modules.'.$key.'.enabled'))
+			{
+				unset($modules[$key]);
+			}
+		}
+		
+		return $modules;
 	}
 
 } // End Userguide
