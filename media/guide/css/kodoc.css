@@ -76,9 +76,11 @@ h4 a.permalink,
 h5 a.permalink,
 h6 a.permalink {
 	font-size: 0.6em;
+	line-height: 1em;
 	margin-left: 1em;
+	padding: 0;
 	font-weight: normal;
-/*	display: none;*/
+	display: none;
 }
 
 h1:hover a.permalink,
@@ -87,7 +89,7 @@ h3:hover a.permalink,
 h4:hover a.permalink,
 h5:hover a.permalink,
 h6:hover a.permalink {
-/*	display: inline;*/
+	display: inline;
 }
 
 
