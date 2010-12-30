@@ -1,8 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * [!!] This class, or a class parent, could not be found or loaded. This could
- * be caused by a missing module or other dependancy. The documentation for
- * class will not be complete!
+ * Set Kodoc_Missing::create_class as an autoloading to prevent missing classes
+ * from crashing the api browser.  Classes that are missing a parent will
+ * extend this class, and get a warning in the API browser.
  *
  * @package    Kohana/Userguide
  * @category   Undocumented

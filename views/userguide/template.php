@@ -9,65 +9,84 @@
 
 <?php foreach ($scripts as $script) echo HTML::script($script, NULL, TRUE), "\n" ?>
 
+<!--[if lt IE 9]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+<![endif]-->
 </head>
-<body class="<?php echo $l ?>">
+<body>
 
-<div id="topbar" class="clear">
-	<div class="container">
-		<div class="span-17 suffix-1">
-			<ul class="breadcrumb">
-			<?php foreach ($breadcrumb as $link => $title): ?>
-				<li><?php echo is_int($link) ? $title : HTML::anchor($link, $title) ?></li>
-			<?php endforeach ?>
-			</ul>
-		</div>
-
-		<div class="translations span-6 last">
-			<?php echo form::open(NULL, array('method' => 'get')) ?>
-				<?php echo form::select('lang', $translations, I18n::$lang) ?>
-			<?php echo form::close() ?>
-		</div>
-	</div>
-</div>
-
-<div id="docs" class="container clear">
-	<div id="content" class="span-17 suffix-1 colborder">
-		<?php echo $content ?>
-
-		<?php if (Kohana::$environment === Kohana::PRODUCTION): ?>
-		<div id="disqus_thread" class="clear"></div>
-		<script type="text/javascript">
-			var disqus_identifier = '<?php echo HTML::chars(Request::instance()->uri) ?>';
-			(function() {
-				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-				dsq.src = 'http://kohana.disqus.com/embed.js';
-				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-				})();
-		</script>
-		<noscript><?php echo __('Please enable JavaScript to view the :anchor_open comments powered by Disqus.:anchor_close', array(':anchor_open' => '<a href="http://disqus.com/?ref_noscript=kohana">', ':anchor_close' => '</a>')); ?></noscript>
-		<a href="http://disqus.com" class="dsq-brlink">Documentation comments powered by <span class="logo-disqus">Disqus</span></a>
-		<?php endif ?>
-	</div>
-
-	<div id="menu" class="span-6 last">
-		<?php echo $menu ?>
-		<?php if (isset($module_menus) AND ! empty($module_menus)) : ?>
-			<h3><?php echo __('Modules'); ?></h3>
-			<?php echo implode("\n", $module_menus) ?>
-		<?php endif; ?>
-	</div>
-</div>
-
-<div id="footer" class="clear">
-	<div class="container">
-		<div class="span-17 suffix-1">
-			<p class="copyright right">&copy; 2008–<?php echo date('Y') ?> Kohana Team</p>
-		</div>
-		<div class="span-6 last">
-			<p class="powered center">Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?></p>
+	<div id="header">
+		<div class="container">
+			<a href="<?php echo Route::url('docs/guide') ?>" id="logo">
+				<img src="<?php echo Route::url('docs/media', array('file' => 'img/kohana.png')) ?>" />
+			</a>
+			<div id="menu">
+				<ul>
+					<li class="guide first">
+						<a href="<?php echo Route::url('docs/guide') ?>"><?php echo __('User Guide') ?></a>
+					</li>
+					<li class="api">
+						<a href="<?php echo Route::url('docs/api') ?>"><?php echo __('API Browser') ?></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
+
+	<div id="content">
+		<div class="wrapper">
+			<div class="container">
+				<div class="span-22 prefix-1 suffix-1">
+					<ul id="breadcrumb">
+						<?php foreach ($breadcrumb as $link => $title): ?>
+							<?php if (is_string($link)): ?>
+							<li><?php echo HTML::anchor($link, $title) ?></li>
+							<?php else: ?>
+							<li class="last"><?php echo $title ?></li>
+							<?php endif ?>
+						<?php endforeach ?>
+					</ul>
+				</div>
+				<div class="span-6 prefix-1">
+					<div id="topics">
+						<?php echo $menu ?>
+					</div>
+				</div>
+				<div id="body" class="span-16 suffix-1 last">
+					<?php echo $content ?>
+
+					<?php if (Kohana::$environment === Kohana::PRODUCTION AND empty($hide_disqus)): ?>
+					<div id="disqus_thread" class="clear"></div>
+					<script type="text/javascript">
+						var disqus_identifier = '<?php echo HTML::chars(Request::instance()->uri) ?>';
+						(function() {
+							var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+							dsq.src = 'http://kohana.disqus.com/embed.js';
+							(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+							})();
+					</script>
+					<noscript><?php echo __('Please enable JavaScript to view the :anchor_open comments powered by Disqus.:anchor_close', array(':anchor_open' => '<a href="http://disqus.com/?ref_noscript=kohana">', ':anchor_close' => '</a>')); ?></noscript>
+					<a href="http://disqus.com" class="dsq-brlink">Documentation comments powered by <span class="logo-disqus">Disqus</span></a>
+					<?php endif ?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="footer">
+		<div class="container">
+			<div class="span-12">
+			<?php if (isset($copyright)): ?>
+				<p><?php echo $copyright ?></p>
+			<?php else: ?>
+				&nbsp;
+			<?php endif ?>
+			</div>
+			<div class="span-12 last right">
+			<p>Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?></p>
+			</div>
+		</div>
+	</div>
 
 <?php if (Kohana::$environment === Kohana::PRODUCTION): ?>
 <script type="text/javascript">
