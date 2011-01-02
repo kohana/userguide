@@ -24,8 +24,17 @@ First, copy this config and place in it `<module>/config/userguide.php`, replaci
 				// Copyright message, shown in the footer for this module
 				'copyright' => '&copy; 2010–2010 <Your Name>',
 			)	
+		),
+
+		/*
+		 * If you use transparent extension outside the Kohana_ namespace,
+		 * add your class prefix here (in lowercase).
+		 * For example, if you use Modulename_<class_name>, then you would define:
+		 */
+		'transparent_prefixes' => array(
+		    'modulename' => true,
 		)
-	);
+    );
 
 Next, create a folder in your module directory called `guide/<modulename>` and create `index.md` and `menu.md`.  All userguide pages use [Markdown](markdown).  The index page is what is shown on the index of your module, the menu is what shows up in the side column.  The menu should be formatted like this:
 
