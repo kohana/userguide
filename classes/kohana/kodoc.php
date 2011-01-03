@@ -161,7 +161,7 @@ class Kohana_Kodoc {
 		foreach ($list as $class)
 		{
 			// Skip transparent extension classes
-			if (KoDoc::is_transparent($class))
+			if (Kodoc::is_transparent($class))
 				continue;
 
 			$_class = new ReflectionClass($class);
@@ -173,7 +173,7 @@ class Kohana_Kodoc {
 				$declares = $_method->getDeclaringClass()->name;
 
 				// Remove the transparent prefix from declaring classes
-				if ($child = KoDoc::is_transparent($declares))
+				if ($child = Kodoc::is_transparent($declares))
 				{
 					$declares = $child;
 				}
@@ -376,7 +376,7 @@ class Kohana_Kodoc {
 	{
 		if ($classes AND ($class != strtolower($class)))
 		{
-			throw new InvalidArgumentException("KoDoc::is_transparent expects lowercase \$class when \$classes array is provided.");
+			throw new InvalidArgumentException("Kodoc::is_transparent expects lowercase \$class when \$classes array is provided.");
 		}
 
 		static $transparent_prefixes = null;
