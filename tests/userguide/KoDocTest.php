@@ -1,9 +1,9 @@
 <?php
 /**
- * Tests for the KoDoc userguide class
+ * Tests for the Kodoc userguide class
  * @group userguide
  */
-class KoDocTest extends Kohana_Unittest_TestCase
+class KodocTest extends Kohana_Unittest_TestCase
 {
     const EXPECT_EXCEPTION = -1;
 
@@ -26,7 +26,7 @@ class KoDocTest extends Kohana_Unittest_TestCase
     }
 
     /**
-     * Tests KoDoc::is_transparent
+     * Tests Kodoc::is_transparent
      *
      * Checks that a selection of transparent and non-transparent classes give expected results
      *
@@ -40,11 +40,11 @@ class KoDocTest extends Kohana_Unittest_TestCase
     {
 	try
 	{
-	    $result = KoDoc::is_transparent($class, $classes);
+	    $result = Kodoc::is_transparent($class, $classes);
 
 	    if ($expected == self::EXPECT_EXCEPTION)
 	    {
-		$this->fail('KoDoc::is_transparent did not throw an expected InvalidArgumentException');
+		$this->fail('Kodoc::is_transparent did not throw an expected InvalidArgumentException');
 	    } else {
 		$this->assertSame($expected,$result);
 	    }
@@ -52,7 +52,7 @@ class KoDocTest extends Kohana_Unittest_TestCase
 	    if ($expected != self::EXPECT_EXCEPTION)
 	    {
 		// We weren't expecting that
-		$this->fail('KoDoc::is_transparent threw unexpected InvalidArgumentException with message '.$e->getMessage());
+		$this->fail('Kodoc::is_transparent threw unexpected InvalidArgumentException with message '.$e->getMessage());
 	    }	    
 	}
 

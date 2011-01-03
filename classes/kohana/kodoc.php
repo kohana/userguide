@@ -346,15 +346,15 @@ class Kohana_Kodoc {
 
         /**
          * Checks whether a class is a transparent extension class or not. The old
-         * code takes two approaches - [KoDoc::menu] checks if the extension class
-         * actually exists, while [KoDoc::class_methods] does not.
+         * code takes two approaches - [Kodoc::menu] checks if the extension class
+         * actually exists, while [Kodoc::class_methods] does not.
          *
          * This method takes an optional $classes parameter, a list of all defined
          * class names. If provided, the method will return false unless the extension
          * class exists. If not, the method will only check known transparent class
          * prefixes.
 	 *
-	 * [!!] The $classes parameter is expected to be a result from KoDoc::classes
+	 * [!!] The $classes parameter is expected to be a result from Kodoc::classes
 	 * and will therefore contain lowercased class names. When $classes is provided,
 	 * $class must also be lowercase, or an exception will be thrown.
          *

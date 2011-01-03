@@ -14,7 +14,7 @@ class Kohana_Kodoc_Class extends Kodoc {
 	 * @var  ReflectionClass The ReflectionClass for this class
 	 */
 	public $class;
-
+	
 	/**
 	 * @var  string  modifiers like abstract, final
 	 */
