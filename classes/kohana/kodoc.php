@@ -353,6 +353,10 @@ class Kohana_Kodoc {
          * class names. If provided, the method will return false unless the extension
          * class exists. If not, the method will only check known transparent class
          * prefixes.
+	 *
+	 * [!!] The $classes parameter is expected to be a result from KoDoc::classes
+	 * and will therefore contain lowercased class names. When $classes is provided,
+	 * $class must also be lowercase, or an exception will be thrown.
          *
          * Transparent prefixes are defined in the userguide.php config file in
          * *lowercase*:
@@ -368,9 +372,15 @@ class Kohana_Kodoc {
          * @param array $classes An optional list of all defined classes
          * @return false If this is not a transparent extension class 
          * @return string The name of the class that extends this (in the case provided)
+	 * @throws InvalidArgumentException If the $classes array is provided and the $class variable is not lowercase
          */
         public static function is_transparent($class, $classes = null)
         {
+	    if ($classes AND ($class != strtolower($class)))
+	    {
+		throw new InvalidArgumentException("KoDoc::is_transparent expects lowercase \$class when \$classes array is provided.");
+	    }
+
             static $transparent_prefixes = null;
 
             if ( ! $transparent_prefixes)
@@ -392,7 +402,7 @@ class Kohana_Kodoc {
                       && (isset($transparent_prefixes[strtolower($segments[0])]));
 
             if ($result AND $classes) {
-                $result = $result && isset($classes[strtolower($segments[1])]);
+                $result = $result && isset($classes[$segments[1]]);
             }
 
             return $result ? $segments[1] : false;
