@@ -32,9 +32,9 @@ First, copy this config and place in it `<module>/config/userguide.php`, replaci
 		 * For example, if you use Modulename_<class_name>, then you would define:
 		 */
 		'transparent_prefixes' => array(
-		    'modulename' => true,
+			'modulename' => true,
 		)
-    );
+	);
 
 Next, create a folder in your module directory called `guide/<modulename>` and create `index.md` and `menu.md`.  All userguide pages use [Markdown](markdown).  The index page is what is shown on the index of your module, the menu is what shows up in the side column.  The menu should be formatted like this:
 

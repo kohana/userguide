@@ -29,8 +29,8 @@ return array
 		)	
 	),
 
-        // Set transparent class name segments
-        'transparent_prefixes' => array(
-            'kohana' => true
-        )
+	// Set transparent class name segments
+	'transparent_prefixes' => array(
+		'kohana' => true
+	)
 );

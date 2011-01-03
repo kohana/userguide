@@ -65,8 +65,8 @@ class Kohana_Kodoc {
 
 		foreach ($classes as $class)
 		{
-                        if (Kodoc::is_transparent($class, $classes))
-                            continue;
+			if (Kodoc::is_transparent($class, $classes))
+				continue;
 
 			$class = Kodoc_Class::factory($class);
 
@@ -154,17 +154,15 @@ class Kohana_Kodoc {
 	 */
 	public static function class_methods(array $list = NULL)
 	{
-		$list = Kodoc::classes($list);                
+		$list = Kodoc::classes($list);
 
 		$classes = array();
 
 		foreach ($list as $class)
 		{
-                        // Skip transparent extension classes
-                        if (KoDoc::is_transparent($class))
-                        {
-                            continue;
-                        }
+			// Skip transparent extension classes
+			if (KoDoc::is_transparent($class))
+				continue;
 
 			$_class = new ReflectionClass($class);
 
@@ -174,9 +172,9 @@ class Kohana_Kodoc {
 			{
 				$declares = $_method->getDeclaringClass()->name;
 
-                                // Remove the transparent prefix from declaring classes
-                                if ($child = KoDoc::is_transparent($declares))
-				{					
+				// Remove the transparent prefix from declaring classes
+				if ($child = KoDoc::is_transparent($declares))
+				{
 					$declares = $child;
 				}
 
@@ -344,69 +342,73 @@ class Kohana_Kodoc {
 		return $show_this;
 	}
 
-        /**
-         * Checks whether a class is a transparent extension class or not. The old
-         * code takes two approaches - [Kodoc::menu] checks if the extension class
-         * actually exists, while [Kodoc::class_methods] does not.
-         *
-         * This method takes an optional $classes parameter, a list of all defined
-         * class names. If provided, the method will return false unless the extension
-         * class exists. If not, the method will only check known transparent class
-         * prefixes.
+	/**
+	 * Checks whether a class is a transparent extension class or not. The old
+	 * code takes two approaches - [Kodoc::menu] checks if the extension class
+	 * actually exists, while [Kodoc::class_methods] does not.
+	 *
+	 * This method takes an optional $classes parameter, a list of all defined
+	 * class names. If provided, the method will return false unless the extension
+	 * class exists. If not, the method will only check known transparent class
+	 * prefixes.
 	 *
 	 * [!!] The $classes parameter is expected to be a result from Kodoc::classes
 	 * and will therefore contain lowercased class names. When $classes is provided,
 	 * $class must also be lowercase, or an exception will be thrown.
-         *
-         * Transparent prefixes are defined in the userguide.php config file in
-         * *lowercase*:
-         *
-         *     'transparent_prefixes' => array(
-         *         'kohana' => true,
-         *     );
-         *
-         * Module developers can therefore add their own transparent extension
-         * namespaces and exclude them from the userguide.
-         *          
-         * @param string $class The name of the class to check for transparency
-         * @param array $classes An optional list of all defined classes
-         * @return false If this is not a transparent extension class 
-         * @return string The name of the class that extends this (in the case provided)
+	 *
+	 * Transparent prefixes are defined in the userguide.php config file in
+	 * *lowercase*:
+	 *
+	 *     'transparent_prefixes' => array(
+	 *         'kohana' => true,
+	 *     );
+	 *
+	 * Module developers can therefore add their own transparent extension
+	 * namespaces and exclude them from the userguide.
+	 *          
+	 * @param string $class The name of the class to check for transparency
+	 * @param array $classes An optional list of all defined classes
+	 * @return false If this is not a transparent extension class 
+	 * @return string The name of the class that extends this (in the case provided)
 	 * @throws InvalidArgumentException If the $classes array is provided and the $class variable is not lowercase
-         */
-        public static function is_transparent($class, $classes = null)
-        {
-	    if ($classes AND ($class != strtolower($class)))
-	    {
-		throw new InvalidArgumentException("KoDoc::is_transparent expects lowercase \$class when \$classes array is provided.");
-	    }
+	 */
+	public static function is_transparent($class, $classes = null)
+	{
+		if ($classes AND ($class != strtolower($class)))
+		{
+			throw new InvalidArgumentException("KoDoc::is_transparent expects lowercase \$class when \$classes array is provided.");
+		}
 
-            static $transparent_prefixes = null;
+		static $transparent_prefixes = null;
 
-            if ( ! $transparent_prefixes)
-            {
-                $transparent_prefixes = Kohana::config('userguide.transparent_prefixes');
-            }
+		if ( ! $transparent_prefixes)
+		{
+			$transparent_prefixes = Kohana::config('userguide.transparent_prefixes');
+		}
 
-            // Hack for Kohana_Core, which doesn't follow convention
-            if ($class == 'Kohana_Core') {
-                return 'Kohana';
-            } else if ($class == 'kohana_core') {
-                return 'kohana';
-            }
+		// Hack for Kohana_Core, which doesn't follow convention
+		if ($class == 'Kohana_Core') 
+		{
+			return 'Kohana';
+		} 
+		elseif ($class == 'kohana_core') 
+		{
+			return 'kohana';
+		}
 
-            // For all others, split into the two elements of the class name
-            $segments = explode('_',$class,2);
+		// For all others, split into the two elements of the class name
+		$segments = explode('_',$class,2);
 
-            $result = (count($segments) == 2)
-                      && (isset($transparent_prefixes[strtolower($segments[0])]));
+		$result = (count($segments) == 2)
+		          && (isset($transparent_prefixes[strtolower($segments[0])]));
 
-            if ($result AND $classes) {
-                $result = $result && isset($classes[$segments[1]]);
-            }
+		if ($result AND $classes) 
+		{
+			$result = $result && isset($classes[$segments[1]]);
+		}
 
-            return $result ? $segments[1] : false;
-        }
+		return $result ? $segments[1] : false;
+	}
 
 
 } // End Kodoc
