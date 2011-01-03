@@ -6,6 +6,13 @@
 	<?php endwhile ?>
 </h1>
 
+<?php if ($child = $doc->is_transparent($doc->class->name)):?>
+<p class="note">
+This class is a transparent base class for <?php echo HTML::anchor($route->uri(array('class'=>$child)),$child) ?> and
+should not be accessed directly.
+</p>
+<?php endif;?>
+
 <?php echo $doc->description ?>
 
 <?php if ($doc->tags): ?>
