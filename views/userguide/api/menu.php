@@ -1,5 +1,5 @@
 
-<h2>Modules</h2>
+<h2><?php echo __('Modules'); ?></h2>
 <ol class="menu">
 <?php foreach ($menu as $package => $categories): ksort($categories); ?>
 <li><span><strong><?php echo $package ?></strong></span>

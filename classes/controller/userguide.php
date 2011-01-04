@@ -73,8 +73,8 @@ class Controller_Userguide extends Controller_Template {
 	// List all modules that have userguides
 	public function index()
 	{
-		$this->template->title = "Userguide";
-		$this->template->breadcrumb = array('User Guide');
+		$this->template->title = __('Userguide');
+		$this->template->breadcrumb = array(__('User Guide'));
 		$this->template->content = View::factory('userguide/index', array('modules' => $this->_modules()));
 		$this->template->menu = View::factory('userguide/menu', array('modules' => $this->_modules()));
 
@@ -86,7 +86,7 @@ class Controller_Userguide extends Controller_Template {
 	public function error($message)
 	{
 		$this->request->status = 404;
-		$this->template->title = "Userguide - Error";
+		$this->template->title = __('Userguide - Error');
 		$this->template->content = View::factory('userguide/error',array('message' => $message));
 
 		// Don't show disqus on error pages
@@ -101,7 +101,7 @@ class Controller_Userguide extends Controller_Template {
 
 			$this->template->menu = Markdown($this->_get_all_menu_markdown());
 			$this->template->breadcrumb = array(
-				$this->guide->uri() => 'User Guide',
+				$this->guide->uri() => __('User Guide'),
 				$this->guide->uri(array('module' => $module)) => Kohana::config('userguide.modules.'.$module.'.name'),
 				'Error'
 			);
@@ -113,8 +113,8 @@ class Controller_Userguide extends Controller_Template {
 
 			// Bind the breadcrumb
 			$this->template->breadcrumb = array(
-				$this->guide->uri(array('page' => NULL)) => 'User Guide',
-				$this->request->route->uri() => 'API Browser',
+				$this->guide->uri(array('page' => NULL)) => __('User Guide'),
+				$this->request->route->uri() => __('API Browser'),
 				'Error'
 			);
 		}
@@ -122,7 +122,7 @@ class Controller_Userguide extends Controller_Template {
 		else
 		{
 			$this->template->menu = View::factory('userguide/menu',array('modules' => $this->_modules()));
-			$this->template->breadcrumb = array($this->request->route->uri() => 'User Guide','Error');
+			$this->template->breadcrumb = array($this->request->route->uri() => __('User Guide'),'Error');
 		}
 	}
 
@@ -263,7 +263,7 @@ class Controller_Userguide extends Controller_Template {
 		// Add the breadcrumb
 		$breadcrumb = array();
 		$breadcrumb[$this->guide->uri(array('page' => NULL))] = __('User Guide');
-		$breadcrumb[$this->request->route->uri()] = 'API Browser';
+		$breadcrumb[$this->request->route->uri()] = __('API Browser');
 		$breadcrumb[] = $this->template->title;
 	}
 

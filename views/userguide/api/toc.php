@@ -1,6 +1,6 @@
 <h1><?php echo __('Available Classes') ?></h1>
 
-<label>Filter:</label>
+<label><?php echo __('Filter'); ?>:</label>
 <input type="text" id="api-filter-box" />
 
 <script type="text/javascript">

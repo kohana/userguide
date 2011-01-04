@@ -11,7 +11,7 @@
 </div>
 
 <?php if ($doc->params): ?>
-<h4>Parameters</h4>
+<h4><?php echo __('Parameters'); ?></h4>
 <ul>
 <?php foreach ($doc->params as $param): ?>
 <li>

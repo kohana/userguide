@@ -1,4 +1,4 @@
-<h4>Tags</h4>
+<h4><?php echo __('Tags'); ?></h4>
 <ul class="tags">
 <?php foreach ($tags as $name => $set): ?>
 <li><?php echo ucfirst($name).($set?' - '.implode(', ',$set):''); ?>

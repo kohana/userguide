@@ -1,4 +1,4 @@
-<h2>Modules</h2>
+<h2><?php echo __('Modules'); ?></h2>
 
 <?php if( ! empty($modules)): ?>
 
@@ -12,6 +12,6 @@
 
 <?php else: ?>
 
-	<p class="error">No modules.</p>
+	<p class="error"><?php echo __('No modules.'); ?></p>
 
 <?php endif; ?>

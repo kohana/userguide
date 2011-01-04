@@ -19,13 +19,13 @@ return array
 			'enabled' => TRUE,
 			
 			// The name that should show up on the userguide index page
-			'name' => 'Userguide',
+			'name' => __('Userguide'),
 
 			// A short description of this module, shown on the index page
-			'description' => 'Documentation viewer and api generation.',
+			'description' => __('Documentation viewer and api generation.'),
 			
 			// Copyright message, shown in the footer for this module
-			'copyright' => '&copy; 2008–2010 Kohana Team',
+			'copyright' => __('&copy; 2008–2010 Kohana Team'),
 		)	
 	)
 );
