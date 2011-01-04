@@ -37,6 +37,12 @@
 		<div class="wrapper">
 			<div class="container">
 				<div class="span-22 prefix-1 suffix-1">
+					<div id="translations" class="span-2">
+						<?php echo form::open(NULL, array('method' => 'get')) ?>
+							<?php echo form::select('lang', $translations, I18n::$lang) ?>
+						<?php echo form::close() ?>
+					</div>
+
 					<ul id="breadcrumb">
 						<?php foreach ($breadcrumb as $link => $title): ?>
 							<?php if (is_string($link)): ?>

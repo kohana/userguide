@@ -118,7 +118,9 @@ h6:hover a.permalink {
 	#content a:hover { color: #00758f; }
 	#content a:active { text-decoration: none; }
 
-#breadcrumb { margin: 0 0 1em; padding: 0 0 1em; list-style: none; border-bottom: solid 1px #f3f3f3; }
+#translations { float: right}
+
+#breadcrumb { float: left; margin: 0 0 1em; padding: 0 0 1em; list-style: none; border-bottom: solid 1px #f3f3f3; }
 	#breadcrumb li { display: inline-block; margin: 0; padding: 0 0.4em 0 0; }
 	#breadcrumb li:before { content: '»'; padding-right: 0.4em; }
 

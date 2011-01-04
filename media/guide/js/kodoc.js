@@ -1,8 +1,12 @@
 $(document).ready(function()
 {
+	// Translation selector
+	$('#translations form select').change(function()
+	{
+		$(this).parents('form').submit();
+	});
 
-// Syntax highlighter
-
+	// Syntax highlighter
 	$('pre:not(.debug) code').each(function()
 	{
 		$(this).addClass('brush: php, class-name: highlighted');
