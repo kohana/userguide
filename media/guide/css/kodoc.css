@@ -20,7 +20,7 @@ code {
 }
 
 pre {
-	background:#f3f3f3;
+	background:#fff;
 	border-radius:10px;
 	padding:1.5em;
 	font-size:0.9em;
@@ -64,7 +64,7 @@ table tr:nth-child(even) {
 .note {
 	padding: 1.5em;
 	padding-left: 5em;
-	background: #f3f3f3 url('../img/lightbulb_48.png') no-repeat 1em center;
+	background: #e8efcf url('../img/lightbulb_48.png') no-repeat 1em center;
 	border-radius: 0.6em;
 	overflow: auto;
 }
@@ -112,15 +112,16 @@ h6:hover a.permalink {
 
 #content { background: #f1f8db url(../img/content.png) center top repeat-x; }
 	#content .wrapper { min-height: 390px; padding: 1em 0; background: transparent url(../img/wrapper.png) center top no-repeat; }
-	#content div.page-toc { float: right; margin: 1em; margin-top: 0; padding: 1em; background: #fff; border: solid 0.1em #f3f3f3; border-radius: 0.6em; }
+	#content div.page-toc { float: right; margin: 1em; margin-top: 0; padding: 1em; background: #fff; border: solid 0.1em #e8efcf; border-radius: 0.6em; }
 	#content p.intro { padding: 1em 20px; padding-left: 20px; margin: 0 -20px; font-size: 1.2em; }
 	#content a { color: #004352; }
 	#content a:hover { color: #00758f; }
 	#content a:active { text-decoration: none; }
 
-#breadcrumb { margin: 0 0 1em; padding: 0 0 1em; list-style: none; border-bottom: solid 1px #f3f3f3; }
-	#breadcrumb li { display: inline-block; margin: 0; padding: 0 0.4em 0 0; }
+#breadcrumb { margin: 0 0 1em; padding: 0 0 0.5em; list-style: none; border-bottom: solid 1px #e8efcf; }
+	#breadcrumb li { display: inline-block; margin: 0; padding: 0 0.4em 0 0; text-transform: uppercase; font-size: 11px; }
 	#breadcrumb li:before { content: '»'; padding-right: 0.4em; }
+	#breadcrumb li a { color: #999; text-decoration: none; }
 
 #topics {  }
 	#topics ul,

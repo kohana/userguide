@@ -22,7 +22,7 @@ First, copy this config and place in it `<module>/config/userguide.php`, replaci
 				'description' => '<Description goes here.>',
 				
 				// Copyright message, shown in the footer for this module
-				'copyright' => '&copy; 2010–2010 <Your Name>',
+				'copyright' => '&copy; 2010–2011 <Your Name>',
 			)	
 		)
 	);

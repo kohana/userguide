@@ -17,7 +17,7 @@
 
 	<div id="header">
 		<div class="container">
-			<a href="<?php echo Route::url('docs/guide') ?>" id="logo">
+			<a href="http://kohanaframework.org/" id="logo">
 				<img src="<?php echo Route::url('docs/media', array('file' => 'img/kohana.png')) ?>" />
 			</a>
 			<div id="menu">
