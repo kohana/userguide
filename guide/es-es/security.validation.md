@@ -1,3 +1,0 @@
-# Validación
-
-[!!] inacabado

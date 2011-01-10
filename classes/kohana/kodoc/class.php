@@ -73,6 +73,22 @@ class Kohana_Kodoc_Class extends Kodoc {
 		while ($parent = $parent->getParentClass());
 
 		list($this->description, $this->tags) = Kodoc::parse($comment);
+		
+		// If this class extends Kodoc_Missing, add a warning about possible
+		// incomplete documentation
+		$parent = $this->class;
+		
+		while ($parent = $parent->getParentClass())
+		{
+			if ($parent->name == 'Kodoc_Missing')
+			{
+				$warning = "[!!] **This class, or a class parent, could not be
+				           found or loaded. This could be caused by a missing
+						   module or other dependancy. The documentation for
+						   class may not be complete!**";
+				$this->description = Markdown($warning).$this->description;
+			}
+		}
 	}
 
 	/**
@@ -84,22 +100,33 @@ class Kohana_Kodoc_Class extends Kodoc {
 	{
 		$props = $this->class->getProperties();
 
-		sort($props);
+		usort($props, array($this,'_prop_sort'));
 
 		foreach ($props as $key => $property)
 		{
-			// Only show public properties, because Reflection can't get the private ones
-			if ($property->isPublic())
-			{
-				$props[$key] = new Kodoc_Property($this->class->name, $property->name);
-			}
-			else
-			{
-				unset($props[$key]);
-			}
+			// Create Kodoc Properties for each property
+			$props[$key] = new Kodoc_Property($this->class->name, $property->name);
 		}
 
 		return $props;
+	}
+	
+	protected function _prop_sort($a, $b)
+	{
+		// If one property is public, and the other is not, it goes on top
+		if ($a->isPublic() AND ( ! $b->isPublic()))
+			return -1;
+		if ($b->isPublic() AND ( ! $a->isPublic()))
+			return 1;
+		
+		// If one property is protected and the other is private, it goes on top
+		if ($a->isProtected() AND $b->isPrivate())
+			return -1;
+		if ($b->isProtected() AND $a->isPrivate())
+			return 1;
+		
+		// Otherwise just do alphabetical
+		return strcmp($a->name, $b->name);
 	}
 
 	/**
@@ -120,22 +147,44 @@ class Kohana_Kodoc_Class extends Kodoc {
 
 		return $methods;
 	}
-
-	protected function _method_sort($a,$b)
+	
+	/**
+	 * Sort methods based on their visibility and declaring class based on:
+	 *  - methods will be sorted public, protected, then private.
+	 *  - methods that are declared by an ancestor will be after classes
+	 *    declared by the current class
+	 *  - lastly, they will be sorted alphabetically
+	 * 
+	 */
+	protected function _method_sort($a, $b)
 	{
+		// If one method is public, and the other is not, it goes on top
+		if ($a->isPublic() AND ( ! $b->isPublic()))
+			return -1;
+		if ($b->isPublic() AND ( ! $a->isPublic()))
+			return 1;
+		
+		// If one method is protected and the other is private, it goes on top
+		if ($a->isProtected() AND $b->isPrivate())
+			return -1;
+		if ($b->isProtected() AND $a->isPrivate())
+			return 1;
+		
+		// The methods have the same visibility, so check the declaring class depth:
+		
+		
 		/*
 		echo kohana::debug('a is '.$a->class.'::'.$a->name,'b is '.$b->class.'::'.$b->name,
-						   'are the classes the same?',$a->class == $b->class,'if they are, the result is:',strcmp($a->name,$b->name),
-						   'is a this class?',$a->name == $this->class->name,-1,
-						   'is b this class?',$b->name == $this->class->name,1,
-						   'otherwise, the result is:',strcmp($a->class,$b->class)
+						   'are the classes the same?', $a->class == $b->class,'if they are, the result is:',strcmp($a->name, $b->name),
+						   'is a this class?', $a->name == $this->class->name,-1,
+						   'is b this class?', $b->name == $this->class->name,1,
+						   'otherwise, the result is:',strcmp($a->class, $b->class)
 						   );
 		*/
 
-
 		// If both methods are defined in the same class, just compare the method names
 		if ($a->class == $b->class)
-			return strcmp($a->name,$b->name);
+			return strcmp($a->name, $b->name);
 
 		// If one of them was declared by this class, it needs to be on top
 		if ($a->name == $this->class->name)

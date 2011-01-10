@@ -64,7 +64,7 @@ class Kohana_Kodoc_Method extends Kodoc {
 
 			foreach ($this->method->getParameters() as $i => $param)
 			{
-				$param = new Kodoc_Method_Param(array($this->method->class,$this->method->name),$i);
+				$param = new Kodoc_Method_Param(array($this->method->class, $this->method->name),$i);
 
 				if (isset($tags['param'][$i]))
 				{
@@ -74,7 +74,7 @@ class Kohana_Kodoc_Method extends Kodoc {
 
 					if (isset($matches[2]))
 					{
-						$param->description = $matches[2];
+						$param->description = ucfirst($matches[2]);
 					}
 				}
 				$params[] = $param;
