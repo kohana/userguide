@@ -65,7 +65,7 @@ class Controller_Userguide extends Controller_Template {
 	// Display an error if a page isn't found
 	public function error($message)
 	{
-		$this->request->status = 404;
+		$this->request->status(404);
 		$this->template->title = "Userguide - Error";
 		$this->template->content = View::factory('userguide/error',array('message' => $message));
 		
@@ -270,7 +270,7 @@ class Controller_Userguide extends Controller_Template {
 		else
 		{
 			// Return a 404 status
-			$this->response->status = 404;
+			$this->response->status(404);
 		}
 	}
 
