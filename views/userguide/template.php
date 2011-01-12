@@ -58,7 +58,7 @@
 					<?php if (Kohana::$environment === Kohana::PRODUCTION AND empty($hide_disqus)): ?>
 					<div id="disqus_thread" class="clear"></div>
 					<script type="text/javascript">
-						var disqus_identifier = '<?php echo HTML::chars(Request::instance()->uri) ?>';
+						var disqus_identifier = '<?php echo HTML::chars(Request::current()->uri()) ?>';
 						(function() {
 							var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 							dsq.src = 'http://kohana.disqus.com/embed.js';

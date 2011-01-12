@@ -87,14 +87,14 @@ class Controller_Userguide extends Controller_Template {
 			);
 		}
 		// If we are in the api browser, show the menu and show the api browser in the breadcrumbs
-		else if (Route::name($this->request->route) == 'docs/api')
+		else if (Route::name($this->request->route()) == 'docs/api')
 		{
 			$this->template->menu = Kodoc::menu();
 
 			// Bind the breadcrumb
 			$this->template->breadcrumb = array(
 				$this->guide->uri(array('page' => NULL)) => 'User Guide',
-				$this->request->route->uri() => 'API Browser',
+				$this->request->route()->uri() => 'API Browser',
 				'Error'
 			);
 		}
@@ -102,7 +102,7 @@ class Controller_Userguide extends Controller_Template {
 		else
 		{
 			$this->template->menu = View::factory('userguide/menu',array('modules' => $this->_modules()));
-			$this->template->breadcrumb = array($this->request->route->uri() => 'User Guide','Error');
+			$this->template->breadcrumb = array($this->request->route()->uri() => 'User Guide','Error');
 		}
 	}
 
@@ -198,7 +198,7 @@ class Controller_Userguide extends Controller_Template {
 
 			$this->template->content = View::factory('userguide/api/toc')
 				->set('classes', Kodoc::class_methods())
-				->set('route', $this->request->route);
+				->set('route', $this->request->route());
 		}
 		else
 		{
@@ -209,7 +209,7 @@ class Controller_Userguide extends Controller_Template {
 			// (different case, orm vs ORM, auth vs Auth) redirect
 			if ($_class->class->name != $class)
 			{
-				$this->request->redirect($this->request->route->uri(array('class'=>$_class->class->name)));
+				$this->request->redirect($this->request->route()->uri(array('class'=>$_class->class->name)));
 			}
 
 			// If this classes immediate parent is Kodoc_Missing, then it should 404
@@ -225,7 +225,7 @@ class Controller_Userguide extends Controller_Template {
 
 			$this->template->content = View::factory('userguide/api/class')
 				->set('doc', Kodoc::factory($class))
-				->set('route', $this->request->route);
+				->set('route', $this->request->route());
 		}
 
 		// Attach the menu to the template
@@ -240,7 +240,7 @@ class Controller_Userguide extends Controller_Template {
 		// Add the breadcrumb
 		$breadcrumb = array();
 		$breadcrumb[$this->guide->uri(array('page' => NULL))] = __('User Guide');
-		$breadcrumb[$this->request->route->uri()] = 'API Browser';
+		$breadcrumb[$this->request->route()->uri()] = 'API Browser';
 		$breadcrumb[] = $this->template->title;
 	}
 
