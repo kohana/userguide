@@ -17,7 +17,7 @@ class Controller_Userguide extends Controller_Template {
 
 	public function before()
 	{
-		if ($this->request->action === 'media')
+		if ($this->request->action() === 'media')
 		{
 			// Do not template media files
 			$this->auto_render = FALSE;
@@ -258,10 +258,10 @@ class Controller_Userguide extends Controller_Template {
 		if ($file = Kohana::find_file('media/guide', $file, $ext))
 		{
 			// Check if the browser sent an "if-none-match: <etag>" header, and tell if the file hasn't changed
-			$this->request->check_cache(sha1($this->request->uri).filemtime($file));
+			$this->request->check_cache(sha1($this->request->uri()).filemtime($file));
 			
 			// Send the file content as the response
-			$this->response->body = file_get_contents($file);
+			$this->response->body(file_get_contents($file));
 
 			// Set the proper headers to allow caching
 			$this->response->headers('content-type',  File::mime_by_ext($ext));
