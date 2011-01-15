@@ -5,9 +5,9 @@
 
 <title><?php echo $title ?> | Kohana <?php echo __('User Guide'); ?></title>
 
-<?php foreach ($styles as $style => $media) echo HTML::style($style, array('media' => $media), TRUE), "\n" ?>
+<?php foreach ($styles as $style => $media) echo HTML::style($style, array('media' => $media), NULL, TRUE), "\n" ?>
 
-<?php foreach ($scripts as $script) echo HTML::script($script, NULL, TRUE), "\n" ?>
+<?php foreach ($scripts as $script) echo HTML::script($script, NULL, NULL, TRUE), "\n" ?>
 
 <!--[if lt IE 9]>
 <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
