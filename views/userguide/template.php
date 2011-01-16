@@ -40,7 +40,7 @@
 					<ul id="breadcrumb">
 						<?php foreach ($breadcrumb as $link => $title): ?>
 							<?php if (is_string($link)): ?>
-							<li><?php echo HTML::anchor($link, $title) ?></li>
+							<li><?php echo HTML::anchor($link, $title, NULL, NULL, TRUE) ?></li>
 							<?php else: ?>
 							<li class="last"><?php echo $title ?></li>
 							<?php endif ?>
