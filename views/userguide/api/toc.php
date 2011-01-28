@@ -5,6 +5,7 @@
 
 <script type="text/javascript">
 (function($) {
+	var search_timeout = null;
 	$.fn.extend({
 		filter_content: function(search){
 			var search_regex = new RegExp(search,'gi');
@@ -44,18 +45,21 @@
 				}
 			});
 		},
-		
+
 		api_filter: function(api_container_selector){
 			$(this).keyup(function(){
 				// Run the filter method on this value
-				$(api_container_selector).filter_content($(this).val());
+				var $this = $(this);
+				search_timeout = setTimeout(function(){
+					$(api_container_selector).filter_content($this.val())
+				}, 300);
 			});
 		}
 	})
 })(jQuery);
 
 $(document).ready(function(){
-    $('#api-filter-box').api_filter('#kodoc-main');
+    $('#api-filter-box').api_filter('#body');
 });
 </script>
 
