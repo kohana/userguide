@@ -161,7 +161,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 					ob_start();
 
 					// Capture the exception handler output and insert it instead
-					Kohana::exception_handler($e);
+					Kohana_exception::handler($e);
 
 					$replace[$search] = ob_get_clean();
 				}
