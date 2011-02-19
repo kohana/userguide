@@ -51,7 +51,7 @@ Once your pull request has been accepted, you can delete your repository if you 
 		cd system
 		
 		# make sure we are up to date
-		git checkout 3.0/develop
+		git checkout 3.1/develop
 		git pull
 		
 		# add your repository as a new remote
@@ -61,6 +61,6 @@ Once your pull request has been accepted, you can delete your repository if you 
 		
 		# now commit the changes and push to your repo
 		git commit
-		git push <your name> 3.0/develop
+		git push <your name> 3.1/develop
 
  4. Send a pull request on github containing the ticket number, and update the ticket with a link to the pull request.
