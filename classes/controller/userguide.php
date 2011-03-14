@@ -119,15 +119,20 @@ class Controller_Userguide extends Controller_Template {
 		{
 			return $this->index();
 		}
-		
+
+		$config = Kohana::config('userguide.modules.'.$module);
+
 		// If this module's userguide pages are disabled, show the error page
-		if ( ! Kohana::config('userguide.modules.'.$module.'.enabled'))
+		if ( ! Arr::get($config, 'enabled'))
 		{
 			return $this->error(__('That module doesn\'t exist, or has userguide pages disabled.'));
 		}
-		
+
+		// Get the index page from config, default to "index"
+		$index = Arr::get($config, 'index', 'index');
+
 		// Prevent "guide/module" and "guide/module/index" from having duplicate content
-		if ( $page == 'index')
+		if ( $page === $index)
 		{
 			return $this->error(__('Userguide page not found'));
 		}
@@ -135,7 +140,7 @@ class Controller_Userguide extends Controller_Template {
 		// If a module is set, but no page was provided in the url, show the index page
 		if ( ! $page )
 		{
-			$page = 'index';
+			$page = $index;
 		}
 
 		// Find the markdown file for this page
@@ -152,7 +157,7 @@ class Controller_Userguide extends Controller_Template {
 		Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
 
 		// Set the page title
-		$this->template->title = $page == 'index' ? Kohana::config('userguide.modules.'.$module.'.name') : $this->title($page);
+		$this->template->title = ($page === $index) ? Arr::get($config, 'name') : $this->title($page);
 
 		// Parse the page contents into the template
 		Kodoc_Markdown::$show_toc = true;
@@ -166,17 +171,17 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->bind('breadcrumb', $breadcrumb);
 		
 		// Bind the copyright
-		$this->template->copyright = Kohana::config('userguide.modules.'.$module.'.copyright');
+		$this->template->copyright = Arr::get($config, 'copyright');
 
 		// Add the breadcrumb trail
 		$breadcrumb = array();
 		$breadcrumb[$this->guide->uri()] = __('User Guide');
-		$breadcrumb[$this->guide->uri(array('module' => $module))] = Kohana::config('userguide.modules.'.$module.'.name');
-		
+		$breadcrumb[$this->guide->uri(array('module' => $module))] = Arr::get($config, 'name');
+
 		// TODO try and get parent category names (from menu).  Regex magic or javascript dom stuff perhaps?
 		
 		// Only add the current page title to breadcrumbs if it isn't the index, otherwise we get repeats.
-		if ($page != 'index')
+		if ($page !== $index)
 		{
 			$breadcrumb[] = $this->template->title;
 		}
