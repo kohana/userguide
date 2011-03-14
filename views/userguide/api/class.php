@@ -60,7 +60,7 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 			<li><a href="#<?php echo $method->method->name ?>"><?php echo $method->method->name ?>()</a></li>
 		<?php endforeach ?>
 		<?php else: ?>
-			<li><em><?php echo __('one'); ?></em></li>
+			<li><em><?php echo __('None'); ?></em></li>
 		<?php endif ?>
 		</ul>
 	</div>

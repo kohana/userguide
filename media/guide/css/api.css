@@ -23,12 +23,12 @@ div.properties dl dd {margin-left:1.5em; margin-bottom:1.5em;}
 
 /* functions */
 
-div.method { padding:0 1.5em; border:1px solid #aaa; border-radius:5px; margin-bottom:1.5em; }
-div.method h3 { background:none; margin-top:0; margin-left:-1.17em; margin-right:-1.17em; padding:.75em 0 .75em 1.17em; background:#eee; border-top-left-radius:5px; border-top-right-radius:5px; }
+div.method { padding:0 1.5em; border:1px solid #c8cfaf; border-radius:5px; margin-bottom:1.5em; }
+div.method h3 { background:none; margin-top:0; margin-left:-1em; margin-right:-1em; padding:.75em 0 .75em 1.17em; background:#e8efcf; border-top-left-radius:5px; border-top-right-radius:5px; }
 div.method h3 .param { font-weight: normal; cursor: help; border-bottom:1px dashed #666;}
 div.method h3 abbr.param { text-transform: none; font-size: 1em; }
 
-dl.tags { overflow: auto; background: #eee; padding: 1em; border: solid 6px #ddd; margin-bottom:1.5em; }
+dl.tags { overflow: auto; background: #e8efcf; padding: 1em; border: solid 6px #d8dfbf; margin-bottom:1.5em; }
 	dl.tags dt { margin: 0; clear: both; float: left; width: 25%; }
 	dl.tags dd { margin: 0; padding: 0; clear: right; float: right; }
 	
