@@ -17,7 +17,10 @@ return array
 
 			// Whether this modules userguide pages should be shown
 			'enabled' => TRUE,
-			
+
+			// Name of the start/landing/home page
+			'index' => 'index',
+
 			// The name that should show up on the userguide index page
 			'name' => 'Userguide',
 
