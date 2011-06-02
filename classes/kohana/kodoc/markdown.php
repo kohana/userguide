@@ -142,6 +142,16 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	public function doIncludeViews($text)
 	{
+		// Escape views within <code> tags
+		if (preg_match_all('/(?s)\<code\>.*?{{[^\s{}]+}}.*?\<\/code\>/', $text, $match, PREG_SET_ORDER))
+		{
+			foreach ($match as $item)
+			{
+				$replacement = preg_replace(array('/{/','/}/'), array('&#123;','&#125;'), $item);
+				$text = str_replace($item, $replacement, $text);
+			}
+		}
+
 		if (preg_match_all('/{{([^\s{}]++)}}/', $text, $matches, PREG_SET_ORDER))
 		{
 			$replace = array();
