@@ -156,8 +156,6 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		{
 			$replace = array();
 
-			$replace = array();
-
 			foreach ($matches as $set)
 			{
 				list($search, $view) = $set;
