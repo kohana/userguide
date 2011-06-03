@@ -142,40 +142,44 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	public function doIncludeViews($text)
 	{
-		// Escape views within <code> tags
-		if (preg_match_all('/(?s)\<code\>.*?{{[^\s{}]+}}.*?\<\/code\>/', $text, $match, PREG_SET_ORDER))
+		if (Route::name(Request::current()->route()) != 'docs/api')
 		{
-			foreach ($match as $item)
+			// Escape views within <code> tags
+			if (preg_match_all('/(?s)\<code\>.*?{{[^\s{}]+}}.*?\<\/code\>/', $text, $match, PREG_SET_ORDER))
 			{
-				$replacement = preg_replace(array('/{/','/}/'), array('&#123;','&#125;'), $item);
-				$text = str_replace($item, $replacement, $text);
-			}
-		}
-
-		if (preg_match_all('/{{([^\s{}]++)}}/', $text, $matches, PREG_SET_ORDER))
-		{
-			$replace = array();
-
-			foreach ($matches as $set)
-			{
-				list($search, $view) = $set;
-
-				try
+				foreach ($match as $item)
 				{
-					$replace[$search] = View::factory($view)->render();
-				}
-				catch (Exception $e)
-				{
-					ob_start();
-
-					// Capture the exception handler output and insert it instead
-					Kohana_exception::handler($e);
-
-					$replace[$search] = ob_get_clean();
+					$replacement = preg_replace(array('/{/','/}/'), array('&#123;','&#125;'), $item);
+					$text = str_replace($item, $replacement, $text);
 				}
 			}
 
-			$text = strtr($text, $replace);
+			if (preg_match_all('/{{([^\s{}]++)}}/', $text, $matches, PREG_SET_ORDER))
+			{
+				$replace = array();
+
+				foreach ($matches as $set)
+				{
+					list($search, $view) = $set;
+
+					try
+					{
+						$replace[$search] = View::factory($view)->render();
+					}
+					catch (Exception $e)
+					{
+						ob_start();
+
+						// Capture the exception handler output and insert it instead
+						Kohana_exception::handler($e);
+
+						$replace[$search] = ob_get_clean();
+					}
+				}
+
+				$text = strtr($text, $replace);
+			}
+			
 		}
 
 		return $text;
