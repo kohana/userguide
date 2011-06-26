@@ -9,7 +9,7 @@ Route::set('docs/media', 'guide/media(/<file>)', array('file' => '.+'))
 	));
 
 // API Browser, if enabled
-if (Kohana::config('userguide.api_browser') === TRUE)
+if (Kohana::$config->load('userguide.api_browser') === TRUE)
 {
 	Route::set('docs/api', 'guide/api(/<class>)', array('class' => '[a-zA-Z0-9_]+'))
 		->defaults(array(

@@ -208,9 +208,9 @@ You can make links to the api browser by wrapping any class name in brackets.  Y
 
 If you want to have parameters and have the function be clickable, only put the brackets around the class and function (not the params), and put a backslash in front of the opening parenthesis.
 
-	[Kohana::config]\('foobar','baz')
+	[Kohana::$config]\('foobar','baz')
 	
-[Kohana::config]\('foobar','baz')
+[Kohana::$config]\('foobar','baz')
 
 ## Notes
 

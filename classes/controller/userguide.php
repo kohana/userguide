@@ -73,7 +73,7 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->hide_disqus = TRUE;
 
 		// If we are in a module and that module has a menu, show that
-		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu') AND Kohana::config('userguide.modules.'.$module.'.enabled'))
+		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu') AND Kohana::$config->load('userguide.modules.'.$module.'.enabled'))
 		{
 			// Namespace the markdown parser
 			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/'.$module.'/';
@@ -82,7 +82,7 @@ class Controller_Userguide extends Controller_Template {
 			$this->template->menu = Markdown($this->_get_all_menu_markdown());
 			$this->template->breadcrumb = array(
 				$this->guide->uri() => 'User Guide',
-				$this->guide->uri(array('module' => $module)) => Kohana::config('userguide.modules.'.$module.'.name'),
+				$this->guide->uri(array('module' => $module)) => Kohana::$config->load('userguide.modules.'.$module.'.name'),
 				'Error'
 			);
 		}
@@ -121,7 +121,7 @@ class Controller_Userguide extends Controller_Template {
 		}
 		
 		// If this module's userguide pages are disabled, show the error page
-		if ( ! Kohana::config('userguide.modules.'.$module.'.enabled'))
+		if ( ! Kohana::$config->load('userguide.modules.'.$module.'.enabled'))
 		{
 			return $this->error(__('That module doesn\'t exist, or has userguide pages disabled.'));
 		}
@@ -152,7 +152,7 @@ class Controller_Userguide extends Controller_Template {
 		Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
 
 		// Set the page title
-		$this->template->title = $page == 'index' ? Kohana::config('userguide.modules.'.$module.'.name') : $this->title($page);
+		$this->template->title = $page == 'index' ? Kohana::$config->load('userguide.modules.'.$module.'.name') : $this->title($page);
 
 		// Parse the page contents into the template
 		Kodoc_Markdown::$show_toc = true;
@@ -166,12 +166,12 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->bind('breadcrumb', $breadcrumb);
 		
 		// Bind the copyright
-		$this->template->copyright = Kohana::config('userguide.modules.'.$module.'.copyright');
+		$this->template->copyright = Kohana::$config->load('userguide.modules.'.$module.'.copyright');
 
 		// Add the breadcrumb trail
 		$breadcrumb = array();
 		$breadcrumb[$this->guide->uri()] = __('User Guide');
-		$breadcrumb[$this->guide->uri(array('module' => $module))] = Kohana::config('userguide.modules.'.$module.'.name');
+		$breadcrumb[$this->guide->uri(array('module' => $module))] = Kohana::$config->load('userguide.modules.'.$module.'.name');
 		
 		// TODO try and get parent category names (from menu).  Regex magic or javascript dom stuff perhaps?
 		
@@ -366,7 +366,7 @@ class Controller_Userguide extends Controller_Template {
 	// Get the list of modules from the config, and reverses it so it displays in the order the modules are added, but move Kohana to the top.
 	protected function _modules()
 	{
-		$modules = array_reverse(Kohana::config('userguide.modules'));
+		$modules = array_reverse(Kohana::$config->load('userguide.modules'));
 		
 		if (isset($modules['kohana']))
 		{
@@ -378,7 +378,7 @@ class Controller_Userguide extends Controller_Template {
 		// Remove modules that have been disabled via config
 		foreach ($modules as $key => $value)
 		{
-			if ( ! Kohana::config('userguide.modules.'.$key.'.enabled'))
+			if ( ! Kohana::$config->load('userguide.modules.'.$key.'.enabled'))
 			{
 				unset($modules[$key]);
 			}

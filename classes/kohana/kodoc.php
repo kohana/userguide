@@ -328,7 +328,7 @@ class Kohana_Kodoc {
 	 */
 	public static function show_class(Kodoc_Class $class)
 	{
-		$api_packages = Kohana::config('userguide.api_packages');
+		$api_packages = Kohana::$config->load('userguide.api_packages');
 
 		// If api_packages is true, all packages should be shown
 		if ($api_packages === TRUE)
