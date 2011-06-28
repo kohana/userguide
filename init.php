@@ -17,6 +17,8 @@ if (Kohana::config('userguide.api_browser') === TRUE)
 			'action'     => 'api',
 			'class'      => NULL,
 		));
+
+	spl_autoload_register(array('Kodoc', 'auto_load'));
 }
 
 // User guide pages, in modules
