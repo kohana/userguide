@@ -1,4 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
+// Allowing for autoloading of Markdown if unit testing.
+if (defined("SUPPRESS_REQUEST"))
+{
+	require Kohana::find_file('vendor', 'markdown/markdown');
+}
+
 /**
  * Custom Markdown parser for Kohana documentation.
  *
