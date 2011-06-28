@@ -373,21 +373,12 @@ class Kohana_Kodoc {
 		try
 		{
 			// Transform the class name into a path
-			$pear = "/usr/lib/php/"; // Need a better way to do this....
-			$file = str_replace('_', '/', strtolower($class));
-			$path = $pear.$file.".php";
+			$path = str_replace('_', '/', strtolower($class)) . ".php";
 
-			if (is_file($path))
-			{
-				// Load the class file
-				require $path;
+			// Load the class file
+			require $path;
 
-				// Class has been found
-				return TRUE;
-			}
-
-			// Class is not in the filesystem
-			return FALSE;
+			return class_exists($class);
 		}
 		catch (Exception $e)
 		{
