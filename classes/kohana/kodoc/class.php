@@ -36,6 +36,11 @@ class Kohana_Kodoc_Class extends Kodoc {
 	public $constants = array();
 
 	/**
+	 * @var array Parent classes/interfaces of this class/interface
+	 */
+	public $parents = array();
+
+	/**
 	 * Loads a class and uses [reflection](http://php.net/reflection) to parse
 	 * the class. Reads the class modifiers, constants and comment. Parses the
 	 * comment to find the description and tags.
@@ -60,9 +65,27 @@ class Kohana_Kodoc_Class extends Kodoc {
 			}
 		}
 
-		$parent = $this->class;
+		// If ReflectionClass::getParentClass() won't work if the class in 
+		// question is an interface
+		if ($this->class->isInterface())
+		{
+			$this->parents = $this->class->getInterfaces();
+		}
+		else
+		{
+			$parent = $this->class;
 
-		do
+			while ($parent = $parent->getParentClass())
+			{
+				$this->parents[] = $parent;
+			}
+		}
+
+		$parents = $this->parents;
+
+		array_unshift($parents, $this->class);
+
+		foreach ($parents as $parent)
 		{
 			if ($comment = $parent->getDocComment())
 			{
@@ -70,15 +93,12 @@ class Kohana_Kodoc_Class extends Kodoc {
 				break;
 			}
 		}
-		while ($parent = $parent->getParentClass());
 
 		list($this->description, $this->tags) = Kodoc::parse($comment);
 		
 		// If this class extends Kodoc_Missing, add a warning about possible
 		// incomplete documentation
-		$parent = $this->class;
-		
-		while ($parent = $parent->getParentClass())
+		foreach ($parents as $parent)
 		{
 			if ($parent->name == 'Kodoc_Missing')
 			{
