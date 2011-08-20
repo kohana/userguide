@@ -17,6 +17,8 @@ class Controller_Userguide extends Controller_Template {
 
 	public function before()
 	{
+		parent::before();
+
 		if ($this->request->action() === 'media')
 		{
 			// Do not template media files
@@ -46,8 +48,6 @@ class Controller_Userguide extends Controller_Template {
 			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/';
 			Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/';
 		}
-
-		parent::before();
 	}
 	
 	// List all modules that have userguides
