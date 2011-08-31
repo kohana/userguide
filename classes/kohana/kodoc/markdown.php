@@ -83,7 +83,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 			$attr = ' id="'.$this->make_heading_id($matches[1]).'"';
 		
 		// Add this header to the page toc
-		$this->_add_to_toc($level,$matches[1],$this->make_heading_id($matches[1]));
+		$this->_add_to_toc($level,$matches[1],substr($attr,5,-1));
 		
 		$block = "<h$level$attr>".$this->runSpanGamut($matches[1])."</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
@@ -107,7 +107,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 			$attr = ' id="'.$this->make_heading_id($matches[2]).'"';
 		
 		// Add this header to the page toc
-		$this->_add_to_toc($level,$matches[2],$this->make_heading_id($matches[2]));
+		$this->_add_to_toc($level,$matches[2],substr($attr,5,-1));
 		
 		$block = "<h$level$attr>".$this->runSpanGamut($matches[2])."</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
