@@ -120,16 +120,14 @@ class Controller_Userguide extends Controller_Template {
 			return $this->index();
 		}
 
-		$config = Kohana::config('userguide.modules.'.$module);
-
 		// If this module's userguide pages are disabled, show the error page
 		if ( ! Kohana::$config->load('userguide.modules.'.$module.'.enabled'))
 		{
 			return $this->error(__('That module doesn\'t exist, or has userguide pages disabled.'));
 		}
 
-		// Get the index page from config, default to "index"
-		$index = Arr::get($config, 'index', 'index');
+		// Get the index page from config
+		$index = Kohana::$config->load('userguide.modules.'.$module.'.index');
 
 		// Prevent "guide/module" and "guide/module/index" from having duplicate content
 		if ( $page === $index)

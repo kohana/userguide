@@ -51,7 +51,7 @@ Just submit a [bug report](http://dev.kohanaframework.org/projects/userguide3/is
 		cd system
 		
 		# make sure we are up to date
-		git checkout 3.1/develop
+		git checkout 3.2/develop
 		git pull
 		
 		# add your repository as a new remote
@@ -61,7 +61,7 @@ Just submit a [bug report](http://dev.kohanaframework.org/projects/userguide3/is
 		
 		# now commit the changes and push to your repo
 		git commit
-		git push <your name> 3.1/develop
+		git push <your name> 3.2/develop
 
  4. Send a pull request on github containing the ticket number, and update the ticket with a link to the pull request.
 
