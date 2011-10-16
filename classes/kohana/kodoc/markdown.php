@@ -146,24 +146,13 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		{
 			$replace = array();
 
-			$replace = array();
-
 			foreach ($matches as $set)
 			{
 				list($search, $view) = $set;
 
-				try
+				if (Kohana::find_file('views', $view))
 				{
 					$replace[$search] = View::factory($view)->render();
-				}
-				catch (Exception $e)
-				{
-					ob_start();
-
-					// Capture the exception handler output and insert it instead
-					Kohana_exception::handler($e);
-
-					$replace[$search] = ob_get_clean();
 				}
 			}
 
