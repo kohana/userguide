@@ -113,6 +113,6 @@ If you want to have parameters, only put the brackets around the class and funct
 
 ### Including Views
 
-You may include a view by putting the name of the view in double curly brackets.  **If the view is not found, no exception or error will be shown!** The curly brackets and view will simply be shown an the page as is.
+You may include a view by putting the name of the view in double curly brackets.  **If the view is not found, no exception or error will be shown!** The curly brackets and view will simply be shown as is.
 
     {{some/view}}
