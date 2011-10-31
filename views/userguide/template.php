@@ -25,9 +25,11 @@
 					<li class="guide first">
 						<a href="<?php echo Route::url('docs/guide') ?>"><?php echo __('User Guide') ?></a>
 					</li>
+					<?php if (Kohana::config('userguide.api_browser') === TRUE): ?>
 					<li class="api">
 						<a href="<?php echo Route::url('docs/api') ?>"><?php echo __('API Browser') ?></a>
 					</li>
+					<?php endif ?>
 				</ul>
 			</div>
 		</div>
