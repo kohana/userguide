@@ -350,5 +350,50 @@ class Kohana_Kodoc {
 		return $show_this;
 	}
 
+	/**
+	 * Provides auto-loading support of classes that are install by PEAR (e.g. PHPUnit)
+	 * so the API browser doesn't break when classes are used in a module by PEAR.
+	 *
+	 * Class names are converted to file names by making the class name
+	 * lowercase and converting underscores to slashes:
+	 *
+	 * You should never have to call this function, as simply calling a class
+	 * will cause it to be called.
+	 *
+	 * This function must be enabled as an autoloader in the init.php file of
+	 * the userguide module:
+	 *
+	 *     spl_autoload_register(array('Kodoc', 'auto_load'));
+	 *
+	 * @param   string   class name
+	 * @return  boolean
+	 */
+	public static function auto_load($class)
+	{
+		try
+		{
+			// Transform the class name into a path
+			$file = str_replace('_', '/', strtolower($class)) . ".php";
+
+			// Load the class file
+			$exists = false;
+			foreach (explode(':', get_include_path()) as $path)
+			{
+				if (is_file($path.$file))
+				{
+					require $path.$file;
+					$exists = true;
+					break;
+				}
+			}
+
+			return $exists;
+		}
+		catch (Exception $e)
+		{
+			Kohana_Exception::handler($e);
+			die;
+		}
+	}
 
 } // End Kodoc
