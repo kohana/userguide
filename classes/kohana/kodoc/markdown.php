@@ -1,4 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
+// Requiring markdown to protect against errors in different environments
+require Kohana::find_file('vendor', 'markdown/markdown');
+
 /**
  * Custom Markdown parser for Kohana documentation.
  *
