@@ -1,4 +1,4 @@
-<h1><?php echo __('Available Classes') ?></h1>
+<h1><?php echo __('Available Classes', NULL, 'en-us') ?></h1>
 
 <label>Filter:</label>
 <input type="text" id="api-filter-box" />
