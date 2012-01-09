@@ -87,6 +87,9 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 <dt><h4 id="property:<?php echo $prop->property->name ?>"><?php echo $prop->modifiers ?> <code><?php echo $prop->type ?></code> $<?php echo $prop->property->name ?></h4></dt>
 <dd><?php echo $prop->description ?></dd>
 <dd><?php echo $prop->value ?></dd>
+<?php if ($prop->default !== $prop->value): ?>
+<dd><small><?php echo __('Default value:') ?></small><br/><?php echo $prop->default ?></dd>
+<?php endif ?>
 <?php endforeach ?>
 </dl>
 </div>

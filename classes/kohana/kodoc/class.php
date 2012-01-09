@@ -120,12 +120,14 @@ class Kohana_Kodoc_Class extends Kodoc {
 	{
 		$props = $this->class->getProperties();
 
+		$defaults = $this->class->getDefaultProperties();
+
 		usort($props, array($this,'_prop_sort'));
 
 		foreach ($props as $key => $property)
 		{
 			// Create Kodoc Properties for each property
-			$props[$key] = new Kodoc_Property($this->class->name, $property->name);
+			$props[$key] = new Kodoc_Property($this->class->name, $property->name,  Arr::get($defaults, $property->name));
 		}
 
 		return $props;
