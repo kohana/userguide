@@ -129,16 +129,19 @@ class Kohana_Kodoc {
 
 		$classes = array();
 
+		// This will be used a lot!
+		$ext_length = strlen(EXT);
+
 		foreach ($list as $name => $path)
 		{
 			if (is_array($path))
 			{
 				$classes += Kodoc::classes($path);
 			}
-			else
+			elseif (substr($name, -$ext_length) === EXT)
 			{
 				// Remove "classes/" and the extension
-				$class = substr($name, 8, -(strlen(EXT)));
+				$class = substr($name, 8, -$ext_length);
 
 				// Convert slashes to underscores
 				$class = str_replace(DIRECTORY_SEPARATOR, '_', strtolower($class));
