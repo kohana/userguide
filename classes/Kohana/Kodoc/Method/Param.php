@@ -83,7 +83,7 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 
 		if ($this->description)
 		{
-			$display .= '<span class="param" title="'.$this->description.'">$'.$this->name.'</span> ';
+			$display .= '<span class="param" title="'.preg_replace('/\s+/', ' ', $this->description).'">$'.$this->name.'</span> ';
 		}
 		else
 		{

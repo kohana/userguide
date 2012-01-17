@@ -91,6 +91,32 @@ COMMENT
 ,
 				array('', array('trailingspace' => array(''))),
 			),
+			array(
+<<<'COMMENT'
+/**
+ * @tag Content that spans
+ * multiple lines
+ */
+COMMENT
+,
+				array(
+					'',
+					array('tag' => array("Content that spans\nmultiple lines")),
+				),
+			),
+			array(
+<<<'COMMENT'
+/**
+ * @tag Content that spans
+ *    multiple lines indented
+ */
+COMMENT
+,
+				array(
+					'',
+					array('tag' => array("Content that spans\n   multiple lines indented")),
+				),
+			),
 		);
 	}
 
