@@ -208,7 +208,16 @@ COMMENT
  */
 COMMENT
 ,
-				array('', array('see' => array('MyClass'))),
+				array(
+					'',
+					array(
+						'see' => array(
+							'<a href="'.URL::site(
+								$route_api->uri(array('class' => 'MyClass'))
+							).'">MyClass</a>',
+						),
+					),
+				),
 			),
 			array(
 <<<'COMMENT'
@@ -217,7 +226,16 @@ COMMENT
  */
 COMMENT
 ,
-				array('', array('see' => array('MyClass::method()'))),
+				array(
+					'',
+					array(
+						'see' => array(
+							'<a href="'.URL::site(
+								$route_api->uri(array('class' => 'MyClass')).'#method'
+							).'">MyClass::method()</a>',
+						),
+					),
+				),
 			),
 			array(
 <<<'COMMENT'

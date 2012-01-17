@@ -256,6 +256,7 @@ class Kohana_Kodoc {
 						$text = HTML::anchor($route->uri(array('class' => $text)), $text);
 					}
 					break;
+				case 'see':
 				case 'uses':
 					if (preg_match('/^'.Kodoc::$regex_class_member.'/', $text, $matches))
 					{
