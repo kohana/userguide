@@ -224,7 +224,7 @@ class Kohana_Kodoc {
 			$line = preg_replace('/^\s*\* ?/m', '', $line);
 
 			// Search this line for a tag
-			if (preg_match('/^@(\S+)(?:\s*(.+))?$/', $line, $matches))
+			if (preg_match('/^@(\S+)\s*(.+)?$/', $line, $matches))
 			{
 				// This is a tag line
 				unset($comment[$i]);

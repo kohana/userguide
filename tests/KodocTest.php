@@ -82,6 +82,15 @@ COMMENT
 					array('tag' => array('Content')),
 				),
 			),
+			array(
+<<<'COMMENT'
+/**
+ * @trailingspace 
+ */
+COMMENT
+,
+				array('', array('trailingspace' => array(''))),
+			),
 		);
 	}
 
