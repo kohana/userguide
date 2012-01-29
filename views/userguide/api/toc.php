@@ -45,12 +45,12 @@
 
 			return this;
 		}
-	})
-})(jQuery);
+	});
 
-$(document).ready(function(){
-    $('#kodoc-api-filter-box').api_filter('#kodoc-body').focus();
-});
+	$(document).ready(function(){
+		$('#kodoc-api-filter-box').api_filter('#kodoc-body').focus();
+	});
+})(jQuery);
 </script>
 
 <div class="class-list">
