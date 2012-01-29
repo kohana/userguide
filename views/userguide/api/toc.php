@@ -1,7 +1,7 @@
 <h1><?php echo __('Available Classes') ?></h1>
 
 <label>Filter:</label>
-<input type="text" id="api-filter-box" />
+<input type="text" id="kodoc-api-filter-box" />
 
 <script type="text/javascript">
 (function($) {
@@ -45,12 +45,12 @@
 
 			return this;
 		}
-	})
-})(jQuery);
+	});
 
-$(document).ready(function(){
-    $('#api-filter-box').api_filter('#body').focus();
-});
+	$(document).ready(function(){
+		$('#kodoc-api-filter-box').api_filter('#kodoc-body').focus();
+	});
+})(jQuery);
 </script>
 
 <div class="class-list">
