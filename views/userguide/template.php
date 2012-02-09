@@ -15,29 +15,31 @@
 </head>
 <body>
 
-	<div id="header">
+	<div id="kodoc-header">
 		<div class="container">
-			<a href="http://kohanaframework.org/" id="logo">
+			<a href="http://kohanaframework.org/" id="kodoc-logo">
 				<img src="<?php echo Route::url('docs/media', array('file' => 'img/kohana.png')) ?>" />
 			</a>
-			<div id="menu">
+			<div id="kodoc-menu">
 				<ul>
 					<li class="guide first">
 						<a href="<?php echo Route::url('docs/guide') ?>"><?php echo __('User Guide') ?></a>
 					</li>
+					<?php if (Kohana::$config->load('userguide.api_browser')): ?>
 					<li class="api">
 						<a href="<?php echo Route::url('docs/api') ?>"><?php echo __('API Browser') ?></a>
 					</li>
+					<?php endif ?>
 				</ul>
 			</div>
 		</div>
 	</div>
 
-	<div id="content">
+	<div id="kodoc-content">
 		<div class="wrapper">
 			<div class="container">
 				<div class="span-22 prefix-1 suffix-1">
-					<ul id="breadcrumb">
+					<ul id="kodoc-breadcrumb">
 						<?php foreach ($breadcrumb as $link => $title): ?>
 							<?php if (is_string($link)): ?>
 							<li><?php echo HTML::anchor($link, $title, NULL, NULL, TRUE) ?></li>
@@ -48,11 +50,11 @@
 					</ul>
 				</div>
 				<div class="span-6 prefix-1">
-					<div id="topics">
+					<div id="kodoc-topics">
 						<?php echo $menu ?>
 					</div>
 				</div>
-				<div id="body" class="span-16 suffix-1 last">
+				<div id="kodoc-body" class="span-16 suffix-1 last">
 					<?php echo $content ?>
 
 					<?php if (Kohana::$environment === Kohana::PRODUCTION AND empty($hide_disqus)): ?>
@@ -73,7 +75,7 @@
 		</div>
 	</div>
 
-	<div id="footer">
+	<div id="kodoc-footer">
 		<div class="container">
 			<div class="span-12">
 			<?php if (isset($copyright)): ?>
