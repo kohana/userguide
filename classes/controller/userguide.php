@@ -114,10 +114,10 @@ class Controller_Userguide extends Controller_Template {
 		// Trim trailing slash
 		$page = rtrim($page, '/');
 
-		// If no module provided in the url, show the user guide index page, which lists the modules.
+		// If no module provided in the url, redirect the user to the kohana guide.
 		if ( ! $module)
 		{
-			return $this->index();
+			$this->request->redirect(url::base().'guide/kohana');
 		}
 		
 		// If this module's userguide pages are disabled, show the error page
@@ -160,7 +160,7 @@ class Controller_Userguide extends Controller_Template {
 		Kodoc_Markdown::$show_toc = false;
 
 		// Attach this module's menu to the template
-		$this->template->menu = Markdown($this->_get_all_menu_markdown());
+		$this->template->menu = Markdown($this->_get_all_menu_markdown()).View::factory('userguide/menu', array('modules' => $this->_modules()));
 		
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
