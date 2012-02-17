@@ -30,20 +30,6 @@ class Controller_Userguide extends Controller_Template {
 			$this->media = Route::get('docs/media');
 			$this->guide = Route::get('docs/guide');
 
-			if (defined('MARKDOWN_PARSER_CLASS'))
-			{
-				throw new Kohana_Exception('Markdown parser already registered. Live documentation will not work in your environment.');
-			}
-
-			// Use customized Markdown parser
-			define('MARKDOWN_PARSER_CLASS', 'Kodoc_Markdown');
-
-			if ( ! class_exists('Markdown', FALSE))
-			{
-				// Load Markdown support
-				require Kohana::find_file('vendor', 'markdown/markdown');
-			}
-
 			// Set the base URL for links and images
 			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/';
 			Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/';
@@ -78,8 +64,8 @@ class Controller_Userguide extends Controller_Template {
 			// Namespace the markdown parser
 			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/'.$module.'/';
 			Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
-		
-			$this->template->menu = Markdown($this->_get_all_menu_markdown());
+
+			$this->template->menu = Kodoc_Markdown::markdown($this->_get_all_menu_markdown());
 			$this->template->breadcrumb = array(
 				$this->guide->uri() => 'User Guide',
 				$this->guide->uri(array('module' => $module)) => Kohana::$config->load('userguide.modules.'.$module.'.name'),
@@ -156,12 +142,12 @@ class Controller_Userguide extends Controller_Template {
 
 		// Parse the page contents into the template
 		Kodoc_Markdown::$show_toc = true;
-		$this->template->content = Markdown(file_get_contents($file));
+		$this->template->content = Kodoc_Markdown::markdown(file_get_contents($file));
 		Kodoc_Markdown::$show_toc = false;
 
 		// Attach this module's menu to the template
-		$this->template->menu = Markdown($this->_get_all_menu_markdown());
-		
+		$this->template->menu = Kodoc_Markdown::markdown($this->_get_all_menu_markdown());
+
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
 		
