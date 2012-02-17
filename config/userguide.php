@@ -27,5 +27,10 @@ return array
 			// Copyright message, shown in the footer for this module
 			'copyright' => '&copy; 2008–2012 Kohana Team',
 		)	
+	),
+
+	// Set transparent class name segments
+	'transparent_prefixes' => array(
+		'kohana' => TRUE,
 	)
 );
