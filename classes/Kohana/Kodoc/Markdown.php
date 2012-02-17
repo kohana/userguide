@@ -5,7 +5,7 @@
  * @package    Kohana/Userguide
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009 Kohana Team
+ * @copyright  (c) 2009-2012 Kohana Team
  * @license    http://kohanaphp.com/license
  */
 class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
@@ -38,6 +38,26 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 */
 	public static $show_toc = false;
 	
+	/**
+	 * Transform some text using [Kodoc_Markdown]
+	 *
+	 * @see Markdown()
+	 *
+	 * @param   string  Text to parse
+	 * @return  string  Transformed text
+	 */
+	public static function markdown($text)
+	{
+		static $instance;
+
+		if ($instance === NULL)
+		{
+			$instance = new Kodoc_Markdown;
+		}
+
+		return $instance->transform($text);
+	}
+
 	public function __construct()
 	{
 		// doImage is 10, add image url just before
