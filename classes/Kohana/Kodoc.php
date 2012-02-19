@@ -212,79 +212,107 @@ class Kohana_Kodoc {
 		// Normalize all new lines to \n
 		$comment = str_replace(array("\r\n", "\n"), "\n", $comment);
 
-		// Remove the phpdoc open/close tags and split
-		$comment = array_slice(explode("\n", $comment), 1, -1);
+		// Split into lines while capturing without leading whitespace
+		preg_match_all('/^\s*\* ?(.*)\n/m', $comment, $lines);
+
+		$route = Route::get('docs/api');
 
 		// Tag content
 		$tags = array();
 
-		foreach ($comment as $i => $line)
+		/**
+		 * Process a tag and add it to $tags
+		 *
+		 * @param   string  $tag    Name of the tag without @
+		 * @param   string  $text   Content of the tag
+		 * @return  void
+		 */
+		$add_tag = function($tag, $text) use ($route, &$tags)
 		{
-			// Remove all leading whitespace
-			$line = preg_replace('/^\s*\* ?/m', '', $line);
-
-			// Search this line for a tag
-			if (preg_match('/^@(\S+)(?:\s*(.+))?$/', $line, $matches))
+			switch ($tag)
 			{
-				// This is a tag line
-				unset($comment[$i]);
+				case 'license':
+					if (strpos($text, '://') !== FALSE)
+					{
+						// Convert the lincense into a link
+						$text = HTML::anchor($text);
+					}
+					break;
+				case 'link':
+					$text = preg_split('/\s+/', $text, 2);
+					$text = HTML::anchor($text[0], isset($text[1]) ? $text[1] : $text[0]);
+					break;
+				case 'copyright':
+					// Convert the copyright symbol
+					$text = str_replace('(c)', '&copy;', $text);
+					break;
+				case 'throws':
+					if (preg_match('/^(\w+)\W(.*)$/D', $text, $matches))
+					{
+						$text = HTML::anchor($route->uri(array('class' => $matches[1])), $matches[1]).' '.$matches[2];
+					}
+					else
+					{
+						$text = HTML::anchor($route->uri(array('class' => $text)), $text);
+					}
+					break;
+				case 'see':
+				case 'uses':
+					if (preg_match('/^'.Kodoc::$regex_class_member.'/', $text, $matches))
+					{
+						$text = Kodoc::link_class_member($matches);
+					}
+					break;
+				// Don't show @access lines, they are shown elsewhere
+				case 'access':
+					return;
+			}
 
-				$name = $matches[1];
-				$text = isset($matches[2]) ? $matches[2] : '';
+			// Add the tag
+			$tags[$tag][] = $text;
+		};
 
-				switch ($name)
+		$comment = $tag = null;
+		$end = count($lines[1]) - 1;
+
+		foreach ($lines[1] as $i => $line)
+		{
+			// Search this line for a tag
+			if (preg_match('/^@(\S+)\s*(.+)?$/', $line, $matches))
+			{
+				if ($tag)
 				{
-					case 'license':
-						if (strpos($text, '://') !== FALSE)
-						{
-							// Convert the lincense into a link
-							$text = HTML::anchor($text);
-						}
-					break;
-					case 'link':
-						$text = preg_split('/\s+/', $text, 2);
-						$text = HTML::anchor($text[0], isset($text[1]) ? $text[1] : $text[0]);
-					break;
-					case 'copyright':
-						if (strpos($text, '(c)') !== FALSE)
-						{
-							// Convert the copyright sign
-							$text = str_replace('(c)', '&copy;', $text);
-						}
-					break;
-					case 'throws':
-						if (preg_match('/^(\w+)\W(.*)$/', $text, $matches))
-						{
-							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $matches[1])), $matches[1]).' '.$matches[2];
-						}
-						else
-						{
-							$text = HTML::anchor(Route::get('docs/api')->uri(array('class' => $text)), $text);
-						}
-					break;
-					case 'uses':
-						if (preg_match('/^'.Kodoc::$regex_class_member.'$/i', $text, $matches))
-						{
-							$text = Kodoc::link_class_member($matches);
-						}
-					break;
-					// Don't show @access lines, they are shown elsewhere
-					case 'access':
-						continue 2;
+					// Previous tag is finished
+					$add_tag($tag, $text);
 				}
 
-				// Add the tag
-				$tags[$name][] = $text;
+				$tag = $matches[1];
+				$text = isset($matches[2]) ? $matches[2] : '';
+
+				if ($i === $end)
+				{
+					// No more lines
+					$add_tag($tag, $text);
+				}
+			}
+			elseif ($tag)
+			{
+				// This is the continuation of the previous tag
+				$text .= "\n".$line;
+
+				if ($i === $end)
+				{
+					// No more lines
+					$add_tag($tag, $text);
+				}
 			}
 			else
 			{
-				// Overwrite the comment line
-				$comment[$i] = (string) $line;
+				$comment .= "\n".$line;
 			}
 		}
 
-		// Concat the comment lines back to a block of text
-		if ($comment = trim(implode("\n", $comment)))
+		if ($comment = trim($comment, "\n"))
 		{
 			// Parse the comment with Markdown
 			$comment = Kodoc_Markdown::markdown($comment);
