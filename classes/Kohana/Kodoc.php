@@ -113,9 +113,7 @@ class Kohana_Kodoc {
 	}
 
 	/**
-	 * Returns an array of all the classes available, built by listing all files in the classes folder and then trying to create that class.
-	 *
-	 * This means any empty class files (as in complety empty) will cause an exception
+	 * Returns an array of all the classes available, built by listing all files in the classes folder.
 	 *
 	 * @param   array   array of files, obtained using Kohana::list_files
 	 * @return  array   an array of all the class names
@@ -144,7 +142,7 @@ class Kohana_Kodoc {
 				$class = substr($name, 8, -$ext_length);
 
 				// Convert slashes to underscores
-				$class = str_replace(DIRECTORY_SEPARATOR, '_', strtolower($class));
+				$class = str_replace(DIRECTORY_SEPARATOR, '_', $class);
 
 				$classes[$class] = $class;
 			}
