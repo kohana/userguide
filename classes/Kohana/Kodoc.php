@@ -202,9 +202,63 @@ class Kohana_Kodoc {
 	}
 
 	/**
+	 * Generate HTML for the content of a tag.
+	 *
+	 * @param   string  $tag    Name of the tag without @
+	 * @param   string  $text   Content of the tag
+	 * @return  string  HTML
+	 */
+	public static function format_tag($tag, $text)
+	{
+		if ($tag === 'license')
+		{
+			if (strpos($text, '://') !== FALSE)
+				return HTML::anchor($text);
+		}
+		elseif ($tag === 'link')
+		{
+			$split = preg_split('/\s+/', $text, 2);
+
+			return HTML::anchor(
+				$split[0],
+				isset($split[1]) ? $split[1] : $split[0]
+			);
+		}
+		elseif ($tag === 'copyright')
+		{
+			// Convert the copyright symbol
+			return str_replace('(c)', '&copy;', $text);
+		}
+		elseif ($tag === 'throws')
+		{
+			$route = Route::get('docs/api');
+
+			if (preg_match('/^(\w+)\W(.*)$/D', $text, $matches))
+			{
+				return HTML::anchor(
+					$route->uri(array('class' => $matches[1])),
+					$matches[1]
+				).' '.$matches[2];
+			}
+
+			return HTML::anchor(
+				$route->uri(array('class' => $text)),
+				$text
+			);
+		}
+		elseif ($tag === 'see' OR $tag === 'uses')
+		{
+			if (preg_match('/^'.Kodoc::$regex_class_member.'/', $text, $matches))
+				return Kodoc::link_class_member($matches);
+		}
+
+		return $text;
+	}
+
+	/**
 	 * Parse a comment to extract the description and the tags
 	 *
-	 * @param   string  the comment retreived using ReflectionClass->getDocComment()
+	 * @param   string  $comment    The DocBlock to parse
 	 * @return  array   array(string $description, array $tags)
 	 */
 	public static function parse($comment)
@@ -214,8 +268,6 @@ class Kohana_Kodoc {
 
 		// Split into lines while capturing without leading whitespace
 		preg_match_all('/^\s*\* ?(.*)\n/m', $comment, $lines);
-
-		$route = Route::get('docs/api');
 
 		// Tag content
 		$tags = array();
@@ -227,49 +279,14 @@ class Kohana_Kodoc {
 		 * @param   string  $text   Content of the tag
 		 * @return  void
 		 */
-		$add_tag = function($tag, $text) use ($route, &$tags)
+		$add_tag = function($tag, $text) use (&$tags)
 		{
-			switch ($tag)
+			// Don't show @access lines, they are shown elsewhere
+			if ($tag !== 'access')
 			{
-				case 'license':
-					if (strpos($text, '://') !== FALSE)
-					{
-						// Convert the lincense into a link
-						$text = HTML::anchor($text);
-					}
-					break;
-				case 'link':
-					$text = preg_split('/\s+/', $text, 2);
-					$text = HTML::anchor($text[0], isset($text[1]) ? $text[1] : $text[0]);
-					break;
-				case 'copyright':
-					// Convert the copyright symbol
-					$text = str_replace('(c)', '&copy;', $text);
-					break;
-				case 'throws':
-					if (preg_match('/^(\w+)\W(.*)$/D', $text, $matches))
-					{
-						$text = HTML::anchor($route->uri(array('class' => $matches[1])), $matches[1]).' '.$matches[2];
-					}
-					else
-					{
-						$text = HTML::anchor($route->uri(array('class' => $text)), $text);
-					}
-					break;
-				case 'see':
-				case 'uses':
-					if (preg_match('/^'.Kodoc::$regex_class_member.'/', $text, $matches))
-					{
-						$text = Kodoc::link_class_member($matches);
-					}
-					break;
-				// Don't show @access lines, they are shown elsewhere
-				case 'access':
-					return;
+				// Add the tag
+				$tags[$tag][] = Kodoc::format_tag($tag, $text);
 			}
-
-			// Add the tag
-			$tags[$tag][] = $text;
 		};
 
 		$comment = $tag = null;
