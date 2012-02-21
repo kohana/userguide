@@ -210,7 +210,7 @@ class Controller_Userguide extends Controller_Template {
 			$this->template->title = $class;
 
 			$this->template->content = View::factory('userguide/api/class')
-				->set('doc', Kodoc::factory($class))
+				->set('doc', $_class)
 				->set('route', $this->request->route());
 		}
 
@@ -219,9 +219,6 @@ class Controller_Userguide extends Controller_Template {
 
 		// Bind the breadcrumb
 		$this->template->bind('breadcrumb', $breadcrumb);
-
-		// Get the docs URI
-		$guide = Route::get('docs/guide');
 
 		// Add the breadcrumb
 		$breadcrumb = array();
