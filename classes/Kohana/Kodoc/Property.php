@@ -50,7 +50,7 @@ class Kohana_Kodoc_Property extends Kodoc {
 
 		if (isset($tags['var']))
 		{
-			if (preg_match('/^(\S*)(?:\s*(.+?))?$/', $tags['var'][0], $matches))
+			if (preg_match('/^(\S*)(?:\s*(.+?))?$/s', $tags['var'][0], $matches))
 			{
 				$this->type = $matches[1];
 
