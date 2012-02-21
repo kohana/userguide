@@ -258,10 +258,14 @@ class Kohana_Kodoc {
 	/**
 	 * Parse a comment to extract the description and the tags
 	 *
+	 * [!!] Converting the output to HTML in this method is deprecated in 3.3
+	 *
 	 * @param   string  $comment    The DocBlock to parse
+	 * @param   boolean $html       Whether or not to convert the return values
+	 *   to HTML (deprecated)
 	 * @return  array   array(string $description, array $tags)
 	 */
-	public static function parse($comment)
+	public static function parse($comment, $html = TRUE)
 	{
 		// Normalize all new lines to \n
 		$comment = str_replace(array("\r\n", "\n"), "\n", $comment);
@@ -279,13 +283,18 @@ class Kohana_Kodoc {
 		 * @param   string  $text   Content of the tag
 		 * @return  void
 		 */
-		$add_tag = function($tag, $text) use (&$tags)
+		$add_tag = function($tag, $text) use ($html, &$tags)
 		{
 			// Don't show @access lines, they are shown elsewhere
 			if ($tag !== 'access')
 			{
+				if ($html)
+				{
+					$text = Kodoc::format_tag($tag, $text);
+				}
+
 				// Add the tag
-				$tags[$tag][] = Kodoc::format_tag($tag, $text);
+				$tags[$tag][] = $text;
 			}
 		};
 
@@ -329,7 +338,9 @@ class Kohana_Kodoc {
 			}
 		}
 
-		if ($comment = trim($comment, "\n"))
+		$comment = trim($comment, "\n");
+
+		if ($comment AND $html)
 		{
 			// Parse the comment with Markdown
 			$comment = Kodoc_Markdown::markdown($comment);
