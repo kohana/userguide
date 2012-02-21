@@ -75,34 +75,19 @@ class Kohana_Kodoc_Class extends Kodoc {
 			}
 		}
 
-		$parents = $this->parents;
-
-		array_unshift($parents, $this->class);
-
-		foreach ($parents as $parent)
+		if ( ! $comment = $this->class->getDocComment())
 		{
-			if ($comment = $parent->getDocComment())
+			foreach ($this->parents as $parent)
 			{
-				// Found a description for this class
-				break;
+				if ($comment = $parent->getDocComment())
+				{
+					// Found a description for this class
+					break;
+				}
 			}
 		}
 
-		list($this->description, $this->tags) = Kodoc::parse($comment);
-		
-		// If this class extends Kodoc_Missing, add a warning about possible
-		// incomplete documentation
-		foreach ($parents as $parent)
-		{
-			if ($parent->name == 'Kodoc_Missing')
-			{
-				$warning = "[!!] **This class, or a class parent, could not be
-				           found or loaded. This could be caused by a missing
-						   module or other dependancy. The documentation for
-						   class may not be complete!**";
-				$this->description = Kodoc_Markdown::markdown($warning).$this->description;
-			}
-		}
+		list($this->description, $this->tags) = Kodoc::parse($comment, FALSE);
 	}
 
 	/**
@@ -120,6 +105,32 @@ class Kohana_Kodoc_Class extends Kodoc {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Get the description of this class as HTML. Includes a warning when the
+	 * class or one of its parents could not be found.
+	 *
+	 * @return  string  HTML
+	 */
+	public function description()
+	{
+		$result = $this->description;
+
+		// If this class extends Kodoc_Missing, add a warning about possible
+		// incomplete documentation
+		foreach ($this->parents as $parent)
+		{
+			if ($parent->name == 'Kodoc_Missing')
+			{
+				$result .= "[!!] **This class, or a class parent, could not be
+				           found or loaded. This could be caused by a missing
+				           module or other dependancy. The documentation for
+				           class may not be complete!**";
+			}
+		}
+
+		return Kodoc_Markdown::markdown($result);
 	}
 
 	/**
@@ -246,4 +257,23 @@ class Kohana_Kodoc_Class extends Kodoc {
 		return $bdepth - $adepth;
 	}
 
-} // End Kodac_Class
+	/**
+	 * Get the tags of this class as HTML.
+	 *
+	 * @return  array
+	 */
+	public function tags()
+	{
+		$result = array();
+
+		foreach ($this->tags as $name => $set)
+		{
+			foreach ($set as $text)
+			{
+				$result[$name][] = Kodoc::format_tag($name, $text);
+			}
+		}
+
+		return $result;
+	}
+}

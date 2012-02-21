@@ -5,11 +5,11 @@
 	<?php endforeach; ?>
 </h1>
 
-<?php echo $doc->description ?>
+<?php echo $doc->description() ?>
 
 <?php if ($doc->tags): ?>
 <dl class="tags">
-<?php foreach ($doc->tags as $name => $set): ?>
+<?php foreach ($doc->tags() as $name => $set): ?>
 <dt><?php echo $name ?></dt>
 <?php foreach ($set as $tag): ?>
 <dd><?php echo $tag ?></dd>
