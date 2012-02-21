@@ -57,13 +57,7 @@ class Kohana_Kodoc_Class extends Kodoc {
 			$this->modifiers = '<small>'.implode(' ', Reflection::getModifierNames($modifiers)).'</small> ';
 		}
 
-		if ($constants = $this->class->getConstants())
-		{
-			foreach ($constants as $name => $value)
-			{
-				$this->constants[$name] = Debug::vars($value);
-			}
-		}
+		$this->constants = $this->class->getConstants();
 
 		// If ReflectionClass::getParentClass() won't work if the class in 
 		// question is an interface
@@ -109,6 +103,23 @@ class Kohana_Kodoc_Class extends Kodoc {
 				$this->description = Kodoc_Markdown::markdown($warning).$this->description;
 			}
 		}
+	}
+
+	/**
+	 * Gets the constants of this class as HTML.
+	 *
+	 * @return  array
+	 */
+	public function constants()
+	{
+		$result = array();
+
+		foreach ($this->constants as $name => $value)
+		{
+			$result[$name] = Debug::vars($value);
+		}
+
+		return $result;
 	}
 
 	/**

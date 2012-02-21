@@ -71,7 +71,7 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 <div class="constants">
 <h1 id="constants"><?php echo __('Constants'); ?></h1>
 <dl>
-<?php foreach ($doc->constants as $name => $value): ?>
+<?php foreach ($doc->constants() as $name => $value): ?>
 <dt><h4 id="constant:<?php echo $name ?>"><?php echo $name ?></h4></dt>
 <dd><?php echo $value ?></dd>
 <?php endforeach; ?>
