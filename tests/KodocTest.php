@@ -1,6 +1,9 @@
 <?php
 
 /**
+ * @group kohana
+ * @group kohana.userguide
+ *
  * @package    Kohana/Userguide
  * @author     Kohana Team
  * @copyright  (c) 2012 Kohana Team
@@ -313,6 +316,7 @@ COMMENT
 	}
 
 	/**
+	 * @covers  Kohana_Kodoc::format_tag
 	 * @covers  Kohana_Kodoc::parse
 	 *
 	 * @dataProvider    provider_parse_tags
