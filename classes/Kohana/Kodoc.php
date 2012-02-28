@@ -275,7 +275,7 @@ class Kohana_Kodoc {
 		 * @param   string  $text   Content of the tag
 		 * @return  void
 		 */
-		$add_tag = function($tag, $text) use ($html, &$tags)
+		$add_tag = function ($tag, $text) use ($html, & $tags)
 		{
 			// Don't show @access lines, they are shown elsewhere
 			if ($tag !== 'access')
@@ -290,7 +290,7 @@ class Kohana_Kodoc {
 			}
 		};
 
-		$comment = $tag = null;
+		$comment = $tag = NULL;
 		$end = count($lines[1]) - 1;
 
 		foreach ($lines[1] as $i => $line)

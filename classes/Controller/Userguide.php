@@ -73,7 +73,7 @@ class Controller_Userguide extends Controller_Template {
 			);
 		}
 		// If we are in the api browser, show the menu and show the api browser in the breadcrumbs
-		else if (Route::name($this->request->route()) == 'docs/api')
+		elseif (Route::name($this->request->route()) == 'docs/api')
 		{
 			$this->template->menu = Kodoc::menu();
 
@@ -113,13 +113,13 @@ class Controller_Userguide extends Controller_Template {
 		}
 		
 		// Prevent "guide/module" and "guide/module/index" from having duplicate content
-		if ( $page == 'index')
+		if ($page == 'index')
 		{
 			return $this->error(__('Userguide page not found'));
 		}
 		
 		// If a module is set, but no page was provided in the url, show the index page
-		if ( ! $page )
+		if ( ! $page)
 		{
 			$page = 'index';
 		}
@@ -138,12 +138,14 @@ class Controller_Userguide extends Controller_Template {
 		Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/'.$module.'/';
 
 		// Set the page title
-		$this->template->title = $page == 'index' ? Kohana::$config->load('userguide.modules.'.$module.'.name') : $this->title($page);
+		$this->template->title = ($page == 'index')
+			? Kohana::$config->load('userguide.modules.'.$module.'.name')
+			: $this->title($page);
 
 		// Parse the page contents into the template
-		Kodoc_Markdown::$show_toc = true;
+		Kodoc_Markdown::$show_toc = TRUE;
 		$this->template->content = Kodoc_Markdown::markdown(file_get_contents($file));
-		Kodoc_Markdown::$show_toc = false;
+		Kodoc_Markdown::$show_toc = FALSE;
 
 		// Attach this module's menu to the template
 		$this->template->menu = Kodoc_Markdown::markdown($this->_get_all_menu_markdown());
@@ -333,11 +335,7 @@ class Controller_Userguide extends Controller_Template {
 			if ($file AND $text = file_get_contents($file))
 			{
 				// Add spans around non-link categories. This is a terrible hack.
-				//echo Kohana::debug($text);
-				
-				//$text = preg_replace('/(\s*[\-\*\+]\s*)(.*)/','$1<span>$2</span>',$text);
 				$text = preg_replace('/^(\s*[\-\*\+]\s*)([^\[\]]+)$/m','$1<span>$2</span>',$text);
-				//echo Kohana::debug($text);
 				$markdown .= $text;
 			}
 			
