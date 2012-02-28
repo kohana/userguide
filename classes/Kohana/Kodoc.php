@@ -66,17 +66,13 @@ class Kohana_Kodoc {
 		foreach ($classes as $class)
 		{
 			if (Kodoc::is_transparent($class, $classes))
-			{
 				continue;
-			}
 
 			$class = Kodoc_Class::factory($class);
 
 			// Test if we should show this class
 			if ( ! Kodoc::show_class($class))
-			{
 				continue;
-			}
 
 			$link = HTML::anchor($route->uri(array('class' => $class->class->name)), $class->class->name);
 
@@ -167,9 +163,7 @@ class Kohana_Kodoc {
 		{
 			// Skip transparent extension classes
 			if (Kodoc::is_transparent($class))
-			{
 				continue;
-			}
 
 			$_class = new ReflectionClass($class);
 
@@ -438,25 +432,34 @@ class Kohana_Kodoc {
 			$transparent_prefixes = Kohana::$config->load('userguide.transparent_prefixes');
 		}
 
-		// Hack for Kohana_Core, which doesn't follow convention
-		if ($class == 'Kohana_Core') 
-		{
-			return 'Kohana';
-		} 
-
-		// For all others, split into the two elements of the class name
+		// Split the class name at the first underscore
 		$segments = explode('_',$class,2);
 
-		$result = ((count($segments) == 2)
-		          AND (isset($transparent_prefixes[$segments[0]])));
-
-		// It is only a transparent class if the unprefixed class also exists
-		if ($result AND $classes) 
+		if ((count($segments) == 2) AND (isset($transparent_prefixes[$segments[0]])))
 		{
-			$result = ($result AND isset($classes[$segments[1]]));
+			if ($segments[1] === 'Core')
+			{
+				// Cater for Module extends Module_Core naming
+				$child_class = $segments[0];
+			}
+			else
+			{
+				// Cater for Foo extends Module_Foo naming
+				$child_class = $segments[1];
+			}
+			
+			// It is only a transparent class if the unprefixed class also exists
+			if ($classes AND ! isset($classes[$child_class]))
+				return FALSE;
+			
+			// Return the name of the child class
+			return $child_class;
 		}
-
-		return $result ? $segments[1] : FALSE;
+		else
+		{
+			// Not a transparent class
+			return FALSE;
+		}
 	}
 
 

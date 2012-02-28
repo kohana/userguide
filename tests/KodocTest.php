@@ -354,7 +354,7 @@ COMMENT
 	 *
 	 * Checks that a selection of transparent and non-transparent classes give expected results
 	 *
-	 * @group userguide.feat3529-configurable-transparent-classes
+	 * @group kohana.userguide.3529-configurable-transparent-classes
 	 * @dataProvider provider_transparent_classes
 	 * @param mixed $expected
 	 * @param string $class

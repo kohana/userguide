@@ -28,11 +28,16 @@ First, copy this config and place in it `<module>/config/userguide.php`, replaci
 
 		/*
 		 * If you use transparent extension outside the Kohana_ namespace,
-		 * add your class prefix here (in lowercase).
-		 * For example, if you use Modulename_<class_name>, then you would define:
+		 * add your class prefix here. Both common Kohana naming conventions are
+		 * excluded: 
+		 *   - Modulename extends Modulename_Core
+		 *   - Foo extends Modulename_Foo
+		 * 
+		 * For example, if you use Modulename_<class_name> for your base classes
+		 * then you would define:
 		 */
 		'transparent_prefixes' => array(
-			'modulename' => true,
+			'Modulename' => TRUE,
 		)
 	);
 
