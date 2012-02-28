@@ -57,15 +57,6 @@ class Kohana_Kodoc {
 	{
 		$classes = Kodoc::classes();
 
-		foreach ($classes as $class)
-		{
-			if (isset($classes['kohana_'.$class]))
-			{
-				// Remove extended classes
-				unset($classes['kohana_'.$class]);
-			}
-		}
-
 		ksort($classes);
 
 		$menu = array();
@@ -74,6 +65,9 @@ class Kohana_Kodoc {
 
 		foreach ($classes as $class)
 		{
+			if (Kodoc::is_transparent($class, $classes))
+				continue;
+
 			$class = Kodoc_Class::factory($class);
 
 			// Test if we should show this class
@@ -167,13 +161,11 @@ class Kohana_Kodoc {
 
 		foreach ($list as $class)
 		{
-			$_class = new ReflectionClass($class);
-
-			if (stripos($_class->name, 'Kohana_') === 0)
-			{
-				// Skip transparent extension classes
+			// Skip transparent extension classes
+			if (Kodoc::is_transparent($class))
 				continue;
-			}
+
+			$_class = new ReflectionClass($class);
 
 			$methods = array();
 
@@ -181,10 +173,10 @@ class Kohana_Kodoc {
 			{
 				$declares = $_method->getDeclaringClass()->name;
 
-				if (stripos($declares, 'Kohana_') === 0)
+				// Remove the transparent prefix from declaring classes
+				if ($child = Kodoc::is_transparent($declares))
 				{
-					// Remove "Kohana_"
-					$declares = substr($declares, 7);
+					$declares = $child;
 				}
 
 				if ($declares === $_class->name OR $declares === "Core")
@@ -405,6 +397,69 @@ class Kohana_Kodoc {
 		}
 
 		return $show_this;
+	}
+
+	/**
+	 * Checks whether a class is a transparent extension class or not.
+	 *
+	 * This method takes an optional $classes parameter, a list of all defined
+	 * class names. If provided, the method will return false unless the extension
+	 * class exists. If not, the method will only check known transparent class
+	 * prefixes.
+	 *
+	 * Transparent prefixes are defined in the userguide.php config file:
+	 *
+	 *     'transparent_prefixes' => array(
+	 *         'Kohana' => TRUE,
+	 *     );
+	 *
+	 * Module developers can therefore add their own transparent extension
+	 * namespaces and exclude them from the userguide.
+	 *          
+	 * @param string $class The name of the class to check for transparency
+	 * @param array $classes An optional list of all defined classes
+	 * @return false If this is not a transparent extension class 
+	 * @return string The name of the class that extends this (in the case provided)
+	 * @throws InvalidArgumentException If the $classes array is provided and the $class variable is not lowercase
+	 */
+	public static function is_transparent($class, $classes = NULL)
+	{
+
+		static $transparent_prefixes = NULL;
+
+		if ( ! $transparent_prefixes)
+		{
+			$transparent_prefixes = Kohana::$config->load('userguide.transparent_prefixes');
+		}
+
+		// Split the class name at the first underscore
+		$segments = explode('_',$class,2);
+
+		if ((count($segments) == 2) AND (isset($transparent_prefixes[$segments[0]])))
+		{
+			if ($segments[1] === 'Core')
+			{
+				// Cater for Module extends Module_Core naming
+				$child_class = $segments[0];
+			}
+			else
+			{
+				// Cater for Foo extends Module_Foo naming
+				$child_class = $segments[1];
+			}
+			
+			// It is only a transparent class if the unprefixed class also exists
+			if ($classes AND ! isset($classes[$child_class]))
+				return FALSE;
+			
+			// Return the name of the child class
+			return $child_class;
+		}
+		else
+		{
+			// Not a transparent class
+			return FALSE;
+		}
 	}
 
 

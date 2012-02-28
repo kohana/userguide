@@ -328,4 +328,41 @@ COMMENT
 	{
 		$this->assertSame($expected, Kodoc::parse($comment));
 	}
+	
+	/**
+	 * Provides test data for test_transparent_classes
+	 * @return array
+	 */
+	public function provider_transparent_classes()
+	{
+		return array(
+			// Kohana_Core is a special case
+			array('Kohana','Kohana_Core',NULL),
+			array('Controller_Template','Kohana_Controller_Template',NULL),
+			array('Controller_Template','Kohana_Controller_Template',
+				array('Kohana_Controller_Template'=>'Kohana_Controller_Template',
+					'Controller_Template'=>'Controller_Template')
+			),
+			array(FALSE,'Kohana_Controller_Template',
+				array('Kohana_Controller_Template'=>'Kohana_Controller_Template')),
+			array(FALSE,'Controller_Template',NULL),
+		);
+	}
+
+	/**
+	 * Tests Kodoc::is_transparent
+	 *
+	 * Checks that a selection of transparent and non-transparent classes give expected results
+	 *
+	 * @group kohana.userguide.3529-configurable-transparent-classes
+	 * @dataProvider provider_transparent_classes
+	 * @param mixed $expected
+	 * @param string $class
+	 * @param array $classes
+	 */
+	public function test_transparent_classes($expected, $class, $classes)
+	{
+		$result = Kodoc::is_transparent($class, $classes);
+		$this->assertSame($expected,$result);
+	}
 }
