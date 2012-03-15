@@ -290,8 +290,30 @@ class Controller_Userguide extends Controller_Template {
 		return parent::after();
 	}
 
+	/**
+	 * Locates the appropriate markdown file for a given guide page. Page URLS
+	 * can be specified in one of three forms:
+	 *
+	 *  * userguide/adding
+	 *  * userguide/adding.md
+	 *  * userguide/adding.markdown
+	 *
+	 * In every case, the userguide will search the cascading file system paths
+	 * for the file guide/userguide/adding.md.
+	 *
+	 * @param string $page The relative URL of the guide page
+	 * @return string
+	 */
 	public function file($page)
 	{
+
+		// Strip optional .md or .markdown suffix from the passed filename
+		$info = pathinfo($page);
+		if (isset($info['extension'])
+			AND (($info['extension'] === 'md') OR ($info['extension'] === 'markdown')))
+		{
+			$page = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'];
+		}
 		return Kohana::find_file('guide', $page, 'md');
 	}
 
