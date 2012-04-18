@@ -74,7 +74,7 @@ class Kohana_Kodoc_Property extends Kodoc {
 			}
 			else
 			{
-				$this->value = Kohana::debug($property->getValue($class));
+				$this->value = Debug::vars($property->getValue($class));
 			}
 		}
 		

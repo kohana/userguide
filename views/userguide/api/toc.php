@@ -5,6 +5,7 @@
 
 <script type="text/javascript">
 (function($) {
+	var search_timeout = null;
 	$.fn.extend({
 		filter_content: function(search){
 			var search_regex = new RegExp(search,'gi');
@@ -44,18 +45,21 @@
 				}
 			});
 		},
-		
+
 		api_filter: function(api_container_selector){
 			$(this).keyup(function(){
 				// Run the filter method on this value
-				$(api_container_selector).filter_content($(this).val());
+				var $this = $(this);
+				search_timeout = setTimeout(function(){
+					$(api_container_selector).filter_content($this.val())
+				}, 300);
 			});
 		}
 	})
 })(jQuery);
 
 $(document).ready(function(){
-    $('#api-filter-box').api_filter('#kodoc-main');
+    $('#api-filter-box').api_filter('#body');
 });
 </script>
 
@@ -63,10 +67,10 @@ $(document).ready(function(){
 
 	<?php foreach ($classes as $class => $methods): $link = $route->uri(array('class' => $class)) ?>
 	<div class="class <?php echo Text::alternate('left', 'right') ?>">
-		<h2><?php echo HTML::anchor($link, $class) ?></h2>
+		<h2><?php echo HTML::anchor($link, $class, NULL, NULL, TRUE) ?></h2>
 		<ul class="methods">
 		<?php foreach ($methods as $method): ?>
-			<li><?php echo HTML::anchor("{$link}#{$method}", "{$class}::{$method}") ?></li>
+			<li><?php echo HTML::anchor("{$link}#{$method}", "{$class}::{$method}", NULL, NULL, TRUE) ?></li>
 		<?php endforeach ?>
 		</ul>
 	</div>
