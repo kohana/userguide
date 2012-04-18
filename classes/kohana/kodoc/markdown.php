@@ -243,7 +243,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	public function doTOC($text)
 	{
 		// Only add the toc do userguide pages, not api since they already have one
-		if (self::$show_toc AND Route::name(Request::instance()->route) == "docs/guide")
+		if (self::$show_toc AND Route::name(Request::current()->route()) == "docs/guide")
 		{
 			$toc = View::factory('userguide/page-toc')
 				->set('array', self::$_toc)

@@ -5,9 +5,9 @@
 
 <title><?php echo $title ?> | Kohana <?php echo __('User Guide'); ?></title>
 
-<?php foreach ($styles as $style => $media) echo HTML::style($style, array('media' => $media), TRUE), "\n" ?>
+<?php foreach ($styles as $style => $media) echo HTML::style($style, array('media' => $media), NULL, TRUE), "\n" ?>
 
-<?php foreach ($scripts as $script) echo HTML::script($script, NULL, TRUE), "\n" ?>
+<?php foreach ($scripts as $script) echo HTML::script($script, NULL, NULL, TRUE), "\n" ?>
 
 <!--[if lt IE 9]>
 <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
@@ -40,7 +40,7 @@
 					<ul id="breadcrumb">
 						<?php foreach ($breadcrumb as $link => $title): ?>
 							<?php if (is_string($link)): ?>
-							<li><?php echo HTML::anchor($link, $title) ?></li>
+							<li><?php echo HTML::anchor($link, $title, NULL, NULL, TRUE) ?></li>
 							<?php else: ?>
 							<li class="last"><?php echo $title ?></li>
 							<?php endif ?>
@@ -58,7 +58,7 @@
 					<?php if (Kohana::$environment === Kohana::PRODUCTION AND empty($hide_disqus)): ?>
 					<div id="disqus_thread" class="clear"></div>
 					<script type="text/javascript">
-						var disqus_identifier = '<?php echo HTML::chars(Request::instance()->uri) ?>';
+						var disqus_identifier = '<?php echo HTML::chars(Request::current()->uri()) ?>';
 						(function() {
 							var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 							dsq.src = 'http://kohana.disqus.com/embed.js';

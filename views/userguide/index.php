@@ -7,7 +7,7 @@
 	<?php foreach($modules as $url => $options): ?>
 	
 		<p>
-			<strong><?php echo html::anchor(Route::get('docs/guide')->uri(array('module' => $url)), $options['name']) ?></strong> - 
+			<strong><?php echo html::anchor(Route::get('docs/guide')->uri(array('module' => $url)), $options['name'], NULL, NULL, TRUE) ?></strong> -
 			<?php echo $options['description'] ?>
 		</p>
 	

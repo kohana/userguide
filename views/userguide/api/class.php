@@ -2,7 +2,7 @@
 	<?php echo $doc->modifiers, $doc->class->name ?>
 	<?php $parent = $doc->class; ?>
 	<?php while ($parent = $parent->getParentClass()): ?>
-	<br/><small>extends <?php echo HTML::anchor($route->uri(array('class' => $parent->name)), $parent->name) ?></small>
+	<br/><small>extends <?php echo HTML::anchor($route->uri(array('class' => $parent->name)), $parent->name, NULL, NULL, TRUE) ?></small>
 	<?php endwhile ?>
 </h1>
 
@@ -21,7 +21,7 @@
 
 <p class="note">
 <?php if ($path = $doc->class->getFilename()): ?>
-Class declared in <tt><?php echo Kohana::debug_path($path) ?></tt> on line <?php echo $doc->class->getStartLine() ?>.
+Class declared in <tt><?php echo Debug::path($path) ?></tt> on line <?php echo $doc->class->getStartLine() ?>.
 <?php else: ?>
 Class is not declared in a file, it is probably an internal <?php echo html::anchor('http://php.net/manual/class.'.strtolower($doc->class->name).'.php', 'PHP class') ?>.
 <?php endif ?>
