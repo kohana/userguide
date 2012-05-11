@@ -358,11 +358,11 @@ class Controller_Userguide extends Controller_Template {
 			if ($file AND $text = file_get_contents($file))
 			{
 				// Add spans around non-link categories. This is a terrible hack.
-				//echo Kohana::debug($text);
+				//echo Debug::vars($text);
 				
 				//$text = preg_replace('/(\s*[\-\*\+]\s*)(.*)/','$1<span>$2</span>',$text);
 				$text = preg_replace('/^(\s*[\-\*\+]\s*)([^\[\]]+)$/m','$1<span>$2</span>',$text);
-				//echo Kohana::debug($text);
+				//echo Debug::vars($text);
 				$markdown .= $text;
 			}
 			
