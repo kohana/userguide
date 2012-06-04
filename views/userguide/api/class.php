@@ -5,6 +5,18 @@
 	<?php endforeach; ?>
 </h1>
 
+<?php if ($interfaces = $doc->class->getInterfaceNames()):?>
+<p class="interfaces"><small>
+Implements:
+<?php
+for ($i = 0, $split = false, $count = count($interfaces); $i < $count; $i++, $split=" | ")
+{
+    echo $split . HTML::anchor($route->uri(array('class' => $interfaces[$i])), $interfaces[$i], NULL, NULL, TRUE);
+}
+?></small>
+</p>
+<?php endif;?>
+
 <?php if ($child = $doc->is_transparent($doc->class->name)):?>
 <p class="note">
 This class is a transparent base class for <?php echo HTML::anchor($route->uri(array('class'=>$child)),$child) ?> and
