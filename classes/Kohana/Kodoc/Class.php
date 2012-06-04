@@ -218,7 +218,7 @@ class Kohana_Kodoc_Class extends Kodoc {
 		
 		
 		/*
-		echo kohana::debug('a is '.$a->class.'::'.$a->name,'b is '.$b->class.'::'.$b->name,
+		echo Debug::vars('a is '.$a->class.'::'.$a->name,'b is '.$b->class.'::'.$b->name,
 						   'are the classes the same?', $a->class == $b->class,'if they are, the result is:',strcmp($a->name, $b->name),
 						   'is a this class?', $a->name == $this->class->name,-1,
 						   'is b this class?', $b->name == $this->class->name,1,
