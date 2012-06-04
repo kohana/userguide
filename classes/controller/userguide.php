@@ -34,6 +34,9 @@ class Controller_Userguide extends Controller_Template {
 			Kodoc_Markdown::$base_url  = URL::site($this->guide->uri()).'/';
 			Kodoc_Markdown::$image_url = URL::site($this->media->uri()).'/';
 		}
+
+		// Default show_comments to config value
+		$this->template->show_comments = Kohana::config('userguide.show_comments');
 	}
 
 	// List all modules that have userguides
@@ -45,7 +48,7 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->menu = View::factory('userguide/menu', array('modules' => $this->_modules()));
 
 		// Don't show disqus on the index page
-		$this->template->hide_disqus = TRUE;
+		$this->template->show_comments = FALSE;
 	}
 
 	// Display an error if a page isn't found
@@ -56,7 +59,7 @@ class Controller_Userguide extends Controller_Template {
 		$this->template->content = View::factory('userguide/error',array('message' => $message));
 
 		// Don't show disqus on error pages
-		$this->template->hide_disqus = TRUE;
+		$this->template->show_comments = FALSE;
 
 		// If we are in a module and that module has a menu, show that
 		if ($module = $this->request->param('module') AND $menu = $this->file($module.'/menu') AND Kohana::config('userguide.modules.'.$module.'.enabled'))
