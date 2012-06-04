@@ -172,20 +172,23 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 			{
 				list($search, $view) = $set;
 
-				try
+				if (Kohana::find_file('views', $view))
 				{
-					$replace[$search] = View::factory($view)->render();
-				}
-				catch (Exception $e)
-				{
-					/**
-					 * Capture the exception handler output and insert it instead.
-					 * 
-					 * NOTE: Is this really the correct way to handle an exception?
-					 */
-					$response = Kohana_exception::_handler($e);
+					try
+					{
+						$replace[$search] = View::factory($view)->render();
+					}
+					catch (Exception $e)
+					{
+						/**
+						* Capture the exception handler output and insert it instead.
+						*
+						* NOTE: Is this really the correct way to handle an exception?
+						*/
+						$response = Kohana_exception::_handler($e);
 
-					$replace[$search] = $response->body();
+						$replace[$search] = $response->body();
+					}
 				}
 			}
 
