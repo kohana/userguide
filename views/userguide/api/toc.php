@@ -1,4 +1,4 @@
-<h1><?php echo __('Available Classes') ?></h1>
+<h1><?php echo 'Available Classes' ?></h1>
 
 <label>Filter:</label>
 <input type="text" id="kodoc-api-filter-box" />
