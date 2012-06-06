@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $l = substr(I18n::$lang, 0, 2) ?>" lang="<?php echo $l ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title><?php echo $title ?> | Kohana <?php echo __('User Guide'); ?></title>
+<title><?php echo $title ?> | Kohana <?php echo 'User Guide'; ?></title>
 
 <?php foreach ($styles as $style => $media) echo HTML::style($style, array('media' => $media), NULL, TRUE), "\n" ?>
 
@@ -23,11 +23,11 @@
 			<div id="kodoc-menu">
 				<ul>
 					<li class="guide first">
-						<a href="<?php echo Route::url('docs/guide') ?>"><?php echo __('User Guide') ?></a>
+						<a href="<?php echo Route::url('docs/guide') ?>">User Guide</a>
 					</li>
 					<?php if (Kohana::$config->load('userguide.api_browser')): ?>
 					<li class="api">
-						<a href="<?php echo Route::url('docs/api') ?>"><?php echo __('API Browser') ?></a>
+						<a href="<?php echo Route::url('docs/api') ?>">API Browser</a>
 					</li>
 					<?php endif ?>
 				</ul>
@@ -67,7 +67,7 @@
 							(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 							})();
 					</script>
-					<noscript><?php echo __('Please enable JavaScript to view the :anchor_open comments powered by Disqus.:anchor_close', array(':anchor_open' => '<a href="http://disqus.com/?ref_noscript=kohana">', ':anchor_close' => '</a>')); ?></noscript>
+					<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=kohana">comments powered by Disqus.</a></noscript>
 					<a href="http://disqus.com" class="dsq-brlink">Documentation comments powered by <span class="logo-disqus">Disqus</span></a>
 					<?php endif ?>
 				</div>
