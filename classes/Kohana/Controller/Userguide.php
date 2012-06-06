@@ -112,13 +112,13 @@ abstract class Kohana_Controller_Userguide extends Controller_Template {
 		// If this module's userguide pages are disabled, show the error page
 		if ( ! Kohana::$config->load('userguide.modules.'.$module.'.enabled'))
 		{
-			return $this->error(__('That module doesn\'t exist, or has userguide pages disabled.'));
+			return $this->error('That module doesn\'t exist, or has userguide pages disabled.');
 		}
 		
 		// Prevent "guide/module" and "guide/module/index" from having duplicate content
 		if ( $page == 'index')
 		{
-			return $this->error(__('Userguide page not found'));
+			return $this->error('Userguide page not found');
 		}
 		
 		// If a module is set, but no page was provided in the url, show the index page
@@ -133,7 +133,7 @@ abstract class Kohana_Controller_Userguide extends Controller_Template {
 		// If it's not found, show the error page
 		if ( ! $file)
 		{
-			return $this->error(__('Userguide page not found'));
+			return $this->error('Userguide page not found');
 		}
 		
 		// Namespace the markdown parser
@@ -159,7 +159,7 @@ abstract class Kohana_Controller_Userguide extends Controller_Template {
 
 		// Add the breadcrumb trail
 		$breadcrumb = array();
-		$breadcrumb[$this->guide->uri()] = __('User Guide');
+		$breadcrumb[$this->guide->uri()] = 'User Guide';
 		$breadcrumb[$this->guide->uri(array('module' => $module))] = Kohana::$config->load('userguide.modules.'.$module.'.name');
 		
 		// TODO try and get parent category names (from menu).  Regex magic or javascript dom stuff perhaps?
@@ -183,7 +183,7 @@ abstract class Kohana_Controller_Userguide extends Controller_Template {
 		// If no class was passed to the url, display the API index page
 		if ( ! $class)
 		{
-			$this->template->title = __('Table of Contents');
+			$this->template->title = 'Table of Contents';
 
 			$this->template->content = View::factory('userguide/api/toc')
 				->set('classes', Kodoc::class_methods())
@@ -225,7 +225,7 @@ abstract class Kohana_Controller_Userguide extends Controller_Template {
 
 		// Add the breadcrumb
 		$breadcrumb = array();
-		$breadcrumb[$this->guide->uri(array('page' => NULL))] = __('User Guide');
+		$breadcrumb[$this->guide->uri(array('page' => NULL))] = 'User Guide';
 		$breadcrumb[$this->request->route()->uri()] = 'API Browser';
 		$breadcrumb[] = $this->template->title;
 	}
