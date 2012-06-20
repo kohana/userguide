@@ -36,7 +36,7 @@ abstract class Kohana_Controller_Userguide extends Controller_Template {
 		}
 
 		// Default show_comments to config value
-		$this->template->show_comments = Kohana::config('userguide.show_comments');
+		$this->template->show_comments = Kohana::$config->load('userguide.show_comments');
 	}
 	
 	// List all modules that have userguides
