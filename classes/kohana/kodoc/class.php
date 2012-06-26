@@ -1,11 +1,11 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Class documentation generator.
  *
  * @package    Kohana/Userguide
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009 Kohana Team
+ * @copyright  (c) 2009-2012 Kohana Team
  * @license    http://kohanaphp.com/license
  */
 class Kohana_Kodoc_Class extends Kodoc {
@@ -86,7 +86,7 @@ class Kohana_Kodoc_Class extends Kodoc {
 				           found or loaded. This could be caused by a missing
 						   module or other dependancy. The documentation for
 						   class may not be complete!**";
-				$this->description = Markdown($warning).$this->description;
+				$this->description = Kodoc_Markdown::markdown($warning).$this->description;
 			}
 		}
 	}
