@@ -15,7 +15,10 @@ h6 small { font-weight: normal; font-size: 0.8em; }
 dl dd { margin-left: 0; }
 
 code {
-	color:#6BAA3D;
+	background:#fff;
+	border-radius:10px;
+	padding:.25em;
+	color:#000;
 	font-family: Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
 }
 
@@ -27,6 +30,11 @@ pre {
 	margin-top:1.5em;
 	margin-bottom:1.5em;
 	overflow:auto;
+}
+
+pre > code {
+    background: transparent;
+    border: none;
 }
 
 .highlighted div.line {
