@@ -198,7 +198,7 @@ abstract class Kohana_Controller_Userguide extends Controller_Template {
 			// (different case, orm vs ORM, auth vs Auth) redirect
 			if ($_class->class->name != $class)
 			{
-				$this->request->redirect($this->request->route()->uri(array('class'=>$_class->class->name)));
+				$this->redirect($this->request->route()->uri(array('class'=>$_class->class->name)));
 			}
 
 			// If this classes immediate parent is Kodoc_Missing, then it should 404
