@@ -1,25 +1,25 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Custom Markdown parser for Kohana documentation.
  *
  * @package    Kohana/Userguide
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2008-2014 Kohana Team
+ * @license    http://kohanaframework.org/license
  */
-class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
+abstract class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 	/**
-	 * @var  string  base url for links
+	 * @var  string  Base url for links
 	 */
 	public static $base_url = '';
 
 	/**
-	 * @var  string  base url for images
+	 * @var  string  Base url for images
 	 */
 	public static $image_url = '';
-	
+
 	/**
 	 * Currently defined heading ids.  
 	 * Used to prevent creating multiple headings with same id.
@@ -28,60 +28,55 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	protected $_heading_ids = array();
 	
 	/**
-	 * @var  string   the generated table of contents
+	 * @var  string  The generated table of contents
 	 */
 	protected static $_toc = "";
 	
 	/**
-	 * Slightly less terrible way to make it so the TOC only shows up when we
-	 * want it to.  set this to true to show the toc.
+	 * Slightly less terrible way to make it so the TOC only shows up 
+	 * when we want it to. Set this to true to show the TOC.
+	 * @var boolean
 	 */
-	public static $show_toc = false;
-	
+	public static $show_toc = FALSE;
+
 	/**
-	 * Transform some text using [Kodoc_Markdown]
-	 *
-	 * @see Markdown()
-	 *
+	 * Transform some text using [Kodoc_Markdown].
+	 * 
 	 * @param   string  Text to parse
 	 * @return  string  Transformed text
+	 * @see     Markdown()
 	 */
 	public static function markdown($text)
 	{
 		static $instance;
-
 		if ($instance === NULL)
 		{
 			$instance = new Kodoc_Markdown;
 		}
-
 		return $instance->transform($text);
 	}
 
+	/**
+	 * 
+	 */
 	public function __construct()
 	{
 		// doImage is 10, add image url just before
 		$this->span_gamut['doImageURL'] = 9;
-
 		// doLink is 20, add base url just before
 		$this->span_gamut['doBaseURL'] = 19;
-
 		// Add API links
 		$this->span_gamut['doAPI'] = 90;
-
 		// Add note spans last
 		$this->span_gamut['doNotes'] = 100;
-
 		// Parse Kohana view inclusions at the very end
 		$this->document_gamut['doIncludeViews'] = 99;
-
 		// Show table of contents for userguide pages
 		$this->document_gamut['doTOC'] = 100;
-
-		// PHP4 makes me sad.
+		// @TODO PHP4 makes me sad. 
 		parent::MarkdownExtra_Parser();
 	}
-	
+
 	/**
 	 * Callback for the heading setext style
 	 * 
@@ -91,7 +86,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 * @param  array    Matches from regex call
 	 * @return string   Generated html
 	 */
-	function _doHeaders_callback_setext($matches) 
+	public function _doHeaders_callback_setext($matches) 
 	{
 		if ($matches[3] == '-' && preg_match('{^- }', $matches[1]))
 			return $matches[0];
@@ -108,7 +103,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		$block = "<h$level$attr>".$this->runSpanGamut($matches[1])."</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
 	}
-	
+
 	/**
 	 * Callback for the heading atx style
 	 *
@@ -117,7 +112,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 * @param  array    Matches from regex call
 	 * @return string   Generated html
 	 */
-	function _doHeaders_callback_atx($matches) 
+	public function _doHeaders_callback_atx($matches) 
 	{
 		$level = strlen($matches[1]);
 		$attr  = $this->_doHeaders_attr($id =& $matches[3]);
@@ -133,7 +128,6 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		return "\n" . $this->hashBlock($block) . "\n\n";
 	}
 
-	
 	/**
 	 * Makes a heading id from the heading text
 	 * If any heading share the same name then subsequent headings will have an integer appended
@@ -141,7 +135,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 * @param  string The heading text
 	 * @return string ID for the heading
 	 */
-	function make_heading_id($heading)
+	public function make_heading_id($heading)
 	{
 		$id = url::title($heading, '-', TRUE);
 		
@@ -160,6 +154,9 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		return $id;
 	}
 
+	/**
+	 * 
+	 */
 	public function doIncludeViews($text)
 	{
 		if (preg_match_all('/{{([^\s{}]++)}}/', $text, $matches, PREG_SET_ORDER))
@@ -256,15 +253,22 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
 		return $this->hashBlock('<p class="note">'.$match[1].'</p>');
 	}
-	
+
+	/**
+	 * 
+	 */
 	protected function _add_to_toc($level, $name, $id)
 	{
 		self::$_toc[] = array(
 			'level' => $level,
 			'name'  => $name,
-			'id'    => $id);
+			'id'    => $id
+		);
 	}
-	
+
+	/**
+	 * 
+	 */
 	public function doTOC($text)
 	{
 		// Only add the toc do userguide pages, not api since they already have one
@@ -272,8 +276,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		{
 			$toc = View::factory('userguide/page-toc')
 				->set('array', self::$_toc)
-				->render()
-				;
+				->render();
 
 			if (($offset = strpos($text, '<p>')) !== FALSE)
 			{
@@ -282,8 +285,14 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 				$text = substr_replace($text, $toc, $offset, 0);
 			}
 		}
-
 		return $text;
 	}
 
-} // End Kodoc_Markdown
+	/**
+	 * 
+	 */
+	function _doHeaders_attr($attr)
+	{
+		return empty($attr) ? '' : ' id="'.$attr.'"';
+	}
+}

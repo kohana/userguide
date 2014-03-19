@@ -1,14 +1,14 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Class method parameter documentation generator.
  *
  * @package    Kohana/Userguide
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2008-2014 Kohana Team
+ * @license    http://kohanaframework.org/license
  */
-class Kohana_Kodoc_Method_Param extends Kodoc {
+abstract class Kohana_Kodoc_Method_Param extends Kodoc {
 
 	/**
 	 * @var  object  ReflectionParameter for this property
@@ -45,28 +45,31 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 	 */
 	public $optional = FALSE;
 
+	/**
+	 * 
+	 */
 	public function __construct($method, $param)
 	{
 		$this->param = new ReflectionParameter($method, $param);
-
 		$this->name = $this->param->name;
 
 		if ($this->param->isDefaultValueAvailable())
 		{
 			$this->default = Debug::dump($this->param->getDefaultValue());
 		}
-
 		if ($this->param->isPassedByReference())
 		{
 			$this->reference = TRUE;
 		}
-
 		if ($this->param->isOptional())
 		{
 			$this->optional = TRUE;
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public function __toString()
 	{
 		$display = '';
@@ -75,21 +78,20 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 		{
 			$display .= '<small>'.$this->type.'</small> ';
 		}
-
 		if ($this->reference)
 		{
 			$display .= '<small><abbr title="passed by reference">&</abbr></small> ';
 		}
-
 		if ($this->description)
 		{
-			$display .= '<span class="param" title="'.preg_replace('/\s+/', ' ', $this->description).'">$'.$this->name.'</span> ';
+			$display .= '<span class="param" title="'
+				.preg_replace('/\s+/', ' ', $this->description)
+				.'">$'.$this->name.'</span> ';
 		}
 		else
 		{
 			$display .= '$'.$this->name.' ';
 		}
-
 		if ($this->default)
 		{
 			$display .= '<small>= '.$this->default.'</small> ';
@@ -97,5 +99,4 @@ class Kohana_Kodoc_Method_Param extends Kodoc {
 
 		return $display;
 	}
-
-} // End Kodoc_Method_Param
+}

@@ -1,14 +1,14 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Class method documentation generator.
  *
  * @package    Kohana/Userguide
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2008-2014 Kohana Team
+ * @license    http://kohanaframework.org/license
  */
-class Kohana_Kodoc_Method extends Kodoc {
+abstract class Kohana_Kodoc_Method extends Kodoc {
 
 	/**
 	 * @var  ReflectionMethod   The ReflectionMethod for this class
@@ -30,6 +30,9 @@ class Kohana_Kodoc_Method extends Kodoc {
 	 */
 	public $source;
 
+	/**
+	 * 
+	 */
 	public function __construct($class, $method)
 	{
 		$this->method = new ReflectionMethod($class, $method);
@@ -64,7 +67,7 @@ class Kohana_Kodoc_Method extends Kodoc {
 
 			foreach ($this->method->getParameters() as $i => $param)
 			{
-				$param = new Kodoc_Method_Param(array($this->method->class, $this->method->name),$i);
+				$param = new Kodoc_Method_Param(array($this->method->class, $this->method->name), $i);
 
 				if (isset($tags['param'][$i]))
 				{
@@ -101,11 +104,14 @@ class Kohana_Kodoc_Method extends Kodoc {
 		$this->tags = $tags;
 	}
 
+	/**
+	 * 
+	 */
 	public function params_short()
 	{
 		$out = '';
-		$required = TRUE;
-		$first = TRUE;
+		$required = $first = TRUE;
+
 		foreach ($this->params as $param)
 		{
 			if ($required AND $param->default AND $first)
@@ -138,4 +144,4 @@ class Kohana_Kodoc_Method extends Kodoc {
 		return $out;
 	}
 
-} // End Kodoc_Method
+}
