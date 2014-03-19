@@ -1,6 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.') ?>
-
-<h1>Available Classes</h1>
+<h1><?php echo 'Available Classes' ?></h1>
 
 <label>Filter:</label>
 <input type="text" id="kodoc-api-filter-box" />
@@ -57,8 +55,7 @@
 
 <div class="class-list">
 
-	<?php foreach ($classes as $class => $methods): 
-		$link = $route->uri(array('class' => $class)) ?>
+	<?php foreach ($classes as $class => $methods): $link = $route->uri(array('class' => $class)) ?>
 	<div class="class <?php echo Text::alternate('left', 'right') ?>">
 		<h2><?php echo HTML::anchor($link, $class, NULL, NULL, TRUE) ?></h2>
 		<ul class="methods">

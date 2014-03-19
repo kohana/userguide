@@ -4,7 +4,7 @@
 	"description": "Kohana user guide and live API documentation module",
 	"homepage":    "http://kohanaframework.org",
 	"license":     "BSD-3-Clause",
-	"keywords":    ["kohana", "framework", "docs", "api", "userguide"],
+	"keywords":    ["kohana", "framework", "docs"],
 	"authors": [
 		{
 			"name":     "Kohana Team",
@@ -14,10 +14,10 @@
 		}
 	],
 	"support": {
-		"issues": "http://dev.kohanaframework.org",
-		"forum":  "http://forum.kohanaframework.org",
-		"irc":    "irc://irc.freenode.net/kohana",
-		"source": "http://github.com/kohana/core"
+		"issues":   "http://dev.kohanaframework.org",
+		"forum":    "http://forum.kohanaframework.org",
+		"irc":      "irc://irc.freenode.net/kohana",
+		"source":   "http://github.com/kohana/core"
 	},
 	"require": {
 		"composer/installers": "~1.0",

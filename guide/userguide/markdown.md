@@ -1,10 +1,6 @@
 # Markdown Syntax
 
-The userguide uses [Markdown](http://daringfireball.net/projects/markdown/) 
-and [Markdown Extra](http://michelf.com/projects/php-markdown/extra/) for the userguide pages, 
-and the in-code comments used to generate the API browser.
-This is a brief summary of most of Markdown and Markdown extra features.
-It does not cover everything, and it does not cover all the caveats.
+The userguide uses [Markdown](http://daringfireball.net/projects/markdown/) and [Markdown Extra](http://michelf.com/projects/php-markdown/extra/) for the userguide pages, and the in-code comments used to generate the API browser.  This is a brief summary of most of Markdown and Markdown extra features.  It does not cover everything, and it does not cover all the caveats.
 
 [!!] Be sure to check out the **[Userguide Specific Syntax](#userguide-specific-syntax)** for things that Userguide adds to markdown.
 
@@ -22,10 +18,11 @@ It does not cover everything, and it does not cover all the caveats.
 ~~~
 Regular text will be transformed into paragraphs.
 Single returns will not make a new paragraph, this
-allows for wrapping (especially for in-code comments).
+allows for wrapping (especially for in-code
+comments).
 
-A new paragraph will start if there is a blank line between blocks of text.
-Chars like > and & are escaped for you.
+A new paragraph will start if there is a blank line between
+blocks of text.  Chars like > and & are escaped for you.
 
 To make a line break,  
 put two spaces at the  
@@ -33,10 +30,11 @@ end of a line.
 ~~~
 Regular text will be transformed into paragraphs.
 Single returns will not make a new paragraph, this
-allows for wrapping (especially for in-code comments).
+allows for wrapping (especially for in-code
+comments).
 
-A new paragraph will start if there is a blank line between blocks of text.
-Chars like `>` and `&` are escaped for you.
+A new paragraph will start if there is a blank line between
+blocks of text.  Chars like > and & are escaped for you.
 
 To make a line break,  
 put two spaces at the  
@@ -166,8 +164,7 @@ First Header  | Second Header
 Content Cell  | Content Cell
 Content Cell  | Content Cell
 
-Note that the pipes on the very left and very right side are optional, 
-and you can change the text-alignment by adding a colon on the right, or on both sides for center.
+Note that the pipes on the very left and very right side are optional, and you can change the text-alignment by adding a colon on the right, or on both sides for center.
 ~~~
 | Item      | Value | Savings |
 | --------- | -----:|:-------:|
@@ -183,31 +180,23 @@ and you can change the text-alignment by adding a colon on the right, or on both
 
 # Userguide Specific Syntax
 
-In addition to the features and syntax of [Markdown](http://daringfireball.net/projects/markdown/) 
-and [Markdown Extra](http://michelf.com/projects/php-markdown/extra/) the following apply to 
-userguide pages and api documentation:
+In addition to the features and syntax of [Markdown](http://daringfireball.net/projects/markdown/) and [Markdown Extra](http://michelf.com/projects/php-markdown/extra/) the following apply to userguide pages and api documentation:
 
 ## Namespacing
 
-The first thing to note is that all links are "namespaced" to the current module.
-For example, from anywhere within the Kohana core docs you do not need to include `kohana` at the beginning of a link url.
-For example: `[Hello World Tutorial](tutorials/hello-world)` rather than `(kohana/tutorials/hello-world)`.
+The first thing to note is that all links are "namespaced" to the current module.  For example, from anywhere within the Kohana core docs you do not need to include `kohana` at the beginning of a link url.  For example: `[Hello World Tutorial](tutorials/hello-world)` rather than `(kohana/tutorials/hello-world)`.
 
 To link to a modules index page, have an empty url like: `[Kohana]()`.
 
-To link to page in a different module, prefix your url with `../` and the module name.
-For example: `[Kohana Routes](../kohana/routing)`
+To link to page in a different module, prefix your url with `../` and the module name.  For example: `[Kohana Routes](../kohana/routing)`
 
 **Images are also namespaced**, using `![Alt Text](imagename.jpg)` would look for `media/guide/<modulename>/imagename.jpg`.
 
-[!!] If you want your userguide pages to be browsable on github or similar sites outside Kohana's own userguide module, 
-specify the optional `.md` file extension in your links
+[!!] If you want your userguide pages to be browsable on github or similar sites outside Kohana's own userguide module, specify the optional .md file extension in your links
 
 ## API Links
 
-You can make links to the api browser by wrapping any class name in brackets.
-You may also include a function name, or propery name to link to that specifically.
-All of the following will link to the API browser:
+You can make links to the api browser by wrapping any class name in brackets.  You may also include a function name, or propery name to link to that specifically.  All of the following will link to the API browser:
 
 	[Request]  
 	[Request::execute]  
@@ -219,9 +208,7 @@ All of the following will link to the API browser:
 [Request::execute()]  
 [Request::$status]  
 
-If you want to have parameters and have the function be clickable, 
-only put the brackets around the class and function (not the params), 
-and put a backslash in front of the opening parenthesis.
+If you want to have parameters and have the function be clickable, only put the brackets around the class and function (not the params), and put a backslash in front of the opening parenthesis.
 
 	[Kohana::$config]\('foobar','baz')
 	
@@ -239,18 +226,12 @@ will display as:
 
 ## Headers automatically get IDs
 
-Headers are automatically assigned an id, based on the content of the header, so each header can be linked to. 
-You can manually assign a different id using the syntax as defined in [Markdown_Extra]. 
-If multiple headers have the same content (e.g. more than one "Examples" header), 
-only the first will get be automatically assigned an id, so you should manually assign more descriptive ids. 
-For example:
+Headers are automatically assigned an id, based on the content of the header, so each header can be linked to. You can manually assign a different id using the syntax as defined in Markdown Extra. If multiple headers have the same content (e.g. more than one "Examples" header), only the first will get be automatically assigned an id, so you should manually assign more descriptive ids. For example:
 
 	### Examples     {#more-descriptive-id}
 
 ## Including Views
 
-If you need you may include a regular [Kohana View](../kohana/mvc/views) file by placing the name of the view in double curly brackets. 
+If you need you may include a regular Kohana View file by placing the name of the view in double curly brackets.  **If the view is not found, no error or exception will be shown, the curly brackets and view name will simply remain there!**
 
 	{{some/view/file}}
-
-[!!] If the view is not found, no error or exception will be shown, the curly brackets and view name will simply remain there!

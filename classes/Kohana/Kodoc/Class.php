@@ -1,42 +1,42 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Class documentation generator.
  *
  * @package    Kohana/Userguide
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2014 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) 2009-2012 Kohana Team
+ * @license    http://kohanaphp.com/license
  */
-abstract class Kohana_Kodoc_Class extends Kodoc {
+class Kohana_Kodoc_Class extends Kodoc {
 
 	/**
-	 * @var  ReflectionClass  The ReflectionClass for this class
+	 * @var  ReflectionClass The ReflectionClass for this class
 	 */
 	public $class;
 
 	/**
-	 * @var  string  Modifiers like abstract, final
+	 * @var  string  modifiers like abstract, final
 	 */
 	public $modifiers;
 
 	/**
-	 * @var  string  Description of the class from the comment
+	 * @var  string  description of the class from the comment
 	 */
 	public $description;
 
 	/**
-	 * @var  array  Array of tags, retrieved from the comment
+	 * @var  array  array of tags, retrieved from the comment
 	 */
 	public $tags = array();
 
 	/**
-	 * @var  array  Array of this classes constants
+	 * @var  array  array of this classes constants
 	 */
 	public $constants = array();
 
 	/**
-	 * @var  array  Parent classes/interfaces of this class/interface
+	 * @var array Parent classes/interfaces of this class/interface
 	 */
 	public $parents = array();
 
@@ -45,7 +45,7 @@ abstract class Kohana_Kodoc_Class extends Kodoc {
 	 * the class. Reads the class modifiers, constants and comment. Parses the
 	 * comment to find the description and tags.
 	 *
-	 * @param   string  $class  Class name
+	 * @param   string   class name
 	 * @return  void
 	 */
 	public function __construct($class)
@@ -59,8 +59,8 @@ abstract class Kohana_Kodoc_Class extends Kodoc {
 
 		$this->constants = $this->class->getConstants();
 
-		// If ReflectionClass::getParentClass() won't work if 
-		// the class in question is an interface
+		// If ReflectionClass::getParentClass() won't work if the class in 
+		// question is an interface
 		if ($this->class->isInterface())
 		{
 			$this->parents = $this->class->getInterfaces();
@@ -98,34 +98,38 @@ abstract class Kohana_Kodoc_Class extends Kodoc {
 	public function constants()
 	{
 		$result = array();
+
 		foreach ($this->constants as $name => $value)
 		{
 			$result[$name] = Debug::vars($value);
 		}
+
 		return $result;
 	}
 
 	/**
-	 * Get the description of this class as HTML. Includes a warning
-	 * when the class or one of its parents could not be found.
+	 * Get the description of this class as HTML. Includes a warning when the
+	 * class or one of its parents could not be found.
 	 *
 	 * @return  string  HTML
 	 */
 	public function description()
 	{
 		$result = $this->description;
+
+		// If this class extends Kodoc_Missing, add a warning about possible
+		// incomplete documentation
 		foreach ($this->parents as $parent)
 		{
-			// If this class extends [Kodoc_Missing], add a warning 
-			// about possible incomplete documentation
 			if ($parent->name == 'Kodoc_Missing')
 			{
-				$result .= '[!!] **This class, or a class parent, could not be'
-					.'found or loaded. This could be caused by a missing'
-					.'module or other dependancy. The documentation for'
-					.'class may not be complete!**';
+				$result .= "[!!] **This class, or a class parent, could not be
+				           found or loaded. This could be caused by a missing
+				           module or other dependancy. The documentation for
+				           class may not be complete!**";
 			}
 		}
+
 		return Kodoc_Markdown::markdown($result);
 	}
 
@@ -140,38 +144,31 @@ abstract class Kohana_Kodoc_Class extends Kodoc {
 
 		$defaults = $this->class->getDefaultProperties();
 
-		usort($props, array($this, '_prop_sort'));
+		usort($props, array($this,'_prop_sort'));
 
 		foreach ($props as $key => $property)
 		{
 			// Create Kodoc Properties for each property
-			$props[$key] = new Kodoc_Property(
-				$this->class->name,
-				$property->name,
-				Arr::get($defaults, $property->name)
-			);
+			$props[$key] = new Kodoc_Property($this->class->name, $property->name,  Arr::get($defaults, $property->name));
 		}
 
 		return $props;
 	}
-
-	/**
-	 * 
-	 */
+	
 	protected function _prop_sort($a, $b)
 	{
 		// If one property is public, and the other is not, it goes on top
-		if ($a->isPublic() AND ! $b->isPublic())
+		if ($a->isPublic() AND ( ! $b->isPublic()))
 			return -1;
-		if ($b->isPublic() AND ! $a->isPublic())
+		if ($b->isPublic() AND ( ! $a->isPublic()))
 			return 1;
-
+		
 		// If one property is protected and the other is private, it goes on top
 		if ($a->isProtected() AND $b->isPrivate())
 			return -1;
 		if ($b->isProtected() AND $a->isPrivate())
 			return 1;
-
+		
 		// Otherwise just do alphabetical
 		return strcmp($a->name, $b->name);
 	}
@@ -184,17 +181,19 @@ abstract class Kohana_Kodoc_Class extends Kodoc {
 	public function methods()
 	{
 		$methods = $this->class->getMethods();
-		usort($methods, array($this, '_method_sort'));
+
+		usort($methods, array($this,'_method_sort'));
+
 		foreach ($methods as $key => $method)
 		{
 			$methods[$key] = new Kodoc_Method($this->class->name, $method->name);
 		}
+
 		return $methods;
 	}
-
+	
 	/**
 	 * Sort methods based on their visibility and declaring class based on:
-	 * 
 	 *  - methods will be sorted public, protected, then private.
 	 *  - methods that are declared by an ancestor will be after classes
 	 *    declared by the current class
@@ -208,18 +207,19 @@ abstract class Kohana_Kodoc_Class extends Kodoc {
 			return -1;
 		if ($b->isPublic() AND ( ! $a->isPublic()))
 			return 1;
-
+		
 		// If one method is protected and the other is private, it goes on top
 		if ($a->isProtected() AND $b->isPrivate())
 			return -1;
 		if ($b->isProtected() AND $a->isPrivate())
 			return 1;
-
+		
 		// The methods have the same visibility, so check the declaring class depth:
+		
+		
 		/*
 		echo Debug::vars('a is '.$a->class.'::'.$a->name,'b is '.$b->class.'::'.$b->name,
-						   'are the classes the same?', $a->class == $b->class,'if they are, 
-						   the result is:',strcmp($a->name, $b->name),
+						   'are the classes the same?', $a->class == $b->class,'if they are, the result is:',strcmp($a->name, $b->name),
 						   'is a this class?', $a->name == $this->class->name,-1,
 						   'is b this class?', $b->name == $this->class->name,1,
 						   'otherwise, the result is:',strcmp($a->class, $b->class)
@@ -236,8 +236,7 @@ abstract class Kohana_Kodoc_Class extends Kodoc {
 		if ($b->name == $this->class->name)
 			return 1;
 
-		// Otherwise, get the parents of each methods declaring class, 
-		// then compare which function has more "ancestors"
+		// Otherwise, get the parents of each methods declaring class, then compare which function has more "ancestors"
 		$adepth = 0;
 		$bdepth = 0;
 
@@ -266,6 +265,7 @@ abstract class Kohana_Kodoc_Class extends Kodoc {
 	public function tags()
 	{
 		$result = array();
+
 		foreach ($this->tags as $name => $set)
 		{
 			foreach ($set as $text)
@@ -273,6 +273,7 @@ abstract class Kohana_Kodoc_Class extends Kodoc {
 				$result[$name][] = Kodoc::format_tag($name, $text);
 			}
 		}
+
 		return $result;
 	}
 }

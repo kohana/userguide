@@ -99,13 +99,9 @@ h6:hover a.permalink {
 #kodoc-content,
 #kodoc-footer { float: left; clear: both; width: 100%; }
 
-#kodoc-header { padding: 2em 0; background: #77c244 url(../img/header.png) center top repeat-x; }
+#kodoc-header { padding: 58px 0 2em; background: #77c244 url(../img/header.png) center top repeat-x; }
 	#kodoc-logo { display: block; float: left; }
-	#google_translate_element { float: right; margin-top: 20px;  -moz-border-radius: 5px; -webkit-border-radius: 5px; }
-	#google_translate_element .goog-te-gadget-simple { background: #113c32; border: 0; padding: 3px 0 0 15px; height: 29px; }
-	#google_translate_element .goog-te-menu-value { color: #efefef; text-decoration: none; text-transform: uppercase; font-size: 90%; letter-spacing: 0.05em; }
-	#google_translate_element .goog-te-menu-value:hover {background: #164e41; border-left-color: #195a4b; color: #fff; text-shadow: #fff 0 0 1px; }
-	#kodoc-menu { float: right; margin-top: 20px; background: #113c32; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+	#kodoc-menu { float: right; margin-top: 12px; background: #113c32; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
 	#kodoc-menu ul { float: left; margin: 0; padding: 0 0.5em 0 0; }
 		#kodoc-menu li { display: block; float: left; margin: 0; padding: 0; }
 		#kodoc-menu li.first { padding-left: 0.5em; }
@@ -116,7 +112,7 @@ h6:hover a.permalink {
 
 #kodoc-content { background: #f1f8db url(../img/content.png) center top repeat-x; }
 	#kodoc-content .wrapper { min-height: 390px; padding: 1em 0; background: transparent url(../img/wrapper.png) center top no-repeat; }
-	#kodoc-content div.page-toc { float: right; margin: 1em 0 1em 1em; margin-top: 0; padding: 1em; background: #fff; border: solid 0.1em #e8efcf; border-radius: 0.6em; max-width: 300px; }
+	#kodoc-content div.page-toc { float: right; margin: 1em; margin-top: 0; padding: 1em; background: #fff; border: solid 0.1em #e8efcf; border-radius: 0.6em; }
 	#kodoc-content p.intro { padding: 1em 20px; padding-left: 20px; margin: 0 -20px; font-size: 1.2em; }
 	#kodoc-content a { color: #004352; }
 	#kodoc-content a:hover { color: #00758f; }
@@ -125,13 +121,13 @@ h6:hover a.permalink {
 #kodoc-breadcrumb { margin: 0 0 1em; padding: 0 0 0.5em; list-style: none; border-bottom: solid 1px #e8efcf; }
 	#kodoc-breadcrumb li { display: inline-block; margin: 0; padding: 0 0.4em 0 0; text-transform: uppercase; font-size: 11px; }
 	#kodoc-breadcrumb li:before { content: '»'; padding-right: 0.4em; }
-	#kodoc-breadcrumb li a { color: #999; text-decoration: none;}
+	#kodoc-breadcrumb li a { color: #999; text-decoration: none; }
 
-#kodoc-topics {}
+#kodoc-topics {  }
 	#kodoc-topics ul,
 	#kodoc-topics ol { list-style-type:none; margin: 0; padding: 0;}
 		#kodoc-topics ul li,
-		#kodoc-topics ol li { margin:0 0 0 0.5em; padding: 0; }
+		#kodoc-topics ol li { margin:0; padding: 0; margin-left: 1em; }
 		#kodoc-topics ul li a.current,
 		#kodoc-topics ol li a.current { font-weight: bold; }
 	#kodoc-topics span,
