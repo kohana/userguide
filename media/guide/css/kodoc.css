@@ -112,7 +112,7 @@ h6:hover a.permalink {
 
 #kodoc-content { background: #f1f8db url(../img/content.png) center top repeat-x; }
 	#kodoc-content .wrapper { min-height: 390px; padding: 1em 0; background: transparent url(../img/wrapper.png) center top no-repeat; }
-	#kodoc-content div.page-toc { float: right; margin: 1em; margin-top: 0; padding: 1em; background: #fff; border: solid 0.1em #e8efcf; border-radius: 0.6em; }
+	#kodoc-content div.page-toc { float: right; margin: 1em; margin-top: 0; padding: 1em; background: #fff; border: solid 0.1em #e8efcf; border-radius: 0.6em; position: fixed;top:0; right: 0; overflow-y: scroll;}
 	#kodoc-content p.intro { padding: 1em 20px; padding-left: 20px; margin: 0 -20px; font-size: 1.2em; }
 	#kodoc-content a { color: #004352; }
 	#kodoc-content a:hover { color: #00758f; }
