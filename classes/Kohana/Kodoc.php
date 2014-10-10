@@ -5,8 +5,8 @@
  * @package    Kohana/Userguide
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2008-2013 Kohana Team
+ * @license    http://kohanaframework.org/license
  */
 class Kohana_Kodoc {
 
@@ -419,12 +419,12 @@ class Kohana_Kodoc {
 	 *
 	 * Module developers can therefore add their own transparent extension
 	 * namespaces and exclude them from the userguide.
-	 *          
-	 * @param string $class The name of the class to check for transparency
-	 * @param array $classes An optional list of all defined classes
-	 * @return false If this is not a transparent extension class 
-	 * @return string The name of the class that extends this (in the case provided)
-	 * @throws InvalidArgumentException If the $classes array is provided and the $class variable is not lowercase
+	 *
+	 * @param   string  $class            The name of the class to check for transparency
+	 * @param   array   $classes          An optional list of all defined classes
+	 * @return  false                     If this is not a transparent extension class
+	 * @return  string                    The name of the class that extends this (in the case provided)
+	 * @throws  InvalidArgumentException  If the $classes array is provided and the $class variable is not lowercase
 	 */
 	public static function is_transparent($class, $classes = NULL)
 	{
@@ -451,11 +451,11 @@ class Kohana_Kodoc {
 				// Cater for Foo extends Module_Foo naming
 				$child_class = $segments[1];
 			}
-			
+
 			// It is only a transparent class if the unprefixed class also exists
 			if ($classes AND ! isset($classes[$child_class]))
 				return FALSE;
-			
+
 			// Return the name of the child class
 			return $child_class;
 		}
@@ -465,6 +465,5 @@ class Kohana_Kodoc {
 			return FALSE;
 		}
 	}
-
 
 } // End Kodoc

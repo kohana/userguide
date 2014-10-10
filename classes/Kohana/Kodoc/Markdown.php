@@ -5,8 +5,8 @@
  * @package    Kohana/Userguide
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2008-2013 Kohana Team
+ * @license    http://kohanaframework.org/license
  */
 class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 
@@ -21,9 +21,10 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	public static $image_url = '';
 	
 	/**
-	 * Currently defined heading ids.  
+	 * Currently defined heading ids.
 	 * Used to prevent creating multiple headings with same id.
-	 * @var array
+	 *
+	 * @var  array
 	 */
 	protected $_heading_ids = array();
 	
@@ -88,10 +89,10 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 * Heading 1
 	 * =========
 	 *
-	 * @param  array    Matches from regex call
-	 * @return string   Generated html
+	 * @param   array   Matches from regex call
+	 * @return  string  Generated html
 	 */
-	function _doHeaders_callback_setext($matches) 
+	function _doHeaders_callback_setext($matches)
 	{
 		if ($matches[3] == '-' AND preg_match('{^- }', $matches[1]))
 			return $matches[0];
@@ -116,10 +117,10 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 *
 	 * # Heading 1
 	 *
-	 * @param  array    Matches from regex call
-	 * @return string   Generated html
+	 * @param   array   Matches from regex call
+	 * @return  string  Generated html
 	 */
-	function _doHeaders_callback_atx($matches) 
+	function _doHeaders_callback_atx($matches)
 	{
 		$level = strlen($matches[1]);
 		$attr  = $this->_doHeaders_attr($id =& $matches[3]);
@@ -142,8 +143,8 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 * Makes a heading id from the heading text
 	 * If any heading share the same name then subsequent headings will have an integer appended
 	 *
-	 * @param  string The heading text
-	 * @return string ID for the heading
+	 * @param   string  The heading text
+	 * @return  string  ID for the heading
 	 */
 	function make_heading_id($heading)
 	{
@@ -159,8 +160,8 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 			{
 				$id .= $count;
 			}
-		}		
-		
+		}
+
 		return $id;
 	}
 
@@ -205,7 +206,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 *
 	 *     [filesystem](about.filesystem "Optional title")
 	 *
-	 * @param   string  span text
+	 * @param   string  Span text
 	 * @return  string
 	 */
 	public function doBaseURL($text)
@@ -219,7 +220,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 *
 	 *     ![Install Page](img/install.png "Optional title")
 	 *
-	 * @param   string  span text
+	 * @param   string  Span text
 	 * @return  string
 	 */
 	public function doImageURL($text)
@@ -233,7 +234,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 *
 	 *     [Class_Name], [Class::method] or [Class::$property]
 	 *
-	 * @param   string   span text
+	 * @param   string  Span text
 	 * @return  string
 	 */
 	public function doAPI($text)
@@ -246,7 +247,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 *
 	 *     [!!] Remember the milk!
 	 *
-	 * @param   string  span text
+	 * @param   string  Span text
 	 * @return  string
 	 */
 	public function doNotes($text)
@@ -266,7 +267,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 			'name'  => $name,
 			'id'    => $id);
 	}
-	
+
 	public function doTOC($text)
 	{
 		// Only add the toc do userguide pages, not api since they already have one
