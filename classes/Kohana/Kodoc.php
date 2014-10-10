@@ -34,6 +34,10 @@ class Kohana_Kodoc {
 			{
 				$member = '#property:'.substr($matches[3], 1);
 			}
+			elseif (preg_match('/^[A-Z_\x7f-\xff][A-Z0-9_\x7f-\xff]*$/', $matches[3]))
+			{
+				$member = '#constant:'.substr($matches[3],0);
+			}
 			else
 			{
 				$member = '#'.$matches[3];
