@@ -21,13 +21,21 @@
 	},
 	"require": {
 		"composer/installers": "~1.0",
-		"kohana/core":         ">=3.3",
-		"php":                 ">=5.3.3"
+		"kohana/core":         ">=3.4",
+		"php":                 ">=5.4.0"
 	},
+    "require-dev": {
+        "kohana/core":         "3.4.*@dev",
+        "kohana/unittest":     "3.4.*@dev",
+        "kohana/koharness":    "*@dev"
+    },
 	"extra": {
 		"branch-alias": {
 			"dev-3.3/develop": "3.3.x-dev",
 			"dev-3.4/develop": "3.4.x-dev"
-		}
+        },
+        "installer-paths": {
+            "vendor/{$vendor}/{$name}": ["type:kohana-module"]
+        }
 	}
 }
