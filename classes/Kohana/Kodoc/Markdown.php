@@ -36,7 +36,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 * Slightly less terrible way to make it so the TOC only shows up when we
 	 * want it to.  set this to true to show the toc.
 	 */
-	public static $show_toc = false;
+	public static $show_toc = FALSE;
 	
 	/**
 	 * Transform some text using [Kodoc_Markdown]
@@ -93,20 +93,22 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 */
 	function _doHeaders_callback_setext($matches) 
 	{
-		if ($matches[3] == '-' && preg_match('{^- }', $matches[1]))
+		if ($matches[3] == '-' AND preg_match('{^- }', $matches[1]))
 			return $matches[0];
-		$level = $matches[3]{0} == '=' ? 1 : 2;
+		$level = ($matches[3]{0} == '=') ? 1 : 2;
 		$attr  = $this->_doHeaders_attr($id =& $matches[2]);
 		
 		// Only auto-generate id if one doesn't exist
-		if(empty($attr))
+		if (empty($attr))
+		{
 			$attr = ' id="'.$this->make_heading_id($matches[1]).'"';
+		}
 		
 		// Add this header to the page toc
 		$this->_add_to_toc($level,$matches[1],$this->make_heading_id($matches[1]));
 		
 		$block = "<h$level$attr>".$this->runSpanGamut($matches[1])."</h$level>";
-		return "\n" . $this->hashBlock($block) . "\n\n";
+		return "\n".$this->hashBlock($block)."\n\n";
 	}
 	
 	/**
@@ -123,14 +125,16 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		$attr  = $this->_doHeaders_attr($id =& $matches[3]);
 		
 		// Only auto-generate id if one doesn't exist
-		if(empty($attr))
+		if (empty($attr))
+		{
 			$attr = ' id="'.$this->make_heading_id($matches[2]).'"';
+		}
 		
 		// Add this header to the page toc
 		$this->_add_to_toc($level, $matches[2], $this->make_heading_id(empty($matches[3]) ? $matches[2] : $matches[3]));
 		
 		$block = "<h$level$attr>".$this->runSpanGamut($matches[2])."</h$level>";
-		return "\n" . $this->hashBlock($block) . "\n\n";
+		return "\n".$this->hashBlock($block)."\n\n";
 	}
 
 	
@@ -145,7 +149,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	{
 		$id = url::title($heading, '-', TRUE);
 		
-		if(isset($this->_heading_ids[$id]))
+		if (isset($this->_heading_ids[$id]))
 		{
 			$id .= '-';
 			
