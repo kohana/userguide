@@ -321,7 +321,25 @@ abstract class Kohana_Controller_Userguide extends Controller_Template {
 		{
 			$page = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'];
 		}
-		return Kohana::find_file('guide', $page, 'md');
+		
+	        // Find file in language directory, if she is exist
+	        $parts = explode('-', I18n::$lang);
+	        $result = FALSE;
+	        $count = count($parts);
+	        for ($i = 0 ; $i <= $count ; $i++)
+	        {
+	            $lang = implode(DIRECTORY_SEPARATOR, $parts).DIRECTORY_SEPARATOR;
+	
+	            $result = Kohana::find_file('guide', $info['dirname'].DIRECTORY_SEPARATOR.$lang.$info['filename'], 'md');
+	            if ($result !== FALSE)
+	                break;
+	
+	            unset($parts[$count - 1]);
+	        }
+
+	        // If file not fined in language directory, then find in default directory
+		return $result === FALSE ? Kohana::find_file('guide', $page, 'md') : $result;
+	
 	}
 
 	public function section($page)
