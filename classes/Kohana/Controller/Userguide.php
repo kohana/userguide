@@ -409,11 +409,11 @@ abstract class Kohana_Controller_Userguide extends Controller_Template {
 		// Only do this once per request...
 		static $markdown = '';
 
-		if (! $markdown)
+		if ( ! $markdown)
 		{
 			// Get menu items
 			$file = $this->file($this->request->param('module').'/menu');
-			$text = file_get_contents($file)
+			$text = file_get_contents($file);
 
 			if ($file AND $text)
 			{
