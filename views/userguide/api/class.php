@@ -107,7 +107,7 @@ Class is not declared in a file, it is probably an internal <?php echo html::anc
 <dd><?php echo $prop->description ?></dd>
 <dd><?php echo $prop->value ?></dd>
 <?php if ($prop->default !== $prop->value): ?>
-<dd><small><?php echo __('Default value:') ?></small><br/><?php echo $prop->default ?></dd>
+<dd><small><?php echo I18n::translate('Default value:') ?></small><br/><?php echo $prop->default ?></dd>
 <?php endif ?>
 <?php endforeach ?>
 </dl>
