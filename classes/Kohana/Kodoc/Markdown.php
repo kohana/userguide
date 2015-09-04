@@ -79,8 +79,8 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 		// Show table of contents for userguide pages
 		$this->document_gamut['doTOC'] = 100;
 
-		// PHP4 makes me sad.
-		parent::MarkdownExtra_Parser();
+		// Call parent constructor.
+		parent::__construct();
 	}
 	
 	/**
