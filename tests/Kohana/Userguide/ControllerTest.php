@@ -13,7 +13,7 @@
  * @copyright  (c) 2008-2013 Kohana Team
  * @license    http://kohanaframework.org/license
  */
-class Userguide_ControllerTest extends Unittest_TestCase
+class Kohana_Userguide_ControllerTest extends Unittest_TestCase
 {
 
 	public function provider_file_finds_markdown_files()
