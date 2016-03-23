@@ -9,8 +9,7 @@ branches:
 
 cache:
   directories:
-    - vendor
-    - $HOME/.composer/cache
+    - $HOME/.composer/cache/files
 
 php:
   - 5.3
@@ -26,8 +25,9 @@ matrix:
       env: 'COMPOSER_PHPUNIT="lowest"'
 
 before_script:
-  - composer install --prefer-dist
-  - if [ "$COMPOSER_PHPUNIT" = "lowest" ]; then composer update --prefer-lowest --with-dependencies phpunit/phpunit; fi;
+  - composer self-update
+  - composer install --prefer-dist --no-interaction
+  - if [ "$COMPOSER_PHPUNIT" = "lowest" ]; then composer update --prefer-lowest --with-dependencies --prefer-dist --no-interaction phpunit/phpunit; fi;
   - vendor/bin/koharness
 
 script:
